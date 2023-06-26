@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--라이브러리 참조 : Thymeleaf & Thymeleaf Layout -->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <!--공통 JS / CSS 영역을 관리하는 환경 영역-->
+    <head>
+        <!--Common Head-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport"
+              content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0"/>
+        <title></title>
+    
+        <!--Common JS-->
+        <script th:inline="javascript" type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.7.0.min.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/bootstrap/bootstrap.min.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/bootstrap/bootstrap.bundle.min.js}"></script>
+        <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/bootstrap/bootstrap-datepicker.min.js}"></script>
+		<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/bootstrap/grid/bootstrap-table.min.js}"></script>
+		<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/bootstrap/grid/extensions/toolbar/bootstrap-table-toolbar.min.js}"></script>
+		<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/bootstrap/grid/extensions/export/bootstrap-table-export.min.js}"></script>
+		
+        <!--Common CSS -->
+        <link th:inline="css" th:href="@{/static/css/bootstrap/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:inline="css" th:href="@{/static/css/bootstrap/bootstrap-datepicker.min.css}" rel="stylesheet"/>
+		<link th:inline="css" th:href="@{/static/css/bootstrap/grid/bootstrap-table.css}" rel="stylesheet"/>
+		<link th:inline="css" th:href="@{/static/css/bootstrap/icon/bootstrap-icons.css}" rel="stylesheet"/>
+		
+		<link th:inline="css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css}" rel="stylesheet"/>
+    </head>
+
+    <body>
+        <!--Header 영역을 참조합니다.-->
+<!--         <header th:replace="common/fragments/header :: HeaderFragment"></header> -->
+    
+        <!--Content 내용 영역을 참조합니다-->
+        <th:block layout:fragment="Content"></th:block>
+    
+        <!--Footer 영역을 참조합니다.-->
+<!--         <footer th:replace="common/fragments/footer :: FooterFragment"></footer> -->
+    </body>
+</html>

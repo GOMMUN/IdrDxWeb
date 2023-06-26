@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.WorkerSupportMapper">
+
+    <select id="findAll" parameterType="WorkerSupport" resultType="WorkerSupport">
+        SELECT 
+			*
+		FROM DSP_WORKER_SUPPORT
+		WHERE 1=1 
+			  AND FACTORYID = #{factoryid} 
+			  AND LINEID = #{lineid} 
+			  AND WORK_DATE = #{workDate} 
+    </select>
+
+</mapper>

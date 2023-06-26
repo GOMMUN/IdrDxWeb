@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.WorkContentsMapper">
+
+    <select id="findAll" parameterType="WorkContents" resultType="WorkContents">
+        SELECT 
+        	DATASEQ, 
+        	RULESYSID, 
+        	FACTORYID, 
+        	LINEID, 
+        	SHIFTID, 
+        	WORK_DATE, 
+        	WORKTIME_FROM, 
+        	WORKTIME_TO, 
+        	MODELID, 
+        	OPERATIONID, 
+        	MANHOUR, 
+        	PLAN_QTY, 
+        	PROD_QTY, 
+        	GOODSUM_QTY, 
+        	FIRSTTIME_GOOD_QTY, 
+        	FIRSTTIME_FAIL_QTY, 
+        	REWORK_GOOD_QTY, 
+        	REWORK_FAIL_QTY, 
+        	NOTES, 
+        	IMAGES, 
+        	MOVIES, 
+        	CREATOR, 
+        	CREATETIME, 
+        	EVENT, 
+        	EVENTUSER, 
+        	EVENTTIME, 
+        	ISUSABLE, 
+        	TID 
+        FROM DSP_WORK_CONTENTS
+        WHERE 1=1
+        	AND FACTORYID = #{factoryid} 
+			AND LINEID = #{lineid} 
+			AND SHIFTID = #{shiftid} 
+			AND WORK_DATE = #{workDate} 
+
+    </select>
+
+</mapper>

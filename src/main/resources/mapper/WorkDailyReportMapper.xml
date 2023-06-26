@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.WorkDailyReportMapper">
+
+    <select id="findAll" resultType="WorkDailyReport">
+        SELECT 
+			A.DATASEQ, 
+			A.RULESYSID, 
+			A.FACTORYID,
+			(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME, 
+			A.WORK_DATE, 
+			A.BLOCKID,
+			(SELECT LOCATIONNAME VALUE FROM DSP_LOCATION WHERE LOCATIONTYPE = 'BLOCK' AND LOCATIONID IN (A.BLOCKID)) AS BLOCKNAME, 
+			A.LINEID,
+			(SELECT LOCATIONNAME FROM DSP_LOCATION WHERE LOCATIONTYPE = 'LINE' AND LOCATIONID IN (A.LINEID)) AS LINENAME, 
+			A.GROUPID, 
+			(SELECT B.VALUE FROM (SELECT 'A' CODE, 'A 조' VALUE UNION ALL SELECT 'B' CODE, 'B 조') B WHERE B.CODE IN (A.GROUPID)) AS GROUPNAME,
+			A.SHIFTID,
+			(SELECT SHIFTNAME FROM DSP_SHIFT WHERE SHIFTID IN (A.SHIFTID)) AS SHIFTNAME, 
+			A.REGISTER, 
+			A.REVIEWER, 
+			A.APPROVER, 
+			A.NOTES, 
+			A.CREATOR, 
+			A.CREATETIME, 
+			A.EVENT, 
+			A.EVENTUSER, 
+			A.EVENTTIME, 
+			A.ISUSABLE, 
+			A.TID
+		FROM DSP_WORKDAILY_REPORT A
+		WHERE A.RULESYSID <![CDATA[<>]]> 0 AND ISUSABLE IS NOT NULL
+    </select>
+    
+    <insert id="create" parameterType="map" >
+        INSERT INTO DSP_WORKDAILY_REPORT (
+               RULESYSID
+             , FACTORYID
+             , WORK_DATE
+             , LINEID
+             , BLOCKID
+             , GROUPID
+             , SHIFTID
+             , REGISTER
+             , REVIEWER
+             , APPROVER
+             , NOTES
+             , CREATOR
+             , CREATETIME
+             , EVENT
+             , EVENTUSER
+             , EVENTTIME
+             , ISUSABLE
+             , TID
+        )
+        VALUES (
+               #{rulesysid}
+             , #{factoryid}
+             , CONVERT(VARCHAR, CONVERT(DATE, #{workDate}), 112)
+             , #{lineid}
+             , #{blockid}
+             , #{groupid}
+             , #{shiftid}
+             , #{register}
+             , #{reviewer}
+             , #{approver}
+             , #{notes}
+             , #{creator}
+             , GETDATE()
+             , #{event}
+             , #{eventuser}
+             , #{eventtime}
+             , #{isusable}
+             , #{tid}
+        )
+    </insert>
+    
+    <update id="modify" parameterType="map" >
+        <![CDATA[ /* wr0101.updateWR0101List */ ]]>
+        UPDATE DSP_WORKDAILY_REPORT
+           SET
+               BLOCKID          = #{blockid}
+             , GROUPID          = #{groupid}
+             , SHIFTID          = #{shiftid}
+             , REGISTER         = #{register}
+             , REVIEWER         = #{reviewer}
+             , APPROVER         = #{approver}
+             , NOTES            = #{notes}
+             , EVENT            = #{event}
+             , EVENTUSER        = #{eventuser}
+             , EVENTTIME        = #{eventtime}
+             , ISUSABLE         = #{isusable}
+             , TID              = #{tid}
+         WHERE DATASEQ          = #{dataseq}
+    </update>
+    
+    <update id="remove" parameterType="list">
+    	UPDATE DSP_WORKDAILY_REPORT 
+		SET ISUSABLE= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
+
+</mapper>

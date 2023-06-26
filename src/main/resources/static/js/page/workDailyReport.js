@@ -7,12 +7,11 @@ $(function(){
 		autoclose : true,
 		language : "ko"
 	});
-	
+	setEventListener();
 });
-	
+
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
-function addEventListener (){
-	
+function setEventListener (){
 	// 작업일보 그리드 이벤트
 	$workDailyReport = $("#workDailyReport");
 	$addWorkDailyReport = $("#addWorkDailyReport");
@@ -156,13 +155,13 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
 	"click .like": function (e, value, row, index) {
-		debugger;
+		//debugger;
 	  	alert('You click like action, row: ');
  	}
 }
 
 function operateEvents(){
-	debugger;
+	//debugger;
 }
 
 function workDailyReport(){

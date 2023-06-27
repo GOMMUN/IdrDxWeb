@@ -1,14 +1,29 @@
 /**
  * 
  */
+let c_factory = null;
+let c_block = null;
+let c_line = null;
+let c_shift= null;
+
 $(function(){
 	$('#workDateDetail').datepicker({
 		format: "yyyy-mm-dd",
 		autoclose : true,
 		language : "ko"
 	});
+	initSetting();
 	setEventListener();
 });
+
+function initSetting(){
+	code();
+}
+
+function code(){
+	factroy();
+	shift();
+}
 
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
 function setEventListener (){
@@ -38,6 +53,8 @@ function setEventListener (){
 	});
 	
 	$addWorkDailyReport.click(function () {
+		
+		resetWorkDailyReport();
 		
 		$("#addWorkDailyReportModalCreate").css('display', "block");
 	  	$("#addWorkDailyReportModalModify").css('display', "none");
@@ -75,7 +92,7 @@ function setEventListener (){
 			//$removeWorkDailyReport.prop('disabled', true);
       		workDailyReport();
 		  }
-	   });
+	   	});
 	});
 	
 	$removeWorkDailyReport.click(function () {
@@ -143,25 +160,156 @@ function setEventListener (){
       $removeWorkerInput.prop('disabled', true);
       
     });
+    
+    // modal 
+    $factoryCodes = $("#factoryCodes");
+    
+    $factoryCodes.change(function () {
+		block($factoryCodes.val());
+		line($factoryCodes.val());
+	});
+}
+
+function factroy(){
+	let url = '/code/factory';
+	
+	c_factory = null;
+	
+	$.ajax({
+	  url: url,
+	  type: 'GET',
+	  success: function(data) {
+		c_factory = data;
+		
+		let $dropdown = $("#factoryCodes");
+		$dropdown.empty();
+			
+		if(c_factory){
+			$dropdown.append($("<option/>").val("").text("공장 선택"));
+			$.each(data, function() {
+	            $dropdown.append($("<option/>").val(this.code).text(this.value));
+	        });
+		}else{
+			$dropdown.append($("<option/>").val("").text("공장 선택"));
+		}
+	  }
+   	});
+}
+
+function block(factoryid){
+	
+	let $dropdown = $("#blockCodes");
+	$dropdown.empty();
+	
+	if(!factoryid){
+		$dropdown.append($("<option/>").val("").text("블록 선택"));
+		return;
+	}
+	
+	let data = {
+		"factoryid" : factoryid
+	};
+	
+	c_block = null;
+	
+	$.ajax({
+	  url: '/code/block',
+	  type: 'GET',
+	  data: data,
+	  success: function(data) {
+		c_block = data;
+		
+		if(c_block){
+			$dropdown.append($("<option/>").val("").text("블록 선택"));
+			$.each(data, function() {
+	            $dropdown.append($("<option/>").val(this.code).text(this.value));
+	        });
+		}else{
+			$dropdown.append($("<option/>").val("").text("블록 선택"));
+		}
+	  }
+   	});
+}
+
+function line(factoryid){
+	
+	let $dropdown = $("#lineCodes");
+	$dropdown.empty();
+	
+	if(!factoryid){
+		$dropdown.append($("<option/>").val("").text("라인 선택"));
+		return;
+	}
+	
+	let data = {
+		"factoryid" : factoryid
+	};
+	
+	c_line = null;
+	
+   	$.ajax({
+	  url: '/code/line',
+	  type: 'GET',
+	  data: data,
+	  success: function(data) {
+		c_line = data;
+		
+		if(c_line){
+			$dropdown.append($("<option/>").val("").text("라인 선택"));
+			$.each(data, function() {
+	            $dropdown.append($("<option/>").val(this.code).text(this.value));
+	        });
+		}else{
+			$dropdown.append($("<option/>").val("").text("라인 선택"));
+		}
+	  }
+   	});
+}
+
+function shift(){
+	let url = '/code/shift';
+	
+	c_shift = null;
+	
+	$.ajax({
+	  url: url,
+	  type: 'GET',
+	  success: function(data) {
+		c_shift = data;
+		
+		let $dropdown = $("#shiftCodes");
+		$dropdown.empty();
+			
+		if(c_shift){
+			$dropdown.append($("<option/>").val("").text("조구분 선택"));
+			$.each(data, function() {
+	            $dropdown.append($("<option/>").val(this.code).text(this.value));
+	        });
+		}else{
+			$dropdown.append($("<option/>").val("").text("조구분 선택"));
+		}
+	  }
+   	});
 }
 
 function operateFormatter(value, row, index) {
 	return [
-		'<a class="like" href="javascript:void(0)" title="수정">',
+		'<a class="modify" href="javascript:void(0)" title="수정">',
 		'<i class="fa-solid fa-pen"></i>',
 		'</a>'
 	].join('');
 }
 
 window.operateEvents = {
-	"click .like": function (e, value, row, index) {
-		//debugger;
-	  	alert('You click like action, row: ');
+	"click .modify": function (e, value, row, index) {
+		
+		workDailyReportDetail(row);
+		
+		$("#addWorkDailyReportModalCreate").css('display', "none");
+	  	$("#addWorkDailyReportModalModify").css('display', "block");
+	  	
+		$('#addWorkDailyReportModal').modal('show');
  	}
-}
-
-function operateEvents(){
-	//debugger;
 }
 
 function workDailyReport(){
@@ -175,14 +323,15 @@ function workDailyReport(){
 }
 
 function workDailyReportDetail(data){
-	$("input[name=ruleid]").val(data.rulesysid);
+//	$("input[name=ruleid]").val(data.rulesysid);
 	//$('#workDateDetail').datepicker("setDate",new Date(data.workDate))
+	
 	$("input[name=workDate]").val(data.workDate);
-	$("input[name=blockid]").val(data.blockid);
-	$("input[name=factoryid]").val(data.factoryid);
-	$("input[name=groupid]").val(data.groupid);
-	$("input[name=lineid]").val(data.lineid);
-	$("input[name=shiftid]").val(data.shiftid);
+	$("select[name=blockid]").val(data.blockid);
+	$("select[name=factoryid]").val(data.factoryid);
+	$("select[name=groupid]").val(data.groupid);
+	$("select[name=lineid]").val(data.lineid);
+	$("select[name=shiftid]").val(data.shiftid);
 	$("input[name=approver]").val(data.approver);
 	$("input[name=reviewer]").val(data.reviewer);
 }
@@ -261,11 +410,11 @@ function workerInput(data) {
 function resetWorkDailyReport(){
 	$("input[name=ruleid]").val("");
 	$("input[name=workDate]").val("");
-	$("input[name=blockid]").val("");
-	$("input[name=factoryid]").val("");
-	$("input[name=groupid]").val("");
-	$("input[name=lineid]").val("");
-	$("input[name=shiftid]").val("");
+	$("select[name=blockid]").val("");
+	$("select[name=factoryid]").val("");
+	$("select[name=groupid]").val("");
+	$("select[name=lineid]").val("");
+	$("select[name=shiftid]").val("");
 	$("input[name=approver]").val("");
 	$("input[name=reviewer]").val("");
 } 

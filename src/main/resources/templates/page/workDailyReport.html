@@ -8,11 +8,43 @@
 >
 	
 	<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/workDailyReport.js}"></script>
-
+	<style>
+		.form-control-custom{
+			display: block;
+		    width: 100%;
+/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		    padding: 0.375rem 0.75rem;
+		    font-size: 1rem;
+		    font-weight: 400;
+		    line-height: 1.5;
+		    color: #6e707e;
+		    background-color: #fff;
+		    background-clip: padding-box;
+		    border: 1px solid #d1d3e2;
+		    border-radius: 0.35rem;
+		    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+		}
+		
+		.form-select-custom{
+			display: block;
+		    width: 100%;
+/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		    padding: 0.375rem 0.75rem;
+		    font-size: 1rem;
+		    font-weight: 400;
+		    line-height: 1.5;
+		    color: #6e707e;
+		    background-color: #fff;
+		    background-clip: padding-box;
+		    border: 1px solid #d1d3e2;
+		    border-radius: 0.35rem;
+		    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+		}
+	</style>
 	<body>
-		<div class="container-fluid">
-			<div class="d-flex bd-highlight">
-				<div class="p-2 col-12 bd-highlight">
+		<div class="container-fluid mt-4">
+			<div class="row">
+				<div class="col-lg-12">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                    <h6 class="m-0 font-weight-bold text-primary">작업일보</h6>
@@ -48,7 +80,7 @@
 							      <th data-field="register" data-sortable="true" data-align="center">작성자</th>
 							      <th data-field="reviewer" data-sortable="true" data-align="center">검토자</th>
 							      <th data-field="approver" data-sortable="true" data-align="center">승인자</th>
-							      <th data-field="approver" data-sortable="true" data-align="center" data-formatter="operateFormatter" data-events="operateEvents">비고</th>
+							      <th data-field="notworkcolumn" data-sortable="false" data-align="center" data-formatter="operateFormatter" data-events="operateEvents">비고</th>
 							    </tr>
 							  </thead>
 							</table>
@@ -56,8 +88,8 @@
 		            </div>
 				</div>
 			</div>
-			<div class="d-flex bd-highlight">
-				<div class="p-2 col-4 bd-highlight">
+			<div class="row">
+				<div class="col-lg-4">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                    <h6 class="m-0 font-weight-bold text-primary">작업자투입현황</h6>
@@ -89,7 +121,7 @@
 		                </div>
 		            </div>
 				</div>
-				<div class="p-2 col-4 bd-highlight">
+				<div class="col-lg-4">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                    <h6 class="m-0 font-weight-bold text-primary">공수투입현황</h6>
@@ -121,7 +153,7 @@
 		                </div>
 		            </div>
 				</div>
-				<div class="p-2 col-4 bd-highlight">
+				<div class="col-lg-4">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                    <h6 class="m-0 font-weight-bold text-primary">타라인지원내역</h6>
@@ -132,7 +164,7 @@
 							    <i class="fa fa-trash"></i> Delete
 							  </button>
 							</div>
-				  			<table id="workerSupport" 
+				  			<table class="col-lg-12" id="workerSupport" 
 				  			    data-toggle="table"
 				  			    data-toolbar="#toolbar4"
 				  				data-height="300"
@@ -156,8 +188,8 @@
 		            </div>
 				</div>
 			</div>
-			<div class="d-flex bd-highlight">
-				<div class="p-2 col-12 bd-highlight">
+			<div class="row">
+				<div class="col-lg-12">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                    <h6 class="m-0 font-weight-bold text-primary">작업내용</h6>
@@ -198,8 +230,8 @@
 		            </div>
 				</div>
 			</div>
-			<div class="d-flex bd-highlight">
-				<div class="p-2 col-6 bd-highlight">
+			<div class="row">
+				<div class="col-lg-6">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                    <h6 class="m-0 font-weight-bold text-primary">부적합내역</h6>
@@ -233,7 +265,7 @@
 		                </div>
 		            </div>
 				</div>
-				<div class="p-2 col-6 bd-highlight">
+				<div class="col-lg-6">
 					<div class="card shadow mb-4">
 		                <div class="card-header py-3">
 		                    <h6 class="m-0 font-weight-bold text-primary">비가동내역</h6>
@@ -274,43 +306,83 @@
 		<div class="modal fade" id="addWorkDailyReportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title">Modal title</h5>
-		        <button type="button" class="close" id="addWorkDailyReportModalClose" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
 		      <div class="modal-body">
-					  <div class="row">
-					    <div class="col-4">
-					      <label for="formGroupExampleInput">RULE ID</label>
-					      <input id="ruleidDetail" name="ruleid" type="text" class="form-control mb-2" placeholder="">
-					      <label for="formGroupExampleInput">날짜</label>
-					      <input id="workDateDetail" name="workDate" type="text" class="form-control mb-2" placeholder="">
-					      <label for="formGroupExampleInput">블록</label>
-					      <input id="blockidDetail" name="blockid" type="text" class="form-control mb-2" placeholder="">
-					    </div>
-					    <div class="col-4">
-					      <label for="formGroupExampleInput">검토자</label>
-					      <input id="approverDetail" name="approver" type="text" class="form-control mb-2" placeholder="">
-					      <label for="formGroupExampleInput">공장</label>
-					      <input id="factoryidDetail" name="factoryid" type="text" class="form-control mb-2" placeholder="">
-					      <label for="formGroupExampleInput">조 구분</label>
-					      <input id="groupidDetail" name="groupid" type="text" class="form-control mb-2" placeholder="">
-					    </div>
-					    <div class="col-4">
-					      <label for="formGroupExampleInput">승인자</label>
-					      <input id="reviewerDetail" name="reviewer" type="text" class="form-control mb-2" placeholder="">
-					      <label for="formGroupExampleInput">라인</label>
-					      <input id="lineidDetail" name="lineid" type="text" class="form-control mb-2" placeholder="">
-					      <label for="formGroupExampleInput">주/야구분</label>
-					      <input id="shiftidDetail" name="shiftid" type="text" class="form-control mb-2" placeholder="">
-					    </div>
-					  </div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" id="addWorkDailyReportModalCreate" class="btn btn-primary">Save</button>
-		        <button type="button" id="addWorkDailyReportModalModify" class="btn btn-primary">Save</button>
+			  	<div class="row">
+					<div class="col-lg-12">
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">작업일보</h1>
+							</div>
+							<form class="user">
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<input type="text" name="workDate" class="form-control-custom form-control-user" id="" placeholder="날짜">
+									</div>
+									<div class="col-sm-6">
+										<select id="blockCodes" name="blockid" class="form-select-custom form-control-user" aria-label="블록">
+									    	<option value="">블록 선택</option>
+									    </select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
+											<option value="">공장 선택</option>									    
+									    </select>
+									</div>
+									<div class="col-sm-6">
+										<select id="lineCodes" name="lineid" class="form-select-custom form-control-user" aria-label="라인">
+									    	<option value="">라인 선택</option>
+									    </select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+<!-- 										<input type="text" name="groupid" class="form-control-custom form-control-user" id="" placeholder="조구분"> -->
+										<select id="groupCodes" name="groupid" class="form-select-custom form-control-user" aria-label="조구분">
+									    	<option value="">조구분 선택</option>
+									    	<option value="A">A조</option>
+									    	<option value="B">B조</option>
+									    </select>
+									</div>
+									<div class="col-sm-6">
+<!-- 										<input type="text" name="shiftid" class="form-control-custom form-control-user" id="" placeholder="주/야구분"> -->
+										<select id="shiftCodes" name="shiftid" class="form-select-custom form-control-user" aria-label="주/야구분">
+									    	<option value="">주/야구분 선택</option>
+									    </select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<input type="text" name="approver" class="form-control-custom form-control-user" id="" placeholder="검토자">
+									</div>
+									<div class="col-sm-6">
+										<input type="text" name="reviewer" class="form-control-custom form-control-user" id="" placeholder="승인자">
+									</div>
+								</div>
+								<div class="form-group">
+									<input type="text" name="notes" class="form-control-custom form-control-user" id="" placeholder="특이사항">
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-lg-10">
+										<a id="addWorkDailyReportModalCreate" class="btn btn-primary btn-user btn-block">
+											Save
+										</a>
+										<a id="addWorkDailyReportModalModify" class="btn btn-primary btn-user btn-block mt-0">
+											Save
+										</a>
+									</div>
+									<div class="col-lg-2">
+										<a id="addWorkDailyReportModalClose" class="btn btn-google btn-user btn-block">
+											X
+										</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 		      </div>
 		    </div>
 		  </div>

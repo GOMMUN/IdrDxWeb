@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.LineMapper">
+
+    <select id="find" parameterType="String" resultType="Location">
+        SELECT 
+        	COMPANYID, 
+        	LOCATIONID, 
+        	FACTORYID, 
+        	LOCATIONNAME, 
+        	DESCRIPTION, 
+        	LOCATIONCLASSID, 
+        	LOCATIONTYPE, 
+        	CREATOR, 
+        	CREATETIME, 
+        	EVENT, 
+        	EVENTUSER, 
+        	EVENTTIME, 
+        	ISUSABLE, 
+        	TID 
+        FROM DSP_LOCATION
+        WHERE 1=1
+        	AND LOCATIONTYPE = 'LINE'
+        <if test='factoryid != null and factoryid != ""'>
+        	AND FACTORYID = #{factoryid}
+        </if>
+    </select>
+
+</mapper>

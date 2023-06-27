@@ -7,7 +7,7 @@ let c_line = null;
 let c_shift= null;
 
 $(function(){
-	$('#workDateDetail').datepicker({
+	$("input[name=workDate]").datepicker({
 		format: "yyyy-mm-dd",
 		autoclose : true,
 		language : "ko"
@@ -328,7 +328,8 @@ function workDailyReportDetail(data){
 //	$("input[name=ruleid]").val(data.rulesysid);
 	//$('#workDateDetail').datepicker("setDate",new Date(data.workDate))
 	
-	$("input[name=workDate]").val(data.workDate);
+	//$("input[name=workDate]").val(data.workDate);
+	$("input[name=workDate]").datepicker( "setDate",new Date(data.workDate.substring(0,4),data.workDate.substring(4,6),data.workDate.substring(6,8)));
 	$("select[name=blockid]").val(data.blockid);
 	$("select[name=factoryid]").val(data.factoryid);
 	$("select[name=groupid]").val(data.groupid);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.NotoperateContentsMapper">
+
+    <select id="findAll" parameterType="NotoperateContents" resultType="NotoperateContents">
+        SELECT 
+        	DATASEQ, 
+        	RULESYSID, 
+        	FACTORYID, 
+        	LINEID, 
+        	SHIFTID, 
+        	WORK_DATE, 
+        	NOTOPERATETIME_FROM, 
+        	NOTOPERATETIME_TO, 
+        	HANDS, 
+        	MANHOUR, 
+        	CAUSE, 
+        	CORRECTIVE_ACTION, 
+        	NOTES, 
+        	IMAGES, 
+        	MOVIES, 
+        	CREATOR, 
+        	CREATETIME, 
+        	EVENT, 
+        	EVENTUSER, 
+        	EVENTTIME, 
+        	ISUSABLE, 
+        	TID 
+        FROM DSP_NOTOPERATE_CONTENTS
+        WHERE 1=1
+        	AND FACTORYID = #{factoryid} 
+			AND LINEID = #{lineid} 
+			AND SHIFTID = #{shiftid} 
+			AND WORK_DATE = #{workDate} 
+
+    </select>
+
+</mapper>

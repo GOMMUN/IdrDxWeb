@@ -123,7 +123,9 @@ function setEventListener (){
 		workerInput($element);
 		workerManhour($element);
 		workerSupport($element);
-		workContents($element)
+		workContents($element);
+		rejectContents($element);
+		notoperateContents($element);
 	});
 	
 	// 작업자투입현황 그리드 이벤트
@@ -402,6 +404,42 @@ function workerInput(data) {
 
     $.get(url + '?' + $.param(params)).then(function (res) {
 	  $table = $("#workContents");
+      $table.bootstrapTable('removeAll');
+      $table.bootstrapTable('append',res);
+    })
+ }
+ 
+ function notoperateContents(data) {
+    var url = '/notoperateContents/find';
+    
+    var params = {
+		//rulesysid : data.rulesysid,
+		factoryid : data.factoryid,
+		lineid : data.lineid,
+		shiftid : data.shiftid,
+		workDate : data.workDate,
+	}
+
+    $.get(url + '?' + $.param(params)).then(function (res) {
+	  $table = $("#notoperateContents");
+      $table.bootstrapTable('removeAll');
+      $table.bootstrapTable('append',res);
+    })
+ }
+ 
+ function rejectContents(data) {
+    var url = '/rejectContents/find';
+    
+    var params = {
+		//rulesysid : data.rulesysid,
+		factoryid : data.factoryid,
+		lineid : data.lineid,
+		shiftid : data.shiftid,
+		workDate : data.workDate,
+	}
+
+    $.get(url + '?' + $.param(params)).then(function (res) {
+	  $table = $("#rejectContents");
       $table.bootstrapTable('removeAll');
       $table.bootstrapTable('append',res);
     })

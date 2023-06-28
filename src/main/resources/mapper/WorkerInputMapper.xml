@@ -8,6 +8,7 @@
     <select id="findAll" parameterType="WorkerInput" resultType="WorkerInput">
         SELECT 
 			DATASEQ, 
+			WORKDAILY_SEQ,
 			RULESYSID, 
 			FACTORYID, 
 			LINEID, 

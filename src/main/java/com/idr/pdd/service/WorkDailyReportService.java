@@ -18,9 +18,9 @@ public class WorkDailyReportService {
 		return mapper.findAll();
 	}
 	
-	public int save(List<WorkDailyReport> param) {
+	public int save(WorkDailyReport param) {
 		
-		if(param.get(0).getDataseq() == 0) {
+		if(param.getDataseq() == 0) {
 			return mapper.create(param);
 		}else {
 			return mapper.modify(param);

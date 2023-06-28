@@ -6,6 +6,7 @@ import lombok.Data;
 public class RejectContents {
 
 	private int dataseq;
+	private int workdailySeq;
 	private int rulesysid;
 	private String factoryid;
 	private String lineid;

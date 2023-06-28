@@ -12,7 +12,7 @@ public interface WorkDailyReportMapper {
 	List<WorkDailyReport> findAll();
 	WorkDailyReport find();
 	
-	int create(List<WorkDailyReport> param);
-	int modify(List<WorkDailyReport> param);
+	int create(WorkDailyReport param);
+	int modify(WorkDailyReport param);
 	int remove(List<Integer> param);
 }

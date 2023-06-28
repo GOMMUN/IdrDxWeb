@@ -8,6 +8,7 @@
     <select id="findAll" parameterType="NotoperateContents" resultType="NotoperateContents">
         SELECT 
         	DATASEQ, 
+        	WORKDAILY_SEQ,
         	RULESYSID, 
         	FACTORYID, 
         	LINEID, 

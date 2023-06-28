@@ -96,6 +96,9 @@
 		                </div>
 		                <div class="card-body">
 		                    <div id="toolbarWorkerInput">
+		                      <button type="button" class="btn btn-primary" id="addWorkerInput" data-toggle="modal" data-target="#addWorkDailyReportModal">
+							    <i class="fa-solid fa-plus"></i> Add
+							  </button>
 							  <button id="removeWorkerInput" class="btn btn-danger" disabled>
 							    <i class="fa fa-trash"></i> Delete
 							  </button>
@@ -127,14 +130,17 @@
 		                    <h6 class="m-0 font-weight-bold text-primary">공수투입현황</h6>
 		                </div>
 		                <div class="card-body">
-		                    <div id="toolbar3">
-							  <button id="remove3" class="btn btn-danger" disabled>
+		                    <div id="toolbarworkerManhour">
+		                      <button type="button" class="btn btn-primary" id="addWorkerManhour" data-toggle="modal" data-target="#addWorkDailyReportModal">
+							    <i class="fa-solid fa-plus"></i> Add
+							  </button>
+							  <button id="removeWorkerManhour" class="btn btn-danger" disabled>
 							    <i class="fa fa-trash"></i> Delete
 							  </button>
 							</div>
 				  			<table id="workerManhour" 
 				  			    data-toggle="table"
-				  			    data-toolbar="#toolbar3"
+				  			    data-toolbar="#toolbarworkerManhour"
 				  				data-height="300"
 				  				data-click-to-select="false"
 				  				data-search="true"
@@ -319,15 +325,15 @@
 										<input type="text" name="workDate" class="form-control-custom form-control-user" id="" placeholder="날짜">
 									</div>
 									<div class="col-sm-6">
-										<select id="blockCodes" name="blockid" class="form-select-custom form-control-user" aria-label="블록">
-									    	<option value="">블록 선택</option>
+										<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
+											<option value="">공장 선택</option>									    
 									    </select>
 									</div>
 								</div>
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
-										<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
-											<option value="">공장 선택</option>									    
+										<select id="blockCodes" name="blockid" class="form-select-custom form-control-user" aria-label="블록">
+									    	<option value="">블록 선택</option>
 									    </select>
 									</div>
 									<div class="col-sm-6">
@@ -375,6 +381,98 @@
 									</div>
 									<div class="col-lg-2">
 										<a id="addWorkDailyReportModalClose" class="btn btn-google btn-user btn-block">
+											X
+										</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<div class="modal fade" id="addWorkerIntputModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-body">
+			  	<div class="row">
+					<div class="col-lg-12">
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">작업자투입현황</h1>
+							</div>
+							<form class="user">
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<span class="fa fa-search"></span>
+										<input type="text" name="workDate" class="form-control-custom form-control-user" id="" placeholder='날짜'>
+									</div>
+									<div class="col-sm-6">
+										<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
+											<option value="">공장 선택</option>									    
+									    </select>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-lg-10">
+										<a id="addWorkDailyReportModalCreate" class="btn btn-primary btn-user btn-block">
+											Save
+										</a>
+										<a id="addWorkDailyReportModalModify" class="btn btn-primary btn-user btn-block mt-0">
+											Save
+										</a>
+									</div>
+									<div class="col-lg-2">
+										<a id="addWorkDailyReportModalClose" class="btn btn-google btn-user btn-block">
+											X
+										</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<div class="modal fade" id="addWorkerManhourModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-body">
+			  	<div class="row">
+					<div class="col-lg-12">
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">공수투입현황</h1>
+							</div>
+							<form class="user">
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<input type="text" name="workDate" class="form-control-custom form-control-user" id="" placeholder='날짜'>
+									</div>
+									<div class="col-sm-6">
+										<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
+											<option value="">공장 선택</option>									    
+									    </select>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-lg-10">
+										<a id="addWorkerManhourModalCreate" class="btn btn-primary btn-user btn-block">
+											Save
+										</a>
+										<a id="addWorkerManhourModalModify" class="btn btn-primary btn-user btn-block mt-0">
+											Save
+										</a>
+									</div>
+									<div class="col-lg-2">
+										<a id="addWorkerManhourModalClose" class="btn btn-google btn-user btn-block">
 											X
 										</a>
 									</div>

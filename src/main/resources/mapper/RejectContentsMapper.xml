@@ -8,6 +8,7 @@
     <select id="findAll" parameterType="RejectContents" resultType="RejectContents">
         SELECT 
         	DATASEQ, 
+        	WORKDAILY_SEQ,
         	RULESYSID, 
         	FACTORYID, 
         	LINEID, 

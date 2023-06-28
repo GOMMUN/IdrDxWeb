@@ -36,7 +36,7 @@
 		ORDER BY CREATETIME ASC
     </select>
     
-    <insert id="create" parameterType="map" >
+    <insert id="create" parameterType="WorkDailyReport" >
         INSERT INTO DSP_WORKDAILY_REPORT (
                RULESYSID
              , FACTORYID
@@ -58,7 +58,7 @@
              , TID
         )
         VALUES (
-               0
+               1
              , #{factoryid}
              , CONVERT(VARCHAR, CONVERT(DATE, #{workDate}), 112)
              , #{lineid}
@@ -79,8 +79,7 @@
         )
     </insert>
     
-    <update id="modify" parameterType="map" >
-        <![CDATA[ /* wr0101.updateWR0101List */ ]]>
+    <update id="modify" parameterType="WorkDailyReport" >
         UPDATE DSP_WORKDAILY_REPORT
            SET
                BLOCKID          = #{blockid}

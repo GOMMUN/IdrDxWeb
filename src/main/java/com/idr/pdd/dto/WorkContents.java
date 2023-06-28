@@ -6,6 +6,7 @@ import lombok.Data;
 public class WorkContents {
 
 	private int dataseq;
+	private int workdailySeq;
 	private int  rulesysid;
 	private String factoryid;
 	private String lineid;

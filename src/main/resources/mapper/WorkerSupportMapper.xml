@@ -7,6 +7,7 @@
 
     <select id="findAll" parameterType="WorkerSupport" resultType="WorkerSupport">
         SELECT 
+            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
 			A.DATASEQ, 
 			B.RULESYSID, 
 			B.FACTORYID, 

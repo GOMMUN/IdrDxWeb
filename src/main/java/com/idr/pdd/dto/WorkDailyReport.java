@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class WorkDailyReport {
 
+	private int rownum;
 	private int dataseq;
 	private int rulesysid;
 	private String factoryid;

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class RejectContents {
 
+	private int rownum;
 	private int dataseq;
 	private int workdailySeq;
 	private int rulesysid;

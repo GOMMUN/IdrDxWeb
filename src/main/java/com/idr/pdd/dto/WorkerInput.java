@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class WorkerInput {
 
+	private int rownum;
 	private int dataseq;
 	private int workdailySeq;
 	private int rulesysid;

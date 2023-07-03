@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript"  th:src="@{/static/js/page/scenariogrouping.js}" ></script>
+
+<body>
+	<div class="d-flex bd-highlight">
+		<div class="p-2 col-12 bd-highlight">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">시나리오별 그룹핑</h6>
+				</div>
+				<div class="card-header py-3">
+					<strong>시나리오 리스트</strong>
+				</div>
+				<div class="card-body">
+					<table id="axis" data-toggle="table" data-toolbar="" data-height="350" data-click-to-select="false"
+						data-search="true" data-url="/scenario/find1" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th data-field="scenarioid" data-sortable="true" data-align="center">시나리오 ID</th>
+								<th data-field="scenarionm" data-sortable="true" data-align="center">시나리오명</th>
+								<th data-field="axisid" data-sortable="true" data-align="center">분류 축(Axis)</th>
+								<th data-field="groupingid" data-sortable="true" data-align="center">1st DataSet</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="card-header py-3">
+					<strong>시나리오별 그룹핑 리스트</strong>
+				</div>
+				<div class="card-body">
+					<table id="axis2" data-toggle="table" data-toolbar="" data-height="350" data-click-to-select="false"
+						data-search="true" data-url="/scenario/find2" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th data-field="pqcdid" data-sortable="true" data-align="center">PQCD 분류</th>
+								<th data-field="activityid" data-sortable="true" data-align="center">Activity ID</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

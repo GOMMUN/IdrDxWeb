@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/factoryInfo.js}"></script>
+
+<body>
+	<div class="d-flex bd-highlight">
+		<div class="p-2 col-12 bd-highlight">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">공장정보</h6>
+				</div>
+				<div class="card-header py-3">
+					<strong>공장정보</strong>
+				</div>
+
+				<div class="card-body">
+					<table id="factoryinfo" data-toggle="table" data-toolbar="" data-height="350"
+						data-click-to-select="false" data-search="true" data-url="/factoryinfo/find" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th data-field="state" data-checkbox="true"></th>
+								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>
+								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
+								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
+								<th data-field="description" data-sortable="true" data-align="center">설명</th>
+								<th data-field="erpplant" data-sortable="true" data-align="center">ERP코드</th>
+								<th data-field="factorytype" data-sortable="true" data-align="center">공장유형</th>
+								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
+								<th data-field="tid" data-sortable="true" data-align="center">TID</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div>
+					<div class="card-header">
+						<div class="row">
+							<label class="control-label font-weight-bold col-lg-6">회사코드 <input type="text" id="companyid" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">공장코드<input type="text" id="factoryid" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">등록자ID<input type="text" id="creator" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">공장명<input type="text" id="factoryname" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">설명<input type="text" id="description" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">ERP코드<input type="text" id="erpplant" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">공장유형<input type="text" id="factorytype" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">사용여부<input type="text" id="isusable" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">TID<input type="text" id="tid" style="width:300px;" disabled class="form-control col-lg-12 "></label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.DvcDatasetModelingMapper">
+
+	<select id="findAll" resultType="CM0701">
+		SELECT
+		A.COMPANY_CD
+		, A.BIZ_CD
+		, A.AXIS_ID
+		, (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'AXIS_ID' AND
+		COMM_CD = A.AXIS_ID ) AXIS_NM
+		, A.GROUPING_ID
+		, A.GROUPING_NM
+		FROM CM0701 A
+		WHERE A.COMPANY_CD = 'dx'
+		AND A.BIZ_CD = 'SP1'
+		AND A.AXIS_ID = 'MEDF'
+		ORDER BY A.GROUPING_ID ASC
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.DatasetDetailedMapper">
+
+	<select id="findAll" resultType="CM0801">
+		SELECT
+		COMPANY_CD
+		, BIZ_CD
+		, ACTIVITY_ID
+		, ACTIVITY_NM
+		, PQCD_ID
+		, (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'PQCD_TYPE'
+		AND COMM_CD = PQCD_ID) PQCD_NM
+		FROM CM0801
+		WHERE 1=1
+	</select>
+
+
+
+</mapper>

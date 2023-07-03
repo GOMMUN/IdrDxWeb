@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.SupplierInfoMapper">
+
+	<select id="findAll" resultType="Vendor">
+		SELECT
+		VENDORID
+		, FACTORYID
+		, VENDORNAME
+		, VENDORNICKNAME
+		, VENDOR_ADDRESS
+		, VENDOR_CHARGEID
+		, VENDOR_CONTACTEMAIL
+		, VENDOR_CONTACTPHONENO
+		, CREATOR
+		, CREATETIME
+		, EVENT
+		, EVENTUSER
+		, EVENTTIME
+		, ISUSABLE
+		, TID
+		FROM DSP_VENDOR
+		WHERE 1=1
+	</select>
+
+
+
+</mapper>

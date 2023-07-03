@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/groupShiftInfo.js}"></script>
+
+<body>
+	<div class="d-flex bd-highlight">
+		<div class="p-2 col-12 bd-highlight">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">그룹/Shift 정보</h6>
+				</div>
+				<div class="card-header py-3">
+					<strong>그룹/Shift 정보</strong>
+				</div>
+				<div class="card-body">
+					<table id="shiftinfo" data-toggle="table" data-toolbar="" data-height="350"
+						data-click-to-select="false" data-search="true" data-url="/groupshift/find" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th data-field="state" data-checkbox="true"></th>
+								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>
+								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
+								<th data-field="shiftid" data-sortable="true" data-align="center">그룹/SHIFT 코드</th>
+								<th data-field="shiftname" data-sortable="true" data-align="center">그룹/SHIFT 명</th>
+								<th data-field="shifttype" data-sortable="true" data-align="center">그룹/SHIFT 타입</th>
+								<th data-field="starttime" data-sortable="true" data-align="center">시작시간</th>
+								<th data-field="endtime" data-sortable="true" data-align="center">종료시간</th>
+								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div>
+					<div class="card-header">
+						<div class="row">
+							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 코드 <input type="text" id="shiftid" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 명<input type="text" id="shiftname" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 타입<input type="text" id="shifttype" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">시작시간<input type="text" id="starttime" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">종료시간<input type="text" id="endtime" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">사용여부<input type="text" id="isusable" disabled class="form-control col-lg-12 "></label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" ></script>
+
+<body>
+	<div class="d-flex bd-highlight">
+		<div class="p-2 col-12 bd-highlight">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">분류 DataSet 상세매핑</h6>
+				</div>
+				<div class="card-header py-3">
+					<strong>분류 Data Set Activity 상세매핑</strong>
+				</div>
+				<div class="card-body">
+					<table id="axis" data-toggle="table" data-toolbar="" data-height="350"
+						data-click-to-select="false" data-search="true" data-url="/datasetdetail/find" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th rowspan="2" data-field="state" data-checkbox="true"></th>
+								<th colspan="2" data-sortable="true" data-align="center">DataSet 그룹핑</th>
+								<th colspan="2" data-sortable="true" data-align="center">PQCD 분류 DataSet</th>
+							</tr>
+							<tr>
+								<th data-field="activityid" data-sortable="true" data-align="center">분류 DataSet ID</th>
+								<th data-field="activitynm" data-sortable="true" data-align="center">분류 DataSet Name</th>
+								<th data-field="pqcdid" data-sortable="true" data-align="center">분류 ID</th>
+								<th data-field="pqcdnm" data-sortable="true" data-align="center">분류 Name</th>
+								
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

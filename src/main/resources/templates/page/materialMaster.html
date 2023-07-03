@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" ></script>
+
+<body>
+	<div class="d-flex bd-highlight">
+		<div class="p-2 col-12 bd-highlight">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">자재마스터</h6>
+				</div>
+				<div class="card-header py-3">
+					<strong>자재마스터</strong>
+				</div>
+				<div class="card-body">
+					<table id="shiftinfo" data-toggle="table" data-toolbar="" data-height="350"
+						data-click-to-select="false" data-search="true" data-url="/material/find" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th data-field="state" data-checkbox="true"></th>
+								<th data-field="materialid" data-sortable="true" data-align="center">자재마스터ID</th>
+								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
+								<th data-field="materialname" data-sortable="true" data-align="center">자재명</th>
+								<th data-field="materialtype" data-sortable="true" data-align="center">자재유형</th>
+								<th data-field="materialkind" data-sortable="true" data-align="center">자재종류</th>
+								<th data-field="materialunit" data-sortable="true" data-align="center">자재단위</th>
+								<th data-field="vendorid" data-sortable="true" data-align="center">공급업체ID</th>
+								<th data-field="receivinginspection" data-sortable="true" data-align="center">수입검사여부</th>
+								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

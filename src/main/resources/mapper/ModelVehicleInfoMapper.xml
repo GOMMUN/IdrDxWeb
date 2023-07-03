@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.ModelVehicleInfoMapper">
+
+	<select id="findAll" resultType="CM0501">
+		SELECT
+		A.COMPANY_CD
+		, A.BIZ_CD
+		, A.MODEL_ID
+		, A.MODEL_NM
+		, A.MODEL_DESC
+		, A.USE_YN
+		, A.FST_REG_USER_ID
+		, A.FST_REG_DT
+		, A.FNL_EDIT_USER_ID
+		, A.FNL_EDIT_DT
+		FROM CM0501 A
+		WHERE 1=1
+		AND A.COMPANY_CD = 'dx'
+
+
+		ORDER BY A.MODEL_ID ASC
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.ScenarioGroupingMapper">
+
+	<select id="findAll1" resultType="CM0901">
+		SELECT
+		A.COMPANY_CD
+		, A.BIZ_CD
+		,
+		A.SCENARIO_ID
+		, A.SCENARIO_NM
+		, A.AXIS_ID
+		, A.GROUPING_ID
+		FROM CM0901 A
+		WHERE 1=1
+
+		ORDER BY A.SCENARIO_ID
+	</select>
+
+	<select id="findAll2" resultType="CM0902">
+		SELECT
+		A.COMPANY_CD
+		, A.BIZ_CD
+		, A.SCENARIO_ID
+		, A.PQCD_ID
+		, A.ACTIVITY_ID
+		FROM CM0902 A
+		INNER JOIN CM0901 B ON (B.COMPANY_CD = A.COMPANY_CD AND B.BIZ_CD = A.BIZ_CD
+		AND B.SCENARIO_ID = A.SCENARIO_ID)
+		WHERE 1=1
+		AND A.COMPANY_CD = #{companyCd}
+		AND A.BIZ_CD = #{bizCd}
+		AND A.SCENARIO_ID = #{scenarioId}
+		ORDER BY A.PQCD_ID ASC
+	</select>
+
+
+
+</mapper>

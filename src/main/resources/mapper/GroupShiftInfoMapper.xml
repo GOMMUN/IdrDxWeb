@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.GroupShiftInfoMapper">
+
+    <select id="findAll" resultType="Shift">
+          SELECT COMPANYID
+             , SHIFTID
+             , FACTORYID
+             , SHIFTNAME
+             , SHIFTTYPE
+             , cast((substring(STARTTIME,0,3)+':'+substring(STARTTIME,3,2)+':'+substring(STARTTIME,5,2)) as varchar) STARTTIME 
+             , cast((substring(ENDTIME,0,3)+':'+substring(ENDTIME,3,2)+':'+substring(ENDTIME,5,2)) as varchar) ENDTIME
+             , CREATOR
+             , CREATETIME
+             , EVENT
+             , EVENTUSER
+             , EVENTTIME
+             , ISUSABLE
+             , TID
+          FROM DSP_SHIFT
+         WHERE 1=1
+    </select>
+    
+    
+
+</mapper>

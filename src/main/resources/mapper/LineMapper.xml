@@ -24,9 +24,6 @@
         FROM DSP_LOCATION
         WHERE 1=1
         	AND LOCATIONTYPE = 'LINE'
-        <if test='factoryid != null and factoryid != ""'>
-        	AND FACTORYID = #{factoryid}
-        </if>
     </select>
 
 </mapper>

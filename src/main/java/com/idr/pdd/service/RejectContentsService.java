@@ -22,13 +22,16 @@ public class RejectContentsService {
 	@Autowired
 	RejectContentsMapper mapper;
 	
-	public List<RejectContents> findAll(String factoryid, String lineid, String shiftid, String workDate){
+	public List<RejectContents> findAll(
+			int workDailySeq
+			//String factoryid, String lineid, String shiftid, String workDate
+			){
 		RejectContents param = new RejectContents();
-		//param.setRulesysid(rulesysid);
-		param.setFactoryid(factoryid);
-		param.setLineid(lineid);
-		param.setShiftid(shiftid);
-		param.setWorkDate(workDate);
+		param.setWorkdailySeq(workDailySeq);
+//		param.setFactoryid(factoryid);
+//		param.setLineid(lineid);
+//		param.setShiftid(shiftid);
+//		param.setWorkDate(workDate);
 		
 		return mapper.findAll(param);
 	}

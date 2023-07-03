@@ -40,7 +40,13 @@ public class WorkDailyReportController {
 	
 	@ResponseBody
 	@PostMapping("/create")
-    public int create(@RequestBody List<WorkDailyReport> param) {
+    public int create(@RequestBody WorkDailyReport param) {
+		return service.save(param);
+    }
+	
+	@ResponseBody
+	@PutMapping("/modify")
+    public int modify(@RequestBody WorkDailyReport param) {
 		return service.save(param);
     }
 	

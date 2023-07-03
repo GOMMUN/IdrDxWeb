@@ -24,13 +24,16 @@ public class NotoperateContentsService {
 	@Autowired
 	NotoperateContentsMapper mapper;
 	
-	public List<NotoperateContents> findAll(String factoryid, String lineid, String shiftid, String workDate){
+	public List<NotoperateContents> findAll(
+			int workDailySeq
+			//String factoryid, String lineid, String shiftid, String workDate
+			){
 		NotoperateContents param = new NotoperateContents();
-		//param.setRulesysid(rulesysid);
-		param.setFactoryid(factoryid);
-		param.setLineid(lineid);
-		param.setShiftid(shiftid);
-		param.setWorkDate(workDate);
+		param.setWorkdailySeq(workDailySeq);
+//		param.setFactoryid(factoryid);
+//		param.setLineid(lineid);
+//		param.setShiftid(shiftid);
+//		param.setWorkDate(workDate);
 		
 		return mapper.findAll(param);
 	}

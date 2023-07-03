@@ -5,7 +5,9 @@ import lombok.Data;
 @Data
 public class NotoperateContents {
 
+	private int rownum;
 	private int dataseq;
+	private int workdailySeq;
 	private int rulesysid;
 	private String factoryid;
 	private String lineid;

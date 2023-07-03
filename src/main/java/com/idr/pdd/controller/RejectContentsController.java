@@ -29,9 +29,11 @@ public class RejectContentsController {
 	@ResponseBody
 	@GetMapping("/find")
     public List<RejectContents> find(
-    		String factoryid, String lineid, String shiftid, String workDate) {
+    		int workDailySeq
+    		//String factoryid, String lineid, String shiftid, String workDate
+    		) {
 		
-		List<RejectContents> list = service.findAll(factoryid, lineid, shiftid, workDate);
+		List<RejectContents> list = service.findAll(workDailySeq);
 		return list;
     }
 }

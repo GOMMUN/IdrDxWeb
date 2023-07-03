@@ -7,41 +7,40 @@
 
     <select id="findAll" parameterType="WorkContents" resultType="WorkContents">
         SELECT 
-        	DATASEQ, 
-        	RULESYSID, 
-        	FACTORYID, 
-        	LINEID, 
-        	SHIFTID, 
-        	WORK_DATE, 
-        	WORKTIME_FROM, 
-        	WORKTIME_TO, 
-        	MODELID, 
-        	OPERATIONID, 
-        	MANHOUR, 
-        	PLAN_QTY, 
-        	PROD_QTY, 
-        	GOODSUM_QTY, 
-        	FIRSTTIME_GOOD_QTY, 
-        	FIRSTTIME_FAIL_QTY, 
-        	REWORK_GOOD_QTY, 
-        	REWORK_FAIL_QTY, 
-        	NOTES, 
-        	IMAGES, 
-        	MOVIES, 
-        	CREATOR, 
-        	CREATETIME, 
-        	EVENT, 
-        	EVENTUSER, 
-        	EVENTTIME, 
-        	ISUSABLE, 
-        	TID 
-        FROM DSP_WORK_CONTENTS
+            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+        	A.DATASEQ,
+        	A.WORKDAILY_SEQ, 
+        	B.RULESYSID, 
+        	B.FACTORYID, 
+        	B.LINEID, 
+        	B.SHIFTID, 
+        	B.WORK_DATE, 
+        	A.WORKTIME_FROM, 
+        	A.WORKTIME_TO, 
+        	A.MODELID, 
+        	A.OPERATIONID, 
+        	A.MANHOUR, 
+        	A.PLAN_QTY, 
+        	A.PROD_QTY, 
+        	A.GOODSUM_QTY, 
+        	A.FIRSTTIME_GOOD_QTY, 
+        	A.FIRSTTIME_FAIL_QTY, 
+        	A.REWORK_GOOD_QTY, 
+        	A.REWORK_FAIL_QTY, 
+        	A.NOTES, 
+        	A.IMAGES, 
+        	A.MOVIES, 
+        	A.CREATOR, 
+        	A.CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	A.EVENTTIME, 
+        	A.ISUSABLE, 
+        	B.TID 
+        FROM DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ = B.DATASEQ 
         WHERE 1=1
-        	AND FACTORYID = #{factoryid} 
-			AND LINEID = #{lineid} 
-			AND SHIFTID = #{shiftid} 
-			AND WORK_DATE = #{workDate} 
-
+            AND WORKDAILY_SEQ = #{workdailySeq}
     </select>
 
 </mapper>

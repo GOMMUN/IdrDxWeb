@@ -7,28 +7,28 @@
 
     <select id="findAll" parameterType="WorkerInput" resultType="WorkerInput">
         SELECT 
-			DATASEQ, 
-			RULESYSID, 
-			FACTORYID, 
-			LINEID, 
-			SHIFTID, 
-			WORK_DATE, 
-			PERSONID, 
-			OVERTIME, 
-			NOTES, 
-			CREATOR, 
-			CREATETIME, 
-			EVENT, 
-			EVENTUSER, 
-			EVENTTIME, 
-			ISUSABLE, 
-			TID
-		FROM DSP_WORKER_INPUT
+            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			A.DATASEQ, 
+			A.WORKDAILY_SEQ,
+			B.RULESYSID, 
+			B.FACTORYID, 
+			B.LINEID, 
+			B.SHIFTID, 
+			B.WORK_DATE, 
+			A.PERSONID, 
+			A.OVERTIME, 
+			A.NOTES, 
+			A.CREATOR, 
+			A.CREATETIME, 
+			A.EVENT,
+			A.EVENTUSER, 
+			A.EVENTTIME, 
+			A.ISUSABLE, 
+			B.TID
+		FROM DSP_WORKER_INPUT A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ = B.DATASEQ 
 		WHERE 1=1
-			  AND FACTORYID = #{factoryid} 
-			  AND LINEID = #{lineid} 
-			  AND SHIFTID = #{shiftid} 
-			  AND WORK_DATE = #{workDate} 
+			  AND WORKDAILY_SEQ = #{workdailySeq}
     </select>
 
 </mapper>

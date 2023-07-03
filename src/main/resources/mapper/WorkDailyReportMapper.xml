@@ -7,6 +7,7 @@
 
     <select id="findAll" resultType="WorkDailyReport">
         SELECT 
+        		ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
 				A.DATASEQ, 
 				A.RULESYSID, 
 				A.FACTORYID,
@@ -32,11 +33,11 @@
 				A.ISUSABLE, 
 				A.TID
 		 FROM DSP_WORKDAILY_REPORT A
-		WHERE A.RULESYSID <![CDATA[<>]]> 0 AND ISUSABLE IS NOT NULL
-		ORDER BY CREATETIME ASC
+		WHERE ISUSABLE IS NOT NULL
+		ORDER BY CREATETIME DESC
     </select>
     
-    <insert id="create" parameterType="map" >
+    <insert id="create" parameterType="WorkDailyReport" >
         INSERT INTO DSP_WORKDAILY_REPORT (
                RULESYSID
              , FACTORYID
@@ -58,7 +59,7 @@
              , TID
         )
         VALUES (
-               0
+               1
              , #{factoryid}
              , CONVERT(VARCHAR, CONVERT(DATE, #{workDate}), 112)
              , #{lineid}
@@ -79,22 +80,16 @@
         )
     </insert>
     
-    <update id="modify" parameterType="map" >
-        <![CDATA[ /* wr0101.updateWR0101List */ ]]>
+    <update id="modify" parameterType="WorkDailyReport" >
         UPDATE DSP_WORKDAILY_REPORT
            SET
-               BLOCKID          = #{blockid}
+           	   WORK_DATE		= REPlACE(#{workDate}, '-', '')
+           	 , FACTORYID		= #{factoryid}
+             , BLOCKID          = #{blockid}
+             , LINEID			= #{lineid}
              , GROUPID          = #{groupid}
              , SHIFTID          = #{shiftid}
-             , REGISTER         = #{register}
-             , REVIEWER         = #{reviewer}
-             , APPROVER         = #{approver}
-             , NOTES            = #{notes}
-             , EVENT            = #{event}
-             , EVENTUSER        = #{eventuser}
-             , EVENTTIME        = #{eventtime}
-             , ISUSABLE         = #{isusable}
-             , TID              = #{tid}
+             , NOTES			= #{notes}
          WHERE DATASEQ          = #{dataseq}
     </update>
     

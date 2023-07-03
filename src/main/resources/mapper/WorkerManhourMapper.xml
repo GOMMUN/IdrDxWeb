@@ -7,13 +7,55 @@
 
     <select id="findAll" parameterType="WorkerManhour" resultType="WorkerManhour">
         SELECT 
-			*
-		FROM DSP_WORKER_MANHOUR
+            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			A.DATASEQ, 
+			B.RULESYSID, 
+			B.FACTORYID, 
+			B.LINEID, 
+			B.SHIFTID, 
+			B.WORK_DATE, 
+			A.INPUT_ITEMID, 
+			A.HANDS, 
+			A.MANHOUR, 
+			A.CREATOR, 
+			A.CREATETIME, 
+			A.EVENT, 
+			A.EVENTUSER, 
+			A.EVENTTIME, 
+			A.ISUSABLE, 
+			B.TID, 
+			A.WORKDAILY_SEQ 
+		FROM DSP_WORKER_MANHOUR A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ = B.DATASEQ 
 		WHERE 1=1
-			  AND FACTORYID = #{factoryid} 
-			  AND LINEID = #{lineid} 
-			  AND SHIFTID = #{shiftid} 
-			  AND WORK_DATE = #{workDate} 
+			  AND WORKDAILY_SEQ = #{workdailySeq} 
     </select>
+    
+    <insert id="create" parameterType="WorkerManhour" >
+        INSERT INTO DSP_WORKER_MANHOUR (
+        	INPUT_ITEMID, 
+        	HANDS, 
+        	MANHOUR, 
+        	CREATOR, 
+        	CREATETIME, 
+        	EVENT, 
+        	EVENTUSER, 
+        	EVENTTIME, 
+        	ISUSABLE, 
+        	WORKDAILY_SEQ
+        ) VALUES(
+        	#{inputItemid},
+        	#{hands},
+        	#{manhour}, 
+        	#{creator},
+        	GETDATE(),
+        	#{event},
+            #{eventuser},
+            #{eventtime},
+            'Usable',
+            #{workdailySeq}
+        );
+
+    </insert>
 
 </mapper>

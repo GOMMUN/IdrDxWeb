@@ -1,58 +1,71 @@
 /**
  * 
  */
-let c_factory = null;
+let c_factory = null;	
 let c_block = null;
 let c_line = null;
 let c_shift= null;
+let c_input_item= null;
+let s_workDailyReport=null;
 
 $(function(){
-	$("input[name=workDate]").datepicker({
-		format: "yyyy-mm-dd",
-		autoclose : true,
-		language : "ko"
-	});
 	initSetting();
 	setEventListener();
 });
 
 function initSetting(){
+	
+	$("input[name=workDate]").datepicker({
+		format: "yyyy-mm-dd",
+		autoclose : true,
+		language : "ko"
+	});
+	
 	code();
 }
 
 function code(){
-	factroy();
-	shift();
+	factroy();		// 공장코드 조회
+	block();
+	line();
+	shift();		// 주/야간구분 코드 조회
+	input_item();
 }
 
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
 function setEventListener (){
-	// 작업일보 그리드 이벤트
-	$workDailyReport = $("#workDailyReport");
-	$addWorkDailyReport = $("#addWorkDailyReport");
-	$addWorkDailyReportModalClose = $("#addWorkDailyReportModalClose");
-	$addWorkDailyReportModalCreate = $("#addWorkDailyReportModalCreate");
-	$addWorkDailyReportModalModify = $("#addWorkDailyReportModalModify");
-	$saveWorkDailyReport = $("#saveWorkDailyReport");
-	$removeWorkDailyReport = $("#removeWorkDailyReport");
 	
-	$workDailyReport.on('check.bs.table', function (row, $element) {
-		$removeWorkDailyReport.prop('disabled', !$workDailyReport.bootstrapTable('getSelections').length)
+	setWorkDailyReportEventListener();		// 작업일보 이벤트 리스너
+	setWorkerInputEventListener();			// 작업자투입현황 이벤트 리스너
+	setWorkerManhourEventListener();		// 공수투입현황 이벤트 리스너
+}
+
+// 작업일보 이벤트
+function setWorkDailyReportEventListener(){
+	$grid = $("#workDailyReport");							// 작업일보 그리드
+	$gridAddBtn = $("#addWorkDailyReport");					// 작업일보 그리드 add 버튼
+	$gridRemoveBtn = $("#removeWorkDailyReport");			// 작업일보 그리드 delete 버튼		
+	$modalCloseBtn = $("#addWorkDailyReportModalClose");	// 작업일보 모달 close 버튼
+	$modalCreateBtn = $("#addWorkDailyReportModalCreate");	// 작업일보 모달 insert 버튼
+	$modalModifyBtn = $("#addWorkDailyReportModalModify");	// 작업일보 모달 update 버튼
+	
+	$grid.on('check.bs.table', function (row, $element) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
-	$workDailyReport.on('uncheck.bs.table', function (row, $element) {
-		$removeWorkDailyReport.prop('disabled', !$workDailyReport.bootstrapTable('getSelections').length)
+	$grid.on('uncheck.bs.table', function (row, $element) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
-	$workDailyReport.on('check-all.bs.table', function (rowsAfter, rowsBefore) {
-		$removeWorkDailyReport.prop('disabled', !$workDailyReport.bootstrapTable('getSelections').length)
+	$grid.on('check-all.bs.table', function (rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
-	$workDailyReport.on('uncheck-all.bs.table', function (rowsAfter, rowsBefore) {
-		$removeWorkDailyReport.prop('disabled', !$workDailyReport.bootstrapTable('getSelections').length)
+	$grid.on('uncheck-all.bs.table', function (rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
-	$addWorkDailyReport.click(function () {
+	$gridAddBtn.click(function () {
 		
 		resetWorkDailyReport();
 		
@@ -62,23 +75,50 @@ function setEventListener (){
 		$('#addWorkDailyReportModal').modal('show');
 	});
 	
-	$addWorkDailyReportModalClose.click(function () {
+	$modalCloseBtn.click(function () {
 		$('#addWorkDailyReportModal').modal('hide');
 	});
 	
-	$saveWorkDailyReport.click(function () {
+	$modalCreateBtn.click(function () {
 		
 		let data = initWorkDailyReport();
 		
-		data[0].ruleid = $("input[name=ruleid]").val();
-		data[0].workDate = $("input[name=workDate]").val();
-		data[0].blockid = $("input[name=blockid]").val();
-		data[0].factoryid = $("input[name=factoryid]").val();
-		data[0].groupid = $("input[name=groupid]").val();
-		data[0].lineid = $("input[name=lineid]").val();
-		data[0].shiftid = $("input[name=shiftid]").val();
-		data[0].approver = $("input[name=approver]").val();
-		data[0].reviewer = $("input[name=reviewer]").val();
+		data.workDate = $("input[name=workDate]").val();
+		data.blockid = $("select[name=blockid]").val();
+		data.factoryid = $("select[name=factoryid]").val();
+		data.groupid = $("select[name=groupid]").val();
+		data.lineid = $("select[name=lineid]").val();
+		data.shiftid = $("select[name=shiftid]").val();
+		data.approver = $("input[name=approver]").val();
+		data.reviewer = $("input[name=reviewer]").val();
+		data.notes = $("input[name=notes]").val();
+		
+		//validation check
+		if(data.workDate == ""){
+			alert("날짜를 선택해주세요.");
+			$("input[name=workDate]").focus();
+			return;
+		}else if(data.factoryid == ""){
+			alert("공장을 선택해주세요.");
+			$("select[name=factoryid]").focus();
+			return;
+		}else if(data.blockid == ""){
+			alert("블록을 선택해주세요.");
+			$("select[name=blockid]").focus();
+			return;
+		}else if(data.lineid == ""){
+			alert("라인을 선택해주세요.");
+			$("select[name=lineid]").focus();
+			return;
+		}else if(data.groupid == ""){
+			alert("조구분을 선택해주세요.");
+			$("select[name=groupid]").focus();
+			return;
+		}else if(data.shiftid == ""){
+			alert("주/야구분을 선택해주세요.");
+			$("select[name=shiftid]").focus();
+			return;
+		}
 		
 		let url = '/workDailyReport/create';
 		
@@ -89,17 +129,75 @@ function setEventListener (){
 		  dataType : "json",
 		  contentType: 'application/json; charset=utf-8',
 		  success: function(data) {
-			//$removeWorkDailyReport.prop('disabled', true);
+			//$gridRemoveBtn.prop('disabled', true);
+			$('#addWorkDailyReportModal').modal('hide');
       		workDailyReport();
 		  }
 	   	});
 	});
 	
-	$removeWorkDailyReport.click(function () {
+	$modalModifyBtn.click(function () {
+		
+		if(s_workDailyReport){
+			let data = s_workDailyReport;
+		
+			data.workDate = $("input[name=workDate]").val();
+			data.blockid = $("select[name=blockid]").val();
+			data.factoryid = $("select[name=factoryid]").val();
+			data.groupid = $("select[name=groupid]").val();
+			data.lineid = $("select[name=lineid]").val();
+			data.shiftid = $("select[name=shiftid]").val();
+			data.approver = $("input[name=approver]").val();
+			data.reviewer = $("input[name=reviewer]").val();
+			data.notes = $("input[name=notes]").val();
+			
+			//validation check
+			if(data.workDate == ""){
+				alert("날짜를 선택해주세요.");
+				$("input[name=workDate]").focus();
+				return;
+			}else if(data.factoryid == ""){
+				alert("공장을 선택해주세요.");
+				$("select[name=factoryid]").focus();
+				return;
+			}else if(data.blockid == ""){
+				alert("블록을 선택해주세요.");
+				$("select[name=blockid]").focus();
+				return;
+			}else if(data.lineid == ""){
+				alert("라인을 선택해주세요.");
+				$("select[name=lineid]").focus();
+				return;
+			}else if(data.groupid == ""){
+				alert("조구분을 선택해주세요.");
+				$("select[name=groupid]").focus();
+				return;
+			}else if(data.shiftid == ""){
+				alert("주/야구분을 선택해주세요.");
+				$("select[name=shiftid]").focus();
+				return;
+			}
+			let url = '/workDailyReport/modify';
+			
+			$.ajax({
+			  url: url,
+			  type: 'PUT',
+			  data: JSON.stringify(data),
+			  dataType : "json",
+			  contentType: 'application/json; charset=utf-8',
+			  success: function(data) {
+				$('#addWorkDailyReportModal').modal('hide');
+	      		workDailyReport();
+			  }
+		   	});
+		}
+	});
+	
+	$gridRemoveBtn.click(function () {
       
       let selections = [];
       
-      $workDailyReport.bootstrapTable('getSelections').forEach(function(data) {
+      $grid.bootstrapTable('getSelections').forEach(function(data) {
 		selections.push(data.dataseq);
 	  });
 	  
@@ -112,63 +210,169 @@ function setEventListener (){
 		  dataType : "json",
 		  contentType: 'application/json; charset=utf-8',
 		  success: function(data) {
-			$removeWorkDailyReport.prop('disabled', true);
+			$gridRemoveBtn.prop('disabled', true);
       		workDailyReport();
 		  }
 	   });
     });
 	
-	$workDailyReport.on('click-row.bs.table', function (row, $element, field) {
-		workDailyReportDetail($element);
-		workerInput($element);
-		workerManhour($element);
-		workerSupport($element);
-		workContents($element);
-		rejectContents($element);
-		notoperateContents($element);
-	});
-	
-	// 작업자투입현황 그리드 이벤트
-	$workerInput = $("#workerInput");
-	$removeWorkerInput = $("#removeWorkerInput");
-	
-	$workerInput.on('check.bs.table', function (row, $element) {
-		$removeWorkerInput.prop('disabled', !$workerInput.bootstrapTable('getSelections').length)
-	});
-	
-	$workerInput.on('uncheck.bs.table', function (row, $element) {
-		$removeWorkerInput.prop('disabled', !$workerInput.bootstrapTable('getSelections').length)
-	});
-	
-	$workerInput.on('check-all.bs.table', function (rowsAfter, rowsBefore) {
-		$removeWorkerInput.prop('disabled', !$workerInput.bootstrapTable('getSelections').length)
-	});
-	
-	$workerInput.on('uncheck-all.bs.table', function (rowsAfter, rowsBefore) {
-		$removeWorkerInput.prop('disabled', !$workerInput.bootstrapTable('getSelections').length)
-	});
-	
-	$removeWorkerInput.click(function () {
+	$grid.on('click-row.bs.table', function (row, $element, field) {
 		
-      var ids = $.map($workerInput.bootstrapTable('getSelections'), function (row) {
+		s_workDailyReport = $element;
+		
+		workerInput(s_workDailyReport);
+		workerManhour(s_workDailyReport);
+		workerSupport(s_workDailyReport);
+		workContents(s_workDailyReport);
+		rejectContents(s_workDailyReport);
+		notoperateContents(s_workDailyReport);
+	});
+	
+	// modal 
+    $factoryCodes = $("#factoryCodes");
+    
+    $factoryCodes.change(function () {
+
+		let $dropdown1 = $("#blockCodes");
+		$dropdown1.empty();
+	
+		if(c_block){
+			$dropdown1.append($("<option/>").val("").text("블록 선택"));
+			$.each(c_block, function() {
+				if($factoryCodes.val() == this.mcode){
+					$dropdown1.append($("<option/>").val(this.code).text(this.value));
+				}
+	        });
+		}else{
+			$dropdown1.append($("<option/>").val("").text("블록 선택"));
+		}
+		
+		
+		let $dropdown2 = $("#lineCodes");
+		$dropdown2.empty();
+		
+		if(c_line){
+			$dropdown2.append($("<option/>").val("").text("라인 선택"));
+			$.each(c_line, function() {
+	            if($factoryCodes.val() == this.mcode){
+					$dropdown2.append($("<option/>").val(this.code).text(this.value));
+				}
+	        });
+		}else{
+			$dropdown2.append($("<option/>").val("").text("라인 선택"));
+		}
+	});
+}
+
+function setWorkerInputEventListener(){
+	$grid = $("#workerInput");
+	$gridAddBtn = $("#addWorkerInput");
+	$gridRemoveBtn = $("#removeWorkerInput");
+	
+	$grid.on('check.bs.table', function (row, $element) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('uncheck.bs.table', function (row, $element) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('check-all.bs.table', function (rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('uncheck-all.bs.table', function (rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$gridAddBtn.click(function () {
+		$('#addWorkerIntputModal').modal('show');
+	});
+	
+	$gridRemoveBtn.click(function () {
+		
+      var ids = $.map($grid.bootstrapTable('getSelections'), function (row) {
         return row.dataseq
       });
       
-      $workerInput.bootstrapTable('remove', {
+      $grid.bootstrapTable('remove', {
         field: 'dataseq',
         values: ids
       });
       
-      $removeWorkerInput.prop('disabled', true);
+      $gridRemoveBtn.prop('disabled', true);
       
     });
-    
-    // modal 
-    $factoryCodes = $("#factoryCodes");
-    
-    $factoryCodes.change(function () {
-		block($factoryCodes.val());
-		line($factoryCodes.val());
+}
+
+function setWorkerManhourEventListener(){
+	
+	$grid = $("#workerManhour");
+	$gridAddBtn = $("#addWorkerManhour");
+	$gridRemoveBtn = $("#removeWorkerManhour");
+	
+	$modalCloseBtn = $("#addWorkerManhourModalClose");		// 작업일보 모달 close 버튼
+	$modalCreateBtn = $("#addWorkerManhourModalCreate");	// 작업일보 모달 insert 버튼
+	$modalModifyBtn = $("#addWorkerManhourModalModify");	// 작업일보 모달 update 버튼
+	
+	$grid.on('check.bs.table', function (row, $element) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('uncheck.bs.table', function (row, $element) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('check-all.bs.table', function (rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('uncheck-all.bs.table', function (rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$gridAddBtn.click(function () {
+		
+		if(!s_workDailyReport){
+			alert("작업일보를 선택해주세요.");
+			return;
+		}
+		
+		resetWorkerManhour();
+
+		$("#addWorkerManhourModalCreate").css('display', "block");
+	  	$("#addWorkerManhourModalModify").css('display', "none");
+	  	
+		$('#addWorkerManhourModal').modal('show');
+	});
+	
+	$modalCloseBtn.click(function () {
+		$('#addWorkerManhourModal').modal('hide');
+	});
+	
+	$modalCreateBtn.click(function () {
+		// s_workDailyReport
+		let data = initWorkerManhour();
+		
+		data.workdailySeq = s_workDailyReport.dataseq;
+		data.hands = $("input[name=hands]").val();
+		data.manhour = $("input[name=manhour]").val();
+		data.inputItemid = $("select[name=inputItemid]").val();
+		
+		let url = '/workerManhour/create';
+		
+		$.ajax({
+		  url: url,
+		  type: 'POST',
+		  data: JSON.stringify(data),
+		  dataType : "json",
+		  contentType: 'application/json; charset=utf-8',
+		  success: function(data) {
+			$('#addWorkerManhourModal').modal('hide');
+			debugger;
+      		workerInput(s_workDailyReport);
+		  }
+	   	});
 	});
 }
 
@@ -198,37 +402,20 @@ function factroy(){
    	});
 }
 
-function block(factoryid){
+function block(){
 	
 	let $dropdown = $("#blockCodes");
 	$dropdown.empty();
-	
-	if(!factoryid){
-		$dropdown.append($("<option/>").val("").text("블록 선택"));
-		return;
-	}
-	
-	let data = {
-		"factoryid" : factoryid
-	};
 	
 	c_block = null;
 	
 	$.ajax({
 	  url: '/code/block',
 	  type: 'GET',
-	  data: data,
 	  success: function(data) {
 		c_block = data;
 		
-		if(c_block){
-			$dropdown.append($("<option/>").val("").text("블록 선택"));
-			$.each(data, function() {
-	            $dropdown.append($("<option/>").val(this.code).text(this.value));
-	        });
-		}else{
-			$dropdown.append($("<option/>").val("").text("블록 선택"));
-		}
+		
 	  }
    	});
 }
@@ -237,33 +424,16 @@ function line(factoryid){
 	
 	let $dropdown = $("#lineCodes");
 	$dropdown.empty();
-	
-	if(!factoryid){
-		$dropdown.append($("<option/>").val("").text("라인 선택"));
-		return;
-	}
-	
-	let data = {
-		"factoryid" : factoryid
-	};
-	
+
 	c_line = null;
 	
    	$.ajax({
 	  url: '/code/line',
 	  type: 'GET',
-	  data: data,
 	  success: function(data) {
 		c_line = data;
 		
-		if(c_line){
-			$dropdown.append($("<option/>").val("").text("라인 선택"));
-			$.each(data, function() {
-	            $dropdown.append($("<option/>").val(this.code).text(this.value));
-	        });
-		}else{
-			$dropdown.append($("<option/>").val("").text("라인 선택"));
-		}
+		
 	  }
    	});
 }
@@ -283,12 +453,38 @@ function shift(){
 		$dropdown.empty();
 			
 		if(c_shift){
-			$dropdown.append($("<option/>").val("").text("조구분 선택"));
+			$dropdown.append($("<option/>").val("").text("주/야간구분 선택"));
 			$.each(data, function() {
 	            $dropdown.append($("<option/>").val(this.code).text(this.value));
 	        });
 		}else{
-			$dropdown.append($("<option/>").val("").text("조구분 선택"));
+			$dropdown.append($("<option/>").val("").text("주/야간구분 선택"));
+		}
+	  }
+   	});
+}
+
+function input_item(){
+	let url = '/code/inputItem';
+	
+	c_shift = null;
+	
+	$.ajax({
+	  url: url,
+	  type: 'GET',
+	  success: function(data) {
+		c_input_item = data;
+		
+		let $dropdown = $("#inputItemCodes");
+		$dropdown.empty();
+			
+		if(c_shift){
+			$dropdown.append($("<option/>").val("").text("구분 선택"));
+			$.each(data, function() {
+	            $dropdown.append($("<option/>").val(this.code).text(this.value));
+	        });
+		}else{
+			$dropdown.append($("<option/>").val("").text("구분 선택"));
 		}
 	  }
    	});
@@ -304,13 +500,18 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
 	"click .modify": function (e, value, row, index) {
-		
+			
 		workDailyReportDetail(row);
 		
 		$("#addWorkDailyReportModalCreate").css('display', "none");
 	  	$("#addWorkDailyReportModalModify").css('display', "block");
 	  	
 		$('#addWorkDailyReportModal').modal('show');
+		
+		$factoryCodes = $("#factoryCodes");
+		$factoryCodes.trigger('change');
+		
+		workDailyReportDetail(row);
  	}
 }
 
@@ -327,9 +528,10 @@ function workDailyReport(){
 function workDailyReportDetail(data){
 //	$("input[name=ruleid]").val(data.rulesysid);
 	//$('#workDateDetail').datepicker("setDate",new Date(data.workDate))
-	
 	//$("input[name=workDate]").val(data.workDate);
-	$("input[name=workDate]").datepicker( "setDate",new Date(data.workDate.substring(0,4),data.workDate.substring(4,6),data.workDate.substring(6,8)));
+	s_workDailyReport = data;
+	
+	$("input[name=workDate]").datepicker( "setDate",new Date(data.workDate.substring(0,4),data.workDate.substring(4,6)-1,data.workDate.substring(6,8)));
 	$("select[name=blockid]").val(data.blockid);
 	$("select[name=factoryid]").val(data.factoryid);
 	$("select[name=groupid]").val(data.groupid);
@@ -337,6 +539,7 @@ function workDailyReportDetail(data){
 	$("select[name=shiftid]").val(data.shiftid);
 	$("input[name=approver]").val(data.approver);
 	$("input[name=reviewer]").val(data.reviewer);
+	$("input[name=notes]").val(data.notes);
 }
 
 function workerInput(data) {
@@ -344,10 +547,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 	
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -362,10 +566,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,		
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 	
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -380,9 +585,10 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		workDate : data.workDate,
 	}
 	
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -397,10 +603,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -415,10 +622,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -433,10 +641,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -456,18 +665,37 @@ function resetWorkDailyReport(){
 	$("select[name=shiftid]").val("");
 	$("input[name=approver]").val("");
 	$("input[name=reviewer]").val("");
+	$("input[name=notes]").val("");
 } 
+
+function resetWorkerManhour(){
+	$("input[name=hands]").val("");
+	$("input[name=manhour]").val("");
+	$("select[name=inputItemid]").val("");
+}
  
  function initWorkDailyReport(){
 	
-	let data = [{
+	let data = {
 		    "dataseq": "",		    "rulesysid": "",		    "factoryid": "",		    "factoryname": "",
 		    "workDate": "",		    "blockid": "",		    "blockname": "",		    "lineid": "",
 		    "linename": "",		    "groupid": "",		    "groupname": "",		    "shiftid": "",
 		    "shiftname": "",		    "register": "",		    "reviewer": "",		    "approver": "",
 		    "notes": "",		    "creator": "",		    "createtime": "",		    "event": "",
 		    "eventuser": "",		    "eventtime": "",		    "isusable": "",		    "tid": ""
-		}];
+		};
+		
+	return data;
+}
+
+function initWorkerManhour(){
+	
+	let data = {
+		"dataseq" : "",	"workdailySeq" : "", "rulesysid" : "",	"factoryid" : "",	
+		"lineid" : "",	"shiftid" : "",	"workDate" : "",	"inputItemid" : "",	
+		"hands" : "",	"manhour" : "",	"creator" : "",	"createtime" : "",	
+		"event" : "",	"eventuser" : "",	"eventtime" : "",	"isusable" : "", "tid" : ""	
+	};
 		
 	return data;
 }

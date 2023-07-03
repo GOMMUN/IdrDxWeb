@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.CodeMapper">
+
+    <select id="find" parameterType="String" resultType="Code">
+        SELECT 
+        	COMM_CD AS CODE,
+        	COMM_CD_NM AS VALUE
+        FROM SC_COMM_CD
+        WHERE 1=1
+        <if test='commGrpCd != null and commGrpCd != ""'>
+        	AND COMM_GRP_CD = #{commGrpCd}
+        </if>
+    </select>
+
+</mapper>

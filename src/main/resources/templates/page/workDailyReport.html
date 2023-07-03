@@ -67,10 +67,12 @@
 				  				data-url="/workDailyReport/find"
 				  				data-show-columns="true"
 		  						data-show-columns-toggle-all="true"
+		  						data-pagination="true"
 				  				>
 							  <thead class="thead-light">
 							    <tr>
 							      <th data-field="state" data-checkbox="true"></th>
+							      <th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 							      <th data-field="workDate" data-sortable="true" data-align="center">날짜</th>
 							      <th data-field="factoryname" data-sortable="true" data-align="center">공장</th>
 							      <th data-field="linename" data-sortable="true" data-align="center">라인명</th>
@@ -96,6 +98,9 @@
 		                </div>
 		                <div class="card-body">
 		                    <div id="toolbarWorkerInput">
+		                      <button type="button" class="btn btn-primary" id="addWorkerInput" data-toggle="modal" data-target="#addWorkDailyReportModal">
+							    <i class="fa-solid fa-plus"></i> Add
+							  </button>
 							  <button id="removeWorkerInput" class="btn btn-danger" disabled>
 							    <i class="fa fa-trash"></i> Delete
 							  </button>
@@ -112,6 +117,7 @@
 							  <thead class="thead-light">
 							    <tr>
 							      <th data-field="state" data-checkbox="true"></th>
+							      <th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 							      <th data-field="personid" data-sortable="true" data-align="center">성명</th>
 							      <th data-field="overtime" data-sortable="true" data-align="center">잔업여부</th>
 							      <th data-field="notes" data-sortable="true" data-align="center">비고</th>
@@ -127,14 +133,17 @@
 		                    <h6 class="m-0 font-weight-bold text-primary">공수투입현황</h6>
 		                </div>
 		                <div class="card-body">
-		                    <div id="toolbar3">
-							  <button id="remove3" class="btn btn-danger" disabled>
+		                    <div id="toolbarworkerManhour">
+		                      <button type="button" class="btn btn-primary" id="addWorkerManhour" data-toggle="modal" data-target="#addWorkDailyReportModal">
+							    <i class="fa-solid fa-plus"></i> Add
+							  </button>
+							  <button id="removeWorkerManhour" class="btn btn-danger" disabled>
 							    <i class="fa fa-trash"></i> Delete
 							  </button>
 							</div>
 				  			<table id="workerManhour" 
 				  			    data-toggle="table"
-				  			    data-toolbar="#toolbar3"
+				  			    data-toolbar="#toolbarworkerManhour"
 				  				data-height="300"
 				  				data-click-to-select="false"
 				  				data-search="true"
@@ -144,6 +153,7 @@
 							  <thead class="thead-light">
 							    <tr>
 							      <th data-field="state" data-checkbox="true"></th>
+							      <th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 							      <th data-field="inputItemid" data-sortable="true" data-align="center">구분</th>
 							      <th data-field="hands" data-sortable="true" data-align="center">인원</th>
 							      <th data-field="manhour" data-sortable="true" data-align="center">공수</th>
@@ -176,6 +186,7 @@
 							  <thead class="thead-light">
 							    <tr>
 							      <th data-field="state" data-checkbox="true"></th>
+							      <th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 							      <th data-field="personid" data-sortable="true" data-align="center">성명</th>
 							      <th data-field="lineid" data-sortable="true" data-align="center">라인명</th>
 							      <th data-field="supporttimeFrom" data-sortable="true" data-align="center">지원시작시간</th>
@@ -212,6 +223,7 @@
 							  <thead class="thead-light">
 							    <tr>
 							      <th data-field="state" data-checkbox="true"></th>
+							      <th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 							      <th data-field="worktimeFrom" data-sortable="true" data-align="center">작업시작시간</th>
 							      <th data-field="worktimeTo" data-sortable="true" data-align="center">작업종료시간</th>
 							      <th data-field="manhour" data-sortable="true" data-align="center">공수</th>
@@ -254,6 +266,7 @@
 							  <thead class="thead-light">
 							    <tr>
 							      <th data-field="state" data-checkbox="true"></th>
+							      <th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 							      <th data-field="modelid" data-sortable="true" data-align="center">모델/차종</th>
 							      <th data-field="operationid" data-sortable="true" data-align="center">공정</th>
 							      <th data-field="rejectItemid" data-sortable="true" data-align="center">불량내용</th>
@@ -288,6 +301,7 @@
 							  <thead class="thead-light">
 							    <tr>
 							      <th data-field="state" data-checkbox="true"></th>
+							      <th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 							      <th data-field="notoperatetimeFrom" data-sortable="true" data-align="center">비가동시작</th>
 							      <th data-field="notoperatetimeTo" data-sortable="true" data-align="center">비가동종료</th>
 							      <th data-field="hands" data-sortable="true" data-align="center">인원</th>
@@ -319,15 +333,15 @@
 										<input type="text" name="workDate" class="form-control-custom form-control-user" id="" placeholder="날짜">
 									</div>
 									<div class="col-sm-6">
-										<select id="blockCodes" name="blockid" class="form-select-custom form-control-user" aria-label="블록">
-									    	<option value="">블록 선택</option>
+										<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
+											<option value="">공장 선택</option>									    
 									    </select>
 									</div>
 								</div>
 								<div class="form-group row">
 									<div class="col-sm-6 mb-3 mb-sm-0">
-										<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
-											<option value="">공장 선택</option>									    
+										<select id="blockCodes" name="blockid" class="form-select-custom form-control-user" aria-label="블록">
+									    	<option value="">블록 선택</option>
 									    </select>
 									</div>
 									<div class="col-sm-6">
@@ -375,6 +389,103 @@
 									</div>
 									<div class="col-lg-2">
 										<a id="addWorkDailyReportModalClose" class="btn btn-google btn-user btn-block">
+											X
+										</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<div class="modal fade" id="addWorkerIntputModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-body">
+			  	<div class="row">
+					<div class="col-lg-12">
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">작업자투입현황</h1>
+							</div>
+							<form class="user">
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<span class="fa fa-search"></span>
+										<input type="text" name="workDate" class="form-control-custom form-control-user" id="" placeholder='날짜'>
+									</div>
+									<div class="col-sm-6">
+										<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
+											<option value="">공장 선택</option>									    
+									    </select>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-lg-10">
+										<a id="addWorkDailyReportModalCreate" class="btn btn-primary btn-user btn-block">
+											Save
+										</a>
+										<a id="addWorkDailyReportModalModify" class="btn btn-primary btn-user btn-block mt-0">
+											Save
+										</a>
+									</div>
+									<div class="col-lg-2">
+										<a id="addWorkDailyReportModalClose" class="btn btn-google btn-user btn-block">
+											X
+										</a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<div class="modal fade" id="addWorkerManhourModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-body">
+			  	<div class="row">
+					<div class="col-lg-12">
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">공수투입현황</h1>
+							</div>
+							<form class="user">
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<input type="text" name="hands" class="form-control-custom form-control-user" id="" placeholder='인원'>
+									</div>
+									<div class="col-sm-6">
+										<input type="text" name="manhour" class="form-control-custom form-control-user" id="" placeholder='공수'>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6">
+										<select id="inputItemCodes" name="inputItemid" class="form-select-custom form-control-user">
+											<option value="">구분 선택</option>									    
+									    </select>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-lg-10">
+										<a id="addWorkerManhourModalCreate" class="btn btn-primary btn-user btn-block">
+											Save
+										</a>
+										<a id="addWorkerManhourModalModify" class="btn btn-primary btn-user btn-block mt-0">
+											Save
+										</a>
+									</div>
+									<div class="col-lg-2">
+										<a id="addWorkerManhourModalClose" class="btn btn-google btn-user btn-block">
 											X
 										</a>
 									</div>

@@ -27,10 +27,12 @@ public class WorkerInputController {
 	@ResponseBody
 	@GetMapping("/find")
     public List<WorkerInput> find(
-    		//int rulesysid, 
-    		String factoryid, String lineid, String shiftid, String workDate) {
+    		int workDailySeq
+    		//String factoryid, String lineid, String shiftid, String workDate
+    		) {
 		
-		List<WorkerInput> list = service.findAll(factoryid, lineid, shiftid, workDate);
+		//List<WorkerInput> list = service.findAll(factoryid, lineid, shiftid, workDate);
+		List<WorkerInput> list = service.findAll(workDailySeq);
 		return list;
     }
 }

@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.idr.pdd.dto.WorkDailyReport;
 import com.idr.pdd.dto.WorkerManhour;
 import com.idr.pdd.service.WorkerManhourService;
 
@@ -25,9 +28,17 @@ public class WorkerManhourController {
 	@ResponseBody
 	@GetMapping("/find")
     public List<WorkerManhour> find(
-    		String factoryid, String lineid, String shiftid, String workDate) {
+    		int workDailySeq
+    		//String factoryid, String lineid, String shiftid, String workDate
+    		) {
 		
-		List<WorkerManhour> list = service.findAll(factoryid, lineid, shiftid, workDate);
+		List<WorkerManhour> list = service.findAll(workDailySeq);
 		return list;
+    }
+	
+	@ResponseBody
+	@PostMapping("/create")
+    public int create(@RequestBody WorkerManhour param) {
+		return service.save(param);
     }
 }

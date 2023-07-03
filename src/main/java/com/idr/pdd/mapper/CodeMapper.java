@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.idr.pdd.dto.Code;
 import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.Location;
 import com.idr.pdd.dto.WorkContents;
@@ -12,7 +13,9 @@ import com.idr.pdd.dto.WorkerManhour;
 import com.idr.pdd.dto.WorkerSupport;
 
 @Mapper
-public interface BlockMapper {
+public interface CodeMapper {
 
-	List<Location> find();
+	List<Code> find(String commGrpCd);
+	
+	
 }

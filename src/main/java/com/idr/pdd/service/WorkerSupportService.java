@@ -18,12 +18,15 @@ public class WorkerSupportService {
 	@Autowired
 	WorkerSupportMapper mapper;
 	
-	public List<WorkerSupport> findAll(String factoryid, String lineid, String shiftid, String workDate){
+	public List<WorkerSupport> findAll(
+			int workDailySeq
+			//String factoryid, String lineid, String shiftid, String workDate
+			){
 		WorkerSupport param = new WorkerSupport();
-		//param.setRulesysid(rulesysid);
-		param.setFactoryid(factoryid);
-		param.setLineid(lineid);
-		param.setWorkDate(workDate);
+		param.setWorkdailySeq(workDailySeq);
+//		param.setFactoryid(factoryid);
+//		param.setLineid(lineid);
+//		param.setWorkDate(workDate);
 		
 		return mapper.findAll(param);
 	}

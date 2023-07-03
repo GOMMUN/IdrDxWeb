@@ -7,34 +7,31 @@
 
     <select id="findAll" parameterType="RejectContents" resultType="RejectContents">
         SELECT 
-        	DATASEQ, 
-        	WORKDAILY_SEQ,
-        	RULESYSID, 
-        	FACTORYID, 
-        	LINEID, 
-        	SHIFTID, 
-        	WORK_DATE, 
-        	OPERATIONID, 
-        	REJECT_ITEMID, 
-        	MODELID, 
-        	FIRSTTIME_REJECT_QTY, 
-        	REWORK_REJECT_QTY, 
-        	IMAGES, 
-        	MOVIES, 
-        	CREATOR, 
-        	CREATETIME, 
-        	EVENT, 
-        	EVENTUSER, 
-        	EVENTTIME, 
-        	ISUSABLE, 
-        	TID 
-        FROM DSP_REJECT_CONTENTS
+        	A.DATASEQ, 
+        	A.WORKDAILY_SEQ,
+        	B.RULESYSID, 
+        	B.FACTORYID, 
+        	B.LINEID, 
+        	B.SHIFTID, 
+        	B.WORK_DATE, 
+        	A.OPERATIONID, 
+        	A.REJECT_ITEMID, 
+        	A.MODELID, 
+        	A.FIRSTTIME_REJECT_QTY, 
+        	A.REWORK_REJECT_QTY, 
+        	A.IMAGES, 
+        	A.MOVIES, 
+        	A.CREATOR, 
+        	A.CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	A.EVENTTIME, 
+        	A.ISUSABLE, 
+        	B.TID 
+        FROM DSP_REJECT_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ = B.DATASEQ 
         WHERE 1=1
-        	AND FACTORYID = #{factoryid} 
-			AND LINEID = #{lineid} 
-			AND SHIFTID = #{shiftid} 
-			AND WORK_DATE = #{workDate} 
-
+            AND WORKDAILY_SEQ = #{workdailySeq}
     </select>
 
 </mapper>

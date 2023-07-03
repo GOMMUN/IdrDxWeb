@@ -31,9 +31,11 @@ public class NotoperateContentsController {
 	@ResponseBody
 	@GetMapping("/find")
     public List<NotoperateContents> find(
-    		String factoryid, String lineid, String shiftid, String workDate) {
+    		int workDailySeq
+    		//String factoryid, String lineid, String shiftid, String workDate
+    		) {
 		
-		List<NotoperateContents> list = service.findAll(factoryid, lineid, shiftid, workDate);
+		List<NotoperateContents> list = service.findAll(workDailySeq);
 		return list;
     }
 }

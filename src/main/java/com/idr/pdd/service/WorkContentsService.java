@@ -20,13 +20,16 @@ public class WorkContentsService {
 	@Autowired
 	WorkContentsMapper mapper;
 	
-	public List<WorkContents> findAll(String factoryid, String lineid, String shiftid, String workDate){
+	public List<WorkContents> findAll(
+			int workDailySeq
+			//String factoryid, String lineid, String shiftid, String workDate
+			){
 		WorkContents param = new WorkContents();
-		//param.setRulesysid(rulesysid);
-		param.setFactoryid(factoryid);
-		param.setLineid(lineid);
-		param.setShiftid(shiftid);
-		param.setWorkDate(workDate);
+		param.setWorkdailySeq(workDailySeq);
+//		param.setFactoryid(factoryid);
+//		param.setLineid(lineid);
+//		param.setShiftid(shiftid);
+//		param.setWorkDate(workDate);
 		
 		return mapper.findAll(param);
 	}

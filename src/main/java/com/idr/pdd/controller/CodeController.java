@@ -38,15 +38,16 @@ public class CodeController {
 	
 	@ResponseBody
 	@GetMapping("/block")
-    public List<Code> block(@RequestParam("factoryid") String factoryid) {
-    	List<Code> list = service.findBlock(factoryid);
+//    public List<Code> block(@RequestParam("factoryid") String factoryid) {
+	public List<Code> block() {
+    	List<Code> list = service.findBlock();
 		return list;
     }
 	
 	@ResponseBody
 	@GetMapping("/line")
-    public List<Code> line(@RequestParam("factoryid") String factoryid) {
-    	List<Code> list = service.findLine(factoryid);
+    public List<Code> line() {
+    	List<Code> list = service.findLine();
 		return list;
     }
 	
@@ -54,6 +55,13 @@ public class CodeController {
 	@GetMapping("/shift")
     public List<Code> shift(Model model) {
     	List<Code> list = service.findShift();
+		return list;
+    }
+	
+	@ResponseBody
+	@GetMapping("/inputItem")
+    public List<Code> inputItem(Model model) {
+    	List<Code> list = service.findInputItem();
 		return list;
     }
 }

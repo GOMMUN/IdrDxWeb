@@ -27,9 +27,11 @@ public class WorkContentsController {
 	@ResponseBody
 	@GetMapping("/find")
     public List<WorkContents> find(
-    		String factoryid, String lineid, String shiftid, String workDate) {
+    		int workDailySeq
+    		//String factoryid, String lineid, String shiftid, String workDate
+    		) {
 		
-		List<WorkContents> list = service.findAll(factoryid, lineid, shiftid, workDate);
+		List<WorkContents> list = service.findAll(workDailySeq);
 		return list;
     }
 }

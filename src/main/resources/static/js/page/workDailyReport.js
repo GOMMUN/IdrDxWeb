@@ -5,6 +5,7 @@ let c_factory = null;
 let c_block = null;
 let c_line = null;
 let c_shift= null;
+let c_input_item= null;
 let s_workDailyReport=null;
 
 $(function(){
@@ -25,7 +26,10 @@ function initSetting(){
 
 function code(){
 	factroy();		// 공장코드 조회
+	block();
+	line();
 	shift();		// 주/야간구분 코드 조회
+	input_item();
 }
 
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
@@ -228,8 +232,35 @@ function setWorkDailyReportEventListener(){
     $factoryCodes = $("#factoryCodes");
     
     $factoryCodes.change(function () {
-		block($factoryCodes.val());
-		line($factoryCodes.val());
+
+		let $dropdown1 = $("#blockCodes");
+		$dropdown1.empty();
+	
+		if(c_block){
+			$dropdown1.append($("<option/>").val("").text("블록 선택"));
+			$.each(c_block, function() {
+				if($factoryCodes.val() == this.mcode){
+					$dropdown1.append($("<option/>").val(this.code).text(this.value));
+				}
+	        });
+		}else{
+			$dropdown1.append($("<option/>").val("").text("블록 선택"));
+		}
+		
+		
+		let $dropdown2 = $("#lineCodes");
+		$dropdown2.empty();
+		
+		if(c_line){
+			$dropdown2.append($("<option/>").val("").text("라인 선택"));
+			$.each(c_line, function() {
+	            if($factoryCodes.val() == this.mcode){
+					$dropdown2.append($("<option/>").val(this.code).text(this.value));
+				}
+	        });
+		}else{
+			$dropdown2.append($("<option/>").val("").text("라인 선택"));
+		}
 	});
 }
 
@@ -255,12 +286,6 @@ function setWorkerInputEventListener(){
 	});
 	
 	$gridAddBtn.click(function () {
-		
-//		resetWorkDailyReport();
-//		
-//		$("#addWorkDailyReportModalCreate").css('display', "block");
-//	  	$("#addWorkDailyReportModalModify").css('display', "none");
-	  	
 		$('#addWorkerIntputModal').modal('show');
 	});
 	
@@ -313,7 +338,7 @@ function setWorkerManhourEventListener(){
 			return;
 		}
 		
-//		resetWorkDailyReport();
+		resetWorkerManhour();
 
 		$("#addWorkerManhourModalCreate").css('display', "block");
 	  	$("#addWorkerManhourModalModify").css('display', "none");
@@ -329,16 +354,25 @@ function setWorkerManhourEventListener(){
 		// s_workDailyReport
 		let data = initWorkerManhour();
 		
-		data.workDate = s_workDailyReport.workDate;
-		data.workdailySeq = s_workDailyReport.workdailySeq;
-		data.blockid = s_workDailyReport.blockid;
-		data.factoryid = s_workDailyReport.factoryid;
-		data.groupid = s_workDailyReport.groupid;
-		data.lineid = s_workDailyReport.lineid;
-		data.shiftid = s_workDailyReport.shiftid;
-		data.notes = $("input[name=notes]").val();
+		data.workdailySeq = s_workDailyReport.dataseq;
+		data.hands = $("input[name=hands]").val();
+		data.manhour = $("input[name=manhour]").val();
+		data.inputItemid = $("select[name=inputItemid]").val();
 		
-		debugger;
+		let url = '/workerManhour/create';
+		
+		$.ajax({
+		  url: url,
+		  type: 'POST',
+		  data: JSON.stringify(data),
+		  dataType : "json",
+		  contentType: 'application/json; charset=utf-8',
+		  success: function(data) {
+			$('#addWorkerManhourModal').modal('hide');
+			debugger;
+      		workerInput(s_workDailyReport);
+		  }
+	   	});
 	});
 }
 
@@ -368,37 +402,20 @@ function factroy(){
    	});
 }
 
-function block(factoryid){
+function block(){
 	
 	let $dropdown = $("#blockCodes");
 	$dropdown.empty();
-	
-	if(!factoryid){
-		$dropdown.append($("<option/>").val("").text("블록 선택"));
-		return;
-	}
-	
-	let data = {
-		"factoryid" : factoryid
-	};
 	
 	c_block = null;
 	
 	$.ajax({
 	  url: '/code/block',
 	  type: 'GET',
-	  data: data,
 	  success: function(data) {
 		c_block = data;
 		
-		if(c_block){
-			$dropdown.append($("<option/>").val("").text("블록 선택"));
-			$.each(data, function() {
-	            $dropdown.append($("<option/>").val(this.code).text(this.value));
-	        });
-		}else{
-			$dropdown.append($("<option/>").val("").text("블록 선택"));
-		}
+		
 	  }
    	});
 }
@@ -407,33 +424,16 @@ function line(factoryid){
 	
 	let $dropdown = $("#lineCodes");
 	$dropdown.empty();
-	
-	if(!factoryid){
-		$dropdown.append($("<option/>").val("").text("라인 선택"));
-		return;
-	}
-	
-	let data = {
-		"factoryid" : factoryid
-	};
-	
+
 	c_line = null;
 	
    	$.ajax({
 	  url: '/code/line',
 	  type: 'GET',
-	  data: data,
 	  success: function(data) {
 		c_line = data;
 		
-		if(c_line){
-			$dropdown.append($("<option/>").val("").text("라인 선택"));
-			$.each(data, function() {
-	            $dropdown.append($("<option/>").val(this.code).text(this.value));
-	        });
-		}else{
-			$dropdown.append($("<option/>").val("").text("라인 선택"));
-		}
+		
 	  }
    	});
 }
@@ -464,6 +464,32 @@ function shift(){
    	});
 }
 
+function input_item(){
+	let url = '/code/inputItem';
+	
+	c_shift = null;
+	
+	$.ajax({
+	  url: url,
+	  type: 'GET',
+	  success: function(data) {
+		c_input_item = data;
+		
+		let $dropdown = $("#inputItemCodes");
+		$dropdown.empty();
+			
+		if(c_shift){
+			$dropdown.append($("<option/>").val("").text("구분 선택"));
+			$.each(data, function() {
+	            $dropdown.append($("<option/>").val(this.code).text(this.value));
+	        });
+		}else{
+			$dropdown.append($("<option/>").val("").text("구분 선택"));
+		}
+	  }
+   	});
+}
+
 function operateFormatter(value, row, index) {
 	return [
 		'<a class="modify" href="javascript:void(0)" title="수정">',
@@ -474,23 +500,18 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
 	"click .modify": function (e, value, row, index) {
-		
+			
 		workDailyReportDetail(row);
-		
-		block(row.factoryid);
-		line(row.factoryid);
-		
-//		$("input[name=workDate]").prop('disabled',true);
-//		$("select[name=blockid]").prop('disabled',true);
-//		$("select[name=factoryid]").prop('disabled',true);
-//		$("select[name=groupid]").prop('disabled',true);
-//		$("select[name=lineid]").prop('disabled',true);
-//		$("select[name=shiftid]").prop('disabled',true);
 		
 		$("#addWorkDailyReportModalCreate").css('display', "none");
 	  	$("#addWorkDailyReportModalModify").css('display', "block");
 	  	
 		$('#addWorkDailyReportModal').modal('show');
+		
+		$factoryCodes = $("#factoryCodes");
+		$factoryCodes.trigger('change');
+		
+		workDailyReportDetail(row);
  	}
 }
 
@@ -527,10 +548,10 @@ function workerInput(data) {
     var params = {
 		//rulesysid : data.rulesysid,
 		workDailySeq : data.dataseq,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 	
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -545,10 +566,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,		
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 	
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -563,9 +585,10 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		workDate : data.workDate,
 	}
 	
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -580,10 +603,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -598,10 +622,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -616,10 +641,11 @@ function workerInput(data) {
     
     var params = {
 		//rulesysid : data.rulesysid,
-		factoryid : data.factoryid,
-		lineid : data.lineid,
-		shiftid : data.shiftid,
-		workDate : data.workDate,
+		workDailySeq : data.dataseq,
+//		factoryid : data.factoryid,
+//		lineid : data.lineid,
+//		shiftid : data.shiftid,
+//		workDate : data.workDate,
 	}
 
     $.get(url + '?' + $.param(params)).then(function (res) {
@@ -641,6 +667,12 @@ function resetWorkDailyReport(){
 	$("input[name=reviewer]").val("");
 	$("input[name=notes]").val("");
 } 
+
+function resetWorkerManhour(){
+	$("input[name=hands]").val("");
+	$("input[name=manhour]").val("");
+	$("select[name=inputItemid]").val("");
+}
  
  function initWorkDailyReport(){
 	

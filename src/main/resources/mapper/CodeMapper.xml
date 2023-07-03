@@ -5,14 +5,14 @@
 
 <mapper namespace="com.idr.pdd.mapper.CodeMapper">
 
-    <select id="find" parameterType="String" resultType="Location">
+    <select id="find" parameterType="String" resultType="Code">
         SELECT 
-        	SYS_CD, 
-        	COMM_GRP_CD, 
-        	COMM_CD, HGR_COMM_GRP_CD, HGR_COMM_CD, COMM_CD_NM, COMM_CD_EXPL, ARRAY_ORD, REF_CD_1, REF_CD_2, REF_CD_3, REF_CD_4, REF_CD_5, USE_YN, FST_REG_DT, FST_REG_USER_ID, FNL_EDIT_DT, FNL_EDIT_USER_ID FROM idrDx.dbo.SC_COMM_CD;
-
-        <if test='factoryid != null and factoryid != ""'>
-        	AND FACTORYID = #{factoryid}
+        	COMM_CD AS CODE,
+        	COMM_CD_NM AS VALUE
+        FROM SC_COMM_CD
+        WHERE 1=1
+        <if test='commGrpCd != null and commGrpCd != ""'>
+        	AND COMM_GRP_CD = #{commGrpCd}
         </if>
     </select>
 

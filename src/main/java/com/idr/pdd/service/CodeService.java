@@ -11,6 +11,7 @@ import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.Location;
 import com.idr.pdd.dto.Shift;
 import com.idr.pdd.mapper.BlockMapper;
+import com.idr.pdd.mapper.CodeMapper;
 import com.idr.pdd.mapper.FactoryMapper;
 import com.idr.pdd.mapper.LineMapper;
 import com.idr.pdd.mapper.ShiftMapper;
@@ -32,6 +33,9 @@ public class CodeService {
 	@Autowired
 	ShiftMapper shiftMapper;
 	
+	@Autowired
+	CodeMapper codeMapper;
+	
 	public List<Code> findFactroy(){
 		List<Code> list = new ArrayList<>();
 		
@@ -45,12 +49,13 @@ public class CodeService {
 		return list;
 	}
 	
-	public List<Code> findBlock(String factoryid){
+	public List<Code> findBlock(){
 		
 		List<Code> list = new ArrayList<>();
 		
-		for (Location location : blockMapper.find(factoryid)) {
+		for (Location location : blockMapper.find()) {
 			Code code = new Code();
+			code.setMCode(location.getFactoryid());
 			code.setCode(location.getLocationid());
 			code.setValue(location.getLocationname());
 			list.add(code);
@@ -59,12 +64,13 @@ public class CodeService {
 		return list;
 	}
 	
-	public List<Code> findLine(String factoryid){
+	public List<Code> findLine(){
 		
 		List<Code> list = new ArrayList<>();
 		
-		for (Location location : lineMapper.find(factoryid)) {
+		for (Location location : lineMapper.find()) {
 			Code code = new Code();
+			code.setMCode(location.getFactoryid());
 			code.setCode(location.getLocationid());
 			code.setValue(location.getLocationname());
 			list.add(code);
@@ -83,6 +89,13 @@ public class CodeService {
 			code.setValue(shift.getShiftname());
 			list.add(code);
 		}
+		
+		return list;
+	}
+	
+	public List<Code> findInputItem(){
+		
+		List<Code> list = codeMapper.find("INPUT_ITEM");
 		
 		return list;
 	}

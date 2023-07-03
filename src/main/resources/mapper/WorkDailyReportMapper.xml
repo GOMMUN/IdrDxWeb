@@ -32,8 +32,8 @@
 				A.ISUSABLE, 
 				A.TID
 		 FROM DSP_WORKDAILY_REPORT A
-		WHERE A.RULESYSID <![CDATA[<>]]> 0 AND ISUSABLE IS NOT NULL
-		ORDER BY CREATETIME ASC
+		WHERE ISUSABLE IS NOT NULL
+		ORDER BY CREATETIME DESC
     </select>
     
     <insert id="create" parameterType="WorkDailyReport" >

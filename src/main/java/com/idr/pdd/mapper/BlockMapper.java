@@ -14,5 +14,5 @@ import com.idr.pdd.dto.WorkerSupport;
 @Mapper
 public interface BlockMapper {
 
-	List<Location> find(String factoryid);
+	List<Location> find();
 }

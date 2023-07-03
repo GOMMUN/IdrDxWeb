@@ -7,12 +7,27 @@
 
     <select id="findAll" parameterType="WorkerSupport" resultType="WorkerSupport">
         SELECT 
-			*
-		FROM DSP_WORKER_SUPPORT
+			A.DATASEQ, 
+			B.RULESYSID, 
+			B.FACTORYID, 
+			B.LINEID, 
+			B.WORK_DATE, 
+			A.PERSONID, 
+			A.SUPPORTTIME_FROM, 
+			A.SUPPORTTIME_TO, 
+			A.MANHOUR, 
+			A.CREATOR, 
+			A.CREATETIME, 
+			A.EVENT, 
+			A.EVENTUSER, 
+			A.EVENTTIME, 
+			A.ISUSABLE, 
+			B.TID, 
+			A.WORKDAILY_SEQ
+		FROM DSP_WORKER_SUPPORT A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ = B.DATASEQ 
 		WHERE 1=1 
-			  AND FACTORYID = #{factoryid} 
-			  AND LINEID = #{lineid} 
-			  AND WORK_DATE = #{workDate} 
+		      AND WORKDAILY_SEQ = #{workdailySeq}
     </select>
 
 </mapper>

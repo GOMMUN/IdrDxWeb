@@ -287,7 +287,8 @@ function setWorkerInputEventListener(){
 	let $grid = $("#workerInput");
 	let $gridAddBtn = $("#addWorkerInput");
 	let $gridRemoveBtn = $("#removeWorkerInput");
-	
+	let $modalCreateBtn = $("#addWorkerInputModalCreate");	// 작업일보 모달 insert 버튼
+
 	$grid.on('check.bs.table', function (row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});

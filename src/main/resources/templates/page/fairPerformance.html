@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/fairPerformance.js}"></script>
+<style>
+</style>
+
+<body>
+	<div class="container-fluid mt-4">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">공정실적</h6>
+					</div>
+					<div class="card-body">
+						<div id="toolbarFairPerformance">
+							<button type="button" class="btn btn-primary" id="addFairPerformance" data-toggle="modal"
+								data-target="#addFairPerformanceModal">
+								<i class="fa-solid fa-plus"></i> Add
+							</button>
+							<button id="removeFairPerformance" class="btn btn-danger" disabled>
+								<i class="fa fa-trash"></i> Delete
+							</button>
+						</div>
+						<table id="fairPerformance" data-toggle="table" data-toolbar="#toolbarFairPerformance"
+							data-height="873" data-multiple-select-row="true" data-click-to-select="true"
+							data-search="true" data-url="/simullator/fairPerformance/find" data-show-columns="true"
+							data-show-columns-toggle-all="true" data-pagination="true" data-side-pagination="server"
+							data-page-size=100
+							>
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
+									<th data-field="equipmentId" data-sortable="true" data-align="center">장비 ID</th>
+									<th data-field="equipmentName" data-sortable="true" data-align="center">장비이름</th>
+									<th data-field="orderId" data-sortable="true" data-align="center">주문 ID</th>
+									<th data-field="orderName" data-sortable="true" data-align="center">주문 이름</th>
+									<th data-field="itemId" data-sortable="true" data-align="center">Item ID</th>
+									<th data-field="itemName" data-sortable="true" data-align="center">Item 이름</th>
+									<th data-field="processId" data-sortable="true" data-align="center">공정 ID</th>
+									<th data-field="processName" data-sortable="true" data-align="center">공정 이름</th>
+									<th data-field="processTime" data-sortable="true" data-align="center">공정시간</th>
+									<th data-field="processResult" data-sortable="true" data-align="center">공정결과</th>
+									<th data-field="startTime" data-sortable="true" data-align="center">시작시간</th>
+									<th data-field="endTime" data-sortable="true" data-align="center">종료시간</th>
+									<th data-field="processType" data-sortable="true" data-align="center">공정종류</th>
+									<th data-field="splitType" data-sortable="true" data-align="center">분활종류</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

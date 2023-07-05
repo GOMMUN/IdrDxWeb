@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.FairPerformanceMapper">
+
+    <select id="find" parameterType="Map" resultType="FairPerformance">
+        SELECT
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			DATASEQ, 
+			EQUIPMENT_ID, 
+			EQUIPMENT_NAME, 
+			ORDER_ID, 
+			ORDER_NAME, 
+			ITEM_ID, 
+			ITEM_NAME, 
+			PROCESS_ID, 
+			PROCESS_NAME, 
+			PROCESS_TIME, 
+			PROCESS_RESULT, 
+			START_TIME, 
+			END_TIME, 
+			PROCESS_TYPE, 
+			SPLIT_TYPE, 
+			CREATOR, 
+			CREATETIME, 
+			EVENT, 
+			EVENTUSER, 
+			EVENTTIME, 
+			ISUSABLE 
+		FROM SIMULLATOR_FAIR_PERFORMANCE
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+       	AND (  EQUIPMENT_ID LIKE CONCAT('%', #{search}, '%') 
+			OR EQUIPMENT_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR ORDER_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDER_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_ID LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_RESULT LIKE CONCAT('%', #{search}, '%') 
+			OR START_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR END_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 
+			OR SPLIT_TYPE LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+		ORDER BY ROWNUM ASC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+    
+    <select id="total" parameterType="String" resultType="Integer">
+        SELECT
+			COUNT(*)
+		FROM SIMULLATOR_FAIR_PERFORMANCE
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+       	AND (  EQUIPMENT_ID LIKE CONCAT('%', #{search}, '%') 
+			OR EQUIPMENT_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR ORDER_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDER_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_ID LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_RESULT LIKE CONCAT('%', #{search}, '%') 
+			OR START_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR END_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 
+			OR SPLIT_TYPE LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+    </select>
+
+</mapper>

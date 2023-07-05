@@ -31,6 +31,21 @@ public class WorkerInputService {
 		
 		return mapper.findAll(param);
 	}
+
+	public int save(WorkerInput param) {
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		}else {
+			return mapper.modify(param);
+		}
+	}
+
+
+
+	public int remove(List<Integer> param) {
+		
+		return mapper.remove(param);
+	}
 	
 	
 }

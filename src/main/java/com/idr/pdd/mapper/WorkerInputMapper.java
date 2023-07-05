@@ -11,4 +11,7 @@ public interface WorkerInputMapper {
 
 	List<WorkerInput> findAll(WorkerInput param);
 	WorkerInput find();
+	int create(WorkerInput param);
+	int remove(List<Integer> param);
+	int modify(WorkerInput param);
 }

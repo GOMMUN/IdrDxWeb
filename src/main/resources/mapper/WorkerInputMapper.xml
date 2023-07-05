@@ -5,30 +5,85 @@
 
 <mapper namespace="com.idr.pdd.mapper.WorkerInputMapper">
 
-    <select id="findAll" parameterType="WorkerInput" resultType="WorkerInput">
-        SELECT 
-            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-			A.DATASEQ, 
-			A.WORKDAILY_SEQ,
-			B.RULESYSID, 
-			B.FACTORYID, 
-			B.LINEID, 
-			B.SHIFTID, 
-			B.WORK_DATE, 
-			A.PERSONID, 
-			A.OVERTIME, 
-			A.NOTES, 
-			A.CREATOR, 
-			A.CREATETIME, 
-			A.EVENT,
-			A.EVENTUSER, 
-			A.EVENTTIME, 
-			A.ISUSABLE, 
-			B.TID
-		FROM DSP_WORKER_INPUT A JOIN DSP_WORKDAILY_REPORT B
-		ON A.WORKDAILY_SEQ = B.DATASEQ 
+	<select id="findAll" parameterType="WorkerInput"
+		resultType="WorkerInput">
+		SELECT
+		ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+		A.DATASEQ,
+		A.WORKDAILY_SEQ,
+		B.RULESYSID,
+		B.FACTORYID,
+		B.LINEID,
+		B.SHIFTID,
+		B.WORK_DATE,
+		A.PERSONID,
+		(SELECT PERSONNAME FROM DSP_PERSON WHERE
+		PERSONID IN (A.PERSONID)) AS
+		PERSONNAME,
+		A.OVERTIME,
+		A.NOTES,
+		A.CREATOR,
+		A.CREATETIME,
+		A.EVENT,
+		A.EVENTUSER,
+		A.EVENTTIME,
+		A.ISUSABLE,
+		B.TID
+		FROM
+		DSP_WORKER_INPUT A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ =
+		B.DATASEQ
 		WHERE 1=1
-			  AND WORKDAILY_SEQ = #{workdailySeq}
-    </select>
+		AND A.WORKDAILY_SEQ = #{workdailySeq}
+		AND A.ISUSABLE
+		='Usable'
+	</select>
+
+	<insert id="create" parameterType="WorkerInput">
+		INSERT INTO DSP_WORKER_INPUT (
+		PERSONID,
+		CREATOR,
+		CREATETIME,
+		EVENT,
+		EVENTUSER,
+		EVENTTIME,
+		ISUSABLE,
+		WORKDAILY_SEQ,
+		OVERTIME,
+		NOTES
+		) VALUES(
+		#{personid},
+		#{creator},
+		GETDATE(),
+		#{event},
+		#{eventuser},
+		#{eventtime},
+		'Usable',
+		#{workdailySeq},
+		#{overtime},
+		#{notes}
+		);
+
+	</insert>
+
+	<update id="modify" parameterType="WorkDailyReport">
+		UPDATE DSP_WORKER_INPUT
+		SET
+		PERSONID = #{personid}
+		, NOTES = #{notes}
+		, OVERTIME = #{overtime}
+		WHERE
+		DATASEQ = #{dataseq}
+	</update>
+
+	<update id="remove" parameterType="list">
+		UPDATE DSP_WORKER_INPUT
+		SET ISUSABLE= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index"
+			separator="," open="(" close=")">
+			#{data}
+		</foreach>
+	</update>
 
 </mapper>

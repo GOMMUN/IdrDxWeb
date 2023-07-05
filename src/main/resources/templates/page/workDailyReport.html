@@ -100,13 +100,13 @@
 							</button>
 						</div>
 						<table id="workerInput" data-toggle="table" data-toolbar="#toolbarWorkerInput" data-height="300"
-							data-multiple-select-row="true" data-click-to-select="true" data-search="true"
+							data-multiple-select-row="false" data-click-to-select="true" data-search="true"
 							data-show-columns="true" data-show-columns-toggle-all="true">
 							<thead class="thead-light">
 								<tr>
 									<th data-field="state" data-checkbox="true"></th>
 									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
-									<th data-field="personid" data-sortable="true" data-align="center">성명</th>
+									<th data-field="personname" data-sortable="true" data-align="center">성명</th>
 									<th data-field="overtime" data-sortable="true" data-align="center">잔업여부</th>
 									<th data-field="notes" data-sortable="true" data-align="center">비고</th>
 									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
@@ -133,7 +133,7 @@
 							</button>
 						</div>
 						<table id="workerManhour" data-toggle="table" data-toolbar="#toolbarworkerManhour"
-							data-height="300" data-multiple-select-row="true" data-click-to-select="true"
+							data-height="300" data-multiple-select-row="false" data-click-to-select="true"
 							data-search="true" data-show-columns="true" data-show-columns-toggle-all="true">
 							<thead class="thead-light">
 								<tr>
@@ -142,6 +142,8 @@
 									<th data-field="inputItemid" data-sortable="true" data-align="center">구분</th>
 									<th data-field="hands" data-sortable="true" data-align="center">인원</th>
 									<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
+									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
+										data-formatter="workerManhourFormatter" data-events="operateEvents">#</th>
 								</tr>
 							</thead>
 						</table>
@@ -391,19 +393,56 @@
 									<h1 class="h4 text-gray-900 mb-4">작업자투입현황</h1>
 								</div>
 								<div class="modal-body">
-									<table id="table" data-toggle="table" data-height="345" data-url="json/data1.json">
+									<table id="selectWorker" data-toggle="table" data-height="345"
+										data-url="person/find" data-click-to-select="true"
+										data-multiple-select-row="true" data-search="true" data-show-columns="true"
+										data-show-columns-toggle-all="true" data-pagination="false">
 										<thead>
 											<tr>
-												<th data-field="id">순번</th>
-												<th data-field="name">Person ID</th>
-												<th data-field="price">Person Name</th>
+												<th data-field="state" data-checkbox="true"></th>
+												<th data-field="personid">작업자ID</th>
+												<th data-field="personname">작업자명</th>
 											</tr>
 										</thead>
 									</table>
 								</div>
 							</div>
 						</div>
+
 					</div>
+					<form class="user">
+						<div class="form-group row">
+							<div class="col-sm-12 mb-3 mb-sm-0">
+								<input type="text" name="workinputdesc" class="form-control-custom form-control-user"
+									id="workinputdesc" placeholder='비고'>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<select id="overtimeyn" name="overtimeyn" class="form-select-custom form-control-user">
+									<option value="N" selected disabled>잔업 여부</option>
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-lg-10">
+								<a id="addWorkerInputModalCreate" class="btn btn-primary btn-user btn-block">
+									Save
+								</a>
+								<a id="addWorkerInputModalModify" class="btn btn-primary btn-user btn-block">
+									Save
+								</a>
+							</div>
+							<div class="col-lg-2">
+								<a id="addWorkerInputModalClose" class="btn btn-google btn-user btn-block">
+									X
+								</a>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -423,11 +462,11 @@
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="hands"
-												class="form-control-custom form-control-user" id="" placeholder='인원'>
+												class="form-control-custom form-control-user" id="personnel" placeholder='인원'>
 										</div>
 										<div class="col-sm-6">
 											<input type="text" name="manhour"
-												class="form-control-custom form-control-user" id="" placeholder='공수'>
+												class="form-control-custom form-control-user" id="Airlift" placeholder='공수'>
 										</div>
 									</div>
 									<div class="form-group row">

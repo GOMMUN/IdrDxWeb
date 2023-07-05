@@ -15,5 +15,5 @@ import com.idr.pdd.dto.WorkerSupport;
 @Mapper
 public interface PersonMapper {
 
-	List<Person> find();
+	List<Person> findall();
 }

@@ -28,7 +28,9 @@
 		FROM DSP_WORKER_MANHOUR A JOIN DSP_WORKDAILY_REPORT B
 		ON A.WORKDAILY_SEQ = B.DATASEQ 
 		WHERE 1=1
-			  AND WORKDAILY_SEQ = #{workdailySeq} 
+			  AND WORKDAILY_SEQ = #{workdailySeq}
+			  AND A.ISUSABLE = 'Usable'
+			  
     </select>
     
     <insert id="create" parameterType="WorkerManhour" >
@@ -57,5 +59,25 @@
         );
 
     </insert>
+    
+    <update id="modify" parameterType="WorkerManhour">
+		UPDATE DSP_WORKER_MANHOUR
+		SET
+		HANDS = #{hands}
+		, MANHOUR = #{manhour}
+		, INPUT_ITEMID = #{inputItemid}
+		WHERE
+		DATASEQ = #{dataseq}
+	</update>
+	
+	<update id="remove" parameterType="list">
+		UPDATE DSP_WORKER_MANHOUR
+		SET ISUSABLE= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index"
+			separator="," open="(" close=")">
+			#{data}
+		</foreach>
+	</update>
 
 </mapper>

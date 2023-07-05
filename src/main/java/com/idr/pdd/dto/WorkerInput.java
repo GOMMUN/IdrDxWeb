@@ -14,6 +14,7 @@ public class WorkerInput {
 	private String shiftid;
 	private String workDate;
 	private String personid;
+	private String personname;
 	private String overtime;
 	private String notes;
 	private String creator;

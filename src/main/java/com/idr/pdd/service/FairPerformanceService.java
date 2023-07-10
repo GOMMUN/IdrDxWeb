@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idr.pdd.dto.FairPerformance;
+import com.idr.pdd.dto.WorkDailyReport;
 import com.idr.pdd.mapper.FairPerformanceMapper;
 
 @Service
@@ -33,5 +34,9 @@ public class FairPerformanceService {
 		result.put("rows", rows);
 		
 		return result;
+	}
+	
+	public int create(FairPerformance param) {
+		return mapper.create(param);
 	}
 }

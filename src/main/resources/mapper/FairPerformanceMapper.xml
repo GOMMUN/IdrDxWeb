@@ -77,5 +77,39 @@
 		)
         </if>
     </select>
+    
+    <insert id="create" parameterType="FairPerformance" >
+        INSERT INTO SIMULLATOR_FAIR_PERFORMANCE (
+        	EQUIPMENT_ID, 
+        	EQUIPMENT_NAME, 
+        	ORDER_ID, 
+        	ORDER_NAME, 
+        	ITEM_ID, 
+        	ITEM_NAME, 
+        	PROCESS_ID, 
+        	PROCESS_NAME, 
+        	PROCESS_TIME, 
+        	PROCESS_RESULT, 
+        	START_TIME, 
+        	END_TIME, 
+        	PROCESS_TYPE, 
+        	SPLIT_TYPE
+        ) VALUES(
+        	#{equipmentId}, 
+        	#{equipmentName}, 
+        	#{orderId}, 
+        	#{orderName}, 
+        	#{itemId}, 
+        	#{itemName}, 
+        	#{processId}, 
+        	#{processName}, 
+        	#{processTime}, 
+        	#{processResult}, 
+        	#{startTime}, 
+        	#{endTime}, 
+        	#{processType}, 
+        	#{splitType}
+        )
+    </insert>
 
 </mapper>

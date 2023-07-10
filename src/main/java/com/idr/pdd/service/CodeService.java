@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import com.idr.pdd.dto.Code;
 import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.Location;
+import com.idr.pdd.dto.ModelNM;
 import com.idr.pdd.dto.Shift;
 import com.idr.pdd.mapper.BlockMapper;
 import com.idr.pdd.mapper.CodeMapper;
 import com.idr.pdd.mapper.FactoryMapper;
 import com.idr.pdd.mapper.LineMapper;
+import com.idr.pdd.mapper.ModelMapper;
 import com.idr.pdd.mapper.ShiftMapper;
 
 import javassist.bytecode.analysis.ControlFlow.Block;
@@ -35,6 +37,9 @@ public class CodeService {
 	
 	@Autowired
 	CodeMapper codeMapper;
+	
+	@Autowired
+	ModelMapper modelMapper;
 	
 	public List<Code> findFactroy(){
 		List<Code> list = new ArrayList<>();
@@ -97,6 +102,18 @@ public class CodeService {
 		
 		List<Code> list = codeMapper.find("INPUT_ITEM");
 		
+		return list;
+	}
+
+	public List<Code> findmodelItem() {
+		List<Code> list = new ArrayList<>();
+		
+		for (ModelNM shift : modelMapper.modelfind()) {
+			Code code = new Code();
+			code.setCode(shift.getModelid());
+			code.setValue(shift.getModelname());
+			list.add(code);
+		}
 		return list;
 	}
 }

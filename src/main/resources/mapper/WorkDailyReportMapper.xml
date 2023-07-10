@@ -34,6 +34,7 @@
 				A.TID
 		 FROM DSP_WORKDAILY_REPORT A
 		WHERE ISUSABLE IS NOT NULL
+		AND A.ISUSABLE = 'Usable'
 		ORDER BY CREATETIME DESC
     </select>
     
@@ -75,7 +76,7 @@
              , #{event}
              , #{eventuser}
              , #{eventtime}
-             , #{isusable}
+             ,'Usable'
              , #{tid}
         )
     </insert>
@@ -90,6 +91,9 @@
              , GROUPID          = #{groupid}
              , SHIFTID          = #{shiftid}
              , NOTES			= #{notes}
+             , EVENTTIME = GETDATE()
+             ,REVIEWER=#{reviewer}
+             ,APPROVER=#{approver}
          WHERE DATASEQ          = #{dataseq}
     </update>
     

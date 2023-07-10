@@ -33,4 +33,20 @@ public class WorkContentsService {
 		
 		return mapper.findAll(param);
 	}
+
+
+	public int save(WorkContents param) {
+		// TODO Auto-generated method stub
+		return mapper.create(param);
+	}
+
+
+	public int remove(List<Integer> param) {
+		return mapper.remove(param);
+	}
+
+
+	public int modify(WorkContents param) {
+		return mapper.modify(param);
+	}
 }

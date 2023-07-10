@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.idr.pdd.dto.Code;
 import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.Location;
+import com.idr.pdd.dto.ModelNM;
 import com.idr.pdd.dto.Shift;
 import com.idr.pdd.service.CodeService;
 
@@ -62,6 +63,13 @@ public class CodeController {
 	@GetMapping("/inputItem")
     public List<Code> inputItem(Model model) {
     	List<Code> list = service.findInputItem();
+		return list;
+    }
+	
+	@ResponseBody
+	@GetMapping("/modelItem")
+    public List<Code> modelItem() {
+    	List<Code> list = service.findmodelItem();
 		return list;
     }
 }

@@ -72,6 +72,7 @@
 		PERSONID = #{personid}
 		, NOTES = #{notes}
 		, OVERTIME = #{overtime}
+		, EVENTTIME = GETDATE()
 		WHERE
 		DATASEQ = #{dataseq}
 	</update>

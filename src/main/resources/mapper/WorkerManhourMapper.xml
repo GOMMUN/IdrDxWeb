@@ -66,6 +66,7 @@
 		HANDS = #{hands}
 		, MANHOUR = #{manhour}
 		, INPUT_ITEMID = #{inputItemid}
+		, EVENTTIME = GETDATE()
 		WHERE
 		DATASEQ = #{dataseq}
 	</update>

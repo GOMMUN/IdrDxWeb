@@ -16,6 +16,7 @@ public class WorkContents {
 	private String worktimeFrom;
 	private String worktimeTo;
 	private String modelid;
+	private String modelname;
 	private String operationid;
 	private int manhour;
 	private int planQty;

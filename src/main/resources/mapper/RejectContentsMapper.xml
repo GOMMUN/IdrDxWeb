@@ -31,7 +31,63 @@
         FROM DSP_REJECT_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
 		ON A.WORKDAILY_SEQ = B.DATASEQ 
         WHERE 1=1
+       	 	AND A.ISUSABLE = 'Usable'
             AND WORKDAILY_SEQ = #{workdailySeq}
     </select>
+    
+    <insert id="create" parameterType="RejectContents">
+		 INSERT INTO DSP_REJECT_CONTENTS (
+             WORKDAILY_SEQ
+             , MODELID
+             , OPERATIONID
+             , REJECT_ITEMID
+             , FIRSTTIME_REJECT_QTY
+             , REWORK_REJECT_QTY
+             ,CREATOR
+			 ,CREATETIME
+			 ,EVENT
+			 ,EVENTUSER
+			 ,EVENTTIME
+			 ,ISUSABLE
+        )
+        VALUES (
+            #{workdailySeq},
+			#{modelid},
+			#{operationid},
+			#{rejectItemid},
+			#{firsttimeRejectQty},
+			#{reworkRejectQty},
+			#{creator},
+			GETDATE(),
+			#{event},
+			#{eventuser},
+			#{eventtime},
+			'Usable'
+        );
+
+	</insert>
+
+	<update id="modify" parameterType="WorkDailyReport">
+		UPDATE DSP_REJECT_CONTENTS
+		SET
+		 MODELID= #{modelid}
+        , OPERATIONID= #{operationid}
+        , REJECT_ITEMID= #{rejectItemid}
+        , FIRSTTIME_REJECT_QTY= #{firsttimeRejectQty}
+        , REWORK_REJECT_QTY= #{reworkRejectQty}
+        , EVENTTIME = GETDATE()
+		WHERE
+		DATASEQ = #{dataseq}
+	</update>
+
+	<update id="remove" parameterType="list">
+		UPDATE DSP_REJECT_CONTENTS
+		SET ISUSABLE= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index"
+			separator="," open="(" close=")">
+			#{data}
+		</foreach>
+	</update>
 
 </mapper>

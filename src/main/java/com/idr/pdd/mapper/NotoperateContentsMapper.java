@@ -11,4 +11,7 @@ public interface NotoperateContentsMapper {
 
 	List<NotoperateContents> findAll(NotoperateContents contents);
 	NotoperateContents find();
+	int create(NotoperateContents param);
+	int modify(NotoperateContents param);
+	int remove(List<Integer> param);
 }

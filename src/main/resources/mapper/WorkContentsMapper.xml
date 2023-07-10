@@ -18,6 +18,7 @@
         	A.WORKTIME_FROM, 
         	A.WORKTIME_TO, 
         	A.MODELID, 
+        	(SELECT DISTINCT MODELNAME FROM DSP_MODEL WHERE MODELID IN (A.MODELID)) AS MODELNAME, 
         	A.OPERATIONID, 
         	A.MANHOUR, 
         	A.PLAN_QTY, 
@@ -40,7 +41,77 @@
         FROM DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
 		ON A.WORKDAILY_SEQ = B.DATASEQ 
         WHERE 1=1
+       		AND A.ISUSABLE = 'Usable'
             AND WORKDAILY_SEQ = #{workdailySeq}
     </select>
+    
+    <insert id="create" parameterType="WorkContents">
+		INSERT INTO DSP_WORK_CONTENTS (
+		WORKDAILY_SEQ,
+		WORKTIME_FROM,
+		WORKTIME_TO,
+		MANHOUR,
+		MODELID,
+		PROD_QTY,
+		PLAN_QTY,
+		GOODSUM_QTY,
+		REWORK_GOOD_QTY,
+		REWORK_FAIL_QTY,
+		NOTES,
+		CREATOR,
+		CREATETIME,
+		EVENT,
+		EVENTUSER,
+		EVENTTIME,
+		ISUSABLE
+		) VALUES(
+		#{workdailySeq},
+		#{worktimeFrom},
+		#{worktimeTo},
+		#{manhour},
+		#{modelid},
+		#{prodQty},
+		#{planQty},
+		#{goodsumQty},
+		#{reworkGoodQty},
+		#{reworkFailQty},
+		#{notes},
+		#{creator},
+		GETDATE(),
+		#{event},
+		#{eventuser},
+		#{eventtime},
+		'Usable'
+		)
+
+	</insert>
+	
+	<update id="modify" parameterType="WorkContents">
+		UPDATE DSP_WORK_CONTENTS
+		SET
+		WORKTIME_FROM = #{worktimeFrom}
+		, WORKTIME_TO = #{worktimeTo}
+		, MANHOUR = #{manhour}
+		, MODELID = #{modelid}
+		, PROD_QTY = #{prodQty}
+		, PLAN_QTY = #{planQty}
+		, GOODSUM_QTY = #{goodsumQty}
+		, REWORK_GOOD_QTY = #{reworkGoodQty}
+		, REWORK_FAIL_QTY = #{reworkFailQty}
+		, NOTES = #{notes}
+		, EVENTTIME = GETDATE()
+		WHERE
+		DATASEQ = #{dataseq}
+	</update>
+	
+	<update id="remove" parameterType="list">
+		UPDATE DSP_WORK_CONTENTS
+		SET ISUSABLE= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index"
+			separator="," open="(" close=")">
+			#{data}
+		</foreach>
+	</update>
 
 </mapper>

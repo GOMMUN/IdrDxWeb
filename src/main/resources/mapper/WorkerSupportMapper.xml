@@ -5,30 +5,91 @@
 
 <mapper namespace="com.idr.pdd.mapper.WorkerSupportMapper">
 
-    <select id="findAll" parameterType="WorkerSupport" resultType="WorkerSupport">
-        SELECT 
-            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-			A.DATASEQ, 
-			B.RULESYSID, 
-			B.FACTORYID, 
-			B.LINEID, 
-			B.WORK_DATE, 
-			A.PERSONID, 
-			A.SUPPORTTIME_FROM, 
-			A.SUPPORTTIME_TO, 
-			A.MANHOUR, 
-			A.CREATOR, 
-			A.CREATETIME, 
-			A.EVENT, 
-			A.EVENTUSER, 
-			A.EVENTTIME, 
-			A.ISUSABLE, 
-			B.TID, 
-			A.WORKDAILY_SEQ
+	<select id="findAll" parameterType="WorkerSupport"
+		resultType="WorkerSupport">
+		SELECT
+		ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+		A.DATASEQ,
+		B.RULESYSID,
+		B.FACTORYID,
+		B.LINEID,
+		B.WORK_DATE,
+		A.PERSONID,
+		(SELECT PERSONNAME FROM DSP_PERSON WHERE PERSONID IN (A.PERSONID)) AS
+		PERSONNAME,
+		A.SUPPORTTIME_FROM,
+		A.SUPPORTTIME_TO,
+		A.MANHOUR,
+		A.CREATOR,
+		A.CREATETIME,
+		A.EVENT,
+		A.EVENTUSER,
+		A.EVENTTIME,
+		A.ISUSABLE,
+		B.TID,
+		A.WORKDAILY_SEQ
 		FROM DSP_WORKER_SUPPORT A JOIN DSP_WORKDAILY_REPORT B
-		ON A.WORKDAILY_SEQ = B.DATASEQ 
-		WHERE 1=1 
-		      AND WORKDAILY_SEQ = #{workdailySeq}
-    </select>
+		ON
+		A.WORKDAILY_SEQ = B.DATASEQ
+		WHERE 1=1
+		AND WORKDAILY_SEQ = #{workdailySeq}
+		AND A.ISUSABLE = 'Usable'
+	</select>
+
+	<insert id="create" parameterType="WorkerSupport">
+		INSERT INTO DSP_WORKER_SUPPORT (
+		PERSONID,
+		SUPPORTTIME_FROM,
+		SUPPORTTIME_TO,
+		LINEID,
+		MANHOUR,
+		CREATOR,
+		CREATETIME,
+		EVENT,
+		EVENTUSER,
+		EVENTTIME,
+		ISUSABLE,
+		WORKDAILY_SEQ
+		) VALUES(
+		#{personid},
+		#{supporttimeFrom},
+		#{supporttimeTo},
+		#{lineid},
+		#{manhour},
+		#{creator},
+		GETDATE(),
+		#{event},
+		#{eventuser},
+		#{eventtime},
+		'Usable',
+		#{workdailySeq}
+		);
+
+
+	</insert>
+
+	<update id="modify" parameterType="WorkDailyReport">
+		UPDATE DSP_WORKER_SUPPORT
+		SET
+		PERSONID = #{personid}
+		, SUPPORTTIME_FROM = #{supporttimeFrom}
+		, SUPPORTTIME_TO = #{supporttimeTo}
+		, LINEID = #{lineid}
+		, MANHOUR = #{manhour}
+		, EVENTTIME = GETDATE()
+		WHERE
+		DATASEQ =
+		#{dataseq}
+	</update>
+	
+	<update id="remove" parameterType="list">
+		UPDATE DSP_WORKER_SUPPORT
+		SET ISUSABLE= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index"
+			separator="," open="(" close=")">
+			#{data}
+		</foreach>
+	</update>
 
 </mapper>

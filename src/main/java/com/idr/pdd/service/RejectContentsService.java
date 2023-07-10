@@ -35,4 +35,16 @@ public class RejectContentsService {
 		
 		return mapper.findAll(param);
 	}
+
+	public int save(RejectContents param) {
+		return mapper.create(param);
+	}
+
+	public int modify(RejectContents param) {
+		return mapper.modify(param);
+	}
+
+	public int remove(List<Integer> param) {
+		return mapper.remove(param);
+	}
 }

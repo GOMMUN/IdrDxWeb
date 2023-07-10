@@ -51,7 +51,7 @@ public class WorkerInputController {
 	@ResponseBody
 	@PutMapping("/modify")
     public int modify(@RequestBody WorkerInput param) {
-		return service.save(param);
+		return service.modify(param);
     }
 	
 	@ResponseBody

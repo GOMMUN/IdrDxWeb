@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.idr.pdd.dto.WorkerInput;
+import com.idr.pdd.dto.WorkerManhour;
 import com.idr.pdd.mapper.WorkerInputMapper;
 
 @Service
@@ -33,13 +34,15 @@ public class WorkerInputService {
 	}
 
 	public int save(WorkerInput param) {
-		if(param.getDataseq() == 0) {
-			return mapper.create(param);
-		}else {
-			return mapper.modify(param);
-		}
+		
+		return mapper.create(param);
+
 	}
 
+	public int modify(WorkerInput param) {
+		// TODO Auto-generated method stub
+		return mapper.modify(param);
+	}
 
 
 	public int remove(List<Integer> param) {

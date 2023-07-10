@@ -37,4 +37,17 @@ public class NotoperateContentsService {
 		
 		return mapper.findAll(param);
 	}
+
+	public int save(NotoperateContents param) {
+		return mapper.create(param);
+	}
+
+	public int modify(NotoperateContents param) {
+		return mapper.modify(param);
+	}
+
+	public int remove(List<Integer> param) {
+		return mapper.remove(param);
+	}
+
 }

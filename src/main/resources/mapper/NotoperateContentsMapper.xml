@@ -33,7 +33,67 @@
         FROM DSP_NOTOPERATE_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
 		ON A.WORKDAILY_SEQ = B.DATASEQ 
         WHERE 1=1
+        	AND A.ISUSABLE = 'Usable'
         	AND WORKDAILY_SEQ = #{workdailySeq}
+        	
     </select>
+    
+     <insert id="create" parameterType="NotoperateContents">
+		 INSERT INTO DSP_NOTOPERATE_CONTENTS (
+             WORKDAILY_SEQ
+             , NOTOPERATETIME_FROM
+             , NOTOPERATETIME_TO
+             , HANDS
+             , MANHOUR
+             , CAUSE
+             ,CORRECTIVE_ACTION
+             ,CREATOR
+			 ,CREATETIME
+			 ,EVENT
+			 ,EVENTUSER
+			 ,EVENTTIME
+			 ,ISUSABLE
+        )
+        VALUES (
+            #{workdailySeq},
+			#{notoperatetimeFrom},
+			#{notoperatetimeTo},
+			#{hands},
+			#{manhour},
+			#{cause},
+			#{correctiveaction},
+			#{creator},
+			GETDATE(),
+			#{event},
+			#{eventuser},
+			#{eventtime},
+			'Usable'
+        );
+
+	</insert>
+
+	<update id="modify" parameterType="WorkDailyReport">
+		UPDATE DSP_NOTOPERATE_CONTENTS
+		SET
+			 NOTOPERATETIME_FROM= #{notoperatetimeFrom}
+             , NOTOPERATETIME_TO= #{notoperatetimeTo}
+             , HANDS= #{hands}
+             , MANHOUR= #{manhour}
+             , CAUSE= #{cause}
+             ,CORRECTIVE_ACTION= #{correctiveaction}
+             , EVENTTIME = GETDATE()
+		WHERE
+		DATASEQ = #{dataseq}
+	</update>
+
+	<update id="remove" parameterType="list">
+		UPDATE DSP_NOTOPERATE_CONTENTS
+		SET ISUSABLE= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index"
+			separator="," open="(" close=")">
+			#{data}
+		</foreach>
+	</update>
 
 </mapper>

@@ -13,4 +13,7 @@ public interface WorkerSupportMapper {
 
 	List<WorkerSupport> findAll(WorkerSupport param);
 	WorkerSupport find();
+	int create(WorkerSupport param);
+	int modify(WorkerSupport param);
+	int remove(List<Integer> param);
 }

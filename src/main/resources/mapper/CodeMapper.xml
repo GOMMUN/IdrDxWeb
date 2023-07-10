@@ -15,5 +15,7 @@
         	AND COMM_GRP_CD = #{commGrpCd}
         </if>
     </select>
+    
+
 
 </mapper>

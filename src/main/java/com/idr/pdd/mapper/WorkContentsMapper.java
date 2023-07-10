@@ -14,4 +14,7 @@ public interface WorkContentsMapper {
 
 	List<WorkContents> findAll(WorkContents param);
 	WorkContents find();
+	int create(WorkContents param);
+	int remove(List<Integer> param);
+	int modify(WorkContents param);
 }

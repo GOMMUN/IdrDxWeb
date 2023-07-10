@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.ModelMapper">
+
+
+     <select id="modelfind"  resultType="ModelNM">
+        SELECT 
+        	MODELID AS MODELID,
+        	MODELNAME AS MODELNAME
+        FROM DSP_MODEL
+        WHERE 1=1
+    </select>
+
+</mapper>

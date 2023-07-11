@@ -33,7 +33,7 @@ function initSetting() {
 
 function code() {
 	factroy();		// 공장코드 조회
-	block();
+	//block();
 	line();
 	shift();		// 주/야간구분 코드 조회
 	input_item();

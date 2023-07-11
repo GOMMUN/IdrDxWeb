@@ -67,12 +67,12 @@
 									<th data-field="workDate" data-sortable="true" data-align="center">날짜</th>
 									<th data-field="factoryname" data-sortable="true" data-align="center">공장</th>
 									<th data-field="linename" data-sortable="true" data-align="center">라인명</th>
-									<th data-field="blockname" data-sortable="true" data-align="center">블록명</th>
-									<th data-field="groupname" data-sortable="true" data-align="center">조구분</th>
+									<!--<th data-field="blockname" data-sortable="true" data-align="center">블록명</th>-->
+									<!--<th data-field="groupname" data-sortable="true" data-align="center">조구분</th>-->
 									<th data-field="shiftname" data-sortable="true" data-align="center">주/야구분</th>
 									<th data-field="register" data-sortable="true" data-align="center">작성자</th>
-									<th data-field="reviewer" data-sortable="true" data-align="center">검토자</th>
-									<th data-field="approver" data-sortable="true" data-align="center">승인자</th>
+									<!--<th data-field="reviewer" data-sortable="true" data-align="center">검토자</th>-->
+									<!--<th data-field="approver" data-sortable="true" data-align="center">승인자</th>-->
 									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
 										data-formatter="workDailyReportOperateFormatter" data-events="operateEvents">#
 									</th>
@@ -341,27 +341,16 @@
 											</div>
 										</div>
 										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
+											<!--<div class="col-sm-6 mb-3 mb-sm-0">
 												<select id="blockCodes" name="blockid"
 													class="form-select-custom form-control-user" aria-label="블록">
 													<option value="">블록 선택</option>
 												</select>
-											</div>
+											</div>-->
 											<div class="col-sm-6">
 												<select id="lineCodes" name="lineid"
 													class="form-select-custom form-control-user" aria-label="라인">
 													<option value="">라인 선택</option>
-												</select>
-											</div>
-										</div>
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<!-- 										<input type="text" name="groupid" class="form-control-custom form-control-user" id="" placeholder="조구분"> -->
-												<select id="groupCodes" name="groupid"
-													class="form-select-custom form-control-user" aria-label="조구분">
-													<option value="">조구분 선택</option>
-													<option value="A">A조</option>
-													<option value="B">B조</option>
 												</select>
 											</div>
 											<div class="col-sm-6">
@@ -372,6 +361,24 @@
 												</select>
 											</div>
 										</div>
+										<!--<div class="form-group row">
+											<div class="col-sm-6 mb-3 mb-sm-0">
+												<select id="groupCodes" name="groupid"
+													class="form-select-custom form-control-user" aria-label="조구분">
+													<option value="">조구분 선택</option>
+													<option value="A">A조</option>
+													<option value="B">B조</option>
+												</select>
+											</div>
+											<div class="col-sm-6">
+									
+												<select id="shiftCodes" name="shiftid"
+													class="form-select-custom form-control-user" aria-label="주/야구분">
+													<option value="">주/야구분 선택</option>
+												</select>
+											</div>
+										</div>-->
+										<!--
 										<div class="form-group row">
 											<div class="col-sm-6 mb-3 mb-sm-0">
 												<input type="text" name="approver"
@@ -383,7 +390,7 @@
 													class="form-control-custom form-control-user" id=""
 													placeholder="승인자">
 											</div>
-										</div>
+										</div> -->
 										<div class="form-group">
 											<input type="text" name="notes"
 												class="form-control-custom form-control-user" id="" placeholder="특이사항">
@@ -786,7 +793,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="modal fade" id="addNonOperationModal" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -835,7 +842,7 @@
 													placeholder='조치사항'>
 											</div>
 										</div>
-										
+
 										<hr>
 										<div class="row">
 											<div class="col-lg-10">

@@ -7,6 +7,7 @@
 
     <select id="findAll" parameterType="RejectContents" resultType="RejectContents">
         SELECT 
+        	ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
         	A.DATASEQ, 
         	A.WORKDAILY_SEQ,
         	B.RULESYSID, 
@@ -17,6 +18,7 @@
         	A.OPERATIONID, 
         	A.REJECT_ITEMID, 
         	A.MODELID, 
+        	(SELECT MODELNAME  FROM DSP_MODEL WHERE MODELID in(A.MODELID) AND FACTORYID in(B.FACTORYID)) AS MODELNAME,
         	A.FIRSTTIME_REJECT_QTY, 
         	A.REWORK_REJECT_QTY, 
         	A.IMAGES, 

@@ -7,6 +7,7 @@
 
     <select id="findAll" parameterType="NotoperateContents" resultType="NotoperateContents">
         SELECT 
+        	ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
         	A.DATASEQ, 
         	A.WORKDAILY_SEQ,
         	B.RULESYSID, 

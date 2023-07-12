@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.LogisticsPerformanceMapper">
+
+    <select id="find" parameterType="Map" resultType="LogisticsPerformance">
+        SELECT
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			DATASEQ, 
+			LOGISTICS_ID, 
+			LOGISTICS_NAME, 
+			OPERATING_TIME, 
+			START_TIME, 
+			END_TIME, 
+			STARTING_EQUIPMENT, 
+			END_EQUIPMENT, 
+			LOADING_TIME, 
+			UNLOADING_TIME, 
+			ACTION_TYPE, 
+			CREATOR, 
+			CREATETIME, 
+			EVENT, 
+			EVENTUSER, 
+			EVENTTIME, 
+			ISUSABLE 
+		FROM SIMULLATOR_LOGISTICS_PERFORMANCE
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+       	AND (  LOGISTICS_ID LIKE CONCAT('%', #{search}, '%') 
+			OR LOGISTICS_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR OPERATING_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR START_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR END_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR STARTING_EQUIPMENT LIKE CONCAT('%', #{search}, '%') 
+			OR END_EQUIPMENT LIKE CONCAT('%', #{search}, '%') 
+			OR LOADING_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR UNLOADING_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR ACTION_TYPE LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+		ORDER BY ROWNUM ASC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+    
+    <select id="total" parameterType="String" resultType="Integer">
+        SELECT
+			COUNT(*)
+		FROM SIMULLATOR_LOGISTICS_PERFORMANCE
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+    	  AND (  LOGISTICS_ID LIKE CONCAT('%', #{search}, '%') 
+			OR LOGISTICS_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR OPERATING_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR START_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR END_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR STARTING_EQUIPMENT LIKE CONCAT('%', #{search}, '%') 
+			OR END_EQUIPMENT LIKE CONCAT('%', #{search}, '%') 
+			OR LOADING_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR UNLOADING_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR ACTION_TYPE LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+    </select>
+    
+    <insert id="create" parameterType="LogisticsPerformance" >
+        INSERT INTO SIMULLATOR_LOGISTICS_PERFORMANCE (
+        	LOGISTICS_ID, 
+        	LOGISTICS_NAME, 
+        	OPERATING_TIME, 
+        	START_TIME, 
+        	END_TIME, 
+        	STARTING_EQUIPMENT, 
+        	END_EQUIPMENT, 
+        	LOADING_TIME, 
+        	UNLOADING_TIME, 
+        	ACTION_TYPE
+        ) VALUES(
+        	#{logisticsid}, 
+        	#{logisticsname}, 
+        	#{operatingtime}, 
+        	#{starttime}, 
+        	#{endtime}, 
+        	#{startingequipment}, 
+        	#{endequipment}, 
+        	#{loadingtime}, 
+        	#{unloadingtime}, 
+        	#{actiontype}
+        )
+    </insert>
+
+</mapper>

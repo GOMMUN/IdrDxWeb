@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.ProductInformationMapper">
+
+    <select id="find" parameterType="Map" resultType="ProductInformation">
+        SELECT
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			DATASEQ, 
+			ITEM_ID, 
+			ITEM_NAME, 
+			FLOW_ID, 
+			FLOW_NAME, 
+			PROCESS_ORDER, 
+			PROCESS_ID, 
+			PROCESS_NAME, 
+			PROCESS_TYPE, 
+			PROCESS_TIME, 			
+			CONNECT_FLOW, 
+			INPUT_LOT_ID, 
+			INPUT_LOT_NAME,
+			INPUT_LOT_SIZE,
+			INPUT_LOT_UNIT,
+			INPUT_LOT_NUM,
+			CREATE_LOT_ID,
+			CREATE_LOT_NAME,
+			CREATE_LOT_SIZE,
+			CREATE_LOT_UNIT,
+			CREATE_LOT_NUM,
+			PRE_PROCESS_WORK,
+			POST_PROCESS_WORK,
+			EQUIPMENTNAME,
+			CREATOR, 
+			CREATETIME, 
+			EVENT, 
+			EVENTUSER, 
+			EVENTTIME, 
+			ISUSABLE 
+		FROM SIMULLATOR_PRODUCT_INFORMATION
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+       	AND (  ITEM_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_ID LIKE CONCAT('%', #{search}, '%') 
+			OR FLOW_ID LIKE CONCAT('%', #{search}, '%') 
+			OR FLOW_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_ORDER LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_ID LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_TIME LIKE CONCAT('%', #{search}, '%') 			
+			OR CONNECT_FLOW LIKE CONCAT('%', #{search}, '%') 
+			OR INPUT_LOT_ID LIKE CONCAT('%', #{search}, '%') 
+			OR INPUT_LOT_NAME LIKE CONCAT('%', #{search}, '%') 		
+			OR INPUT_LOT_SIZE LIKE CONCAT('%', #{search}, '%') 
+			OR INPUT_LOT_UNIT LIKE CONCAT('%', #{search}, '%') 
+			OR INPUT_LOT_NUM LIKE CONCAT('%', #{search}, '%') 
+			OR CREATE_LOT_ID LIKE CONCAT('%', #{search}, '%') 
+			OR CREATE_LOT_NAME LIKE CONCAT('%', #{search}, '%') 		
+			OR CREATE_LOT_SIZE LIKE CONCAT('%', #{search}, '%') 
+			OR CREATE_LOT_UNIT LIKE CONCAT('%', #{search}, '%') 
+			OR CREATE_LOT_NUM LIKE CONCAT('%', #{search}, '%') 
+			OR PRE_PROCESS_WORK LIKE CONCAT('%', #{search}, '%') 
+			OR POST_PROCESS_WORK LIKE CONCAT('%', #{search}, '%') 
+			OR EQUIPMENTNAME LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+		ORDER BY ROWNUM ASC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+    
+    <select id="total" parameterType="String" resultType="Integer">
+        SELECT
+			COUNT(*)
+		FROM SIMULLATOR_PRODUCT_INFORMATION
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+    	  		AND (  ITEM_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_ID LIKE CONCAT('%', #{search}, '%') 
+			OR FLOW_ID LIKE CONCAT('%', #{search}, '%') 
+			OR FLOW_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_ORDER LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_ID LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESS_TIME LIKE CONCAT('%', #{search}, '%') 			
+			OR CONNECT_FLOW LIKE CONCAT('%', #{search}, '%') 
+			OR INPUT_LOT_ID LIKE CONCAT('%', #{search}, '%') 
+			OR INPUT_LOT_NAME LIKE CONCAT('%', #{search}, '%') 		
+			OR INPUT_LOT_SIZE LIKE CONCAT('%', #{search}, '%') 
+			OR INPUT_LOT_UNIT LIKE CONCAT('%', #{search}, '%') 
+			OR INPUT_LOT_NUM LIKE CONCAT('%', #{search}, '%') 
+			OR CREATE_LOT_ID LIKE CONCAT('%', #{search}, '%') 
+			OR CREATE_LOT_NAME LIKE CONCAT('%', #{search}, '%') 		
+			OR CREATE_LOT_SIZE LIKE CONCAT('%', #{search}, '%') 
+			OR CREATE_LOT_UNIT LIKE CONCAT('%', #{search}, '%') 
+			OR CREATE_LOT_NUM LIKE CONCAT('%', #{search}, '%') 
+			OR PRE_PROCESS_WORK LIKE CONCAT('%', #{search}, '%') 
+			OR POST_PROCESS_WORK LIKE CONCAT('%', #{search}, '%') 
+			OR EQUIPMENTNAME LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+    </select>
+    
+    <insert id="create" parameterType="ProductInformation" >
+        INSERT INTO SIMULLATOR_PRODUCT_INFORMATION (
+        	ITEM_ID, 
+			ITEM_NAME, 
+			FLOW_ID, 
+			FLOW_NAME, 
+			PROCESS_ORDER, 
+			PROCESS_ID, 
+			PROCESS_NAME, 
+			PROCESS_TYPE, 
+			PROCESS_TIME, 			
+			CONNECT_FLOW, 
+			INPUT_LOT_ID, 
+			INPUT_LOT_NAME,
+			INPUT_LOT_SIZE,
+			INPUT_LOT_UNIT,
+			INPUT_LOT_NUM,
+			CREATE_LOT_ID,
+			CREATE_LOT_NAME,
+			CREATE_LOT_SIZE,
+			CREATE_LOT_UNIT,
+			CREATE_LOT_NUM,
+			PRE_PROCESS_WORK,
+			POST_PROCESS_WORK,
+			EQUIPMENTNAME
+        ) VALUES(
+        	#{itemid}, 
+        	#{itemname}, 
+        	#{flowid}, 
+        	#{flowname}, 
+        	#{processorder}, 
+        	#{processid}, 
+        	#{processname}, 
+        	#{processtype}, 
+        	#{processtime},
+        	#{connectflow},
+        	#{inputlotid},
+        	#{inputlotname},
+        	#{inputlotsize}, 
+        	#{inputlotunit}, 
+        	#{inputlotnum}, 
+        	#{createlotid}, 
+        	#{createlotname}, 
+        	#{createlotsize}, 
+        	#{createlotunit}, 
+        	#{createlotnum}, 
+        	#{preprocesswork},
+        	#{postprocesswork},
+        	#{equipmentname} 	
+        )
+    </insert>
+
+</mapper>

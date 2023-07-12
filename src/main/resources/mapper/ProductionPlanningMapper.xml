@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.ProductionPlanningMapper">
+
+    <select id="find" parameterType="Map" resultType="ProductionPlanning">
+        SELECT
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			DATASEQ, 
+			ORDER_ID, 
+			ORDER_NAME, 
+			ITEM_ID, 
+			ITEM_NAME, 
+			LOT_ID, 
+			LOT_NAME, 
+			TOTAL_PRODUCTION_LOT, 
+			STATE, 
+			IMPORTANCE, 
+			START_TIME, 
+			DELIVERY, 
+			GROUP_ID, 
+			ORDER_WITHIN_GROUP, 
+			CREATOR, 
+			CREATETIME, 
+			EVENT, 
+			EVENTUSER, 
+			EVENTTIME, 
+			ISUSABLE 
+		FROM SIMULLATOR_PRODUCTION_PLANNING
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+       	AND (  ORDER_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDER_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR LOT_ID LIKE CONCAT('%', #{search}, '%') 
+			OR LOT_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR TOTAL_PRODUCTION_LOT LIKE CONCAT('%', #{search}, '%') 
+			OR STATE LIKE CONCAT('%', #{search}, '%') 
+			OR IMPORTANCE LIKE CONCAT('%', #{search}, '%') 
+			OR START_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR DELIVERY LIKE CONCAT('%', #{search}, '%') 
+			OR GROUP_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDER_WITHIN_GROUP LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+		ORDER BY ROWNUM ASC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+    
+    <select id="total" parameterType="String" resultType="Integer">
+        SELECT
+			COUNT(*)
+		FROM SIMULLATOR_PRODUCTION_PLANNING
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+    	  	AND (  ORDER_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDER_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ITEM_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR LOT_ID LIKE CONCAT('%', #{search}, '%') 
+			OR LOT_NAME LIKE CONCAT('%', #{search}, '%') 
+			OR TOTAL_PRODUCTION_LOT LIKE CONCAT('%', #{search}, '%') 
+			OR STATE LIKE CONCAT('%', #{search}, '%') 
+			OR IMPORTANCE LIKE CONCAT('%', #{search}, '%') 
+			OR START_TIME LIKE CONCAT('%', #{search}, '%') 
+			OR DELIVERY LIKE CONCAT('%', #{search}, '%') 
+			OR GROUP_ID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDER_WITHIN_GROUP LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+    </select>
+    
+    <insert id="create" parameterType="ProductionPlanning" >
+        INSERT INTO SIMULLATOR_PRODUCTION_PLANNING (
+        	ORDER_ID, 
+			ORDER_NAME, 
+			ITEM_ID, 
+			ITEM_NAME, 
+			LOT_ID, 
+			LOT_NAME, 
+			TOTAL_PRODUCTION_LOT, 
+			IMPORTANCE, 
+			START_TIME, 
+			DELIVERY, 
+			GROUP_ID, 
+			ORDER_WITHIN_GROUP
+        ) VALUES(
+        	#{orderid}, 
+        	#{ordername}, 
+        	#{itemid}, 
+        	#{itemname}, 
+        	#{lotid}, 
+        	#{lotname}, 
+        	#{totalproductionlot}, 
+        	#{importance}, 
+        	#{starttime},
+        	#{delivery},
+        	#{groupid},
+        	#{orderwithingroup}
+        )
+    </insert>
+
+</mapper>

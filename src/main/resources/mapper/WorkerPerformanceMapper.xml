@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.WorkerPerformanceMapper">
+
+    <select id="find" parameterType="Map" resultType="WorkerPerformance">
+        SELECT
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			DATASEQ, 
+			WORKERNAME, 
+			WORKERID, 
+			ORDERID, 
+			ORDERNAME, 
+			ITEMID, 
+			ITEMNAME, 
+			PROCESSID, 
+			PROCESSNAME, 
+			PROCESSTIME, 
+			EQUIPID, 
+			STARTTIME, 
+			ENDTIME, 
+			DIVISIONTYPE, 
+			CREATOR, 
+			CREATETIME, 
+			EVENT, 
+			EVENTUSER, 
+			EVENTTIME, 
+			ISUSABLE 
+		FROM SIMULLATOR_WORKER_PERFORMANCE
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+       	AND (  WORKERNAME LIKE CONCAT('%', #{search}, '%') 
+			OR WORKERID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDERID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDERNAME LIKE CONCAT('%', #{search}, '%') 
+			OR ITEMID LIKE CONCAT('%', #{search}, '%') 
+			OR ITEMNAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESSID LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESSNAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESSTIME LIKE CONCAT('%', #{search}, '%') 
+			OR EQUIPID LIKE CONCAT('%', #{search}, '%') 
+			OR STARTTIME LIKE CONCAT('%', #{search}, '%') 
+			OR ENDTIME LIKE CONCAT('%', #{search}, '%') 
+			OR DIVISIONTYPE LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+		ORDER BY ROWNUM ASC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+    
+    <select id="total" parameterType="String" resultType="Integer">
+        SELECT
+			COUNT(*)
+		FROM SIMULLATOR_WORKER_PERFORMANCE
+		WHERE 1=1 
+		AND ISUSABLE = 'Usabled'
+		<if test='search != null and search != ""'>
+    	  	AND (  WORKERNAME LIKE CONCAT('%', #{search}, '%') 
+			OR WORKERID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDERID LIKE CONCAT('%', #{search}, '%') 
+			OR ORDERNAME LIKE CONCAT('%', #{search}, '%') 
+			OR ITEMID LIKE CONCAT('%', #{search}, '%') 
+			OR ITEMNAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESSID LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESSNAME LIKE CONCAT('%', #{search}, '%') 
+			OR PROCESSTIME LIKE CONCAT('%', #{search}, '%') 
+			OR EQUIPID LIKE CONCAT('%', #{search}, '%') 
+			OR STARTTIME LIKE CONCAT('%', #{search}, '%') 
+			OR ENDTIME LIKE CONCAT('%', #{search}, '%') 
+			OR DIVISIONTYPE LIKE CONCAT('%', #{search}, '%') 
+		)
+        </if>
+    </select>
+    
+    <insert id="create" parameterType="WorkerPerformance" >
+        INSERT INTO SIMULLATOR_WORKER_PERFORMANCE (
+        	WORKERID, 
+        	WORKERNAME, 
+        	ORDERID, 
+        	ORDERNAME, 
+        	ITEMID, 
+        	ITEMNAME, 
+        	PROCESSID, 
+        	PROCESSNAME, 
+        	PROCESSTIME, 
+        	EQUIPID,
+        	STARTTIME,
+        	ENDTIME,
+        	DIVISIONTYPE
+        ) VALUES(
+        	#{workerid}, 
+        	#{workername}, 
+        	#{orderid}, 
+        	#{ordername}, 
+        	#{itemid}, 
+        	#{itemname}, 
+        	#{processid}, 
+        	#{processname}, 
+        	#{processtime}, 
+        	#{equipid},
+        	#{starttime},
+        	#{endtime},
+        	#{divisiontype}
+        	
+        )
+    </insert>
+
+</mapper>

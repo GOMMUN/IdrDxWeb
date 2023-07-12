@@ -12,12 +12,17 @@
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-primary">작업자정보</h6>
 				</div>
-				<div class="card-header py-3">
-					<strong>작업자정보</strong>
-				</div>
 				<div class="card-body">
-					<table id="workerinfo" data-toggle="table" data-toolbar="" data-height="350"
-						data-click-to-select="false" data-search="true" data-url="/workerinfo/find" data-show-columns="true"
+					<div id="toolbarWorkerInfo">
+						<button type="button" class="btn btn-primary" id="addWorkerinfo">
+							<i class="fa-solid fa-plus"></i> Add
+						</button>
+						<button id="removeWorkerinfo" class="btn btn-danger" disabled>
+							<i class="fa fa-trash"></i> Delete
+						</button>
+					</div>					
+					<table id="workerinfo" data-toggle="table" data-toolbar="#toolbarWorkerInfo" data-height="350"
+						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/workerinfo/find" data-show-columns="true"
 						data-show-columns-toggle-all="true">
 						<thead class="thead-light">
 							<tr>
@@ -33,14 +38,31 @@
 				<div>
 					<div class="card-header">
 						<div class="row">
-							<label class="control-label font-weight-bold col-lg-6">작업자 ID<input type="text" id="workerid" disabled class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">작업자명<input type="text" id="workernm" disabled class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">주/야간<input type="text" id="daynight" disabled class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">사용유무<input type="text" id="useyn" disabled class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">작업자 ID<input type="text" id="workerid" name="workerid" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">작업자명<input type="text" id="workernm" name="workernm" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">주/야간
+								<select id="daynight" name="daynight"
+									class="form-select-custom form-control col-lg-12" aria-label="사용여부">
+									<option value="DAY">DAY</option>
+									<option value="NIGHT">NIGHT</option>
+								</select>
+							</label>
+							<label class="control-label font-weight-bold col-lg-6">사용유무
+								<select id="useyn" name="useyn"
+									class="form-select-custom form-control col-lg-12" aria-label="사용여부">
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</label>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class= "float-right">		
+				<button type="button" class="btn btn-primary" id="updateWorkerinfo">
+					<i class="fa-solid"></i> 저장
+				</button>
+			</div>			
 		</div>
 	</div>
 </body>

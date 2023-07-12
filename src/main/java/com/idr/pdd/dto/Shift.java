@@ -8,6 +8,7 @@ public class Shift {
 	private String companyid;
 	private String shiftid;
 	private String factoryid;
+	private String factoryname;
 	private String shiftname;
 	private String shifttype;
 	private String starttime;

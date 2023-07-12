@@ -22,4 +22,12 @@ public class WorkerInfoService {
 		
 		return mapper.findAll();
 	}
+	
+	public int save(CM0401 param) {	
+		return mapper.merge(param);
+	}
+	
+	public int remove(List<CM0401> param) {
+		return mapper.remove(param);
+	}	
 }

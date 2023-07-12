@@ -41,6 +41,7 @@ public class WorkDailyReportController {
 	@ResponseBody
 	@PostMapping("/create")
     public int create(@RequestBody WorkDailyReport param) {
+
 		return service.save(param);
     }
 	

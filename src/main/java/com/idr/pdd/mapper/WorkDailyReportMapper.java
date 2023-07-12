@@ -15,4 +15,5 @@ public interface WorkDailyReportMapper {
 	int create(WorkDailyReport param);
 	int modify(WorkDailyReport param);
 	int remove(List<Integer> param);
+	int validationcheck(WorkDailyReport param);
 }

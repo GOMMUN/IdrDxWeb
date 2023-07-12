@@ -171,10 +171,17 @@ function setWorkDailyReportEventListener() {
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
-				//$gridRemoveBtn.prop('disabled', true);
-				$('#addWorkDailyReportModal').modal('hide');
+				if(data==-1)
+				{
+					alert("중복된 데이터가 있습니다.");
+				}
+				else{
+					$('#addWorkDailyReportModal').modal('hide');
 				alert("저장되었습니다.");
 				workDailyReport();
+				}
+				//$gridRemoveBtn.prop('disabled', true);
+				
 			}
 		});
 	});

@@ -21,7 +21,15 @@ public class WorkDailyReportService {
 	public int save(WorkDailyReport param) {
 		
 		if(param.getDataseq() == 0) {
-			return mapper.create(param);
+			System.out.println(mapper.validationcheck(param));
+			
+			if(mapper.validationcheck(param)>0){
+				return -1;
+			}
+			else{
+				return mapper.create(param);
+			}
+						
 		}else {
 			return mapper.modify(param);
 		}

@@ -9,6 +9,7 @@
         SELECT 
         	*
         FROM DSP_PERSON
+        WHERE FACTORYID in(#{factoryid})
     </select>
 
 </mapper>

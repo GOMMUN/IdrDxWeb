@@ -77,6 +77,7 @@ function setWorkDailyReportEventListener() {
 			workContents($element);
 			rejectContents($element);
 			notoperateContents($element);
+			personfind($element);
 		}
 
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -133,6 +134,7 @@ function setWorkDailyReportEventListener() {
 		data.shiftid = $("select[name=shiftid]").val();
 		data.approver = $("input[name=approver]").val();
 		data.reviewer = $("input[name=reviewer]").val();
+		data.planQty = $("input[name=planqty]").val();
 		data.notes = $("input[name=notes]").val();
 
 		//validation check
@@ -159,6 +161,10 @@ function setWorkDailyReportEventListener() {
 		} else if (data.shiftid == "") {
 			alert("주/야구분을 선택해주세요.");
 			$("select[name=shiftid]").focus();
+			return;
+		}else if (data.planQty == "") {
+			alert("계획수량을 선택해주세요.");
+			$("select[name=planqty]").focus();
 			return;
 		}
 
@@ -199,6 +205,7 @@ function setWorkDailyReportEventListener() {
 			data.shiftid = $("select[name=shiftid]").val();
 			data.approver = $("input[name=approver]").val();
 			data.reviewer = $("input[name=reviewer]").val();
+			data.planQty = $("input[name=planqty]").val();
 			data.notes = $("input[name=notes]").val();
 
 			//validation check
@@ -226,7 +233,11 @@ function setWorkDailyReportEventListener() {
 				alert("주/야구분을 선택해주세요.");
 				$("select[name=shiftid]").focus();
 				return;
-			}
+			}else if (data.planQty == "") {
+			alert("계획수량을 선택해주세요.");
+			$("select[name=planqty]").focus();
+			return;
+		}
 			let url = '/workDailyReport/modify';
 
 			$.ajax({
@@ -1574,6 +1585,29 @@ function rejectContents(data) {
 	})
 }
 
+function personfind(data) {
+	var url = '/person/find';
+
+	var params = {
+		//rulesysid : data.rulesysid,
+		workDailySeq: data.dataseq,
+		factoryid : data.factoryid,
+		//		lineid : data.lineid,
+		//		shiftid : data.shiftid,
+		//		workDate : data.workDate,
+	}
+	
+	$.get(url + '?' + $.param(params)).then(function(res) {
+		$table = $("#selectWorker");
+		$table2 = $("#selectWorkerSupport");
+		
+		$table.bootstrapTable('removeAll');
+		$table.bootstrapTable('append', res);
+		$table2.bootstrapTable('removeAll');
+		$table2.bootstrapTable('append', res);
+	})
+}
+
 function resetWorkDailyReport() {
 	$("input[name=ruleid]").val("");
 	$("input[name=workDate]").val("");
@@ -1601,7 +1635,7 @@ function initWorkDailyReport() {
 		"linename": "", "groupid": "", "groupname": "", "shiftid": "",
 		"shiftname": "", "register": "", "reviewer": "", "approver": "",
 		"notes": "", "creator": "", "createtime": "", "event": "",
-		"eventuser": "", "eventtime": "", "isusable": "", "tid": ""
+		"eventuser": "", "eventtime": "", "isusable": "", "tid": "","planQty": ""
 	};
 
 	return data;

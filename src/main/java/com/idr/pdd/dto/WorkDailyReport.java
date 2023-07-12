@@ -30,4 +30,5 @@ public class WorkDailyReport {
 	private String eventtime;
 	private String isusable;
 	private String tid;
+	private String planQty;
 }

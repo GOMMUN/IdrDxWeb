@@ -69,6 +69,7 @@
 									<th data-field="linename" data-sortable="true" data-align="center">라인명</th>
 									<!--<th data-field="blockname" data-sortable="true" data-align="center">블록명</th>-->
 									<!--<th data-field="groupname" data-sortable="true" data-align="center">조구분</th>-->
+									<th data-field="planQty" data-sortable="true" data-align="center">계획수량</th>
 									<th data-field="shiftname" data-sortable="true" data-align="center">주/야구분</th>
 									<th data-field="register" data-sortable="true" data-align="center">작성자</th>
 									<!--<th data-field="reviewer" data-sortable="true" data-align="center">검토자</th>-->
@@ -165,7 +166,7 @@
 								<i class="fa fa-trash"></i> Delete
 							</button>
 						</div>
-						<table id="workerSupport" data-toggle="table" data-toolbar="#toolbarSupportLine"
+						<table id="workerSupport" data-toggle="table" data-toolbar="#toolbarworkerSupport"
 							data-height="300" data-multiple-select-row="false" data-click-to-select="true"
 							data-search="true" data-show-columns="true" data-show-columns-toggle-all="true">
 							<thead class="thead-light">
@@ -186,6 +187,8 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card shadow mb-4">
@@ -202,7 +205,7 @@
 									<i class="fa fa-trash"></i> Delete
 								</button>
 							</div>
-							<table id="workContents" data-toggle="table" data-toolbar="#toolbar5" data-height="300"
+							<table id="workContents" data-toggle="table" data-toolbar="#toolbarworkContents" data-height="300"
 								data-multiple-select-row="true" data-click-to-select="true" data-search="true"
 								data-show-columns="true" data-show-columns-toggle-all="true">
 								<thead class="thead-light">
@@ -234,6 +237,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="card shadow mb-4">
@@ -241,7 +245,7 @@
 							<h6 class="m-0 font-weight-bold text-primary">부적합내역</h6>
 						</div>
 						<div class="card-body">
-							<div id="toolbarworkContents">
+							<div id="toolbar6">
 								<button type="button" class="btn btn-primary" id="addNonconFormity" data-toggle="modal"
 									data-target="#addNonconFormityModal">
 									<i class="fa-solid fa-plus"></i> Add
@@ -278,7 +282,7 @@
 							<h6 class="m-0 font-weight-bold text-primary">비가동내역</h6>
 						</div>
 						<div class="card-body">
-							<div id="toolbarworkContents">
+							<div id="toolbar7">
 								<button type="button" class="btn btn-primary" id="addNonOperation" data-toggle="modal"
 									data-target="#addNonOperationModal">
 									<i class="fa-solid fa-plus"></i> Add
@@ -392,6 +396,10 @@
 											</div>
 										</div> -->
 										<div class="form-group">
+											<input type="text" name="planqty"
+												class="form-control-custom form-control-user" id="" placeholder="계획수량">
+										</div>
+										<div class="form-group">
 											<input type="text" name="notes"
 												class="form-control-custom form-control-user" id="" placeholder="특이사항">
 										</div>
@@ -436,7 +444,7 @@
 									</div>
 									<div class="modal-body">
 										<table id="selectWorker" data-toggle="table" data-height="345"
-											data-url="person/find" data-click-to-select="true"
+											data-click-to-select="true"
 											data-multiple-select-row="true" data-search="true" data-show-columns="true"
 											data-show-columns-toggle-all="true" data-pagination="false">
 											<thead>
@@ -563,7 +571,7 @@
 									</div>
 									<div class="modal-body">
 										<table id="selectWorkerSupport" data-toggle="table" data-height="345"
-											data-url="person/find" data-click-to-select="true"
+											 data-click-to-select="true"
 											data-multiple-select-row="true" data-search="true" data-show-columns="true"
 											data-show-columns-toggle-all="true" data-pagination="false">
 											<thead>

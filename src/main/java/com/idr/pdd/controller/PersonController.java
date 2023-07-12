@@ -26,8 +26,8 @@ public class PersonController {
 	
 	@ResponseBody
 	@GetMapping("/find")
-    public List<Person> find() {
-		List<Person> list = service.findAll();
+    public List<Person> find(Person param) {
+		List<Person> list = service.findAll(param);
 		return list;
     }
 }

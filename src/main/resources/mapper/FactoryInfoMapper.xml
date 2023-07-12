@@ -23,6 +23,54 @@
          WHERE 1=1
     </select>
     
-    
+	<update id="merge" parameterType="Factory" >
+		MERGE INTO DSP_FACTORY AS A
+		USING (
+			SELECT 1 AS DUM
+		) AS B
+		ON (
+			A.FACTORYID = #{factoryid}
+			)
+		WHEN MATCHED THEN
+			UPDATE SET 
+				 FACTORYNAME	= #{factoryname}
+				,DESCRIPTION	= #{description}
+				,ERPPLANT		= #{erpplant}
+				,FACTORYTYPE	= #{factorytype}
+				,ISUSABLE		= #{isusable}
+				,TID			= #{tid}
+		WHEN NOT MATCHED THEN 
+			INSERT(
+				 COMPANYID
+				,FACTORYID
+				,FACTORYNAME
+				,DESCRIPTION
+				,ERPPLANT
+				,FACTORYTYPE
+				,ISUSABLE
+				,TID			
+			) 
+			VALUES(
+				 'dx'
+				,#{factoryid}
+				,#{factoryname}
+				,#{description}				
+				,#{erpplant}
+				,#{factorytype}
+				,#{isusable}
+				,#{tid}				
+			)
+		;
+	</update>
+
+    <update id="remove" parameterType="list">
+		<foreach collection="list" item="data" open="" close="" separator=";">
+		UPDATE DSP_FACTORY 
+		SET ISUSABLE= 'N'
+    	WHERE
+			COMPANYID = 'dx' 
+			AND FACTORYID = #{data.factoryid} 
+		</foreach>
+    </update>    
 
 </mapper>

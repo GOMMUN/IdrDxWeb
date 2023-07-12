@@ -6,24 +6,76 @@
 <mapper namespace="com.idr.pdd.mapper.GroupShiftInfoMapper">
 
     <select id="findAll" resultType="Shift">
-          SELECT COMPANYID
-             , SHIFTID
-             , FACTORYID
-             , SHIFTNAME
-             , SHIFTTYPE
-             , cast((substring(STARTTIME,0,3)+':'+substring(STARTTIME,3,2)+':'+substring(STARTTIME,5,2)) as varchar) STARTTIME 
-             , cast((substring(ENDTIME,0,3)+':'+substring(ENDTIME,3,2)+':'+substring(ENDTIME,5,2)) as varchar) ENDTIME
-             , CREATOR
-             , CREATETIME
-             , EVENT
-             , EVENTUSER
-             , EVENTTIME
-             , ISUSABLE
-             , TID
-          FROM DSP_SHIFT
-         WHERE 1=1
-    </select>
+		SELECT
+			   A.COMPANYID
+             , A.SHIFTID
+             , A.FACTORYID
+             ,(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
+             , A.SHIFTNAME
+             , A.SHIFTTYPE
+             , A.STARTTIME 
+             , A.ENDTIME
+             , A.CREATOR
+             , A.CREATETIME
+             , A.EVENT
+             , A.EVENTUSER
+             , A.EVENTTIME
+             , A.ISUSABLE
+             , A.TID
+		FROM DSP_SHIFT A
+		WHERE 1=1
+    </select>  
     
-    
+	<update id="merge" parameterType="Shift" >
+		MERGE INTO DSP_SHIFT AS A
+		USING (
+			SELECT 1 AS DUM
+		) AS B
+		ON (
+			A.COMPANYID = #{companyid} AND
+			A.FACTORYID = #{factoryid} AND
+			A.SHIFTID = #{shiftid}
+			)
+		WHEN MATCHED THEN
+			UPDATE SET 
+				 SHIFTNAME		= #{shiftname}
+				,SHIFTTYPE		= #{shifttype}
+				,STARTTIME		= #{starttime}
+				,ENDTIME		= #{endtime}
+				,ISUSABLE		= #{isusable}
+		WHEN NOT MATCHED THEN 
+			INSERT(
+				 COMPANYID
+				,FACTORYID
+				,SHIFTID
+				,SHIFTNAME
+				,SHIFTTYPE
+				,STARTTIME
+				,ENDTIME
+				,ISUSABLE				
+			) 
+			VALUES(
+				 'dx'
+				,#{factoryid}
+				,#{shiftid}
+				,#{shiftname}				
+				,#{shifttype}
+				,#{starttime}
+				,#{endtime}
+				,#{isusable}				
+			)
+		;
+	</update>
+
+    <update id="remove" parameterType="list">
+		<foreach collection="list" item="data" open="" close="" separator=";">
+		UPDATE DSP_SHIFT 
+		SET ISUSABLE= 'N'
+    	WHERE
+			COMPANYID = 'dx' 
+			AND FACTORYID = #{data.factoryid} 
+			AND SHIFTID = #{data.shiftid}
+		</foreach>
+    </update>
 
 </mapper>

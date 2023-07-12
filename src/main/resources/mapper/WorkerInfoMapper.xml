@@ -15,10 +15,51 @@
 		, USE_YN
 		FROM CM0401
 		WHERE 1=1
-
 		ORDER BY WORKER_ID DESC
 	</select>
 
+	<update id="merge" parameterType="CM0401" >
+		MERGE INTO CM0401 AS A
+		USING (
+			SELECT 1 AS DUM
+		) AS B
+		ON (
+			A.WORKER_ID = #{workerid}
+			)
+		WHEN MATCHED THEN
+			UPDATE SET 
+				 WORKER_NM		= #{workernm}
+				,DAY_NIGHT		= #{daynight}
+				,USE_YN		= #{useyn}
+		WHEN NOT MATCHED THEN 
+			INSERT(
+				 COMPANY_CD
+				,BIZ_CD
+				,WORKER_ID
+				,WORKER_NM
+				,DAY_NIGHT
+				,USE_YN			
+			) 
+			VALUES(
+				 'dx'
+				,'SP1'
+				,#{workerid}
+				,#{workernm}				
+				,#{daynight}
+				,#{useyn}			
+			)
+		;
+	</update>
 
+    <update id="remove" parameterType="list">
+		<foreach collection="list" item="data" open="" close="" separator=";">
+		UPDATE CM0401 
+		SET USE_YN= 'N'
+    	WHERE
+			COMPANY_CD = 'dx' 
+			AND BIZ_CD = 'SP1'
+			AND WORKER_ID = #{data.workerid}
+		</foreach>
+    </update>
 
 </mapper>

@@ -12,19 +12,25 @@
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-primary">그룹/Shift 정보</h6>
 				</div>
-				<div class="card-header py-3">
-					<strong>그룹/Shift 정보</strong>
-				</div>
 				<div class="card-body">
-					<table id="shiftinfo" data-toggle="table" data-toolbar="" data-height="350"
-						data-click-to-select="false" data-search="true" data-url="/groupshift/find" data-show-columns="true"
+					<div id="toolbarShiftinfo">
+						<button type="button" class="btn btn-primary" id="addShiftinfo">
+							<i class="fa-solid fa-plus"></i> Add
+						</button>
+						<button id="removeShiftinfo" class="btn btn-danger" disabled>
+							<i class="fa fa-trash"></i> Delete
+						</button>
+					</div>
+					<table id="shiftinfo" data-toggle="table" data-toolbar="#toolbarShiftinfo" data-height="350"
+						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/groupshift/find" data-show-columns="true"
 						data-show-columns-toggle-all="true">
 						<thead class="thead-light">
 							<tr>
 								<th data-field="state" data-checkbox="true"></th>
-								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>
+<!--								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>-->
 								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
-								<th data-field="shiftid" data-sortable="true" data-align="center">그룹/SHIFT 코드</th>
+								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
+								<th hidden data-field="shiftid" data-sortable="true" data-align="center">그룹/SHIFT 코드</th>
 								<th data-field="shiftname" data-sortable="true" data-align="center">그룹/SHIFT 명</th>
 								<th data-field="shifttype" data-sortable="true" data-align="center">그룹/SHIFT 타입</th>
 								<th data-field="starttime" data-sortable="true" data-align="center">시작시간</th>
@@ -37,15 +43,41 @@
 				<div>
 					<div class="card-header">
 						<div class="row">
-							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 코드 <input type="text" id="shiftid" disabled class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 명<input type="text" id="shiftname" disabled class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 타입<input type="text" id="shifttype" disabled class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">시작시간<input type="text" id="starttime" disabled class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">종료시간<input type="text" id="endtime" disabled class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">사용여부<input type="text" id="isusable" disabled class="form-control col-lg-12 "></label>
+							<!--<label class="control-label font-weight-bold col-lg-6">회사코드 <input type="text" id="companyid" name="companyid" disabled class="form-control col-lg-12 " ></label>-->
+							<label hidden class="control-label font-weight-bold col-lg-6">공장코드 <input type="text" id="factoryid" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">공장
+								<br/> 
+								<select id="factoryCodes" name="factoryid"
+									class="form-select-custom form-control col-lg-12" aria-label="공장">
+									<option value="">공장 선택</option>
+								</select>								
+							</label>
+							<label hidden class="control-label font-weight-bold col-lg-6">그룹/SHIFT 코드 <input type="text" id="shiftid" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 명
+								<select id="shiftCodes" name="shiftid"
+									class="form-select-custom form-control col-lg-12" aria-label="주/야구분">
+									<option value="">주/야구분 선택</option>
+								</select>
+							</label>
+							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 타입<input type="text" id="shifttype" name="shifttype" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">시작시간<input type="text" id="starttime" name="starttime" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">종료시간<input type="text" id="endtime" name="endtime" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">사용여부
+								<select id="isusable" name="isusable"
+									class="form-select-custom form-control col-lg-12" aria-label="사용여부">
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</label>
 						</div>
 					</div>
+
 				</div>
+			</div>
+			<div class= "float-right">		
+				<button type="button" class="btn btn-primary" id="updateShiftinfo">
+					<i class="fa-solid"></i> 저장
+				</button>
 			</div>
 		</div>
 	</div>

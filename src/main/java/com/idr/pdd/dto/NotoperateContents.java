@@ -18,7 +18,7 @@ public class NotoperateContents {
 	private int hands;
 	private int manhour;
 	private String cause;
-	private String correctiveaction;
+	private String correctiveAction;
 	private String notes;
 	private String images;
 	private String movies;

@@ -17,7 +17,8 @@
 			PROCESS_ID, 
 			PROCESS_NAME, 
 			PROCESS_TYPE, 
-			PROCESS_TIME, 			
+			PROCESS_TIMEM, 		
+			PROCESS_TIMES, 		
 			CONNECT_FLOW, 
 			INPUT_LOT_ID, 
 			INPUT_LOT_NAME,
@@ -29,8 +30,10 @@
 			CREATE_LOT_SIZE,
 			CREATE_LOT_UNIT,
 			CREATE_LOT_NUM,
-			PRE_PROCESS_WORK,
-			POST_PROCESS_WORK,
+			PRE_PROCESS_WORKM,
+			PRE_PROCESS_WORKS,
+			POST_PROCESS_WORKM,
+			POST_PROCESS_WORKS,
 			EQUIPMENTNAME,
 			CREATOR, 
 			CREATETIME, 
@@ -51,7 +54,8 @@
 			OR PROCESS_ID LIKE CONCAT('%', #{search}, '%') 
 			OR PROCESS_NAME LIKE CONCAT('%', #{search}, '%') 
 			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 
-			OR PROCESS_TIME LIKE CONCAT('%', #{search}, '%') 			
+			OR PROCESS_TIMEM LIKE CONCAT('%', #{search}, '%')
+			OR PROCESS_TIMES LIKE CONCAT('%', #{search}, '%') 			
 			OR CONNECT_FLOW LIKE CONCAT('%', #{search}, '%') 
 			OR INPUT_LOT_ID LIKE CONCAT('%', #{search}, '%') 
 			OR INPUT_LOT_NAME LIKE CONCAT('%', #{search}, '%') 		
@@ -63,8 +67,10 @@
 			OR CREATE_LOT_SIZE LIKE CONCAT('%', #{search}, '%') 
 			OR CREATE_LOT_UNIT LIKE CONCAT('%', #{search}, '%') 
 			OR CREATE_LOT_NUM LIKE CONCAT('%', #{search}, '%') 
-			OR PRE_PROCESS_WORK LIKE CONCAT('%', #{search}, '%') 
-			OR POST_PROCESS_WORK LIKE CONCAT('%', #{search}, '%') 
+			OR PRE_PROCESS_WORKM LIKE CONCAT('%', #{search}, '%') 
+			OR PRE_PROCESS_WORKS LIKE CONCAT('%', #{search}, '%') 
+			OR POST_PROCESS_WORKM LIKE CONCAT('%', #{search}, '%') 
+			OR POST_PROCESS_WORKS LIKE CONCAT('%', #{search}, '%') 
 			OR EQUIPMENTNAME LIKE CONCAT('%', #{search}, '%') 
 		)
         </if>
@@ -88,7 +94,8 @@
 			OR PROCESS_ID LIKE CONCAT('%', #{search}, '%') 
 			OR PROCESS_NAME LIKE CONCAT('%', #{search}, '%') 
 			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 
-			OR PROCESS_TIME LIKE CONCAT('%', #{search}, '%') 			
+			OR PROCESS_TIMEM LIKE CONCAT('%', #{search}, '%')
+			OR PROCESS_TIMES LIKE CONCAT('%', #{search}, '%') 			
 			OR CONNECT_FLOW LIKE CONCAT('%', #{search}, '%') 
 			OR INPUT_LOT_ID LIKE CONCAT('%', #{search}, '%') 
 			OR INPUT_LOT_NAME LIKE CONCAT('%', #{search}, '%') 		
@@ -100,8 +107,10 @@
 			OR CREATE_LOT_SIZE LIKE CONCAT('%', #{search}, '%') 
 			OR CREATE_LOT_UNIT LIKE CONCAT('%', #{search}, '%') 
 			OR CREATE_LOT_NUM LIKE CONCAT('%', #{search}, '%') 
-			OR PRE_PROCESS_WORK LIKE CONCAT('%', #{search}, '%') 
-			OR POST_PROCESS_WORK LIKE CONCAT('%', #{search}, '%') 
+			OR PRE_PROCESS_WORKM LIKE CONCAT('%', #{search}, '%') 
+			OR PRE_PROCESS_WORKS LIKE CONCAT('%', #{search}, '%') 
+			OR POST_PROCESS_WORKM LIKE CONCAT('%', #{search}, '%') 
+			OR POST_PROCESS_WORKS LIKE CONCAT('%', #{search}, '%') 
 			OR EQUIPMENTNAME LIKE CONCAT('%', #{search}, '%') 
 		)
         </if>
@@ -117,7 +126,8 @@
 			PROCESS_ID, 
 			PROCESS_NAME, 
 			PROCESS_TYPE, 
-			PROCESS_TIME, 			
+			PROCESS_TIMEM, 	
+			PROCESS_TIMES, 		
 			CONNECT_FLOW, 
 			INPUT_LOT_ID, 
 			INPUT_LOT_NAME,
@@ -129,8 +139,10 @@
 			CREATE_LOT_SIZE,
 			CREATE_LOT_UNIT,
 			CREATE_LOT_NUM,
-			PRE_PROCESS_WORK,
-			POST_PROCESS_WORK,
+			PRE_PROCESS_WORKM,
+			PRE_PROCESS_WORKS,
+			POST_PROCESS_WORKM,
+			POST_PROCESS_WORKS,
 			EQUIPMENTNAME
         ) VALUES(
         	#{itemid}, 
@@ -141,7 +153,8 @@
         	#{processid}, 
         	#{processname}, 
         	#{processtype}, 
-        	#{processtime},
+        	#{processtimem},
+        	#{processtimes},
         	#{connectflow},
         	#{inputlotid},
         	#{inputlotname},
@@ -153,8 +166,10 @@
         	#{createlotsize}, 
         	#{createlotunit}, 
         	#{createlotnum}, 
-        	#{preprocesswork},
-        	#{postprocesswork},
+        	#{preprocessworkm},
+        	#{preprocessworks},
+        	#{postprocessworkm},
+        	#{postprocessworks},
         	#{equipmentname} 	
         )
     </insert>

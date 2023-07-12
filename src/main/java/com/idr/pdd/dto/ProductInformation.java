@@ -15,7 +15,8 @@ public class ProductInformation {
 	private String processid;
 	private String processname;
 	private String processtype;
-	private String processtime;
+	private	int processtimem;
+	private int processtimes;
 	private String connectflow;
 	private String inputlotid;
 	private String inputlotname;
@@ -27,8 +28,10 @@ public class ProductInformation {
 	private String createlotsize;
 	private String createlotunit;
 	private String createlotnum;
-	private String preprocesswork;
-	private String postprocesswork;
+	private int preprocessworkm;
+	private int preprocessworks;
+	private int postprocessworkm;
+	private int postprocessworks;
 	private String equipmentname;
 	private String creator;
 	private String createtime;

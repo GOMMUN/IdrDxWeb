@@ -134,15 +134,22 @@ public class ProductInformationController {
 							domain.setCreatelotunit(cell.toString());
 						}else if("생성LOT수량".equals(key)) {
 							domain.setCreatelotnum(cell.toString());
-						}else if("공전전작업".equals(key)) {
-							domain.setPreprocesswork(cell.toString());
-						}else if("공정시간".equals(key)) {
-							domain.setProcesstime(cell.toString()); 
-						}else if("공정후작업".equals(key)) {
-							domain.setPostprocesswork(cell.toString());
+						}else if("공정전작업분".equals(key)) {
+							domain.setPreprocessworkm((int)Double.parseDouble(cell.toString()));
+						}else if("공정전작업초".equals(key)) {
+							domain.setPreprocessworks((int)Double.parseDouble(cell.toString()));
+						}else if("공정시간분".equals(key)) {
+							domain.setProcesstimem((int)Double.parseDouble(cell.toString()));
+						}else if("공정시간초".equals(key)) {
+							domain.setProcesstimes((int)Double.parseDouble(cell.toString()));
+						}else if("공정후작업분".equals(key)) {
+							domain.setPostprocessworkm((int)Double.parseDouble(cell.toString()));
+						}else if("공정후작업초".equals(key)) {
+							domain.setPostprocessworks((int)Double.parseDouble(cell.toString()));
 						}else if("장비이름".equals(key)) {
 							domain.setEquipmentname(cell.toString());
 						}
+						
 					}
 				}
 				list.add(domain);

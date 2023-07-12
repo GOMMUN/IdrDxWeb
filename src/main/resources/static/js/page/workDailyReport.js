@@ -1085,7 +1085,7 @@ function setNonOperationEventListener() {
 		data.hands=$("input[name=nonhands]").val();
 		data.manhour=$("input[name=nonmanhour]").val();
 		data.cause=$("input[name=cause]").val();
-		data.correctiveaction=$("input[name=correctiveaction]").val();
+		data.correctiveAction=$("input[name=correctiveAction]").val();
 		if (data.notoperatetimeFrom == "") {
 			alert("비가동시작을 선택 하세요.");
 			return;
@@ -1712,7 +1712,7 @@ function initNonOperation() {
 		"dataseq": "", "workdailySeq": "", "rulesysid": "", "factoryid": "",
 		"lineid": "", "shiftid": "", "workDate": "", "notoperatetimeFrom": "",
 		"notoperatetimeTo": "", "hands": "", "manhour": "", "cause": "",
-		"correctiveaction": "", "notes": "", "images": "", "movies": "", "creator": "",
+		"correctiveAction": "", "notes": "", "images": "", "movies": "", "creator": "",
 		"createtime": "", "event": "","eventuser": "", "eventtime": ""
 		,"isusable": "", "tid": ""
 	};

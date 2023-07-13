@@ -99,21 +99,21 @@ public class WorkerPerformanceController {
 						}else if("작업자명".equals(key)) {
 							domain.setWorkername(cell.toString());
 						}else if("주문ID".equals(key)) {
-							domain.setOrderid(cell.toString());
+							domain.setOrderid((int)Double.parseDouble(cell.toString()));
 						}else if("주문이름".equals(key)) {
 							domain.setOrdername(cell.toString());					
 						}else if("ITEMID".equals(key)) {
-							domain.setItemid(cell.toString());
+							domain.setItemid((int)Double.parseDouble(cell.toString()));
 						}else if("ITEM이름".equals(key)) {
 							domain.setItemname(cell.toString());
 						}else if("공정ID".equals(key)) {
-							domain.setProcessid(cell.toString());
+							domain.setProcessid((int)Double.parseDouble(cell.toString()));
 						}else if("공정이름".equals(key)) {
 							domain.setProcessname(cell.toString());
 						}else if("공정시간".equals(key)) {
 							domain.setProcesstime(cell.toString());
 						}else if("장비ID".equals(key)) {
-							domain.setEquipid(cell.toString());
+							domain.setEquipid((int)Double.parseDouble(cell.toString()));
 						}else if("시작시간".equals(key)) {
 							domain.setStarttime(cell.toString());
 						}else if("종료시간".equals(key)) {

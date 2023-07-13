@@ -9,14 +9,14 @@ public class WorkerPerformance {
 	private int dataseq;
 	private String workerid;
 	private String workername;
-	private String orderid;
+	private int orderid;
 	private String ordername;
-	private String itemid;
+	private int itemid;
 	private String itemname;
-	private String processid;
+	private int processid;
 	private String processname;
 	private String processtime;
-	private String equipid;
+	private int equipid;
 	private String starttime;
 	private String endtime;
 	private String divisiontype;

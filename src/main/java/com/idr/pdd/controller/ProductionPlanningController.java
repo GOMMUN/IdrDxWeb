@@ -97,19 +97,19 @@ public class ProductionPlanningController {
 					
 					if( cell != null ) {
 						if("주문ID".equals(key)) {
-							domain.setOrderid(cell.toString());
+							domain.setOrderid((int)Double.parseDouble(cell.toString()));
 						}else if("주문명".equals(key)) {
 							domain.setOrdername(cell.toString());
 						}else if("ITEMID".equals(key)) {
-							domain.setItemid(cell.toString());
+							domain.setItemid((int)Double.parseDouble(cell.toString()));
 						}else if("ITEM이름".equals(key)) {
 							domain.setItemname(cell.toString());				
 						}else if("LOTID".equals(key)) {
-							domain.setLotid(cell.toString());
+							domain.setLotid((int)Double.parseDouble(cell.toString()));
 						}else if("LOT이름".equals(key)) {
 							domain.setLotname(cell.toString());
 						}else if("총생산LOT수".equals(key)) {
-							domain.setTotalproductionlot(cell.toString());
+							domain.setTotalproductionlot((int)Double.parseDouble(cell.toString()));
 						}else if("중요도".equals(key)) {
 							domain.setImportance(cell.toString());
 						}else if("시작시간".equals(key)) {
@@ -117,9 +117,9 @@ public class ProductionPlanningController {
 						}else if("납기".equals(key)) {
 							domain.setDelivery(cell.toString());
 						}else if("GROUPID".equals(key)) {
-							domain.setGroupid(cell.toString());
+							domain.setGroupid((int)Double.parseDouble(cell.toString()));
 						}else if("GROUP내순서".equals(key)) {
-							domain.setOrderwithingroup(cell.toString());
+							domain.setOrderwithingroup((int)Double.parseDouble(cell.toString()));
 						}
 					}
 				}

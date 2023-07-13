@@ -27,7 +27,8 @@
 				A.EVENTUSER, 
 				A.EVENTTIME, 
 				A.ISUSABLE, 
-				A.TID
+				A.TID,
+				A.PLAN_QTY
 		 FROM DSP_WORKDAILY_REPORT A
 		WHERE ISUSABLE IS NOT NULL
 		AND A.ISUSABLE = 'Usable'
@@ -65,6 +66,7 @@
              , EVENTTIME
              , ISUSABLE
              , TID
+             , PLAN_QTY
         )
         VALUES (
                1
@@ -85,6 +87,7 @@
              , #{eventtime}
              ,'Usable'
              , #{tid}
+             , #{planQty}
         )
     </insert>
     
@@ -101,6 +104,7 @@
              , EVENTTIME = GETDATE()
              ,REVIEWER=#{reviewer}
              ,APPROVER=#{approver}
+             ,PLAN_QTY=#{planQty}
          WHERE DATASEQ          = #{dataseq}
     </update>
     

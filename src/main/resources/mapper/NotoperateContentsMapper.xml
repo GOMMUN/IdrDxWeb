@@ -62,7 +62,7 @@
 			#{hands},
 			#{manhour},
 			#{cause},
-			#{correctiveaction},
+			#{correctiveAction},
 			#{creator},
 			GETDATE(),
 			#{event},
@@ -81,7 +81,7 @@
              , HANDS= #{hands}
              , MANHOUR= #{manhour}
              , CAUSE= #{cause}
-             ,CORRECTIVE_ACTION= #{correctiveaction}
+             ,CORRECTIVE_ACTION= #{correctiveAction}
              , EVENTTIME = GETDATE()
 		WHERE
 		DATASEQ = #{dataseq}

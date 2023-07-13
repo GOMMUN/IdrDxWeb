@@ -18,7 +18,9 @@
 		B.WORK_DATE,
 		A.PERSONID,
 		(SELECT PERSONNAME FROM DSP_PERSON WHERE
-		PERSONID IN (A.PERSONID)) AS
+		PERSONID IN (A.PERSONID)
+		AND FACTORYID in(B.FACTORYID)
+		) AS
 		PERSONNAME,
 		A.OVERTIME,
 		A.NOTES,
@@ -35,8 +37,7 @@
 		B.DATASEQ
 		WHERE 1=1
 		AND A.WORKDAILY_SEQ = #{workdailySeq}
-		AND A.ISUSABLE
-		='Usable'
+		AND A.ISUSABLE ='Usable'
 	</select>
 
 	<insert id="create" parameterType="WorkerInput">

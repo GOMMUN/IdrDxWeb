@@ -18,8 +18,8 @@ public class PersonService {
 	@Autowired
 	PersonMapper mapper;
 
-	public List<Person> findAll() {
+	public List<Person> findAll(Person param) {
 		
-		return mapper.findall();
+		return mapper.findall(param);
 	}
 }

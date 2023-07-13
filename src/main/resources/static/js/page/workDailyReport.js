@@ -760,6 +760,8 @@ function setWorkContentsEventListener() {
 		$("#addWorkContentsModalModify").css('display', "none");
 
 		$('#addWorkContentsModal').modal('show');
+		
+		modelitem();
 	});
 
 	$gridRemoveBtn.click(function() {
@@ -927,6 +929,8 @@ function setNonconFormityEventListener() {
 		$("#addNonconFormityModalModify").css('display', "none");
 
 		$('#addNonconFormityModal').modal('show');
+		
+		modelitem();
 	});
 
 	$gridRemoveBtn.click(function() {
@@ -1280,34 +1284,42 @@ function modelitem() {
 	let url = '/code/modelItem';
 
 	c_model_item = null;
-
-	$.ajax({
-		url: url,
-		type: 'GET',
-		success: function(data) {
-			c_model_item = data;
-
-			let $dropdown = $("#inputModelCodes");
-			$dropdown.empty();
-			
-			let $dropdown2 = $("#inputModelCodes2");
-			$dropdown.empty();
-
-			if (c_model_item) {
-				$dropdown.append($("<option/>").val("").text("모델/차종"));
-				$dropdown2.append($("<option/>").val("").text("모델/차종"));
+	
+	if(s_workDailyReport){
+		$.ajax({
+			url: url,
+			type: 'GET',
+			success: function(data) {
+				c_model_item = data;
+	
+				let $dropdown = $("#inputModelCodes");
+				$dropdown.empty();
 				
-				$.each(data, function() {
-					$dropdown.append($("<option/>").val(this.code).text(this.value));
-				});
-				$.each(data, function() {
-					$dropdown2.append($("<option/>").val(this.code).text(this.value));
-				});
-			} else {
-				$dropdown.append($("<option/>").val("").text("모델/차종"));
+				let $dropdown2 = $("#inputModelCodes2");
+				$dropdown2.empty();
+	
+				if (c_model_item) {
+					$dropdown.append($("<option/>").val("").text("모델/차종"));
+					$dropdown2.append($("<option/>").val("").text("모델/차종"));
+
+					$.each(data, function() {
+						if(s_workDailyReport.factoryid == this.mcode){
+							$dropdown.append($("<option/>").val(this.code).text(this.value));
+						}
+					});
+					$.each(data, function() {
+						if(s_workDailyReport.factoryid == this.mcode){
+							$dropdown2.append($("<option/>").val(this.code).text(this.value));
+						}
+					});
+				} else {
+					$dropdown.append($("<option/>").val("").text("모델/차종"));
+				}
 			}
-		}
-	});
+		});
+	}
+
+	
 }
 
 function workDailyReportOperateFormatter(value, row, index) {

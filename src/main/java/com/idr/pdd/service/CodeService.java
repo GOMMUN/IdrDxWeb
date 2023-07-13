@@ -90,6 +90,7 @@ public class CodeService {
 		
 		for (Shift shift : shiftMapper.find()) {
 			Code code = new Code();
+			code.setMCode(shift.getFactoryid());
 			code.setCode(shift.getShiftid());
 			code.setValue(shift.getShiftname());
 			list.add(code);

@@ -314,6 +314,22 @@ function setWorkDailyReportEventListener() {
 		} else {
 			$dropdown2.append($("<option/>").val("").text("라인 선택"));
 		}
+		
+		
+		let $dropdown3 = $("#shiftCodes");
+		$dropdown3.empty();
+		
+		if (c_shift) {
+			$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
+			$.each(c_shift, function() {
+				if ($factoryCodes.val() == this.mcode) {
+					$dropdown3.append($("<option/>").val(this.code).text(this.value));
+				}
+			});
+		} else {
+			$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
+		
+		}
 	});
 }
 
@@ -1229,17 +1245,7 @@ function shift() {
 		success: function(data) {
 			c_shift = data;
 
-			let $dropdown = $("#shiftCodes");
-			$dropdown.empty();
-
-			if (c_shift) {
-				$dropdown.append($("<option/>").val("").text("주/야간구분 선택"));
-				$.each(data, function() {
-					$dropdown.append($("<option/>").val(this.code).text(this.value));
-				});
-			} else {
-				$dropdown.append($("<option/>").val("").text("주/야간구분 선택"));
-			}
+			
 		}
 	});
 }

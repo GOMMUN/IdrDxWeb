@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.AnomalyDetectionMapper">
+
+   
+    
+    <update id="modify" parameterType="AnomalyDetection">
+		UPDATE DSP_ALARM_SETTING
+		SET
+		VALUE = #{value}
+		, ALARM_TYPE = #{alarmType}
+		, TYPE_NAME = #{typeName}
+		WHERE
+		DATASEQ = 1
+	</update>
+
+
+</mapper>

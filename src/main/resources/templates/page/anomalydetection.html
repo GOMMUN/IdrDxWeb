@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/anomalydetection.js}"></script>
+
+<body>
+	<div class="d-flex bd-highlight">
+		<div class="p-2 col-12 bd-highlight">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">알람세팅</h6>
+				</div>
+				<div class="card-body">
+				<button type="button" class="btn btn-primary" id="set">
+							<i class="fa-solid "></i> 이상감지 값 설정
+						</button>
+
+				</div>
+				<div>
+					<div class="card-header">
+						<div class="row">
+
+							<label class="control-label font-weight-bold col-lg-4">타입<input type="text" id="alarmType"
+									name="alarmType" class="form-control col-lg-12 "></label>
+
+							<label class="control-label font-weight-bold col-lg-4">타입 이름<input type="text" id="typeName"
+									name="typeName" class="form-control col-lg-12 "></label>
+
+							<label class="control-label font-weight-bold col-lg-4">VALUE 설정<input type="text" id="value"
+									name="value" class="form-control col-lg-12 "></label>
+
+
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+/**
+ * 
+ */
+$(function(){
+	setEventListener();
+});
+
+function setEventListener(){
+	
+};

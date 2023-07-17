@@ -6,10 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.idr.pdd.common.Tid;
 import com.idr.pdd.dto.WorkerInput;
-import com.idr.pdd.dto.WorkerManhour;
 import com.idr.pdd.mapper.WorkerInputMapper;
 
 @Service
@@ -34,7 +31,6 @@ public class WorkerInputService {
 	}
 
 	public int save(WorkerInput param) {
-		param.setTid(Tid.generate());
 		return mapper.create(param);
 
 	}

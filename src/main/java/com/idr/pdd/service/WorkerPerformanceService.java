@@ -20,7 +20,6 @@ public class WorkerPerformanceService {
 	
 	public Map<String, Object> find(String search, int offset, int limit){
 		
-		
 		Map<String, Object> result = new HashMap<>();
 		
 		Integer total = mapper.total(search);

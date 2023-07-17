@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.idr.pdd.common.Tid;
 import com.idr.pdd.dto.WorkerInput;
 import com.idr.pdd.dto.WorkerManhour;
 import com.idr.pdd.dto.WorkerSupport;
@@ -32,6 +33,8 @@ public class WorkerSupportService {
 	}
 
 	public int save(WorkerSupport param) {
+		param.setTid(Tid.generate());
+		
 		if(param.getDataseq() == 0) {
 			return mapper.create(param);
 		}else {

@@ -5,60 +5,73 @@
 
 <mapper namespace="com.idr.pdd.mapper.WorkerInfoMapper">
 
-	<select id="findAll" resultType="CM0401">
+	<select id="findAll" resultType="WorkerInfo">
 		SELECT
-		COMPANY_CD
-		, BIZ_CD
-		, WORKER_ID
-		, WORKER_NM
-		, DAY_NIGHT
-		, USE_YN
-		FROM CM0401
+			 A.COMPANYID
+			,A.PERSONID
+			,A.FACTORYID
+			,(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
+			,A.PERSONNAME
+			,A.DESCRIPTION
+			,A.PERSONCLASSID
+			,A.WORKCREWID
+			,A.SHIFTID
+			,A.CREATOR
+			,FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
+			,A.EVENT
+			,A.EVENTUSER
+			,FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
+			,A.ISUSABLE
+			,A.TID
+		FROM DSP_PERSON A
 		WHERE 1=1
-		ORDER BY WORKER_ID DESC
+		ORDER BY PERSONID ASC;
 	</select>
 
-	<update id="merge" parameterType="CM0401" >
-		MERGE INTO CM0401 AS A
+	<update id="save" parameterType="WorkerInfo" >
+		MERGE INTO DSP_PERSON AS A
 		USING (
 			SELECT 1 AS DUM
 		) AS B
 		ON (
-			A.WORKER_ID = #{workerid}
+			A.PERSONID = #{personid} AND
+			A.FACTORYID = #{factoryid}
 			)
 		WHEN MATCHED THEN
 			UPDATE SET 
-				 WORKER_NM		= #{workernm}
-				,DAY_NIGHT		= #{daynight}
-				,USE_YN		= #{useyn}
+				 PERSONNAME		= #{personname}
+				,EVENTTIME		= FORMAT(SYSDATETIME(), 'yyyy-MM-dd HH:mm:ss')
+				,ISUSABLE		= #{isusable}
 		WHEN NOT MATCHED THEN 
 			INSERT(
-				 COMPANY_CD
-				,BIZ_CD
-				,WORKER_ID
-				,WORKER_NM
-				,DAY_NIGHT
-				,USE_YN			
+				 COMPANYID
+				,PERSONID
+				,FACTORYID
+				,PERSONNAME
+				,CREATETIME
+				,EVENTTIME
+				,ISUSABLE		
 			) 
 			VALUES(
 				 'dx'
-				,'SP1'
-				,#{workerid}
-				,#{workernm}				
-				,#{daynight}
-				,#{useyn}			
+				,#{personid}
+				,#{factoryid}
+				,#{personname}				
+				,FORMAT(SYSDATETIME(), 'yyyy-MM-dd HH:mm:ss')
+				,FORMAT(SYSDATETIME(), 'yyyy-MM-dd HH:mm:ss')
+				,#{isusable}			
 			)
 		;
 	</update>
 
     <update id="remove" parameterType="list">
 		<foreach collection="list" item="data" open="" close="" separator=";">
-		UPDATE CM0401 
-		SET USE_YN= 'N'
+		UPDATE DSP_PERSON 
+		SET ISUSABLE= 'N'
     	WHERE
-			COMPANY_CD = 'dx' 
-			AND BIZ_CD = 'SP1'
-			AND WORKER_ID = #{data.workerid}
+			COMPANYID = 'dx' 
+			AND PERSONID = #{data.personid}
+			AND FACTORYID = #{data.factoryid}
 		</foreach>
     </update>
 

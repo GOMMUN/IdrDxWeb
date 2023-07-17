@@ -14,6 +14,6 @@ public interface GroupShiftInfoMapper {
 
 	List<Shift> findAll();
 	
-	int merge(Shift param);
+	int save(Shift param);
 	int remove(List<Shift> param);
 }

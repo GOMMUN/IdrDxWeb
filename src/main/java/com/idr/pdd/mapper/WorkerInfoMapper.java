@@ -4,15 +4,14 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.idr.pdd.dto.CM0401;
-import com.idr.pdd.dto.Shift;
+import com.idr.pdd.dto.WorkerInfo;
 
 
 @Mapper
 public interface WorkerInfoMapper {
 
-	List<CM0401> findAll();
+	List<WorkerInfo> findAll();
 	
-	int merge(CM0401 param);
-	int remove(List<CM0401> param);
+	int save(WorkerInfo param);
+	int remove(List<WorkerInfo> param);
 }

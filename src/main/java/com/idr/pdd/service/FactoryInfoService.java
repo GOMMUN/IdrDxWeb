@@ -20,7 +20,7 @@ public class FactoryInfoService {
 		return mapper.findAll();
 	}
 	public int save(Factory param) {	
-		return mapper.merge(param);
+		return mapper.save(param);
 	}
 	
 	public int remove(List<Factory> param) {

@@ -26,7 +26,7 @@
 		WHERE 1=1
     </select>  
     
-	<update id="merge" parameterType="Shift" >
+	<update id="save" parameterType="Shift" >
 		MERGE INTO DSP_SHIFT AS A
 		USING (
 			SELECT 1 AS DUM

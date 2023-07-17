@@ -39,8 +39,8 @@ public class GroupShiftInfoController {
     }
 	
 	@ResponseBody
-	@PostMapping("/merge")
-    public int merge(@RequestBody Shift param) {
+	@PostMapping("/save")
+    public int save(@RequestBody Shift param) {
 		return service.save(param);
     }
 	

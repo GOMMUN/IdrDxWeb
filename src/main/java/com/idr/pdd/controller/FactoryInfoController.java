@@ -39,8 +39,8 @@ public class FactoryInfoController {
     }
 	
 	@ResponseBody
-	@PostMapping("/merge")
-    public int merge(@RequestBody Factory param) {
+	@PostMapping("/save")
+    public int save(@RequestBody Factory param) {
 		return service.save(param);
     }
 	

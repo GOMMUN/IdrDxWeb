@@ -30,7 +30,7 @@
 <!--								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>-->
 								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
 								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
-								<th hidden data-field="shiftid" data-sortable="true" data-align="center">그룹/SHIFT 코드</th>
+								<th data-field="shiftid" data-sortable="true" data-align="center">그룹/SHIFT 코드</th>
 								<th data-field="shiftname" data-sortable="true" data-align="center">그룹/SHIFT 명</th>
 								<th data-field="shifttype" data-sortable="true" data-align="center">그룹/SHIFT 타입</th>
 								<th data-field="starttime" data-sortable="true" data-align="center">시작시간</th>
@@ -52,11 +52,12 @@
 									<option value="">공장 선택</option>
 								</select>								
 							</label>
-							<label hidden class="control-label font-weight-bold col-lg-6">그룹/SHIFT 코드 <input type="text" id="shiftid" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 코드 <input type="text" id="shiftid" name="shiftid" class="form-control col-lg-12 "></label>
 							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 명
-								<select id="shiftCodes" name="shiftid"
+								<select id="shiftname" name="shiftname"
 									class="form-select-custom form-control col-lg-12" aria-label="주/야구분">
-									<option value="">주/야구분 선택</option>
+									<option value="오전">오전</option>
+									<option value="오후">오후</option>
 								</select>
 							</label>
 							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 타입<input type="text" id="shifttype" name="shifttype" class="form-control col-lg-12 "></label>
@@ -75,7 +76,7 @@
 				</div>
 			</div>
 			<div class= "float-right">		
-				<button type="button" class="btn btn-primary" id="updateShiftinfo">
+				<button type="button" class="btn btn-primary" id="saveShiftinfo">
 					<i class="fa-solid"></i> 저장
 				</button>
 			</div>

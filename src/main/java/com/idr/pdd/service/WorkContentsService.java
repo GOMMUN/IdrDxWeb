@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.idr.pdd.common.Tid;
 import com.idr.pdd.dto.WorkContents;
 import com.idr.pdd.dto.WorkerInput;
 import com.idr.pdd.dto.WorkerManhour;
@@ -36,7 +37,7 @@ public class WorkContentsService {
 
 
 	public int save(WorkContents param) {
-		// TODO Auto-generated method stub
+		param.setTid(Tid.generate());
 		return mapper.create(param);
 	}
 

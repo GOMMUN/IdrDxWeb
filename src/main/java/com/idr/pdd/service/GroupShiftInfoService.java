@@ -20,7 +20,7 @@ public class GroupShiftInfoService {
 	}
 	
 	public int save(Shift param) {	
-		return mapper.merge(param);
+		return mapper.save(param);
 	}
 	
 	public int remove(List<Shift> param) {

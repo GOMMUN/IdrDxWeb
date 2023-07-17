@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.idr.pdd.dto.CM0401;
-import com.idr.pdd.dto.Shift;
+import com.idr.pdd.dto.WorkerInfo;
 import com.idr.pdd.service.WorkerInfoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,20 +34,20 @@ public class WorkerInfoController {
 	
 	@ResponseBody
 	@GetMapping("/find")
-    public List<CM0401> find() {
-		List<CM0401> list = service.findAll();
+    public List<WorkerInfo> find() {
+		List<WorkerInfo> list = service.findAll();
 		return list;
     }
 	
 	@ResponseBody
-	@PostMapping("/merge")
-    public int merge(@RequestBody CM0401 param) {
+	@PostMapping("/save")
+    public int save(@RequestBody WorkerInfo param) {
 		return service.save(param);
     }
 	
 	@ResponseBody
 	@PutMapping("/remove")
-    public int remove(@RequestBody List<CM0401> param) {
+    public int remove(@RequestBody List<WorkerInfo> param) {
 		return service.remove(param);
     }
 }

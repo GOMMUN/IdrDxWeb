@@ -23,7 +23,7 @@
 		ORDER BY A.MODEL_ID ASC
 	</select>
 
-	<update id="merge" parameterType="CM0501" >
+	<update id="save" parameterType="CM0501" >
 		MERGE INTO CM0501 AS A
 		USING (
 			SELECT 1 AS DUM

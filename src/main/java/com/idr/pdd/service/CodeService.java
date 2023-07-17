@@ -90,6 +90,7 @@ public class CodeService {
 		
 		for (Shift shift : shiftMapper.find()) {
 			Code code = new Code();
+			code.setMCode(shift.getFactoryid());
 			code.setCode(shift.getShiftid());
 			code.setValue(shift.getShiftname());
 			list.add(code);
@@ -108,10 +109,11 @@ public class CodeService {
 	public List<Code> findmodelItem() {
 		List<Code> list = new ArrayList<>();
 		
-		for (ModelNM shift : modelMapper.modelfind()) {
+		for (ModelNM model : modelMapper.modelfind()) {
 			Code code = new Code();
-			code.setCode(shift.getModelid());
-			code.setValue(shift.getModelname());
+			code.setMCode(model.getFactoryid());
+			code.setCode(model.getModelid());
+			code.setValue(model.getModelname());
 			list.add(code);
 		}
 		return list;

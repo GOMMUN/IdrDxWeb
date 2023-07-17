@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.idr.pdd.common.Tid;
 import com.idr.pdd.dto.WorkDailyReport;
 import com.idr.pdd.mapper.WorkDailyReportMapper;
 
@@ -20,8 +18,6 @@ public class WorkDailyReportService {
 	}
 	
 	public int save(WorkDailyReport param) {
-		
-		param.setTid(Tid.generate());
 		
 		if(param.getDataseq() == 0) {
 			System.out.println(mapper.validationcheck(param));

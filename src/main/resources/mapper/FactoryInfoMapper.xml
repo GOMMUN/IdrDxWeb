@@ -23,7 +23,7 @@
          WHERE 1=1
     </select>
     
-	<update id="merge" parameterType="Factory" >
+	<update id="save" parameterType="Factory" >
 		MERGE INTO DSP_FACTORY AS A
 		USING (
 			SELECT 1 AS DUM
@@ -37,6 +37,7 @@
 				,DESCRIPTION	= #{description}
 				,ERPPLANT		= #{erpplant}
 				,FACTORYTYPE	= #{factorytype}
+				,CREATOR		= #{creator}
 				,ISUSABLE		= #{isusable}
 				,TID			= #{tid}
 		WHEN NOT MATCHED THEN 
@@ -47,6 +48,7 @@
 				,DESCRIPTION
 				,ERPPLANT
 				,FACTORYTYPE
+				,CREATOR
 				,ISUSABLE
 				,TID			
 			) 
@@ -57,6 +59,7 @@
 				,#{description}				
 				,#{erpplant}
 				,#{factorytype}
+				,#{creator}
 				,#{isusable}
 				,#{tid}				
 			)

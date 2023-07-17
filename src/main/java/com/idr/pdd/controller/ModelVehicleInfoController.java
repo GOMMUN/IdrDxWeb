@@ -39,8 +39,8 @@ public class ModelVehicleInfoController {
     }
 	
 	@ResponseBody
-	@PostMapping("/merge")
-    public int merge(@RequestBody CM0501 param) {
+	@PostMapping("/save")
+    public int save(@RequestBody CM0501 param) {
 		return service.save(param);
     }
 	

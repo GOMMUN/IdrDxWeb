@@ -13,6 +13,6 @@ public interface FactoryInfoMapper {
 
 	List<Factory> findAll();
 	
-	int merge(Factory param);
+	int save(Factory param);
 	int remove(List<Factory> param);
 }

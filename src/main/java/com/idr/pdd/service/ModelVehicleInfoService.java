@@ -21,7 +21,7 @@ public class ModelVehicleInfoService {
 	}
 	
 	public int save(CM0501 param) {	
-		return mapper.merge(param);
+		return mapper.save(param);
 	}
 	
 	public int remove(List<CM0501> param) {

@@ -10,24 +10,32 @@ $(function(){
 	 
 	let $grid = $("#factoryinfo");
 	let $gridAddBtn = $("#addFactoryinfo");			//행추가
-	let $gridUpdateBtn = $("#updateFactoryinfo");	//수정
+	let $gridSaveBtn = $("#saveFactoryinfo");		//수정
 	let $gridRemoveBtn = $("#removeFactoryinfo");	//삭제
 	 
-	$grid.on('click-row.bs.table', function (row, $element, field) {
+	$grid.on('check.bs.table', function (row, $element, field) {
 		gridData($element);
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length);
 	});
 	
-    $grid.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
-		$gridRemoveBtn.prop('disabled', !$table.bootstrapTable('getSelections').length)
-    });
+	$grid.on('uncheck.bs.table', function(row, $element) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+
+	$grid.on('check-all.bs.table', function(rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+
+	$grid.on('uncheck-all.bs.table', function(rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
 	
 	$gridAddBtn.click(function() {			//행추가
 		$grid.bootstrapTable('append', initFactoryInfo());
 		$gridAddBtn.prop('disabled',true);
 	});
 	
-	$gridUpdateBtn.click(function() {		//수정
+	$gridSaveBtn.click(function() {		//수정
 		let data = initFactoryInfo();
 
 //		data.companyid = $("input[name=companyid]").val();
@@ -55,7 +63,7 @@ $(function(){
 			return;
 		}
 		
-		let url = '/factoryinfo/merge';
+		let url = '/factoryinfo/save';
 		
 		$.ajax({
 			url: url,

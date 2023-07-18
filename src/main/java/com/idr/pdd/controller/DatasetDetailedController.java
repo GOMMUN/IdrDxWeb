@@ -7,14 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.idr.pdd.dto.CM0801;
 import com.idr.pdd.service.DatasetDetailedService;
-
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +37,18 @@ public class DatasetDetailedController {
 		List<CM0801> list = service.findAll();
 		return list;
 
+    }
+	
+	@ResponseBody
+	@PostMapping("/save")
+    public int save(@RequestBody CM0801 param) {
+		return service.save(param);
+    }
+	
+	@ResponseBody
+	@PutMapping("/remove")
+    public int remove(@RequestBody List<CM0801> param) {
+		return service.remove(param);
     }
 
 }

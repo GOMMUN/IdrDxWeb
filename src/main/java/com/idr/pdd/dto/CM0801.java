@@ -11,6 +11,7 @@ public class CM0801 {
 	private String activitynm;
 	private String pqcdid;
 	private String pqcdnm;
+	private String isusable;
 	
 
 }

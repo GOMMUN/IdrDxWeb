@@ -14,10 +14,54 @@
 		, PQCD_ID
 		, (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'PQCD_TYPE'
 		AND COMM_CD = PQCD_ID) PQCD_NM
+		, ISUSABLE
 		FROM CM0801
 		WHERE 1=1
 	</select>
 
+	<update id="save" parameterType="CM0801" >
+		MERGE INTO CM0801 AS A
+		USING (
+			SELECT 1 AS DUM
+		) AS B
+		ON (
+			A.ACTIVITY_ID = #{activityid} AND
+			A.PQCD_ID = #{pqcdid}
+			)
+		WHEN MATCHED THEN
+			UPDATE SET 
+				 ACTIVITY_NM	= #{activitynm}
+				,ISUSABLE		= #{isusable}
+		WHEN NOT MATCHED THEN 
+			INSERT(
+				 COMPANY_CD
+				,BIZ_CD
+				,ACTIVITY_ID
+				,ACTIVITY_NM
+				,PQCD_ID
+				,ISUSABLE			
+			) 
+			VALUES(
+				 'dx'
+				,'SP1'
+				,#{activityid}
+				,#{activitynm}				
+				,#{pqcdid}
+				,#{isusable}				
+			)
+		;
+	</update>
 
+    <update id="remove" parameterType="list">
+		<foreach collection="list" item="data" open="" close="" separator=";">
+		UPDATE CM0801 
+		SET ISUSABLE= 'N'
+    	WHERE
+			COMPANY_CD = 'dx' 
+			AND BIZ_CD = 'SP1'
+			AND ACTIVITY_ID = #{data.activityid} 
+			AND PQCD_ID = #{data.pqcdid}
+		</foreach>
+    </update>
 
 </mapper>

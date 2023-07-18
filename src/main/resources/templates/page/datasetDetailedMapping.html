@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
 
-<script th:inline="javascript" type="text/javascript" ></script>
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/datasetDetailed.js}"></script>
 
 <body>
 	<div class="d-flex bd-highlight">
@@ -16,26 +16,63 @@
 					<strong>분류 Data Set Activity 상세매핑</strong>
 				</div>
 				<div class="card-body">
-					<table id="axis" data-toggle="table" data-toolbar="" data-height="350"
-						data-click-to-select="false" data-search="true" data-url="/datasetdetail/find" data-show-columns="true"
+					<div id="toolbarDatasetDetail">
+						<button type="button" class="btn btn-primary" id="addDatasetDetailInfo">
+							<i class="fa-solid fa-plus"></i> Add
+						</button>
+						<button id="removeDatasetDetailInfo" class="btn btn-danger" disabled>
+							<i class="fa fa-trash"></i> Delete
+						</button>
+					</div>					
+					<table id="axis" data-toggle="table" data-toolbar="#toolbarDatasetDetail" data-height="350"
+						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/datasetdetail/find" data-show-columns="true"
 						data-show-columns-toggle-all="true">
 						<thead class="thead-light">
 							<tr>
 								<th rowspan="2" data-field="state" data-checkbox="true"></th>
 								<th colspan="2" data-sortable="true" data-align="center">DataSet 그룹핑</th>
 								<th colspan="2" data-sortable="true" data-align="center">PQCD 분류 DataSet</th>
+								<th rowspan="2" data-sortable="true" data-align="center" data-field="isusable">사용여부</th>
 							</tr>
 							<tr>
 								<th data-field="activityid" data-sortable="true" data-align="center">분류 DataSet ID</th>
 								<th data-field="activitynm" data-sortable="true" data-align="center">분류 DataSet Name</th>
 								<th data-field="pqcdid" data-sortable="true" data-align="center">분류 ID</th>
 								<th data-field="pqcdnm" data-sortable="true" data-align="center">분류 Name</th>
-								
 							</tr>
 						</thead>
 					</table>
 				</div>
+				<div>
+					<div class="card-header">
+						<div class="row">							
+							<label class="control-label font-weight-bold col-lg-6">분류 DataSet ID <input type="text" id="activityid" name="activityid" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">분류 DataSet Name <input type="text" id="activitynm" name="activitynm" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">분류ID
+								<select id="pqcdid" name="pqcdid"
+									class="form-select-custom form-control col-lg-12" aria-label="주/야구분">
+									<option value="P">P</option>
+									<option value="Q">Q</option>
+									<option value="C">C</option>
+									<option value="D">D</option>
+								</select>
+							</label>	
+							<label class="control-label font-weight-bold col-lg-6">사용여부
+								<select id="isusable" name="isusable"
+									class="form-select-custom form-control col-lg-12" aria-label="사용여부">
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</label>
+						</div>
+					</div>
+				</div>						
 			</div>
+			<div class= "float-right">		
+				<button type="button" class="btn btn-primary" id="saveDatasetDetailInfo">
+					<i class="fa-solid"></i> 저장
+				</button>
+			</div>			
 		</div>
 	</div>
 </body>

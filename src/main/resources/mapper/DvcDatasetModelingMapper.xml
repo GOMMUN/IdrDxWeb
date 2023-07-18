@@ -5,8 +5,20 @@
 
 <mapper namespace="com.idr.pdd.mapper.DvcDatasetModelingMapper">
 
-	<select id="findAll" resultType="CM0701">
-		SELECT
+	<select id="findAxis" resultType="CM0701">
+		SELECT DISTINCT 
+		A.COMPANY_CD
+		, A.BIZ_CD
+		, A.AXIS_ID
+		, (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'AXIS_ID' AND
+		COMM_CD = A.AXIS_ID ) AXIS_NM
+		FROM CM0701 A
+		WHERE A.COMPANY_CD = 'dx'
+		AND A.BIZ_CD = 'SP1'
+	</select>
+	
+	<select id="findGroup" parameterType="CM0701" resultType="CM0701">
+		SELECT 
 		A.COMPANY_CD
 		, A.BIZ_CD
 		, A.AXIS_ID
@@ -14,13 +26,57 @@
 		COMM_CD = A.AXIS_ID ) AXIS_NM
 		, A.GROUPING_ID
 		, A.GROUPING_NM
+		, A.ISUSABLE
 		FROM CM0701 A
 		WHERE A.COMPANY_CD = 'dx'
 		AND A.BIZ_CD = 'SP1'
-		AND A.AXIS_ID = 'MEDF'
+		AND A.AXIS_ID = #{axisid}
 		ORDER BY A.GROUPING_ID ASC
-	</select>
+	</select>	
 
+	<update id="save" parameterType="CM0701" >
+		MERGE INTO CM0701 AS A
+		USING (
+			SELECT 1 AS DUM
+		) AS B
+		ON (
+			A.AXIS_ID 		= #{axisid} AND
+			A.GROUPING_ID 	= #{groupingid}
+			)
+		WHEN MATCHED THEN
+			UPDATE SET 		
+				 GROUPING_NM	= #{groupingnm}
+				,ISUSABLE		= #{isusable}
+		WHEN NOT MATCHED THEN 
+			INSERT(
+				 COMPANY_CD
+				,BIZ_CD
+				,AXIS_ID
+				,GROUPING_ID
+				,GROUPING_NM
+				,ISUSABLE		
+			) 
+			VALUES(
+				 'dx'
+				,'SP1'
+				,#{axisid}			
+				,#{groupingid}
+				,#{groupingnm}
+				,#{isusable}
+			)
+		;
+	</update>
 
+    <update id="remove" parameterType="list">
+		<foreach collection="list" item="data" open="" close="" separator=";">
+		UPDATE CM0701 
+		SET ISUSABLE= 'N'
+    	WHERE
+			COMPANYID = 'dx' 
+			AND BIZ_CD = 'SP1'
+			AND AXIS_ID = #{data.axisid} 
+			AND GROUPING_ID = #{data.groupingid}
+		</foreach>
+    </update>
 
 </mapper>

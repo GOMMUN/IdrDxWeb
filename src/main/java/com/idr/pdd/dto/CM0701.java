@@ -11,8 +11,6 @@ public class CM0701 {
 	private String axisnm;
 	private String groupingid;
 	private String groupingnm;
-
-	
-
+	private String isusable;
 
 }

@@ -25,8 +25,8 @@ public class ScenarioGroupingService {
 		return mapper.findAll1();
 	}
 	
-	public List<CM0902> findAll2() {
+	public List<CM0902> findAll2(CM0901 param) {
 		
-		return mapper.findAll2();
+		return mapper.findAll2(param);
 	}
 }

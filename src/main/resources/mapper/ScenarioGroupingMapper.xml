@@ -7,33 +7,31 @@
 
 	<select id="findAll1" resultType="CM0901">
 		SELECT
-		A.COMPANY_CD
-		, A.BIZ_CD
-		,
-		A.SCENARIO_ID
-		, A.SCENARIO_NM
-		, A.AXIS_ID
-		, A.GROUPING_ID
+		 A.COMPANY_CD
+		,A.BIZ_CD
+		,A.SCENARIO_ID
+		,A.SCENARIO_NM
+		,A.AXIS_ID
+		,A.GROUPING_ID
 		FROM CM0901 A
 		WHERE 1=1
-
 		ORDER BY A.SCENARIO_ID
 	</select>
 
-	<select id="findAll2" resultType="CM0902">
+	<select id="findAll2" parameterType="CM0901" resultType="CM0902">
 		SELECT
-		A.COMPANY_CD
-		, A.BIZ_CD
-		, A.SCENARIO_ID
-		, A.PQCD_ID
-		, A.ACTIVITY_ID
+		 A.COMPANY_CD
+		,A.BIZ_CD
+		,A.SCENARIO_ID
+		,A.PQCD_ID
+		,A.ACTIVITY_ID
 		FROM CM0902 A
 		INNER JOIN CM0901 B ON (B.COMPANY_CD = A.COMPANY_CD AND B.BIZ_CD = A.BIZ_CD
 		AND B.SCENARIO_ID = A.SCENARIO_ID)
 		WHERE 1=1
-		AND A.COMPANY_CD = #{companyCd}
-		AND A.BIZ_CD = #{bizCd}
-		AND A.SCENARIO_ID = #{scenarioId}
+		AND A.COMPANY_CD = 'dx'
+		AND A.BIZ_CD = 'SP1'
+		AND A.SCENARIO_ID = #{scenarioid}
 		ORDER BY A.PQCD_ID ASC
 	</select>
 

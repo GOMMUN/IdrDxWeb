@@ -12,7 +12,7 @@ import com.idr.pdd.dto.CM0902;
 public interface ScenarioGroupingMapper {
 
 	List<CM0901> findAll1();
-	List<CM0902> findAll2();
+	List<CM0902> findAll2(CM0901 param);
 	
 	
 }

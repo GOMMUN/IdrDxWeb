@@ -39,8 +39,8 @@ public class ScenarioGroupingController {
 	
 	@ResponseBody
 	@GetMapping("/find2")
-    public List<CM0902> find2() {
-		List<CM0902> list = service.findAll2();
+    public List<CM0902> find2(CM0901 param) {
+		List<CM0902> list = service.findAll2(param);
 		return list;
 
     }

@@ -10,30 +10,36 @@
 		<div class="p-2 col-12 bd-highlight">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">알람세팅</h6>
+					<h6 class="m-0 font-weight-bold text-primary">납품지연 설정</h6>
 				</div>
 				<div class="card-body">
-				<button type="button" class="btn btn-primary" id="set">
-							<i class="fa-solid "></i> 이상감지 값 설정
-						</button>
+					<button type="button" class="btn btn-primary" id="set">
+						<i class="fa-solid "></i> 납품지연 값 설정
+					</button>
 
 				</div>
 				<div>
 					<div class="card-header">
 						<div class="row">
 
-							<label class="control-label font-weight-bold col-lg-4">타입<input type="text" id="alarmType"
-									name="alarmType" class="form-control col-lg-12 "></label>
-
-							<label class="control-label font-weight-bold col-lg-4">타입 이름<input type="text" id="typeName"
-									name="typeName" class="form-control col-lg-12 "></label>
-
-							<label class="control-label font-weight-bold col-lg-4">VALUE 설정<input type="text" id="value"
-									name="value" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-4">VALUE 설정<form>
+									<select name="setting">
+										<option value="none">=== 선택 ===</option>
+										<option value="10">10</option>
+										<option value="20">20</option>
+										<option value="30">30</option>
+										<option value="40">40</option>
+										<option value="50">50</option>
+										<option value="60">60</option>
+										<option value="70">70</option>
+										<option value="80">80</option>
+										<option value="90">90</option>										
+									</select>
+								</form></label>
 
 
 						</div>
-						
+
 					</div>
 				</div>
 			</div>

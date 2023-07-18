@@ -19,9 +19,7 @@ function set() {
 
 	$set.click(function() {
 		data = init();
-		data.alarmType = $("input[name=alarmType]").val();
-		data.typeName = $("input[name=typeName]").val();
-		data.value = $("input[name=value]").val();
+		data.value = $("select[name=setting]").val();
 
 		
 		let url = '/anomalydetection/modify';

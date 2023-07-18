@@ -11,10 +11,8 @@
 		UPDATE DSP_ALARM_SETTING
 		SET
 		VALUE = #{value}
-		, ALARM_TYPE = #{alarmType}
-		, TYPE_NAME = #{typeName}
 		WHERE
-		DATASEQ = 1
+		DATASEQ = 2
 	</update>
 
 

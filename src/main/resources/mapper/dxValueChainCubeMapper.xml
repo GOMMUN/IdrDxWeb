@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.dxValueChainCubeMapper">
+
+    <select id="findAll" resultType="DxCube">
+		SELECT
+               X.COMPANY_CD
+             , X.BIZ_CD
+             , Y.AXIS_ID
+             , (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'AXIS_ID' AND COMM_CD = Y.AXIS_ID) + '(' + Y.AXIS_ID +  ')' AS AXIS_DESC
+             , Y.GROUPING_ID
+             , Z.GROUPING_NM AS GROUPING_DESC
+             , X.SCENARIO_ID
+             , Y.SCENARIO_NM AS SCENARIO_DESC
+             , X.PQCD_ID
+             , X.PQCD_ID + ' (' + (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'PQCD_TYPE' AND COMM_CD = X.PQCD_ID) + ')' AS PQCD_DESC
+             , X.ACTIVITY_ID
+             , A.ACTIVITY_NM AS ACTIVITY_DESC
+          FROM CM0902 X
+         INNER JOIN CM0901 Y ON (X.COMPANY_CD = Y.COMPANY_CD AND X.BIZ_CD = Y.BIZ_CD AND X.SCENARIO_ID = Y.SCENARIO_ID)
+         INNER JOIN CM0701 Z ON (Y.COMPANY_CD = Z.COMPANY_CD AND Y.BIZ_CD = Z.BIZ_CD AND Y.AXIS_ID = Z.AXIS_ID AND Y.GROUPING_ID = Z.GROUPING_ID)
+         INNER JOIN CM0801 A ON (X.COMPANY_CD = A.COMPANY_CD AND X.BIZ_CD = A.BIZ_CD AND X.PQCD_ID = A.PQCD_ID AND X.ACTIVITY_ID = A.ACTIVITY_ID)
+         WHERE 1=1
+    </select>  
+    
+	<update id="save" parameterType="DxCube" >
+		MERGE INTO DSP_SHIFT AS A
+		USING (
+			SELECT 1 AS DUM
+		) AS B
+		ON (
+			A.COMPANYID = #{companyid} AND
+			A.FACTORYID = #{factoryid} AND
+			A.SHIFTID = #{shiftid}
+			)
+		WHEN MATCHED THEN
+			UPDATE SET 
+				 SHIFTNAME		= #{shiftname}
+				,SHIFTTYPE		= #{shifttype}
+				,STARTTIME		= #{starttime}
+				,ENDTIME		= #{endtime}
+				,ISUSABLE		= #{isusable}
+		WHEN NOT MATCHED THEN 
+			INSERT(
+				 COMPANYID
+				,FACTORYID
+				,SHIFTID
+				,SHIFTNAME
+				,SHIFTTYPE
+				,STARTTIME
+				,ENDTIME
+				,ISUSABLE				
+			) 
+			VALUES(
+				 'dx'
+				,#{factoryid}
+				,#{shiftid}
+				,#{shiftname}				
+				,#{shifttype}
+				,#{starttime}
+				,#{endtime}
+				,#{isusable}				
+			)
+		;
+	</update>
+
+    <update id="remove" parameterType="list">
+		<foreach collection="list" item="data" open="" close="" separator=";">
+		UPDATE DSP_SHIFT 
+		SET ISUSABLE= 'N'
+    	WHERE
+			COMPANYID = 'dx' 
+			AND FACTORYID = #{data.factoryid} 
+			AND SHIFTID = #{data.shiftid}
+		</foreach>
+    </update>
+
+</mapper>

@@ -63,7 +63,11 @@
 		EVENT,
 		EVENTUSER,
 		EVENTTIME,
-		ISUSABLE
+		ISUSABLE,
+		FACTORYID,
+		LINEID,
+		SHIFTID,
+		WORK_DATE
 		) VALUES(
 		#{workdailySeq},
 		#{worktimeFrom},
@@ -81,7 +85,11 @@
 		#{event},
 		#{eventuser},
 		#{eventtime},
-		'Usable'
+		'Usable',
+		#{plant},
+		#{line},
+		#{shift},
+		#{date}
 		)
 
 	</insert>

@@ -805,6 +805,11 @@ function setWorkContentsEventListener() {
 		data.reworkFailQty = $("input[name=reworkFailQty]").val();
 		data.notes = $("input[name=workcontentnotes]").val();
 		
+		data.plant=s_workDailyReport.factoryid;
+		data.line=s_workDailyReport.lineid;
+		data.shift=s_workDailyReport.shiftid;
+		data.date=s_workDailyReport.workDate;
+		
 		if (data.worktimeFrom == "") {
 			alert("작업시간을 선택 하세요.");
 			return;
@@ -1106,6 +1111,13 @@ function setNonOperationEventListener() {
 		data.manhour=$("input[name=nonmanhour]").val();
 		data.cause=$("input[name=cause]").val();
 		data.correctiveAction=$("input[name=correctiveAction]").val();
+		
+		data.plant=s_workDailyReport.factoryid;
+		data.line=s_workDailyReport.lineid;
+		data.shift=s_workDailyReport.shiftid;
+		data.date=s_workDailyReport.workDate;
+		
+		
 		if (data.notoperatetimeFrom == "") {
 			alert("비가동시작을 선택 하세요.");
 			return;
@@ -1699,8 +1711,8 @@ function initWorkerSupportInput() {
 function initWorkContentsInput() {
 
 	let data = {
-		"dataseq": "", "workdailySeq": "", "rulesysid": "", "factoryid": "",
-		"lineid": "", "shiftid": "", "workDate": "", "worktimeFrom": "",
+		"dataseq": "", "workdailySeq": "", "rulesysid": "", "plant": "",
+		"line": "", "shift": "", "date": "", "worktimeFrom": "",
 		"worktimeTo": "", "modelid": "", "operationid": "", "manhour": "",
 		"planQty": "", "prodQty": "", "goodsumQty": "", "firsttimeGoodQty": "", "firsttimeFailQty": "",
 		"reworkGoodQty": "", "reworkFailQty": "","notes": "", "images": "",
@@ -1727,8 +1739,8 @@ function initNonconFormity() {
 function initNonOperation() {
 
 	let data = {
-		"dataseq": "", "workdailySeq": "", "rulesysid": "", "factoryid": "",
-		"lineid": "", "shiftid": "", "workDate": "", "notoperatetimeFrom": "",
+		"dataseq": "", "workdailySeq": "", "rulesysid": "", "plant": "",
+		"line": "", "shift": "", "date": "", "notoperatetimeFrom": "",
 		"notoperatetimeTo": "", "hands": "", "manhour": "", "cause": "",
 		"correctiveAction": "", "notes": "", "images": "", "movies": "", "creator": "",
 		"createtime": "", "event": "","eventuser": "", "eventtime": ""

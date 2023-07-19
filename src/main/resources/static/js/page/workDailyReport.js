@@ -847,7 +847,8 @@ function setWorkContentsEventListener() {
 			return;
 		}
 
-		let url = '/workContents/create';
+		//let url = '/workContents/create';
+		let url = 'http://localhost:8171/work-contents/';
 
 		$.ajax({
 			url: url,

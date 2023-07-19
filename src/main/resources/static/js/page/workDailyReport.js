@@ -870,9 +870,9 @@ function setWorkContentsEventListener() {
 		data.worktimeFrom = $("input[name=worktimeFrom]").val();
 		data.worktimeTo = $("input[name=workcontenttimeTo]").val();
 		data.manhour = $("input[name=workcontentmanhour]").val();
-		data.modelid = $("select[name=modelid]").val();
+		//data.modelid = $("select[name=modelid]").val();
 		data.prodQty = $("input[name=prodQty]").val();
-		data.planQty = $("input[name=planQty]").val();
+		//data.planQty = $("input[name=planQty]").val();
 		data.goodsumQty = $("input[name=goodsumQty]").val();
 		data.reworkGoodQty = $("input[name=reworkGoodQty]").val();
 		data.reworkFailQty = $("input[name=reworkFailQty]").val();
@@ -969,8 +969,8 @@ function setNonconFormityEventListener() {
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
 		data.workdailySeq = dataseq;
-		data.modelid = $("select[name=modelid2]").val();
-		data.operationid=$("input[name=operationid]").val();
+		//data.modelid = $("select[name=modelid2]").val();
+		//data.operationid=$("input[name=operationid]").val();
 		data.rejectItemid=$("input[name=rejectItemid]").val();
 		data.firsttimeRejectQty=$("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty=$("input[name=reworkRejectQty]").val();
@@ -1140,8 +1140,8 @@ function setNonOperationEventListener() {
 			return;
 		}
 
-		let url = '/notoperateContents/create';
-
+		//let url = '/notoperateContents/create';
+		let url = 'http://localhost:8171/notoperate-contents/';
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -1676,10 +1676,10 @@ function initWorkDailyReport() {
 function initWorkerManhour() {
 
 	let data = {
-		"dataseq": "", "workdailySeq": "", "rulesysid": "", "factoryid": "",
-		"lineid": "", "shiftid": "", "workDate": "", "inputItemid": "",
+		"dataseq": "", "workdailySeq": "", "inputItemid": "",
 		"hands": "", "manhour": "", "creator": "", "createtime": "",
 		"event": "", "eventuser": "", "eventtime": "", "isusable": "", "tid": ""
+		 /*"rulesysid": "", "factoryid": "","lineid": "", "shiftid": "", "workDate": "",*/
 	};
 
 	return data;
@@ -1688,8 +1688,7 @@ function initWorkerManhour() {
 function initWorkerInput() {
 
 	let data = {
-		"dataseq": "", "workdailySeq": "", "rulesysid": "", "factoryid": "",
-		"lineid": "", "shiftid": "", "workDate": "", "personid": "",
+		"dataseq": "", "workdailySeq": "", "personid": "",
 		"overtime": "", "notes": "", "creator": "", "createtime": "",
 		"event": "", "eventuser": "", "eventtime": "", "isusable": "", "tid": ""
 	};
@@ -1700,11 +1699,12 @@ function initWorkerInput() {
 function initWorkerSupportInput() {
 
 	let data = {
-		"dataseq": "", "workdailySeq": "", "rulesysid": "", "factoryid": "",
-		"lineid": "", "linename": "", "workDate": "", "personid": "",
+		"dataseq": "", "workdailySeq": "",  "personid": "",
 		"personname": "", "supporttimeFrom": "", "supporttimeTo": "", "manhour": "",
 		"creator": "", "createtime": "", "event": "", "eventuser": "", "eventtime": "",
 		"isusable": "", "tid": ""
+		/*"rulesysid": "", "factoryid": "",
+		"lineid": "", "linename": "", "workDate": "",*/
 	};
 
 	return data;
@@ -1713,12 +1713,12 @@ function initWorkerSupportInput() {
 function initWorkContentsInput() {
 
 	let data = {
-		"dataseq": "", "workdailySeq": "", "rulesysid": "", "plant": "",
-		"line": "", "shift": "", "date": "", "worktimeFrom": "",
-		"worktimeTo": "", "modelid": "", "operationid": "", "manhour": "",
-		"planQty": "", "prodQty": "", "goodsumQty": "", "firsttimeGoodQty": "", "firsttimeFailQty": "",
-		"reworkGoodQty": "", "reworkFailQty": "","notes": "", "images": "",
-		"movies": "", "creator": "","createtime": "", "event": "",
+		"dataseq": "", "workdailySeq": "", /*"rulesysid": "", "plant": "",
+		"line": "", "shift": "", "date": "","modelid": "", "operationid": "","images": "","planQty": "",
+		"movies": "",*/ "worktimeFrom": "",
+		"worktimeTo": "",  "manhour": "",
+		 "prodQty": "", "goodsumQty": "", "firsttimeGoodQty": "", "firsttimeFailQty": "",
+		"reworkGoodQty": "", "reworkFailQty": "","notes": "",  "creator": "","createtime": "", "event": "",
 		"eventuser": "", "eventtime": "","isusable": "", "tid": "",
 	};
 
@@ -1728,10 +1728,10 @@ function initWorkContentsInput() {
 function initNonconFormity() {
 
 	let data = {
-		"dataseq": "", "workdailySeq": "", "rulesysid": "", "factoryid": "",
-		"lineid": "", "shiftid": "", "workDate": "", "operationid": "",
-		"rejectItemid": "", "modelid": "", "firsttimeRejectQty": "", "reworkRejectQty": "",
-		"images": "", "movies": "", "creator": "", "createtime": "", "event": "",
+		"dataseq": "", "workdailySeq": "",/* "rulesysid": "", "factoryid": "",
+		"lineid": "", "shiftid": "", "workDate": "", "operationid": "","modelid": "","images": "", "movies": "",*/
+		"rejectItemid": "", "firsttimeRejectQty": "", "reworkRejectQty": "",
+		 "creator": "", "createtime": "", "event": "",
 		"eventuser": "", "eventtime": "","isusable": "", "tid": ""
 	};
 
@@ -1741,10 +1741,10 @@ function initNonconFormity() {
 function initNonOperation() {
 
 	let data = {
-		"dataseq": "", "workdailySeq": "", "rulesysid": "", "plant": "",
-		"line": "", "shift": "", "date": "", "notoperatetimeFrom": "",
+		"dataseq": "", "workdailySeq": "",/* "rulesysid": "", "plant": "",
+		"line": "", "shift": "", "date": "","images": "", "movies": "",  */"notoperatetimeFrom": "",
 		"notoperatetimeTo": "", "hands": "", "manhour": "", "cause": "",
-		"correctiveAction": "", "notes": "", "images": "", "movies": "", "creator": "",
+		"correctiveAction": "", "notes": "", "creator": "",
 		"createtime": "", "event": "","eventuser": "", "eventtime": ""
 		,"isusable": "", "tid": ""
 	};

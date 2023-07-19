@@ -9,12 +9,7 @@
         SELECT 
         	ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
         	A.DATASEQ, 
-        	A.WORKDAILY_SEQ,
-        	B.RULESYSID, 
-        	B.FACTORYID, 
-        	B.LINEID, 
-        	B.SHIFTID, 
-        	B.WORK_DATE, 
+        	A.WORKDAILY_SEQ,       	
         	A.NOTOPERATETIME_FROM, 
         	A.NOTOPERATETIME_TO, 
         	A.HANDS, 
@@ -22,8 +17,6 @@
         	A.CAUSE, 
         	A.CORRECTIVE_ACTION, 
         	A.NOTES, 
-        	A.IMAGES, 
-        	A.MOVIES, 
         	A.CREATOR, 
         	A.CREATETIME, 
         	A.EVENT, 
@@ -54,10 +47,6 @@
 			 ,EVENTUSER
 			 ,EVENTTIME
 			 ,ISUSABLE
-			 ,FACTORYID
-			 ,LINEID
-			 ,SHIFTID
-			 ,WORK_DATE
         )
         VALUES (
             #{workdailySeq},
@@ -71,12 +60,8 @@
 			GETDATE(),
 			#{event},
 			#{eventuser},
-			#{eventtime},
-			'Usable',
-			#{plant},
-			#{line},
-			#{shift},
-			#{date}
+			GETDATE(),
+			'Usable'
         );
 
 	</insert>

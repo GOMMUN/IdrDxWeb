@@ -262,7 +262,7 @@
 								<tr>
 									<th data-field="state" data-checkbox="true"></th>
 									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
-									<th data-field="operationid" data-sortable="true" data-align="center">공정</th>
+									<!--<th data-field="operationid" data-sortable="true" data-align="center">공정</th>-->
 									<th data-field="rejectItemid" data-sortable="true" data-align="center">불량내용</th>
 									<th data-field="firsttimeRejectQty" data-sortable="true" data-align="center">본
 									</th>
@@ -656,23 +656,30 @@
 												class="form-control-custom form-control-user" id="Airlift"
 												placeholder='공수'>
 										</div>
-										<div class="col-sm-6">
+										<!--<div class="col-sm-6">
+											
 											<select id="inputModelCodes" name="modelid"
 												class="form-select-custom form-control-user">
 												<option value="">모델/차종</option>
 											</select>
-										</div>
-									</div>
-									<div class="form-group row">
+										</div>-->
 										<div class="col-sm-6">
 											<input type="text" name="goodsumQty"
 												class="form-control-custom form-control-user" id="Airlift"
 												placeholder='양품합계'>
 										</div>
+									</div>
+									<div class="form-group row">
+										
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="prodQty"
 												class="form-control-custom form-control-user" id="personnel"
 												placeholder='생산수량'>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="reworkFailQty"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='재작업불량'>
 										</div>
 										<!--
 											<div class="col-sm-6 mb-3 mb-sm-0">
@@ -682,19 +689,13 @@
 											</div>-->
 									</div>
 									<div class="form-group row">										
-										<div class="col-sm-6">
-											<input type="text" name="reworkFailQty"
-												class="form-control-custom form-control-user" id="Airlift"
-												placeholder='재작업불량'>
-										</div>
+										
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="reworkGoodQty"
 												class="form-control-custom form-control-user" id="personnel"
 												placeholder='재작업양품'>
 										</div>
-									</div>
-									<div class="form-group row">
-										<div class="col-sm-12 mb-3 mb-sm-0">
+										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="workcontentnotes"
 												class="form-control-custom form-control-user" id="personnel"
 												placeholder='특이사항'>
@@ -739,6 +740,7 @@
 									<h1 class="h4 text-gray-900 mb-4">부적합내역</h1>
 								</div>
 								<form class="user">
+									<!--
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<select id="inputModelCodes2" name="modelid2"
@@ -751,7 +753,7 @@
 												class="form-control-custom form-control-user" id="personnel"
 												placeholder='공정'>
 										</div>
-									</div>
+									</div>-->
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="rejectItemid"

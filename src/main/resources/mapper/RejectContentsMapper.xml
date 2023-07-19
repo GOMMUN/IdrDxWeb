@@ -10,19 +10,9 @@
         	ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
         	A.DATASEQ, 
         	A.WORKDAILY_SEQ,
-        	B.RULESYSID, 
-        	B.FACTORYID, 
-        	B.LINEID, 
-        	B.SHIFTID, 
-        	B.WORK_DATE, 
-        	A.OPERATIONID, 
         	A.REJECT_ITEMID, 
-        	A.MODELID, 
-        	(SELECT MODELNAME  FROM DSP_MODEL WHERE MODELID in(A.MODELID) AND FACTORYID in(B.FACTORYID)) AS MODELNAME,
         	A.FIRSTTIME_REJECT_QTY, 
         	A.REWORK_REJECT_QTY, 
-        	A.IMAGES, 
-        	A.MOVIES, 
         	A.CREATOR, 
         	A.CREATETIME, 
         	A.EVENT, 
@@ -40,8 +30,6 @@
     <insert id="create" parameterType="RejectContents">
 		 INSERT INTO DSP_REJECT_CONTENTS (
              WORKDAILY_SEQ
-             , MODELID
-             , OPERATIONID
              , REJECT_ITEMID
              , FIRSTTIME_REJECT_QTY
              , REWORK_REJECT_QTY
@@ -54,8 +42,6 @@
         )
         VALUES (
             #{workdailySeq},
-			#{modelid},
-			#{operationid},
 			#{rejectItemid},
 			#{firsttimeRejectQty},
 			#{reworkRejectQty},
@@ -72,9 +58,7 @@
 	<update id="modify" parameterType="WorkDailyReport">
 		UPDATE DSP_REJECT_CONTENTS
 		SET
-		 MODELID= #{modelid}
-        , OPERATIONID= #{operationid}
-        , REJECT_ITEMID= #{rejectItemid}
+         REJECT_ITEMID= #{rejectItemid}
         , FIRSTTIME_REJECT_QTY= #{firsttimeRejectQty}
         , REWORK_REJECT_QTY= #{reworkRejectQty}
         , EVENTTIME = GETDATE()

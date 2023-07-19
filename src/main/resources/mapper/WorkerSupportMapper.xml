@@ -10,10 +10,6 @@
 		SELECT
 		ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
 		A.DATASEQ,
-		B.RULESYSID,
-		B.FACTORYID,
-		B.LINEID,
-		B.WORK_DATE,
 		A.PERSONID,
 		(SELECT PERSONNAME FROM DSP_PERSON WHERE PERSONID IN (A.PERSONID)
 		AND FACTORYID IN (B.FACTORYID)
@@ -43,7 +39,6 @@
 		PERSONID,
 		SUPPORTTIME_FROM,
 		SUPPORTTIME_TO,
-		LINEID,
 		MANHOUR,
 		CREATOR,
 		CREATETIME,
@@ -56,13 +51,12 @@
 		#{personid},
 		#{supporttimeFrom},
 		#{supporttimeTo},
-		#{lineid},
 		#{manhour},
 		#{creator},
 		GETDATE(),
 		#{event},
 		#{eventuser},
-		#{eventtime},
+		GETDATE(),
 		'Usable',
 		#{workdailySeq}
 		);
@@ -76,7 +70,6 @@
 		PERSONID = #{personid}
 		, SUPPORTTIME_FROM = #{supporttimeFrom}
 		, SUPPORTTIME_TO = #{supporttimeTo}
-		, LINEID = #{lineid}
 		, MANHOUR = #{manhour}
 		, EVENTTIME = GETDATE()
 		WHERE

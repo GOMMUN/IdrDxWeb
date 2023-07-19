@@ -8,12 +8,7 @@
     <select id="findAll" parameterType="WorkerManhour" resultType="WorkerManhour">
         SELECT 
             ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-			A.DATASEQ, 
-			B.RULESYSID, 
-			B.FACTORYID, 
-			B.LINEID, 
-			B.SHIFTID, 
-			B.WORK_DATE, 
+			A.DATASEQ, 	
 			A.INPUT_ITEMID, 
 			(SELECT DISTINCT COMM_CD_NM  FROM SC_COMM_CD WHERE COMM_CD IN (A.INPUT_ITEMID) AND COMM_GRP_CD ='INPUT_ITEM') AS INPUT_ITEMIDNAME, 
 			A.HANDS, 
@@ -54,7 +49,7 @@
         	GETDATE(),
         	#{event},
             #{eventuser},
-            #{eventtime},
+            GETDATE(),
             'Usable',
             #{workdailySeq}
         );

@@ -10,18 +10,9 @@
             ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
         	A.DATASEQ,
         	A.WORKDAILY_SEQ, 
-        	B.RULESYSID, 
-        	B.FACTORYID, 
-        	B.LINEID, 
-        	B.SHIFTID, 
-        	B.WORK_DATE, 
         	A.WORKTIME_FROM, 
-        	A.WORKTIME_TO, 
-        	A.MODELID, 
-        	(SELECT DISTINCT MODELNAME FROM DSP_MODEL WHERE MODELID IN (A.MODELID)) AS MODELNAME, 
-        	A.OPERATIONID, 
+        	A.WORKTIME_TO,         	
         	A.MANHOUR, 
-        	A.PLAN_QTY, 
         	A.PROD_QTY, 
         	A.GOODSUM_QTY, 
         	A.FIRSTTIME_GOOD_QTY, 
@@ -29,8 +20,6 @@
         	A.REWORK_GOOD_QTY, 
         	A.REWORK_FAIL_QTY, 
         	A.NOTES, 
-        	A.IMAGES, 
-        	A.MOVIES, 
         	A.CREATOR, 
         	A.CREATETIME, 
         	A.EVENT, 
@@ -51,9 +40,7 @@
 		WORKTIME_FROM,
 		WORKTIME_TO,
 		MANHOUR,
-		MODELID,
 		PROD_QTY,
-		PLAN_QTY,
 		GOODSUM_QTY,
 		REWORK_GOOD_QTY,
 		REWORK_FAIL_QTY,
@@ -63,19 +50,13 @@
 		EVENT,
 		EVENTUSER,
 		EVENTTIME,
-		ISUSABLE,
-		FACTORYID,
-		LINEID,
-		SHIFTID,
-		WORK_DATE
+		ISUSABLE
 		) VALUES(
 		#{workdailySeq},
 		#{worktimeFrom},
 		#{worktimeTo},
 		#{manhour},
-		#{modelid},
 		#{prodQty},
-		#{planQty},
 		#{goodsumQty},
 		#{reworkGoodQty},
 		#{reworkFailQty},
@@ -85,11 +66,7 @@
 		#{event},
 		#{eventuser},
 		#{eventtime},
-		'Usable',
-		#{plant},
-		#{line},
-		#{shift},
-		#{date}
+		'Usable'
 		)
 
 	</insert>
@@ -100,9 +77,7 @@
 		WORKTIME_FROM = #{worktimeFrom}
 		, WORKTIME_TO = #{worktimeTo}
 		, MANHOUR = #{manhour}
-		, MODELID = #{modelid}
 		, PROD_QTY = #{prodQty}
-		, PLAN_QTY = #{planQty}
 		, GOODSUM_QTY = #{goodsumQty}
 		, REWORK_GOOD_QTY = #{reworkGoodQty}
 		, REWORK_FAIL_QTY = #{reworkFailQty}

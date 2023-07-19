@@ -11,11 +11,6 @@
 		ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
 		A.DATASEQ,
 		A.WORKDAILY_SEQ,
-		B.RULESYSID,
-		B.FACTORYID,
-		B.LINEID,
-		B.SHIFTID,
-		B.WORK_DATE,
 		A.PERSONID,
 		(SELECT PERSONNAME FROM DSP_PERSON WHERE
 		PERSONID IN (A.PERSONID)
@@ -58,7 +53,7 @@
 		GETDATE(),
 		#{event},
 		#{eventuser},
-		#{eventtime},
+		GETDATE(),
 		'Usable',
 		#{workdailySeq},
 		#{overtime},

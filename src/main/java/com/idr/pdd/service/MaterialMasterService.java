@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.idr.pdd.dto.CM0801;
+import com.idr.pdd.dto.Code;
 import com.idr.pdd.dto.Material;
 import com.idr.pdd.dto.Vendor;
 import com.idr.pdd.mapper.DatasetDetailedMapper;
@@ -21,8 +22,8 @@ public class MaterialMasterService {
 	@Autowired
 	MaterialMasterMapper mapper;
 
-	public List<Material> findAll() {
+	public List<Code> findAll(Material data) {
 		
-		return mapper.findAll();
+		return mapper.findAll(data);
 	}
 }

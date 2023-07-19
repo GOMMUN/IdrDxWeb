@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.idr.pdd.dto.Code;
 import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.Material;
 import com.idr.pdd.dto.Vendor;
@@ -32,8 +34,8 @@ public class MaterialMasterController {
 	
 	@ResponseBody
 	@GetMapping("/find")
-    public List<Material> find() {
-		List<Material> list = service.findAll();
+    public List<Code> find(Material data) {
+		List<Code> list = service.findAll(data);
 		return list;
     }
 }

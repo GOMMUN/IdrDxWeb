@@ -66,11 +66,13 @@
 									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 									<th data-field="workDate" data-sortable="true" data-align="center">날짜</th>
 									<th data-field="factoryname" data-sortable="true" data-align="center">공장</th>
-									<th data-field="linename" data-sortable="true" data-align="center">라인명</th>
+									<th data-field="linename" data-sortable="true" data-align="center">공정</th>
 									<!--<th data-field="blockname" data-sortable="true" data-align="center">블록명</th>-->
 									<!--<th data-field="groupname" data-sortable="true" data-align="center">조구분</th>-->
 									<th data-field="planQty" data-sortable="true" data-align="center">계획수량</th>
-									<th data-field="shiftname" data-sortable="true" data-align="center">주/야구분</th>
+									<th data-field="shiftname" data-sortable="true" data-align="center">작업구분</th>
+									<th data-field="" data-sortable="true" data-align="center">자재</th>
+									<th data-field="" data-sortable="true" data-align="center">차종</th>
 									<th data-field="register" data-sortable="true" data-align="center">작성자</th>
 									<!--<th data-field="reviewer" data-sortable="true" data-align="center">검토자</th>-->
 									<!--<th data-field="approver" data-sortable="true" data-align="center">승인자</th>-->
@@ -188,184 +190,181 @@
 				</div>
 			</div>
 		</div>
-		
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">작업내용</h6>
-						</div>
-						<div class="card-body">
-							<div id="toolbarworkContents">
-								<button type="button" class="btn btn-primary" id="addworkContents" data-toggle="modal"
-									data-target="#addworkContentsModal">
-									<i class="fa-solid fa-plus"></i> Add
-								</button>
-								<button id="removeworkContents" class="btn btn-danger" disabled>
-									<i class="fa fa-trash"></i> Delete
-								</button>
-							</div>
-							<table id="workContents" data-toggle="table" data-toolbar="#toolbarworkContents" data-height="300"
-								data-multiple-select-row="true" data-click-to-select="true" data-search="true"
-								data-show-columns="true" data-show-columns-toggle-all="true">
-								<thead class="thead-light">
-									<tr>
-										<th data-field="state" data-checkbox="true"></th>
-										<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
-										<th data-field="worktimeFrom" data-sortable="true" data-align="center">작업시작시간
-										</th>
-										<th data-field="worktimeTo" data-sortable="true" data-align="center">작업종료시간</th>
-										<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
-										<th data-field="modelname" data-sortable="true" data-align="center">모델/차종</th>
-										<th data-field="prodQty" data-sortable="true" data-align="center">생산수량</th>
-										<th data-field="goodsumQty" data-sortable="true" data-align="center">양품합계</th>
-										<th data-field="firsttimeGoodQty" data-sortable="true" data-align="center">양품
-										</th>
-										<th data-field="firsttimeFailQty" data-sortable="true" data-align="center">불량
-										</th>
-										<th data-field="reworkGoodQty" data-sortable="true" data-align="center">재작업양품
-										</th>
-										<th data-field="reworkFailQty" data-sortable="true" data-align="center">재작업불량
-										</th>
-										<th data-field="notes" data-sortable="true" data-align="center">특이사항</th>
-										<th data-field="" data-sortable="false" data-align="center"
-											data-formatter="workContentFormatter" data-events="operateEvents">#</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">작업내용</h6>
 					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">부적합내역</h6>
+					<div class="card-body">
+						<div id="toolbarworkContents">
+							<button type="button" class="btn btn-primary" id="addworkContents" data-toggle="modal"
+								data-target="#addworkContentsModal">
+								<i class="fa-solid fa-plus"></i> Add
+							</button>
+							<button id="removeworkContents" class="btn btn-danger" disabled>
+								<i class="fa fa-trash"></i> Delete
+							</button>
 						</div>
-						<div class="card-body">
-							<div id="toolbar6">
-								<button type="button" class="btn btn-primary" id="addNonconFormity" data-toggle="modal"
-									data-target="#addNonconFormityModal">
-									<i class="fa-solid fa-plus"></i> Add
-								</button>
-								<button id="removeNonconFormity" class="btn btn-danger" disabled>
-									<i class="fa fa-trash"></i> Delete
-								</button>
-							</div>
-							<table id="rejectContents" data-toggle="table" data-toolbar="#toolbar6" data-height="300"
-								data-multiple-select-row="true" data-click-to-select="true" data-search="true"
-								data-show-columns="true" data-show-columns-toggle-all="true">
-								<thead class="thead-light">
-									<tr>
-										<th data-field="state" data-checkbox="true"></th>
-										<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
-										<th data-field="modelname" data-sortable="true" data-align="center">모델/차종</th>
-										<th data-field="operationid" data-sortable="true" data-align="center">공정</th>
-										<th data-field="rejectItemid" data-sortable="true" data-align="center">불량내용</th>
-										<th data-field="firsttimeRejectQty" data-sortable="true" data-align="center">본
-										</th>
-										<th data-field="reworkRejectQty" data-sortable="true" data-align="center">재투입
-										</th>
-										<th data-field="" data-sortable="false" data-align="center"
-											data-formatter="NonconFormityFormatter" data-events="operateEvents">#</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">비가동내역</h6>
-						</div>
-						<div class="card-body">
-							<div id="toolbar7">
-								<button type="button" class="btn btn-primary" id="addNonOperation" data-toggle="modal"
-									data-target="#addNonOperationModal">
-									<i class="fa-solid fa-plus"></i> Add
-								</button>
-								<button id="removeNonOperation" class="btn btn-danger" disabled>
-									<i class="fa fa-trash"></i> Delete
-								</button>
-							</div>
-							<table id="notoperateContents" data-toggle="table" data-toolbar="#toolbar7"
-								data-height="300" data-multiple-select-row="true" data-click-to-select="true"
-								data-search="true" data-show-columns="true" data-show-columns-toggle-all="true">
-								<thead class="thead-light">
-									<tr>
-										<th data-field="state" data-checkbox="true"></th>
-										<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
-										<th data-field="notoperatetimeFrom" data-sortable="true" data-align="center">
-											비가동시작
-										</th>
-										<th data-field="notoperatetimeTo" data-sortable="true" data-align="center">비가동종료
-										</th>
-										<th data-field="hands" data-sortable="true" data-align="center">인원</th>
-										<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
-										<th data-field="cause" data-sortable="true" data-align="center">내용/원인</th>
-										<th data-field="correctiveaction" data-sortable="true" data-align="center">조치사항
-										</th>
-										<th data-field="" data-sortable="false" data-align="center"
-											data-formatter="NonOperationFormatter" data-events="operateEvents">#</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
+						<table id="workContents" data-toggle="table" data-toolbar="#toolbarworkContents"
+							data-height="300" data-multiple-select-row="true" data-click-to-select="true"
+							data-search="true" data-show-columns="true" data-show-columns-toggle-all="true">
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
+									<th data-field="worktimeFrom" data-sortable="true" data-align="center">작업시작시간
+									</th>
+									<th data-field="worktimeTo" data-sortable="true" data-align="center">작업종료시간</th>
+									<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
+									<th data-field="prodQty" data-sortable="true" data-align="center">생산수량</th>
+									<th data-field="goodsumQty" data-sortable="true" data-align="center">양품합계</th>
+									<th data-field="firsttimeGoodQty" data-sortable="true" data-align="center">양품
+									</th>
+									<th data-field="firsttimeFailQty" data-sortable="true" data-align="center">불량
+									</th>
+									<th data-field="reworkGoodQty" data-sortable="true" data-align="center">재작업양품
+									</th>
+									<th data-field="reworkFailQty" data-sortable="true" data-align="center">재작업불량
+									</th>
+									<th data-field="notes" data-sortable="true" data-align="center">특이사항</th>
+									<th data-field="" data-sortable="false" data-align="center"
+										data-formatter="workContentFormatter" data-events="operateEvents">#</th>
+								</tr>
+							</thead>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Modal -->
-		<div class="modal fade" id="addWorkDailyReportModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-5">
-									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">작업일보</h1>
-									</div>
-									<form class="user">
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="workDate"
-													class="form-control-custom form-control-user" id=""
-													placeholder="날짜">
-											</div>
-											<div class="col-sm-6">
-												<select id="factoryCodes" name="factoryid"
-													class="form-select-custom form-control-user" aria-label="공장">
-													<option value="">공장 선택</option>
-												</select>
-											</div>
+
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">부적합내역</h6>
+					</div>
+					<div class="card-body">
+						<div id="toolbar6">
+							<button type="button" class="btn btn-primary" id="addNonconFormity" data-toggle="modal"
+								data-target="#addNonconFormityModal">
+								<i class="fa-solid fa-plus"></i> Add
+							</button>
+							<button id="removeNonconFormity" class="btn btn-danger" disabled>
+								<i class="fa fa-trash"></i> Delete
+							</button>
+						</div>
+						<table id="rejectContents" data-toggle="table" data-toolbar="#toolbar6" data-height="300"
+							data-multiple-select-row="true" data-click-to-select="true" data-search="true"
+							data-show-columns="true" data-show-columns-toggle-all="true">
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
+									<th data-field="operationid" data-sortable="true" data-align="center">공정</th>
+									<th data-field="rejectItemid" data-sortable="true" data-align="center">불량내용</th>
+									<th data-field="firsttimeRejectQty" data-sortable="true" data-align="center">본
+									</th>
+									<th data-field="reworkRejectQty" data-sortable="true" data-align="center">재투입
+									</th>
+									<th data-field="" data-sortable="false" data-align="center"
+										data-formatter="NonconFormityFormatter" data-events="operateEvents">#</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">비가동내역</h6>
+					</div>
+					<div class="card-body">
+						<div id="toolbar7">
+							<button type="button" class="btn btn-primary" id="addNonOperation" data-toggle="modal"
+								data-target="#addNonOperationModal">
+								<i class="fa-solid fa-plus"></i> Add
+							</button>
+							<button id="removeNonOperation" class="btn btn-danger" disabled>
+								<i class="fa fa-trash"></i> Delete
+							</button>
+						</div>
+						<table id="notoperateContents" data-toggle="table" data-toolbar="#toolbar7" data-height="300"
+							data-multiple-select-row="true" data-click-to-select="true" data-search="true"
+							data-show-columns="true" data-show-columns-toggle-all="true">
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
+									<th data-field="notoperatetimeFrom" data-sortable="true" data-align="center">
+										비가동시작
+									</th>
+									<th data-field="notoperatetimeTo" data-sortable="true" data-align="center">비가동종료
+									</th>
+									<th data-field="hands" data-sortable="true" data-align="center">인원</th>
+									<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
+									<th data-field="cause" data-sortable="true" data-align="center">내용/원인</th>
+									<th data-field="correctiveaction" data-sortable="true" data-align="center">조치사항
+									</th>
+									<th data-field="" data-sortable="false" data-align="center"
+										data-formatter="NonOperationFormatter" data-events="operateEvents">#</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="addWorkDailyReportModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">작업일보</h1>
+								</div>
+								<form class="user">
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="workDate"
+												class="form-control-custom form-control-user" id="" placeholder="날짜">
 										</div>
-										<div class="form-group row">
-											<!--<div class="col-sm-6 mb-3 mb-sm-0">
+										<div class="col-sm-6">
+											<select id="factoryCodes" name="factoryid"
+												class="form-select-custom form-control-user" aria-label="공장">
+												<option value="">공장 선택</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<!--<div class="col-sm-6 mb-3 mb-sm-0">
 												<select id="blockCodes" name="blockid"
 													class="form-select-custom form-control-user" aria-label="블록">
 													<option value="">블록 선택</option>
 												</select>
 											</div>-->
-											<div class="col-sm-6">
-												<select id="lineCodes" name="lineid"
-													class="form-select-custom form-control-user" aria-label="라인">
-													<option value="">라인 선택</option>
-												</select>
-											</div>
-											<div class="col-sm-6">
-												<!-- 										<input type="text" name="shiftid" class="form-control-custom form-control-user" id="" placeholder="주/야구분"> -->
-												<select id="shiftCodes" name="shiftid"
-													class="form-select-custom form-control-user" aria-label="주/야구분">
-													<option value="">주/야구분 선택</option>
-												</select>
-											</div>
+										<div class="col-sm-6">
+											<select id="lineCodes" name="lineid"
+												class="form-select-custom form-control-user" aria-label="라인">
+												<option value="">라인 선택</option>
+											</select>
 										</div>
-										<!--<div class="form-group row">
+										<div class="col-sm-6">
+											<!-- 										<input type="text" name="shiftid" class="form-control-custom form-control-user" id="" placeholder="주/야구분"> -->
+											<select id="shiftCodes" name="shiftid"
+												class="form-select-custom form-control-user" aria-label="주/야구분">
+												<option value="">주/야구분 선택</option>
+											</select>
+										</div>
+									</div>
+									<!--<div class="form-group row">
 											<div class="col-sm-6 mb-3 mb-sm-0">
 												<select id="groupCodes" name="groupid"
 													class="form-select-custom form-control-user" aria-label="조구분">
@@ -382,7 +381,7 @@
 												</select>
 											</div>
 										</div>-->
-										<!--
+									<!--
 										<div class="form-group row">
 											<div class="col-sm-6 mb-3 mb-sm-0">
 												<input type="text" name="approver"
@@ -395,491 +394,486 @@
 													placeholder="승인자">
 											</div>
 										</div> -->
-										<div class="form-group">
-											<input type="text" name="planqty"
-												class="form-control-custom form-control-user" id="" placeholder="계획수량">
+									<div class="form-group">
+										<input type="text" name="planqty" class="form-control-custom form-control-user"
+											id="" placeholder="계획수량">
+									</div>
+									<div class="form-group">
+										<input type="text" name="notes" class="form-control-custom form-control-user"
+											id="" placeholder="특이사항">
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-lg-10">
+											<a id="addWorkDailyReportModalCreate"
+												class="btn btn-primary btn-user btn-block">
+												Save
+											</a>
+											<a id="addWorkDailyReportModalModify"
+												class="btn btn-primary btn-user btn-block mt-0">
+												Save
+											</a>
 										</div>
-										<div class="form-group">
-											<input type="text" name="notes"
-												class="form-control-custom form-control-user" id="" placeholder="특이사항">
+										<div class="col-lg-2">
+											<a id="addWorkDailyReportModalClose"
+												class="btn btn-google btn-user btn-block">
+												X
+											</a>
 										</div>
-										<hr>
-										<div class="row">
-											<div class="col-lg-10">
-												<a id="addWorkDailyReportModalCreate"
-													class="btn btn-primary btn-user btn-block">
-													Save
-												</a>
-												<a id="addWorkDailyReportModalModify"
-													class="btn btn-primary btn-user btn-block mt-0">
-													Save
-												</a>
-											</div>
-											<div class="col-lg-2">
-												<a id="addWorkDailyReportModalClose"
-													class="btn btn-google btn-user btn-block">
-													X
-												</a>
-											</div>
-										</div>
-									</form>
-								</div>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="modal fade" id="addWorkerIntputModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-5">
-									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">작업자투입현황</h1>
-									</div>
-									<div class="modal-body">
-										<table id="selectWorker" data-toggle="table" data-height="345"
-											data-click-to-select="true"
-											data-multiple-select-row="true" data-search="true" data-show-columns="true"
-											data-show-columns-toggle-all="true" data-pagination="false">
-											<thead>
-												<tr>
-													<th data-field="state" data-checkbox="true"></th>
-													<th data-field="personid">작업자ID</th>
-													<th data-field="personname">작업자명</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
+	<div class="modal fade" id="addWorkerIntputModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">작업자투입현황</h1>
+								</div>
+								<div class="modal-body">
+									<table id="selectWorker" data-toggle="table" data-height="345"
+										data-click-to-select="true" data-multiple-select-row="true" data-search="true"
+										data-show-columns="true" data-show-columns-toggle-all="true"
+										data-pagination="false">
+										<thead>
+											<tr>
+												<th data-field="state" data-checkbox="true"></th>
+												<th data-field="personid">작업자ID</th>
+												<th data-field="personname">작업자명</th>
+											</tr>
+										</thead>
+									</table>
 								</div>
 							</div>
-
 						</div>
-						<form class="user">
-							<div class="form-group row">
-								<div class="col-sm-12 mb-3 mb-sm-0">
-									<input type="text" name="workinputdesc"
-										class="form-control-custom form-control-user" id="workinputdesc"
-										placeholder='비고'>
+
+					</div>
+					<form class="user">
+						<div class="form-group row">
+							<div class="col-sm-12 mb-3 mb-sm-0">
+								<input type="text" name="workinputdesc" class="form-control-custom form-control-user"
+									id="workinputdesc" placeholder='비고'>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<select id="overtimeyn" name="overtimeyn" class="form-select-custom form-control-user">
+									<option value="N" selected disabled>잔업 여부</option>
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-lg-10">
+								<a id="addWorkerInputModalCreate" class="btn btn-primary btn-user btn-block">
+									Save
+								</a>
+								<a id="addWorkerInputModalModify" class="btn btn-primary btn-user btn-block">
+									Save
+								</a>
+							</div>
+							<div class="col-lg-2">
+								<a id="addWorkerInputModalClose" class="btn btn-google btn-user btn-block">
+									X
+								</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="addWorkerManhourModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">공수투입현황</h1>
+								</div>
+								<form class="user">
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="hands"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='인원'>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="manhour"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='공수'>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<select id="inputItemCodes" name="inputItemid"
+												class="form-select-custom form-control-user">
+												<option value="">구분 선택</option>
+											</select>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-lg-10">
+											<a id="addWorkerManhourModalCreate"
+												class="btn btn-primary btn-user btn-block">
+												Save
+											</a>
+											<a id="addWorkerManhourModalModify"
+												class="btn btn-primary btn-user btn-block mt-0">
+												Save
+											</a>
+										</div>
+										<div class="col-lg-2">
+											<a id="addWorkerManhourModalClose"
+												class="btn btn-google btn-user btn-block">
+												X
+											</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="addWorkerSupportModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">타라인지원내역</h1>
+								</div>
+								<div class="modal-body">
+									<table id="selectWorkerSupport" data-toggle="table" data-height="345"
+										data-click-to-select="true" data-multiple-select-row="true" data-search="true"
+										data-show-columns="true" data-show-columns-toggle-all="true"
+										data-pagination="false">
+										<thead>
+											<tr>
+												<th data-field="state" data-checkbox="true"></th>
+												<th data-field="personid">작업자ID</th>
+												<th data-field="personname">작업자명</th>
+											</tr>
+										</thead>
+									</table>
 								</div>
 							</div>
+						</div>
+
+					</div>
+					<form class="user">
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<input type="text" name="manhour" class="form-control-custom form-control-user" id=""
+									placeholder="공수">
+							</div>
+
 							<div class="form-group row">
+								<div class="col-sm-6 mb-3 mb-sm-0">
+									<input type="time" name="supporttimeFrom"
+										class="form-control-custom form-control-user" id="supporttimeFrom"
+										placeholder="지원시작시간">
+								</div>
 								<div class="col-sm-6">
-									<select id="overtimeyn" name="overtimeyn"
-										class="form-select-custom form-control-user">
-										<option value="N" selected disabled>잔업 여부</option>
-										<option value="Y">Y</option>
-										<option value="N">N</option>
-									</select>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-lg-10">
-									<a id="addWorkerInputModalCreate" class="btn btn-primary btn-user btn-block">
-										Save
-									</a>
-									<a id="addWorkerInputModalModify" class="btn btn-primary btn-user btn-block">
-										Save
-									</a>
-								</div>
-								<div class="col-lg-2">
-									<a id="addWorkerInputModalClose" class="btn btn-google btn-user btn-block">
-										X
-									</a>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="addWorkerManhourModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-5">
-									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">공수투입현황</h1>
-									</div>
-									<form class="user">
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="hands"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='인원'>
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="manhour"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='공수'>
-											</div>
-										</div>
-										<div class="form-group row">
-											<div class="col-sm-6">
-												<select id="inputItemCodes" name="inputItemid"
-													class="form-select-custom form-control-user">
-													<option value="">구분 선택</option>
-												</select>
-											</div>
-										</div>
-										<hr>
-										<div class="row">
-											<div class="col-lg-10">
-												<a id="addWorkerManhourModalCreate"
-													class="btn btn-primary btn-user btn-block">
-													Save
-												</a>
-												<a id="addWorkerManhourModalModify"
-													class="btn btn-primary btn-user btn-block mt-0">
-													Save
-												</a>
-											</div>
-											<div class="col-lg-2">
-												<a id="addWorkerManhourModalClose"
-													class="btn btn-google btn-user btn-block">
-													X
-												</a>
-											</div>
-										</div>
-									</form>
+									<input type="time" name="supporttimeTo"
+										class="form-control-custom form-control-user" id="supporttimeTo"
+										placeholder="지원종료시간">
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="addWorkerSupportModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
+						<hr>
 						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-5">
-									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">타라인지원내역</h1>
-									</div>
-									<div class="modal-body">
-										<table id="selectWorkerSupport" data-toggle="table" data-height="345"
-											 data-click-to-select="true"
-											data-multiple-select-row="true" data-search="true" data-show-columns="true"
-											data-show-columns-toggle-all="true" data-pagination="false">
-											<thead>
-												<tr>
-													<th data-field="state" data-checkbox="true"></th>
-													<th data-field="personid">작업자ID</th>
-													<th data-field="personname">작업자명</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
-								</div>
+							<div class="col-lg-10">
+								<a id="addWorkerSupportModalCreate" class="btn btn-primary btn-user btn-block">
+									Save
+								</a>
+								<a id="addWorkerSupportModalModify" class="btn btn-primary btn-user btn-block">
+									Save
+								</a>
 							</div>
-
+							<div class="col-lg-2">
+								<a id="addWorkerSupportModalClose" class="btn btn-google btn-user btn-block">
+									X
+								</a>
+							</div>
 						</div>
-						<form class="user">
-							<div class="form-group row">
-								<div class="col-sm-6">
-									<input type="text" name="manhour" class="form-control-custom form-control-user"
-										id="" placeholder="공수">
-								</div>
-
-								<div class="form-group row">
-									<div class="col-sm-6 mb-3 mb-sm-0">
-										<input type="text" name="supporttimeFrom"
-											class="form-control-custom form-control-user" id="supporttimeFrom"
-											placeholder="지원시작시간">
-									</div>
-									<div class="col-sm-6">
-										<input type="text" name="supporttimeTo"
-											class="form-control-custom form-control-user" id="supporttimeTo"
-											placeholder="지원종료시간">
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-lg-10">
-									<a id="addWorkerSupportModalCreate" class="btn btn-primary btn-user btn-block">
-										Save
-									</a>
-									<a id="addWorkerSupportModalModify" class="btn btn-primary btn-user btn-block">
-										Save
-									</a>
-								</div>
-								<div class="col-lg-2">
-									<a id="addWorkerSupportModalClose" class="btn btn-google btn-user btn-block">
-										X
-									</a>
-								</div>
-							</div>
-						</form>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="modal fade" id="addWorkContentsModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-5">
-									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">작업내용</h1>
+	<div class="modal fade" id="addWorkContentsModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">작업내용</h1>
+								</div>
+								<form class="user">
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="time" name="worktimeFrom"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='작업시작시간'>
+										</div>
+										<div class="col-sm-6">
+											<input type="time" name="workcontenttimeTo"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='작업종료시간'>
+										</div>
 									</div>
-									<form class="user">
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="worktimeFrom"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='작업시작시간'>
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="workcontenttimeTo"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='작업종료시간'>
-											</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="workcontentmanhour"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='공수'>
 										</div>
-										<div class="form-group row">
-											<div class="col-sm-6">
-												<input type="text" name="workcontentmanhour"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='공수'>
-											</div>
-											<div class="col-sm-6">
-												<select id="inputModelCodes" name="modelid"
-													class="form-select-custom form-control-user">
-													<option value="">모델/차종</option>
-												</select>
-											</div>
+										<div class="col-sm-6">
+											<select id="inputModelCodes" name="modelid"
+												class="form-select-custom form-control-user">
+												<option value="">모델/차종</option>
+											</select>
 										</div>
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="prodQty"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='생산수량'>
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="goodsumQty"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='양품합계'>
-											</div>
-											<!--
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="goodsumQty"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='양품합계'>
+										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="prodQty"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='생산수량'>
+										</div>
+										<!--
 											<div class="col-sm-6 mb-3 mb-sm-0">
 												<input type="text" name="planQty"
 													class="form-control-custom form-control-user" id="personnel"
 													placeholder='계획수량'>
 											</div>-->
-										</div>
-										<div class="form-group row">
-											
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="reworkGoodQty"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='재작업양품'>
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="reworkFailQty"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='재작업불량'>
-											</div>
-										</div>
-										<div class="form-group row">
-											<div class="col-sm-12 mb-3 mb-sm-0">
-												<input type="text" name="workcontentnotes"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='특이사항'>
-											</div>
-										</div>
-										<hr>
-										<div class="row">
-											<div class="col-lg-10">
-												<a id="addWorkContentsModalCreate"
-													class="btn btn-primary btn-user btn-block">
-													Save
-												</a>
-												<a id="addWorkContentsModalModify"
-													class="btn btn-primary btn-user btn-block mt-0">
-													Save
-												</a>
-											</div>
-											<div class="col-lg-2">
-												<a id="addWorkContentsModalClose"
-													class="btn btn-google btn-user btn-block">
-													X
-												</a>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="modal fade" id="addNonconFormityModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-5">
-									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">부적합내역</h1>
 									</div>
-									<form class="user">
-										<div class="form-group row">
-											<div class="col-sm-6">
-												<select id="inputModelCodes2" name="modelid2"
-													class="form-select-custom form-control-user">
-													<option value="">모델/차종</option>
-												</select>
-											</div>
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="operationid"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='공정'>
-											</div>
+									<div class="form-group row">										
+										<div class="col-sm-6">
+											<input type="text" name="reworkFailQty"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='재작업불량'>
 										</div>
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="rejectItemid"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='불량내용'>
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="firsttimeRejectQty"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='본'>
-											</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="reworkGoodQty"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='재작업양품'>
 										</div>
-										<div class="form-group row">
-											<div class="col-sm-6">
-												<input type="text" name="reworkRejectQty"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='재투입'>
-											</div>
-										</div>
-										<hr>
-										<div class="row">
-											<div class="col-lg-10">
-												<a id="addNonconFormityModalCreate"
-													class="btn btn-primary btn-user btn-block">
-													Save
-												</a>
-												<a id="addNonconFormityModalModify"
-													class="btn btn-primary btn-user btn-block mt-0">
-													Save
-												</a>
-											</div>
-											<div class="col-lg-2">
-												<a id="addNonconFormityModalClose"
-													class="btn btn-google btn-user btn-block">
-													X
-												</a>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="modal fade" id="addNonOperationModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-5">
-									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">비가동내역</h1>
 									</div>
-									<form class="user">
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="notoperatetimeFrom"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='비가동시작'>
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="notoperatetimeTo"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='비가동종료'>
-											</div>
+									<div class="form-group row">
+										<div class="col-sm-12 mb-3 mb-sm-0">
+											<input type="text" name="workcontentnotes"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='특이사항'>
 										</div>
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="nonhands"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='인원'>
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="nonmanhour"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='공수'>
-											</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-lg-10">
+											<a id="addWorkContentsModalCreate"
+												class="btn btn-primary btn-user btn-block">
+												Save
+											</a>
+											<a id="addWorkContentsModalModify"
+												class="btn btn-primary btn-user btn-block mt-0">
+												Save
+											</a>
 										</div>
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="cause"
-													class="form-control-custom form-control-user" id="personnel"
-													placeholder='내용/원인'>
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="correctiveAction"
-													class="form-control-custom form-control-user" id="Airlift"
-													placeholder='조치사항'>
-											</div>
+										<div class="col-lg-2">
+											<a id="addWorkContentsModalClose" class="btn btn-google btn-user btn-block">
+												X
+											</a>
 										</div>
-
-										<hr>
-										<div class="row">
-											<div class="col-lg-10">
-												<a id="addNonOperationModalCreate"
-													class="btn btn-primary btn-user btn-block">
-													Save
-												</a>
-												<a id="addNonOperationModalModify"
-													class="btn btn-primary btn-user btn-block mt-0">
-													Save
-												</a>
-											</div>
-											<div class="col-lg-2">
-												<a id="addNonOperationModalClose"
-													class="btn btn-google btn-user btn-block">
-													X
-												</a>
-											</div>
-										</div>
-									</form>
-								</div>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="modal fade" id="addNonconFormityModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">부적합내역</h1>
+								</div>
+								<form class="user">
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<select id="inputModelCodes2" name="modelid2"
+												class="form-select-custom form-control-user">
+												<option value="">모델/차종</option>
+											</select>
+										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="operationid"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='공정'>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="rejectItemid"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='불량내용'>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="firsttimeRejectQty"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='본'>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="reworkRejectQty"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='재투입'>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-lg-10">
+											<a id="addNonconFormityModalCreate"
+												class="btn btn-primary btn-user btn-block">
+												Save
+											</a>
+											<a id="addNonconFormityModalModify"
+												class="btn btn-primary btn-user btn-block mt-0">
+												Save
+											</a>
+										</div>
+										<div class="col-lg-2">
+											<a id="addNonconFormityModalClose"
+												class="btn btn-google btn-user btn-block">
+												X
+											</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="addNonOperationModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">비가동내역</h1>
+								</div>
+								<form class="user">
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="time" name="notoperatetimeFrom"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='비가동시작'>
+										</div>
+										<div class="col-sm-6">
+											<input type="time" name="notoperatetimeTo"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='비가동종료'>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="nonhands"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='인원'>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="nonmanhour"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='공수'>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="cause"
+												class="form-control-custom form-control-user" id="personnel"
+												placeholder='내용/원인'>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="correctiveAction"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='조치사항'>
+										</div>
+									</div>
+
+									<hr>
+									<div class="row">
+										<div class="col-lg-10">
+											<a id="addNonOperationModalCreate"
+												class="btn btn-primary btn-user btn-block">
+												Save
+											</a>
+											<a id="addNonOperationModalModify"
+												class="btn btn-primary btn-user btn-block mt-0">
+												Save
+											</a>
+										</div>
+										<div class="col-lg-2">
+											<a id="addNonOperationModalClose" class="btn btn-google btn-user btn-block">
+												X
+											</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

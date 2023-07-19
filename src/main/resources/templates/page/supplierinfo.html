@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
 
-<script th:inline="javascript" type="text/javascript" ></script>
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/supplierinfo.js}"></script>
 
 <body>
 	<div class="d-flex bd-highlight">
@@ -12,29 +12,78 @@
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-primary">공급업체정보</h6>
 				</div>
-				<div class="card-header py-3">
-					<strong>공급업체</strong>
-				</div>
+<!--				<div class="card-header py-3">-->
+<!--					<strong>공급업체</strong>-->
+<!--				</div>-->
 				<div class="card-body">
-					<table id="shiftinfo" data-toggle="table" data-toolbar="" data-height="350"
-						data-click-to-select="false" data-search="true" data-url="/supplier/find" data-show-columns="true"
+					<div id="toolbarSupplierinfo">
+						<button type="button" class="btn btn-primary" id="addSupplierinfo">
+							<i class="fa-solid fa-plus"></i> Add
+						</button>
+						<button id="removeSupplierinfo" class="btn btn-danger" disabled>
+							<i class="fa fa-trash"></i> Delete
+						</button>
+					</div>					
+					<table id="supplierinfo" data-toggle="table" data-toolbar="#toolbarSupplierinfo" data-height="300"
+						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/supplier/find" data-show-columns="true"
 						data-show-columns-toggle-all="true">
 						<thead class="thead-light">
 							<tr>
 								<th data-field="state" data-checkbox="true"></th>
 								<th data-field="vendorid" data-sortable="true" data-align="center">공급업체ID</th>
 								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
+								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
 								<th data-field="vendorname" data-sortable="true" data-align="center">공급업체명</th>
 								<th data-field="vendornickname" data-sortable="true" data-align="center">공급업체별칭</th>
 								<th data-field="vendoraddress" data-sortable="true" data-align="center">주소</th>
 								<th data-field="vendorchargeid" data-sortable="true" data-align="center">담당자ID</th>
 								<th data-field="vendorcontactemail" data-sortable="true" data-align="center">이메일</th>
 								<th data-field="vendorcontactphoneno" data-sortable="true" data-align="center">전화번호</th>
+								<th data-field="creator" data-sortable="true" data-align="center">생성자</th>
+								<th data-field="createtime" data-sortable="true" data-align="center">생성시간</th>
+								<th data-field="eventuser" data-sortable="true" data-align="center">수정자</th>
+								<th data-field="eventtime" data-sortable="true" data-align="center">수정시간</th>
+								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
 							</tr>
 						</thead>
 					</table>
 				</div>
+				<div>
+					<div class="card-header">
+						<div class="row">
+							<label class="control-label font-weight-bold col-lg-6">*공급업체ID <input type="text" id="vendorid" name="vendorid" class="form-control col-lg-12 "></label>
+							<label hidden class="control-labeln fot-weight-bold col-lg-6">공장코드 <input type="text" id="factoryid" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">*공장
+								<br/> 
+								<select id="factoryCodes" name="factoryid"
+									class="form-select-custom form-control col-lg-12" aria-label="공장">
+									<option value="">공장 선택</option>
+								</select>								
+							</label>
+							<label class="control-label font-weight-bold col-lg-6">공급업체명 <input type="text" id="vendorname" name="vendorname" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">공급업체별칭<input type="text" id="vendornickname" name="vendornickname" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">주소<input type="text" id="vendoraddress" name="vendoraddress" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">담당자ID<input type="text" id="vendorchargeid" name="vendorchargeid" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">이메일<input type="text" id="vendorcontactemail" name="vendorcontactemail" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">전화번호<input type="text" id="vendorcontactphoneno" name="vendorcontactphoneno" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">생성자<input type="text" id="creator" name="creator" class="form-control col-lg-12 "></label>							
+							<label class="control-label font-weight-bold col-lg-6">수정자<input type="text" id="eventuser" name="eventuser" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">사용여부
+								<select id="isusable" name="isusable"
+									class="form-select-custom form-control col-lg-12" aria-label="사용여부">
+									<option value="Y">Y</option>
+									<option value="N">N</option>
+								</select>
+							</label>
+						</div>
+					</div>
+				</div>				
 			</div>
+			<div class= "float-right">
+				<button type="button" class="btn btn-primary" id="saveSupplierinfo">
+					<i class="fa-solid"></i> 저장
+				</button>
+			</div>			
 		</div>
 	</div>
 </body>

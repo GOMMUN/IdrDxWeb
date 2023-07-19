@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-
-
-import com.idr.pdd.dto.CM0801;
 import com.idr.pdd.dto.Vendor;
 
 
@@ -15,5 +12,8 @@ import com.idr.pdd.dto.Vendor;
 public interface SupplierInfoMapper {
 
 	List<Vendor> findAll();
+	int checkCnt(Vendor param);
 	
+	int save(Vendor param);
+	int remove(List<Vendor> param);
 }

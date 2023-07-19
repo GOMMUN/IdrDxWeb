@@ -8,24 +8,96 @@
 	<select id="findAll" resultType="Vendor">
 		SELECT
 		VENDORID
-		, FACTORYID
-		, VENDORNAME
-		, VENDORNICKNAME
-		, VENDOR_ADDRESS
-		, VENDOR_CHARGEID
-		, VENDOR_CONTACTEMAIL
-		, VENDOR_CONTACTPHONENO
-		, CREATOR
-		, CREATETIME
-		, EVENT
-		, EVENTUSER
-		, EVENTTIME
-		, ISUSABLE
-		, TID
-		FROM DSP_VENDOR
+		,A.FACTORYID
+		,(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
+		,A.VENDORNAME
+		,A.VENDORNICKNAME
+		,A.VENDOR_ADDRESS
+		,A.VENDOR_CHARGEID
+		,A.VENDOR_CONTACTEMAIL
+		,A.VENDOR_CONTACTPHONENO
+		,A.CREATOR
+		,FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
+		,A.EVENT
+		,A.EVENTUSER
+		,FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
+		,A.ISUSABLE
+		,A.TID
+		FROM DSP_VENDOR A
 		WHERE 1=1
 	</select>
+	
+	<select id="checkCnt" parameterType="Vendor" resultType="int">
+		SELECT COUNT(*)
+		FROM DSP_VENDOR
+		WHERE 1=1
+			AND VENDORID = #{vendorid}
+			AND FACTORYID = #{factoryid}
+	</select>	
 
+	<update id="save" parameterType="Vendor" >
+		MERGE INTO DSP_VENDOR AS A
+		USING (
+			SELECT 1 AS DUM
+		) AS B
+		ON (
+			A.VENDORID = #{vendorid} AND
+			A.FACTORYID = #{factoryid}
+			)
+		WHEN MATCHED THEN
+			UPDATE SET 
+				 VENDORNAME				= #{vendorname}
+				,VENDORNICKNAME			= #{vendornickname}
+				,VENDOR_ADDRESS			= #{vendoraddress}
+				,VENDOR_CHARGEID		= #{vendorchargeid}
+				,VENDOR_CONTACTEMAIL	= #{vendorcontactemail}
+				,VENDOR_CONTACTPHONENO	= #{vendorcontactphoneno}
+				,EVENTUSER				= #{eventuser}
+				,EVENTTIME				= SYSDATETIME()
+				,ISUSABLE				= #{isusable}
+		WHEN NOT MATCHED THEN 
+			INSERT(
+				 VENDORID
+				,FACTORYID
+				,VENDORNAME
+				,VENDORNICKNAME
+				,VENDOR_ADDRESS
+				,VENDOR_CHARGEID
+				,VENDOR_CONTACTEMAIL
+				,VENDOR_CONTACTPHONENO
+				,CREATOR
+				,CREATETIME
+				,EVENTUSER
+				,EVENTTIME
+				,ISUSABLE
+			) 
+			VALUES(
+				 #{vendorid}
+				,#{factoryid}
+				,#{vendorname}
+				,#{vendornickname}				
+				,#{vendoraddress}
+				,#{vendorchargeid}
+				,#{vendorcontactemail}
+				,#{vendorcontactphoneno}
+				,#{creator}
+				,SYSDATETIME()
+				,#{eventuser}
+				,SYSDATETIME()
+				,#{isusable}
+			)
+		;
+	</update>
 
+    <update id="remove" parameterType="list">
+		<foreach collection="list" item="data" open="" close="" separator=";">
+		UPDATE DSP_VENDOR 
+		SET ISUSABLE= 'N'
+			,EVENTTIME = SYSDATETIME()
+    	WHERE
+			VENDORID = #{data.vendorid}
+			AND FACTORYID = #{data.factoryid}
+		</foreach>
+    </update>
 
 </mapper>

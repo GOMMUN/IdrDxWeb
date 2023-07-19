@@ -7,6 +7,7 @@ public class Vendor {
 	
 	public String vendorid;
 	public String factoryid;
+	public String factoryname;
 	public String vendorname;
 	public String vendornickname;
 	public String vendoraddress;

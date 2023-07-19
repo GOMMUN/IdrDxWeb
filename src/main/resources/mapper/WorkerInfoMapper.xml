@@ -40,7 +40,7 @@
 		WHEN MATCHED THEN
 			UPDATE SET 
 				 PERSONNAME		= #{personname}
-				,EVENTTIME		= FORMAT(SYSDATETIME(), 'yyyy-MM-dd HH:mm:ss')
+				,EVENTTIME		= SYSDATETIME()
 				,ISUSABLE		= #{isusable}
 		WHEN NOT MATCHED THEN 
 			INSERT(
@@ -57,8 +57,8 @@
 				,#{personid}
 				,#{factoryid}
 				,#{personname}				
-				,FORMAT(SYSDATETIME(), 'yyyy-MM-dd HH:mm:ss')
-				,FORMAT(SYSDATETIME(), 'yyyy-MM-dd HH:mm:ss')
+				,SYSDATETIME()
+				,SYSDATETIME()
 				,#{isusable}			
 			)
 		;
@@ -68,6 +68,7 @@
 		<foreach collection="list" item="data" open="" close="" separator=";">
 		UPDATE DSP_PERSON 
 		SET ISUSABLE= 'N'
+			,EVENTTIME = SYSDATETIME()
     	WHERE
 			COMPANYID = 'dx' 
 			AND PERSONID = #{data.personid}

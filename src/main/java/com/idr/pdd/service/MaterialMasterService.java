@@ -19,11 +19,5 @@ import com.idr.pdd.mapper.SupplierInfoMapper;
 @Service
 public class MaterialMasterService {
 
-	@Autowired
-	MaterialMasterMapper mapper;
 
-	public List<Code> findAll(Material data) {
-		
-		return mapper.findAll(data);
-	}
 }

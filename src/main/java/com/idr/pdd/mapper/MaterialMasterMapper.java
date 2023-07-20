@@ -16,6 +16,6 @@ import com.idr.pdd.dto.Vendor;
 @Mapper
 public interface MaterialMasterMapper {
 
-	List<Code> findAll(Material data);
+	List<Material> findAll();
 	
 }

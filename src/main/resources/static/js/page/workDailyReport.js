@@ -5,8 +5,10 @@ let c_factory = null;
 let c_block = null;
 let c_line = null;
 let c_shift = null;
+let c_model = null;
 let c_input_item = null;
-let c_model_item=null;
+let c_material=null;
+//let c_model_item=null;
 let s_workDailyReport = null;
 let dataseq = null;
 let s_workerInput = null;
@@ -37,7 +39,8 @@ function code() {
 	line();
 	shift();		// 주/야간구분 코드 조회
 	input_item();
-	modelitem();
+	model();
+	matarial();
 }
 
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
@@ -127,11 +130,13 @@ function setWorkDailyReportEventListener() {
 		let data = initWorkDailyReport();
 
 		data.workDate = $("input[name=workDate]").val();
-		data.blockid = $("select[name=blockid]").val();
+		//data.blockid = $("select[name=blockid]").val();
 		data.factoryid = $("select[name=factoryid]").val();
-		data.groupid = $("select[name=groupid]").val();
+		//data.groupid = $("select[name=groupid]").val();
 		data.lineid = $("select[name=lineid]").val();
 		data.shiftid = $("select[name=shiftid]").val();
+		data.materialid = $("select[name=wdrmatarial]").val();
+		data.modelid = $("select[name=wdrmodel]").val();
 		data.approver = $("input[name=approver]").val();
 		data.reviewer = $("input[name=reviewer]").val();
 		data.planQty = $("input[name=planqty]").val();
@@ -146,19 +151,11 @@ function setWorkDailyReportEventListener() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
-		} else if (data.blockid == "") {
-			alert("블록을 선택해주세요.");
-			$("select[name=blockid]").focus();
-			return;
 		} else if (data.lineid == "") {
 			alert("라인을 선택해주세요.");
 			$("select[name=lineid]").focus();
 			return;
-		} else if (data.groupid == "") {
-			alert("조구분을 선택해주세요.");
-			$("select[name=groupid]").focus();
-			return;
-		} else if (data.shiftid == "") {
+		}else if (data.shiftid == "") {
 			alert("주/야구분을 선택해주세요.");
 			$("select[name=shiftid]").focus();
 			return;
@@ -198,11 +195,13 @@ function setWorkDailyReportEventListener() {
 			let data = s_workDailyReport;
 
 			data.workDate = $("input[name=workDate]").val();
-			data.blockid = $("select[name=blockid]").val();
+			//data.blockid = $("select[name=blockid]").val();
 			data.factoryid = $("select[name=factoryid]").val();
-			data.groupid = $("select[name=groupid]").val();
+			//data.groupid = $("select[name=groupid]").val();
 			data.lineid = $("select[name=lineid]").val();
 			data.shiftid = $("select[name=shiftid]").val();
+			data.metarialid = $("select[name=wdrmatarial]").val();
+			data.modelid = $("select[name=wdrmodel]").val();
 			data.approver = $("input[name=approver]").val();
 			data.reviewer = $("input[name=reviewer]").val();
 			data.planQty = $("input[name=planqty]").val();
@@ -216,10 +215,6 @@ function setWorkDailyReportEventListener() {
 			} else if (data.factoryid == "") {
 				alert("공장을 선택해주세요.");
 				$("select[name=factoryid]").focus();
-				return;
-			} else if (data.blockid == "") {
-				alert("블록을 선택해주세요.");
-				$("select[name=blockid]").focus();
 				return;
 			} else if (data.lineid == "") {
 				alert("라인을 선택해주세요.");
@@ -305,14 +300,14 @@ function setWorkDailyReportEventListener() {
 		$dropdown2.empty();
 
 		if (c_line) {
-			$dropdown2.append($("<option/>").val("").text("라인 선택"));
+			$dropdown2.append($("<option/>").val("").text("공정 선택"));
 			$.each(c_line, function() {
 				if ($factoryCodes.val() == this.mcode) {
 					$dropdown2.append($("<option/>").val(this.code).text(this.value));
 				}
 			});
 		} else {
-			$dropdown2.append($("<option/>").val("").text("라인 선택"));
+			$dropdown2.append($("<option/>").val("").text("공정 선택"));
 		}
 		
 		
@@ -328,6 +323,36 @@ function setWorkDailyReportEventListener() {
 			});
 		} else {
 			$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
+		
+		}
+		
+		let $dropdown4 = $("#wdrmodelid");
+		$dropdown4.empty();
+		
+		if (c_model) {
+			$dropdown4.append($("<option/>").val("").text("차종 선택"));
+			$.each(c_model, function() {
+				if ($factoryCodes.val() == this.mcode) {
+					$dropdown4.append($("<option/>").val(this.code).text(this.value));
+				}
+			});
+		} else {
+			$dropdown4.append($("<option/>").val("").text("차종 선택"));
+		
+		}
+		
+		let $dropdown5 = $("#wdrmatarialid");
+		$dropdown5.empty();
+		
+		if (c_material) {
+			$dropdown5.append($("<option/>").val("").text("자재 선택"));
+			$.each(c_material, function() {
+				if ($factoryCodes.val() == this.mcode) {
+					$dropdown5.append($("<option/>").val(this.code).text(this.value));
+				}
+			});
+		} else {
+			$dropdown5.append($("<option/>").val("").text("자재 선택"));
 		
 		}
 	});
@@ -761,7 +786,7 @@ function setWorkContentsEventListener() {
 
 		$('#addWorkContentsModal').modal('show');
 		
-		modelitem();
+		
 	});
 
 	$gridRemoveBtn.click(function() {
@@ -936,7 +961,7 @@ function setNonconFormityEventListener() {
 
 		$('#addNonconFormityModal').modal('show');
 		
-		modelitem();
+		reject_item();
 	});
 
 	$gridRemoveBtn.click(function() {
@@ -971,7 +996,7 @@ function setNonconFormityEventListener() {
 		data.workdailySeq = dataseq;
 		//data.modelid = $("select[name=modelid2]").val();
 		//data.operationid=$("input[name=operationid]").val();
-		data.rejectItemid=$("input[name=rejectItemid]").val();
+		data.rejectItemid=$("select[name=rejectItemId]").val();
 		data.firsttimeRejectQty=$("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty=$("input[name=reworkRejectQty]").val();
 		
@@ -1267,6 +1292,38 @@ function shift() {
 	});
 }
 
+function model() {
+	let url = '/code/model';
+
+	c_model = null;
+
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			c_model = data;
+
+			
+		}
+	});
+}
+
+function matarial() {
+	let url = '/code/matarial';
+
+	c_material = null;
+
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			c_material = data;
+
+			
+		}
+	});
+}
+
 function input_item() {
 	let url = '/code/inputItem';
 
@@ -1293,7 +1350,33 @@ function input_item() {
 	});
 }
 
+function reject_item() {
+	let url = '/code/rejectItem';
 
+	c_input_item = null;
+
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			c_input_item = data;
+
+			let $dropdown = $("#rejectItemCode");
+			$dropdown.empty();
+
+			if (c_input_item) {
+				$dropdown.append($("<option/>").val("").text("불량"));
+				$.each(data, function() {
+					$dropdown.append($("<option/>").val(this.code).text(this.value));
+				});
+			} else {
+				$dropdown.append($("<option/>").val("").text("불량"));
+			}
+		}
+	});
+}
+
+/*
 function modelitem() {
 	let url = '/code/modelItem';
 
@@ -1334,7 +1417,7 @@ function modelitem() {
 	}
 
 	
-}
+}*/
 
 function workDailyReportOperateFormatter(value, row, index) {
 	return [
@@ -1663,6 +1746,7 @@ function initWorkDailyReport() {
 
 	let data = {
 		"dataseq": "", "rulesysid": "", "factoryid": "", "factoryname": "",
+		"materialid": "", "modelid": "",
 		"workDate": "", "blockid": "", "blockname": "", "lineid": "",
 		"linename": "", "groupid": "", "groupname": "", "shiftid": "",
 		"shiftname": "", "register": "", "reviewer": "", "approver": "",

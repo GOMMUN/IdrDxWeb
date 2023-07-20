@@ -19,6 +19,10 @@ public class WorkDailyReport {
 	private String groupname;
 	private String shiftid;
 	private String shiftname;
+	private String materialid;
+	private String materialname;
+	private String modelid;
+	private String modelname;
 	private String register;
 	private String reviewer;
 	private String approver;

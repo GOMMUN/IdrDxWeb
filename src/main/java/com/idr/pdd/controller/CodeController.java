@@ -67,9 +67,24 @@ public class CodeController {
     }
 	
 	@ResponseBody
-	@GetMapping("/modelItem")
+	@GetMapping("/model")
     public List<Code> modelItem() {
     	List<Code> list = service.findmodelItem();
 		return list;
     }
+	
+	@ResponseBody
+	@GetMapping("/matarial")
+    public List<Code> matarialItem() {
+    	List<Code> list = service.findmatarial();
+		return list;
+    }
+	
+	@ResponseBody
+	@GetMapping("/rejectItem")
+    public List<Code> rejectItem(Model model) {
+    	List<Code> list = service.findrejectItem();
+		return list;
+    }
+
 }

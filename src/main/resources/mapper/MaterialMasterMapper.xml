@@ -5,12 +5,13 @@
 
 <mapper namespace="com.idr.pdd.mapper.MaterialMasterMapper">
 
-	<select id="findAll" resultType="Material" parameterType="Code">
+	<select id="findAll" resultType="Material" >
 		SELECT
-		MATERIALID AS CODE
-		, MATERIALNAME AS VALUE
+		FACTORYID,
+		MATERIALID 
+		, MATERIALNAME 
 		FROM DSP_MATERIAL
-		WHERE FACTORYID=#{factoryid}
+		
 	</select>
 
 

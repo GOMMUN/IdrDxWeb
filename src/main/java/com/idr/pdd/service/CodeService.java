@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import com.idr.pdd.dto.Code;
 import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.Location;
+import com.idr.pdd.dto.Material;
 import com.idr.pdd.dto.ModelNM;
 import com.idr.pdd.dto.Shift;
 import com.idr.pdd.mapper.BlockMapper;
 import com.idr.pdd.mapper.CodeMapper;
 import com.idr.pdd.mapper.FactoryMapper;
 import com.idr.pdd.mapper.LineMapper;
+import com.idr.pdd.mapper.MaterialMasterMapper;
 import com.idr.pdd.mapper.ModelMapper;
 import com.idr.pdd.mapper.ShiftMapper;
 
@@ -40,6 +42,9 @@ public class CodeService {
 	
 	@Autowired
 	ModelMapper modelMapper;
+	
+	@Autowired
+	MaterialMasterMapper matarialMapper;
 	
 	public List<Code> findFactroy(){
 		List<Code> list = new ArrayList<>();
@@ -114,6 +119,25 @@ public class CodeService {
 			code.setMCode(model.getFactoryid());
 			code.setCode(model.getModelid());
 			code.setValue(model.getModelname());
+			list.add(code);
+		}
+		return list;
+	}
+
+	public List<Code> findrejectItem() {
+List<Code> list = codeMapper.find("REJECT_ITEMID");
+		
+		return list;
+	}
+
+	public List<Code> findmatarial() {
+		List<Code> list = new ArrayList<>();
+		
+		for (Material model : matarialMapper.findAll()){
+			Code code = new Code();
+			code.setMCode(model.getFactoryid());
+			code.setCode(model.getMaterialid());
+			code.setValue(model.getMaterialname());
 			list.add(code);
 		}
 		return list;

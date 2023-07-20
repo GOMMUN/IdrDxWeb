@@ -32,10 +32,5 @@ public class MaterialMasterController {
         return "page/materialMaster";
     }
 	
-	@ResponseBody
-	@GetMapping("/find")
-    public List<Code> find(Material data) {
-		List<Code> list = service.findAll(data);
-		return list;
-    }
+
 }

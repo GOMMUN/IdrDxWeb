@@ -17,6 +17,10 @@
 				(SELECT LOCATIONNAME FROM DSP_LOCATION WHERE LOCATIONTYPE = 'LINE' AND LOCATIONID IN (A.LINEID) AND FACTORYID IN (A.FACTORYID)) AS LINENAME, 
 				A.SHIFTID,
 				(SELECT SHIFTNAME FROM DSP_SHIFT WHERE SHIFTID IN (A.SHIFTID) AND ISUSABLE = 'Y' ) AS SHIFTNAME, 
+				A.MODELID,
+				(SELECT DISTINCT MODELNAME FROM DSP_MODEL WHERE MODELID IN (A.MODELID) ) AS MODELNAME, 
+				A.MATERIALID,
+				(SELECT DISTINCT MATERIALNAME FROM DSP_MATERIAL WHERE MATERIALID IN (A.MATERIALID)  ) AS MATERIALNAME, 
 				A.REGISTER, 
 				A.REVIEWER, 
 				A.APPROVER, 
@@ -53,9 +57,9 @@
              , FACTORYID
              , WORK_DATE
              , LINEID
-             , BLOCKID
-             , GROUPID
              , SHIFTID
+             , MODELID
+             , MATERIALID
              , REGISTER
              , REVIEWER
              , APPROVER
@@ -74,9 +78,9 @@
              , #{factoryid}
              , CONVERT(VARCHAR, CONVERT(DATE, #{workDate}), 112)
              , #{lineid}
-             , #{blockid}
-             , #{groupid}
              , #{shiftid}
+             , #{modelid}
+             , #{materialid}
              , #{register}
              , #{reviewer}
              , #{approver}
@@ -97,10 +101,10 @@
            SET
            	   WORK_DATE		= REPlACE(#{workDate}, '-', '')
            	 , FACTORYID		= #{factoryid}
-             , BLOCKID          = #{blockid}
              , LINEID			= #{lineid}
-             , GROUPID          = #{groupid}
              , SHIFTID          = #{shiftid}
+             , MODELID			= #{modelid}
+             , MATERIALID		= #{materialid}
              , NOTES			= #{notes}
              , EVENTTIME = GETDATE()
              ,REVIEWER=#{reviewer}

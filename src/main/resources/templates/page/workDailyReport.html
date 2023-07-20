@@ -71,8 +71,8 @@
 									<!--<th data-field="groupname" data-sortable="true" data-align="center">조구분</th>-->
 									<th data-field="planQty" data-sortable="true" data-align="center">계획수량</th>
 									<th data-field="shiftname" data-sortable="true" data-align="center">작업구분</th>
-									<th data-field="" data-sortable="true" data-align="center">자재</th>
-									<th data-field="" data-sortable="true" data-align="center">차종</th>
+									<th data-field="materialname" data-sortable="true" data-align="center">자재</th>
+									<th data-field="modelname" data-sortable="true" data-align="center">차종</th>
 									<th data-field="register" data-sortable="true" data-align="center">작성자</th>
 									<!--<th data-field="reviewer" data-sortable="true" data-align="center">검토자</th>-->
 									<!--<th data-field="approver" data-sortable="true" data-align="center">승인자</th>-->
@@ -263,7 +263,7 @@
 									<th data-field="state" data-checkbox="true"></th>
 									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 									<!--<th data-field="operationid" data-sortable="true" data-align="center">공정</th>-->
-									<th data-field="rejectItemid" data-sortable="true" data-align="center">불량내용</th>
+									<th data-field="rejectItemname" data-sortable="true" data-align="center">불량내용</th>
 									<th data-field="firsttimeRejectQty" data-sortable="true" data-align="center">본
 									</th>
 									<th data-field="reworkRejectQty" data-sortable="true" data-align="center">재투입
@@ -353,54 +353,42 @@
 										<div class="col-sm-6">
 											<select id="lineCodes" name="lineid"
 												class="form-select-custom form-control-user" aria-label="라인">
-												<option value="">라인 선택</option>
+												<option value="">공정선택</option>
 											</select>
 										</div>
 										<div class="col-sm-6">
 											<!-- 										<input type="text" name="shiftid" class="form-control-custom form-control-user" id="" placeholder="주/야구분"> -->
 											<select id="shiftCodes" name="shiftid"
-												class="form-select-custom form-control-user" aria-label="주/야구분">
-												<option value="">주/야구분 선택</option>
+												class="form-select-custom form-control-user" aria-label="작업구분">
+												<option value="">작업구분 선택</option>
 											</select>
 										</div>
 									</div>
-									<!--<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<select id="groupCodes" name="groupid"
-													class="form-select-custom form-control-user" aria-label="조구분">
-													<option value="">조구분 선택</option>
-													<option value="A">A조</option>
-													<option value="B">B조</option>
-												</select>
-											</div>
-											<div class="col-sm-6">
-									
-												<select id="shiftCodes" name="shiftid"
-													class="form-select-custom form-control-user" aria-label="주/야구분">
-													<option value="">주/야구분 선택</option>
-												</select>
-											</div>
-										</div>-->
-									<!--
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" name="approver"
-													class="form-control-custom form-control-user" id=""
-													placeholder="검토자">
-											</div>
-											<div class="col-sm-6">
-												<input type="text" name="reviewer"
-													class="form-control-custom form-control-user" id=""
-													placeholder="승인자">
-											</div>
-										</div> -->
-									<div class="form-group">
-										<input type="text" name="planqty" class="form-control-custom form-control-user"
-											id="" placeholder="계획수량">
+						
+									<div class="form-group row">
+										<div class="col-sm-6 ">
+											<select id="wdrmatarialid" name="wdrmatarial"
+												class="form-select-custom form-control-user" aria-label="자재">
+												<option value="">자재 선택</option>
+											</select>
+										</div>
+										
+										<div class="col-sm-6 ">
+											<select id="wdrmodelid" name="wdrmodel"
+												class="form-select-custom form-control-user" aria-label="차종">
+												<option value="">차종 선택</option>
+											</select>
+										</div>
 									</div>
-									<div class="form-group">
-										<input type="text" name="notes" class="form-control-custom form-control-user"
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="planqty" class="form-control-custom form-control-user"
+											id="" placeholder="계획수량">
+										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="notes" class="form-control-custom form-control-user"
 											id="" placeholder="특이사항">
+										</div>
 									</div>
 									<hr>
 									<div class="row">
@@ -756,9 +744,10 @@
 									</div>-->
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="text" name="rejectItemid"
-												class="form-control-custom form-control-user" id="personnel"
-												placeholder='불량내용'>
+												<select id="rejectItemCode" name="rejectItemId"
+												class="form-select-custom form-control-user">
+												<option value="">불량</option>
+											</select>
 										</div>
 										<div class="col-sm-6">
 											<input type="text" name="firsttimeRejectQty"

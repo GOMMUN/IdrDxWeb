@@ -26,6 +26,14 @@
 		WHERE 1=1
     </select>  
     
+	<select id="checkCnt" parameterType="Shift" resultType="int">
+		SELECT COUNT(*)
+		FROM DSP_SHIFT
+		WHERE 1=1
+			AND SHIFTID = #{shiftid}
+			AND FACTORYID = #{factoryid}
+	</select>    
+    
 	<update id="save" parameterType="Shift" >
 		MERGE INTO DSP_SHIFT AS A
 		USING (

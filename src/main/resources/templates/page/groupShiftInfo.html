@@ -27,7 +27,6 @@
 						<thead class="thead-light">
 							<tr>
 								<th data-field="state" data-checkbox="true"></th>
-<!--								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>-->
 								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
 								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
 								<th data-field="shiftid" data-sortable="true" data-align="center">그룹/SHIFT 코드</th>
@@ -42,17 +41,16 @@
 				</div>
 				<div>
 					<div class="card-header">
-						<div class="row">
-							<!--<label class="control-label font-weight-bold col-lg-6">회사코드 <input type="text" id="companyid" name="companyid" disabled class="form-control col-lg-12 " ></label>-->
+						<div class="row">							
 							<label hidden class="control-label font-weight-bold col-lg-6">공장코드 <input type="text" id="factoryid" class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">공장
+							<label class="control-label font-weight-bold col-lg-6">*공장
 								<br/> 
 								<select id="factoryCodes" name="factoryid"
 									class="form-select-custom form-control col-lg-12" aria-label="공장">
 									<option value="">공장 선택</option>
 								</select>								
 							</label>
-							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 코드 <input type="text" id="shiftid" name="shiftid" class="form-control col-lg-12 "></label>
+							<label class="control-label font-weight-bold col-lg-6">*그룹/SHIFT 코드 <input type="text" id="shiftid" name="shiftid" class="form-control col-lg-12 "></label>
 							<label class="control-label font-weight-bold col-lg-6">그룹/SHIFT 명
 								<select id="shiftname" name="shiftname"
 									class="form-select-custom form-control col-lg-12" aria-label="주/야구분">

@@ -43,7 +43,6 @@ public class SupplierInfoController {
 	@PostMapping("/check")
     public int checkCnt(@RequestBody Vendor param) {
 		int cnt = service.checkCnt(param);
-		System.out.println(cnt+"#####");
 		return cnt;
 		
     }

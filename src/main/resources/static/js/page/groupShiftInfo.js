@@ -37,13 +37,14 @@ function initSetting() {
 	
 	$gridAddBtn.click(function() {			//행추가
 		$grid.bootstrapTable('append', initGroupShiftInfo());
+		$grid.bootstrapTable('scrollTo', 'bottom');
+		$grid.bootstrapTable('check', ($grid.bootstrapTable('getData').length-1));		
 		$gridAddBtn.prop('disabled',true);
 	});
 	
 	$gridSaveBtn.click(function() {		//수정
 		let data = initGroupShiftInfo();
-
-//		data.companyid = $("input[name=companyid]").val();
+//		data.factoryid = $("#factoryCodes option:selected").val();
 		data.factoryid = $("select[name=factoryid]").val();
 		data.shiftid = $("input[name=shiftid]").val();
 		data.shiftname = $("select[name=shiftname]").val();
@@ -58,7 +59,7 @@ function initSetting() {
 			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.shiftid == "") {
-			alert("그룹/SHIFT 명을 산텍하세요.");
+			alert("그룹/SHIFT 명을 선텍하세요.");
 			$("select[name=shiftid]").focus();
 			return;
 		} else if (data.isusable == "") {
@@ -67,6 +68,37 @@ function initSetting() {
 			return;
 		}
 		
+		//데이터 이미 존재하는지 체크(중복=0, 아니면=1)
+		let valiCheck;
+		let url_val = '/groupshift/check';
+		
+		$.ajax({
+			url: url_val,
+			type: 'POST',
+			data: JSON.stringify(data),
+			dataType: "json",
+			async:false,
+			contentType: 'application/json; charset=utf-8',
+			success: function(data) {
+				if(data > 0){
+					valiCheck = 0;
+				}else {
+					valiCheck = 1;
+				}
+			}
+		});		
+
+		if(valiCheck == 0){
+			if(!confirm('기존 데이터를 수정하시겠습니까?')){
+            	return false;
+        	}
+		}else if(valiCheck == 1){
+			if(!confirm('해당 데이터를 새로 추가하시겠습니까?')){
+            	return false;
+        	}
+		}				
+		
+		//저장 처리
 		let url = '/groupshift/save';
 		
 		$.ajax({
@@ -110,20 +142,18 @@ function initSetting() {
 			}
 		});
 	});
+	
 };
  
 function gridData(data){
-	
-	$("#companyid").val(data.companyid);
-	$("#factoryid").val(data.factoryid);
-	$("#factoryname").val(data.factoryname);
+
+	$("#factoryCodes option:selected").val(data.factoryid).text(data.factoryname);
 	$("#shiftid").val(data.shiftid);
 	$("#shiftname").val(data.shiftname);
 	$("#shifttype").val(data.shifttype);
 	$("#starttime").val(data.starttime);
 	$("#endtime").val(data.endtime);
 	$("#isusable").val(data.isusable);
-
 }
   
 function initGroupShiftInfo() {

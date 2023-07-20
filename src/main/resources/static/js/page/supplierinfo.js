@@ -45,7 +45,7 @@ function setEventListener(){
 		let data = initSupplierinfo();
 
 		data.vendorid = $("input[name=vendorid]").val();
-		data.factoryid = $("#factoryid").val();
+		data.factoryid = $("select[name=factoryid]").val();
 		data.vendorname = $("input[name=vendorname]").val();		
 		data.vendornickname = $("input[name=vendornickname]").val();
 		data.vendoraddress = $("input[name=vendoraddress]").val();
@@ -55,7 +55,6 @@ function setEventListener(){
 		data.creator = $("input[name=creator]").val();
 		data.eventuser = $("input[name=eventuser]").val();
 		data.isusable = $("select[name=isusable]").val();
-		alert(data.factoryid);
 
 		//validation check
 		 if (data.vendorid == "") {
@@ -160,8 +159,7 @@ function setEventListener(){
 function gridData(data){
 
 	$("#vendorid").val(data.vendorid);
-	$("#factoryid").val(data.factoryid);	//hidden
-	$("#factoryCodes option:selected").text(data.factoryname);
+	$("#factoryCodes option:selected").val(data.factoryid).text(data.factoryname);
 	$("#vendorname").val(data.vendorname);
 	$("#vendornickname").val(data.vendornickname);
 	$("#vendoraddress").val(data.vendoraddress);

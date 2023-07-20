@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.idr.pdd.dto.Shift;
+import com.idr.pdd.dto.Vendor;
 import com.idr.pdd.service.GroupShiftInfoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,13 @@ public class GroupShiftInfoController {
 		List<Shift> list = service.findAll();
 		return list;
     }
+	
+	@ResponseBody
+	@PostMapping("/check")
+    public int checkCnt(@RequestBody Shift param) {
+		int cnt = service.checkCnt(param);
+		return cnt;
+    }	
 	
 	@ResponseBody
 	@PostMapping("/save")

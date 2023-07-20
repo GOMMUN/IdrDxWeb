@@ -30,6 +30,10 @@ public class DatasetDetailedController {
     public String init() {
         return "page/datasetDetailedMapping";
     }
+	@GetMapping("dummy")
+    public String init2() {
+        return "page/dummy";
+    }
 	
 	@ResponseBody
 	@GetMapping("/find")

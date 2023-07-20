@@ -11,6 +11,7 @@ import com.idr.pdd.dto.WorkerInfo;
 public interface WorkerInfoMapper {
 
 	List<WorkerInfo> findAll();
+	int checkCnt(WorkerInfo param);
 	
 	int save(WorkerInfo param);
 	int remove(List<WorkerInfo> param);

@@ -36,8 +36,14 @@ public class DatasetDetailedController {
     public List<CM0801> find() {
 		List<CM0801> list = service.findAll();
 		return list;
-
     }
+	
+	@ResponseBody
+	@PostMapping("/check")
+    public int checkCnt(@RequestBody CM0801 param) {
+		int cnt = service.checkCnt(param);
+		return cnt;
+    }	
 	
 	@ResponseBody
 	@PostMapping("/save")

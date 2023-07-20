@@ -22,6 +22,13 @@
 		AND A.COMPANY_CD = 'dx'
 		ORDER BY A.MODEL_ID ASC
 	</select>
+	
+	<select id="checkCnt" parameterType="CM0501" resultType="int">
+		SELECT COUNT(*)
+		FROM CM0501
+		WHERE 1=1
+			AND MODEL_ID = #{modelid}
+	</select>  	
 
 	<update id="save" parameterType="CM0501" >
 		MERGE INTO CM0501 AS A

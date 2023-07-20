@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.idr.pdd.dto.CM0401;
 import com.idr.pdd.dto.WorkerInfo;
 import com.idr.pdd.service.WorkerInfoService;
 
@@ -38,6 +37,13 @@ public class WorkerInfoController {
 		List<WorkerInfo> list = service.findAll();
 		return list;
     }
+	
+	@ResponseBody
+	@PostMapping("/check")
+    public int checkCnt(@RequestBody WorkerInfo param) {
+		int cnt = service.checkCnt(param);
+		return cnt;
+    }		
 	
 	@ResponseBody
 	@PostMapping("/save")

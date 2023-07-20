@@ -39,6 +39,13 @@ public class ModelVehicleInfoController {
     }
 	
 	@ResponseBody
+	@PostMapping("/check")
+    public int checkCnt(@RequestBody CM0501 param) {
+		int cnt = service.checkCnt(param);
+		return cnt;
+    }	
+	
+	@ResponseBody
 	@PostMapping("/save")
     public int save(@RequestBody CM0501 param) {
 		return service.save(param);

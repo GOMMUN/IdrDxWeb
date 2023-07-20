@@ -14,20 +14,30 @@ function initSetting() {
 	 
 	let $grid = $("#workerinfo");
 	let $gridAddBtn = $("#addWorkerinfo");			//행추가
-	let $gridSaveBtn = $("#saveWorkerinfo");	//수정
+	let $gridSaveBtn = $("#saveWorkerinfo");		//수정
 	let $gridRemoveBtn = $("#removeWorkerinfo");	//삭제
 	 
-	$grid.on('click-row.bs.table', function (row, $element, field) {
+	$grid.on('check.bs.table', function (row, $element, field) {
 		gridData($element);
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length);
 	});
 
-    $grid.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
+	$grid.on('uncheck.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
-    });
+	});
+
+	$grid.on('check-all.bs.table', function(rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+
+	$grid.on('uncheck-all.bs.table', function(rowsAfter, rowsBefore) {
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
     
    $gridAddBtn.click(function() {			//행추가
 		$grid.bootstrapTable('append', initWorkerInfo());
+		$grid.bootstrapTable('scrollTo', 'bottom');
+		$grid.bootstrapTable('check', ($grid.bootstrapTable('getData').length-1));
 		$gridAddBtn.prop('disabled',true);
 	});
 	
@@ -57,6 +67,38 @@ function initSetting() {
 			$("select[name=useyn]").focus();
 			return;
 		}
+		
+		//데이터 이미 존재하는지 체크(중복=0, 아니면=1)
+		let valiCheck;
+		let url_val = '/workerinfo/check';
+		
+		$.ajax({
+			url: url_val,
+			type: 'POST',
+			data: JSON.stringify(data),
+			dataType: "json",
+			async:false,
+			contentType: 'application/json; charset=utf-8',
+			success: function(data) {
+				if(data > 0){
+					valiCheck = 0;
+				}else {
+					valiCheck = 1;
+				}
+			}
+		});
+
+		if(valiCheck == 0){
+			if(!confirm('기존 데이터를 수정하시겠습니까?')){
+            	return false;
+        	}
+		}else if(valiCheck == 1){
+			if(!confirm('해당 데이터를 새로 추가하시겠습니까?')){
+            	return false;
+        	}
+		}				
+		
+		//저장 처리
 		
 		let url = '/workerinfo/save';
 		
@@ -105,11 +147,9 @@ function initSetting() {
 };
  
 function gridData(data){
-//	$("input[name=ruleid]").val(data.rulesysid);
-	//$('#workDateDetail').datepicker("setDate",new Date(data.workDate))
 	
 	$("#personid").val(data.personid);
-	$("#factoryid").val(data.factoryid);
+	$("#factoryCodes option:selected").val(data.factoryid).text(data.factoryname);
 	$("#personname").val(data.personname);
 	$("#isusable").val(data.isusable);
 	

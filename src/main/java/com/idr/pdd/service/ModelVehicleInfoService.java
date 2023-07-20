@@ -20,6 +20,11 @@ public class ModelVehicleInfoService {
 		return mapper.findAll();
 	}
 	
+	public int checkCnt(CM0501 param) {
+		
+		return mapper.checkCnt(param);
+	}	
+	
 	public int save(CM0501 param) {	
 		return mapper.save(param);
 	}

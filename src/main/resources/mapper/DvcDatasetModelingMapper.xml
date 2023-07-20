@@ -15,7 +15,7 @@
 		FROM CM0701 A
 		WHERE A.COMPANY_CD = 'dx'
 		AND A.BIZ_CD = 'SP1'
-	</select>
+	</select>  	
 	
 	<select id="findGroup" parameterType="CM0701" resultType="CM0701">
 		SELECT 
@@ -33,6 +33,14 @@
 		AND A.AXIS_ID = #{axisid}
 		ORDER BY A.GROUPING_ID ASC
 	</select>	
+		
+	<select id="checkCnt" parameterType="CM0701" resultType="int">
+		SELECT COUNT(*)
+		FROM CM0701
+		WHERE 1=1
+			AND AXIS_ID = #{axisid}
+			AND GROUPING_ID = #{groupingid}
+	</select> 
 
 	<update id="save" parameterType="CM0701" >
 		MERGE INTO CM0701 AS A

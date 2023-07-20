@@ -27,6 +27,14 @@
 		WHERE 1=1
 		ORDER BY PERSONID ASC;
 	</select>
+	
+	<select id="checkCnt" parameterType="WorkerInfo" resultType="int">
+		SELECT COUNT(*)
+		FROM DSP_PERSON
+		WHERE 1=1
+			AND PERSONID = #{personid}
+			AND FACTORYID = #{factoryid}
+	</select>   	
 
 	<update id="save" parameterType="WorkerInfo" >
 		MERGE INTO DSP_PERSON AS A

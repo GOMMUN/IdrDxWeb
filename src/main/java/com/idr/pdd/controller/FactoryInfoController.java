@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.idr.pdd.dto.Factory;
-import com.idr.pdd.dto.Shift;
 import com.idr.pdd.service.FactoryInfoService;
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +35,13 @@ public class FactoryInfoController {
 		List<Factory > list = service.findAll();
 		return list;
     }
+	
+	@ResponseBody
+	@PostMapping("/check")
+    public int checkCnt(@RequestBody Factory param) {
+		int cnt = service.checkCnt(param);
+		return cnt;
+    }	
 	
 	@ResponseBody
 	@PostMapping("/save")

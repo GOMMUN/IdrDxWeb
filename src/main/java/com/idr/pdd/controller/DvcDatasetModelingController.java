@@ -46,6 +46,13 @@ public class DvcDatasetModelingController {
     }
 	
 	@ResponseBody
+	@PostMapping("/check")
+    public int checkCnt(@RequestBody CM0701 param) {
+		int cnt = service.checkCnt(param);
+		return cnt;
+    }	
+	
+	@ResponseBody
 	@PostMapping("/save")
     public int save(@RequestBody CM0701 param) {
 		return service.save(param);

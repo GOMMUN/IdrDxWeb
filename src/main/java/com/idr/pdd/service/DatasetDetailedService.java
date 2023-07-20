@@ -21,6 +21,11 @@ public class DatasetDetailedService {
 		return mapper.findAll();
 	}
 	
+	public int checkCnt(CM0801 param) {
+		
+		return mapper.checkCnt(param);
+	}
+	
 	public int save(CM0801 param) {	
 		return mapper.save(param);
 	}

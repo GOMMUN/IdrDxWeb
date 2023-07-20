@@ -23,6 +23,13 @@
          WHERE 1=1
     </select>
     
+    <select id="checkCnt" parameterType="Factory" resultType="int">
+		SELECT COUNT(*)
+		FROM DSP_FACTORY
+		WHERE 1=1
+			AND FACTORYID = #{factoryid}
+	</select>   
+    
 	<update id="save" parameterType="Factory" >
 		MERGE INTO DSP_FACTORY AS A
 		USING (

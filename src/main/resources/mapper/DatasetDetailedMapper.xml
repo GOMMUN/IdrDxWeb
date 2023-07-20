@@ -18,6 +18,14 @@
 		FROM CM0801
 		WHERE 1=1
 	</select>
+	
+	<select id="checkCnt" parameterType="CM0801" resultType="int">
+		SELECT COUNT(*)
+		FROM CM0801
+		WHERE 1=1
+			AND ACTIVITY_ID = #{activityid}
+			AND PQCD_ID = #{pqcdid}
+	</select>   	
 
 	<update id="save" parameterType="CM0801" >
 		MERGE INTO CM0801 AS A

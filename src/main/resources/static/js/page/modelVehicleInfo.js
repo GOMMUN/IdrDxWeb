@@ -32,6 +32,8 @@ $(function(){
 	
 	$gridAddBtn.click(function() {			//행추가
 		$grid.bootstrapTable('append', initMvInfo());
+		$grid.bootstrapTable('scrollTo', 'bottom');
+		$grid.bootstrapTable('check', ($grid.bootstrapTable('getData').length-1));
 		$gridAddBtn.prop('disabled',true);
 	});
 	
@@ -61,6 +63,38 @@ $(function(){
 			$("select[name=useyn]").focus();
 			return;
 		}
+		
+		//데이터 이미 존재하는지 체크(중복=0, 아니면=1)
+		let valiCheck;
+		let url_val = '/mvinfo/check';
+		
+		$.ajax({
+			url: url_val,
+			type: 'POST',
+			data: JSON.stringify(data),
+			dataType: "json",
+			async:false,
+			contentType: 'application/json; charset=utf-8',
+			success: function(data) {
+				if(data > 0){
+					valiCheck = 0;
+				}else {
+					valiCheck = 1;
+				}
+			}
+		});		
+
+		if(valiCheck == 0){
+			if(!confirm('기존 데이터를 수정하시겠습니까?')){
+            	return false;
+        	}
+		}else if(valiCheck == 1){
+			if(!confirm('해당 데이터를 새로 추가하시겠습니까?')){
+            	return false;
+        	}
+		}				
+		
+		//저장 처리		
 		
 		let url = '/mvinfo/save';
 		
@@ -108,8 +142,6 @@ $(function(){
 };
  
  function gridData(data){
-//	$("input[name=ruleid]").val(data.rulesysid);
-	//$('#workDateDetail').datepicker("setDate",new Date(data.workDate))
 	
 	$("#modelid").val(data.modelid);
 	$("#modelnm").val(data.modelnm);

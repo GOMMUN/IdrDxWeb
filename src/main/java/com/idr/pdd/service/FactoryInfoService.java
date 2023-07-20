@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idr.pdd.dto.Factory;
-import com.idr.pdd.dto.Shift;
 import com.idr.pdd.mapper.FactoryInfoMapper;
 
 
@@ -19,6 +18,12 @@ public class FactoryInfoService {
 	public List<Factory> findAll(){
 		return mapper.findAll();
 	}
+	
+	public int checkCnt(Factory param) {
+		
+		return mapper.checkCnt(param);
+	}
+	
 	public int save(Factory param) {	
 		return mapper.save(param);
 	}

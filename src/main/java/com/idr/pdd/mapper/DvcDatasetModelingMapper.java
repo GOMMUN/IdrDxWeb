@@ -12,8 +12,8 @@ import com.idr.pdd.dto.CM0701;
 public interface DvcDatasetModelingMapper {
 
 	List<CM0701> findAxis();
-	
 	List<CM0701> findGroup(CM0701 param);
+	int checkCnt(CM0701 param);
 	
 	int save(CM0701 param);
 	int remove(List<CM0701> param);

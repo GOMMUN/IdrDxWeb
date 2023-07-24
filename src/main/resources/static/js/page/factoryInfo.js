@@ -142,10 +142,7 @@ $(function(){
 };
  
 function gridData(data){
-//	$("input[name=ruleid]").val(data.rulesysid);
-	//$('#workDateDetail').datepicker("setDate",new Date(data.workDate))
-	
-	$("#companyid").val(data.companyid);
+
 	$("#factoryid").val(data.factoryid);
 	$("#factoryname").val(data.factoryname);
 	$("#description").val(data.description);
@@ -153,14 +150,13 @@ function gridData(data){
 	$("#factorytype").val(data.factorytype);
 	$("#creator").val(data.creator);
 	$("#isusable").val(data.isusable);
-	$("#tid").val(data.tid);
 
 }
 
 function initFactoryInfo() {
 	let data = {
-		"companyid": "dx", "factoryid": "", "factoryname": "", "description": "", "erpplant": "",
-		"factorytype": "", "creator": "", "isusable": "", "tid": ""
+		"factoryid": "", "factoryname": "", "description": "", "erpplant": "",
+		"factorytype": "", "creator": "", "isusable": ""
 	};
 	
 	return data;

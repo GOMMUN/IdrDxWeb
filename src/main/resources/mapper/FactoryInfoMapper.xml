@@ -7,18 +7,17 @@
 
     <select id="findAll" resultType="Factory">
           SELECT COMPANYID
-             , FACTORYID
-             , FACTORYNAME
-             , DESCRIPTION
-             , ERPPLANT
-             , FACTORYTYPE
-             , CREATOR
-             , CREATETIME
-             , EVENT
-             , EVENTUSER
-             , EVENTTIME
-             , ISUSABLE
-             , TID
+	             ,FACTORYID
+	             ,FACTORYNAME
+	             ,DESCRIPTION
+	             ,ERPPLANT
+	             ,FACTORYTYPE
+	             ,CREATOR
+	             ,FORMAT(CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
+	             ,EVENT
+	             ,EVENTUSER
+	             ,FORMAT(EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
+	             ,ISUSABLE
           FROM DSP_FACTORY
          WHERE 1=1
     </select>
@@ -44,9 +43,9 @@
 				,DESCRIPTION	= #{description}
 				,ERPPLANT		= #{erpplant}
 				,FACTORYTYPE	= #{factorytype}
-				,CREATOR		= #{creator}
+				,EVENTUSER		= 'idrAdmin'
+				,EVENTTIME		= GETDATE()
 				,ISUSABLE		= #{isusable}
-				,TID			= #{tid}
 		WHEN NOT MATCHED THEN 
 			INSERT(
 				 COMPANYID
@@ -56,8 +55,10 @@
 				,ERPPLANT
 				,FACTORYTYPE
 				,CREATOR
-				,ISUSABLE
-				,TID			
+				,CREATETIME
+				,EVENTUSER
+				,EVENTTIME
+				,ISUSABLE		
 			) 
 			VALUES(
 				 'dx'
@@ -66,9 +67,11 @@
 				,#{description}				
 				,#{erpplant}
 				,#{factorytype}
-				,#{creator}
-				,#{isusable}
-				,#{tid}				
+				,'idrAdmin'
+				,GETDATE()
+				,'idrAdmin'
+				,GETDATE()				
+				,#{isusable}			
 			)
 		;
 	</update>
@@ -77,9 +80,11 @@
 		<foreach collection="list" item="data" open="" close="" separator=";">
 		UPDATE DSP_FACTORY 
 		SET ISUSABLE= 'N'
+			,EVENTUSER = 'idrAdmin'
+			,EVENTTIME = GETDATE()
     	WHERE
 			COMPANYID = 'dx' 
-			AND FACTORYID = #{data.factoryid} 
+			AND FACTORYID = #{data.factoryid}
 		</foreach>
     </update>    
 

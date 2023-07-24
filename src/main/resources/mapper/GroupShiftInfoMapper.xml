@@ -16,12 +16,11 @@
              , A.STARTTIME 
              , A.ENDTIME
              , A.CREATOR
-             , A.CREATETIME
+             , FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
              , A.EVENT
              , A.EVENTUSER
-             , A.EVENTTIME
+             , FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
              , A.ISUSABLE
-             , A.TID
 		FROM DSP_SHIFT A
 		WHERE 1=1
     </select>  
@@ -40,7 +39,6 @@
 			SELECT 1 AS DUM
 		) AS B
 		ON (
-			A.COMPANYID = #{companyid} AND
 			A.FACTORYID = #{factoryid} AND
 			A.SHIFTID = #{shiftid}
 			)
@@ -50,6 +48,8 @@
 				,SHIFTTYPE		= #{shifttype}
 				,STARTTIME		= #{starttime}
 				,ENDTIME		= #{endtime}
+				,EVENTUSER		= 'idrAdmin'
+				,EVENTTIME		= GETDATE()
 				,ISUSABLE		= #{isusable}
 		WHEN NOT MATCHED THEN 
 			INSERT(
@@ -60,6 +60,10 @@
 				,SHIFTTYPE
 				,STARTTIME
 				,ENDTIME
+				,CREATOR
+				,CREATETIME
+				,EVENTUSER
+				,EVENTTIME				
 				,ISUSABLE				
 			) 
 			VALUES(
@@ -70,6 +74,10 @@
 				,#{shifttype}
 				,#{starttime}
 				,#{endtime}
+				,'idrAdmin'
+				,GETDATE()
+				,'idrAdmin'
+				,GETDATE()				
 				,#{isusable}				
 			)
 		;
@@ -79,6 +87,8 @@
 		<foreach collection="list" item="data" open="" close="" separator=";">
 		UPDATE DSP_SHIFT 
 		SET ISUSABLE= 'N'
+			,EVENTUSER = 'idrAdmin'
+			,EVENTTIME = GETDATE()		
     	WHERE
 			COMPANYID = 'dx' 
 			AND FACTORYID = #{data.factoryid} 

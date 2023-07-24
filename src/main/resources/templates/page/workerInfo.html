@@ -30,9 +30,11 @@
 								<th data-field="personid" data-sortable="true" data-align="center">작업자ID</th>
 								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>								
 								<th data-field="personname" data-sortable="true" data-align="center">작업자명</th>
-								<th data-field="createtime" data-sortable="true" data-align="center">최초등록시간</th>
-								<th data-field="eventtime" data-sortable="true" data-align="center">최종수정시간</th>
-								<th data-field="isusable" data-sortable="true" data-align="center">사용유무</th>
+								<th data-field="creator" data-sortable="true" data-align="center">생성자</th>
+								<th data-field="createtime" data-sortable="true" data-align="center">생성시간</th>
+								<th data-field="eventuser" data-sortable="true" data-align="center">수정자</th>
+								<th data-field="eventtime" data-sortable="true" data-align="center">수정시간</th>
+								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
 							</tr>
 						</thead>
 					</table>
@@ -49,7 +51,7 @@
 								</select>								
 							</label>
 							<label class="control-label font-weight-bold col-lg-6">작업자명<input type="text" id="personname" name="personname" class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">사용유무
+							<label class="control-label font-weight-bold col-lg-6">사용여부
 								<select id="isusable" name="isusable"
 									class="form-select-custom form-control col-lg-12" aria-label="사용여부">
 									<option value="Y">Y</option>

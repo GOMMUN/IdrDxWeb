@@ -12,6 +12,7 @@ import com.idr.pdd.dto.Location;
 import com.idr.pdd.dto.Material;
 import com.idr.pdd.dto.ModelNM;
 import com.idr.pdd.dto.Shift;
+import com.idr.pdd.dto.Storage;
 import com.idr.pdd.mapper.BlockMapper;
 import com.idr.pdd.mapper.CodeMapper;
 import com.idr.pdd.mapper.FactoryMapper;
@@ -19,6 +20,7 @@ import com.idr.pdd.mapper.LineMapper;
 import com.idr.pdd.mapper.MaterialMasterMapper;
 import com.idr.pdd.mapper.ModelMapper;
 import com.idr.pdd.mapper.ShiftMapper;
+import com.idr.pdd.mapper.StorageMapper;
 
 import javassist.bytecode.analysis.ControlFlow.Block;
 
@@ -45,6 +47,9 @@ public class CodeService {
 	
 	@Autowired
 	MaterialMasterMapper matarialMapper;
+	
+	@Autowired
+	StorageMapper storageMapper;
 	
 	public List<Code> findFactroy(){
 		List<Code> list = new ArrayList<>();
@@ -125,7 +130,7 @@ public class CodeService {
 	}
 
 	public List<Code> findrejectItem() {
-List<Code> list = codeMapper.find("REJECT_ITEMID");
+		List<Code> list = codeMapper.find("REJECT_ITEMID");
 		
 		return list;
 	}
@@ -138,6 +143,19 @@ List<Code> list = codeMapper.find("REJECT_ITEMID");
 			code.setMCode(model.getFactoryid());
 			code.setCode(model.getMaterialid());
 			code.setValue(model.getMaterialname());
+			list.add(code);
+		}
+		return list;
+	}
+	
+	public List<Code> findStorage() {
+		List<Code> list = new ArrayList<>();
+		
+		for (Storage storage : storageMapper.find()) {
+			Code code = new Code();
+			code.setMCode(storage.getFactoryid());
+			code.setCode(storage.getStorageid());
+			code.setValue(storage.getStoragename());
 			list.add(code);
 		}
 		return list;

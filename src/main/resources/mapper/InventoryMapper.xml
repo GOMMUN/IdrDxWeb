@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.InventoryMapper">
+
+    <select id="findAll" resultType="Inventory">
+        SELECT
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM
+			, A.DATASEQ
+			, A.FACTORYID
+			, (SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
+			, A.STORAGEID
+			, (SELECT STORAGENAME FROM DSP_STORAGE WHERE FACTORYID IN (A.FACTORYID) AND STORAGEID IN (A.STORAGEID)) AS STORAGENAME
+			, A.MATERIALID
+			, (SELECT MATERIALNAME FROM DSP_MATERIAL WHERE FACTORYID IN (A.FACTORYID) AND MATERIALID IN (A.MATERIALID)) AS MATERIALNAME
+			, A.QTY
+			, A.CREATOR
+			, A.CREATETIME
+			, A.EVENT
+			, A.EVENTUSER
+			, A.EVENTTIME
+			, A.ISUSABLE
+			, A.INVENTORYDATE 
+		FROM DSP_INVENTORY A
+		WHERE 1=1
+		AND ISUSABLE IS NOT NULL
+		ORDER BY CREATETIME DESC
+    </select>
+    
+    <select id="countByInventory" parameterType="Inventory" resultType="Integer">
+        SELECT COUNT(*)
+		 FROM DSP_INVENTORY A
+		WHERE 1=1
+		AND ISUSABLE IS NOT NULL
+    </select>
+    
+    <insert id="create" parameterType="Inventory" >
+        INSERT INTO DSP_INVENTORY (
+               FACTORYID
+               , STORAGEID
+               , MATERIALID
+               , QTY
+               , CREATOR
+               , CREATETIME
+               , EVENTUSER
+               , EVENTTIME
+               , INVENTORYDATE
+        )
+        VALUES (
+               #{factoryid}
+               , #{storageid}
+               , #{materialid}
+               , #{qty}
+               , #{creator}
+               , getdate()
+               , #{eventuser}
+               , getdate()
+               , #{inventorydate}
+        )
+    </insert>
+    
+    <update id="modify" parameterType="Inventory" >
+        UPDATE DSP_INVENTORY
+           SET
+           	   FACTORYID		=	#{factoryid}
+               , STORAGEID		=	#{storageid}
+               , MATERIALID		=	#{materialid}
+               , QTY			=	#{qty}
+               , EVENTUSER		=	#{eventuser}
+               , EVENTTIME		=	getdate()
+               , INVENTORYDATE	=	#{inventorydate}
+         WHERE DATASEQ          = 	#{dataseq}
+    </update>
+    
+    <update id="remove" parameterType="list">
+    	UPDATE DSP_INVENTORY 
+		SET ISUSABLE= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
+
+</mapper>

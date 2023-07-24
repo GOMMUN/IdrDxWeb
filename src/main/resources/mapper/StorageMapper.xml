@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.StorageMapper">
+
+    <select id="find" resultType="Storage">
+        SELECT 
+        	FACTORYID
+			,STORAGEID
+			,STORAGENAME
+			,FAILURERATE
+			,RECOVERYTIME
+			,BUFFER
+			,CREATOR
+			,CREATETIME
+			,EVENT
+			,EVENTUSER
+			,EVENTTIME
+			,ISUSABLE 
+        FROM DSP_STORAGE
+    </select>
+
+</mapper>

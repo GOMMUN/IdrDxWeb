@@ -86,5 +86,13 @@ public class CodeController {
     	List<Code> list = service.findrejectItem();
 		return list;
     }
+	
+	@ResponseBody
+	@GetMapping("/storage")
+    public List<Code> storage() {
+    	List<Code> list = service.findStorage();
+		return list;
+    }
+	
 
 }

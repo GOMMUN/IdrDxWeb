@@ -4,12 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-
-
-import com.idr.pdd.dto.CM0801;
 import com.idr.pdd.dto.Code;
 import com.idr.pdd.dto.Material;
-import com.idr.pdd.dto.Vendor;
 
 
 
@@ -17,5 +13,9 @@ import com.idr.pdd.dto.Vendor;
 public interface MaterialMasterMapper {
 
 	List<Material> findAll();
+	List<Material> findMateriaMasterAll(Material data);
+	int checkCnt(Material param);
 	
+	int save(Material param);
+	int remove(List<Material> param);
 }

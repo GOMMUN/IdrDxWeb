@@ -7,6 +7,7 @@ public class Material {
 
 	public String materialid;
 	public String factoryid;
+	public String factoryname;
 	public String materialname;
 	public String materialtype;
 	public String materialkind;

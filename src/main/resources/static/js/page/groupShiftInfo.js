@@ -1,6 +1,8 @@
 /**
  * 
  */
+let s_groupshiftinfo = null;
+
 $(function(){
 	initSetting();
 	setEventListener();
@@ -13,13 +15,14 @@ function initSetting() {
 
  function setEventListener (){
 
-	let $grid = $("#shiftinfo");					//조회
-	let $gridAddBtn = $("#addShiftinfo");			//행추가
-	let $gridSaveBtn = $("#saveShiftinfo");			//수정
-	let $gridRemoveBtn = $("#removeShiftinfo");		//삭제
+	let $grid = $("#shiftinfo");					//그리드
+	let $gridAddBtn = $("#addShiftinfo");			//그리드 add버튼
+	let $gridRemoveBtn = $("#removeShiftinfo");		//그리드 delete버튼
+	let $modalCreateBtn = $("#addGroupShiftInfoModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addGroupShiftInfoModalModify");	// 모달 update 버튼	
+	let $modalCloseBtn = $("#addGroupShiftInfoModalClose");		// 모달 close 버튼 
 	 
 	$grid.on('check.bs.table', function (row, $element, field) {	//조회
-		gridData($element);
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length);
 	});
 	
@@ -36,15 +39,66 @@ function initSetting() {
 	});
 	
 	$gridAddBtn.click(function() {			//행추가
-		$grid.bootstrapTable('append', initGroupShiftInfo());
-		$grid.bootstrapTable('scrollTo', 'bottom');
-		$grid.bootstrapTable('check', ($grid.bootstrapTable('getData').length-1));		
-		$gridAddBtn.prop('disabled',true);
+		$("#addGroupShiftInfoModalCreate").css('display', "block");
+		$("#addGroupShiftInfoModalModify").css('display', "none");
+
+		$('#addGroupShiftInfoModal').modal('show');
 	});
 	
-	$gridSaveBtn.click(function() {		//수정
+	$modalCloseBtn.click(function() {
+		refreshGroupShiftInfo();
+		$('#addGroupShiftInfoModal').modal('hide');
+	});	
+	
+	$modalCreateBtn.click(function() {
+
 		let data = initGroupShiftInfo();
-//		data.factoryid = $("#factoryCodes option:selected").val();
+		
+		data.factoryid = $("select[name=factoryid]").val();
+		data.shiftid = $("input[name=shiftid]").val();
+		data.shiftname = $("select[name=shiftname]").val();
+		data.shifttype = $("input[name=shifttype]").val();
+		data.starttime = $("input[name=starttime]").val();
+		data.endtime = $("input[name=endtime]").val();
+		data.isusable = $("select[name=isusable]").val();
+
+		//validation check
+		 if (data.factoryid == "") {
+			alert("공장을 선택하세요.");
+			$("select[name=factoryid]").focus();
+			return;
+		} else if (data.shiftid == "") {
+			alert("그룹/SHIFT 명을 선텍하세요.");
+			$("select[name=shiftid]").focus();
+			return;
+		} else if (data.isusable == "") {
+			alert("사용여부를 선택하세요.");
+			$("select[name=isusable]").focus();
+			return;
+		}
+
+		let url = '/groupshift/create';
+
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function(data) {
+				
+				$table = $("#shiftinfo");
+				$table.bootstrapTable('refresh');
+				
+				$('#addGroupShiftInfoModal').modal('hide');
+				alert("저장되었습니다.");
+			}
+		});
+	});
+	
+	$modalModifyBtn.click(function() {
+		let data = s_groupshiftinfo;
+
 		data.factoryid = $("select[name=factoryid]").val();
 		data.shiftid = $("input[name=shiftid]").val();
 		data.shiftname = $("select[name=shiftname]").val();
@@ -68,51 +122,24 @@ function initSetting() {
 			return;
 		}
 		
-		//데이터 이미 존재하는지 체크(중복=0, 아니면=1)
-		let valiCheck;
-		let url_val = '/groupshift/check';
-		
-		$.ajax({
-			url: url_val,
-			type: 'POST',
-			data: JSON.stringify(data),
-			dataType: "json",
-			async:false,
-			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
-				if(data > 0){
-					valiCheck = 0;
-				}else {
-					valiCheck = 1;
-				}
-			}
-		});		
+		let url = '/groupshift/modify';
 
-		if(valiCheck == 0){
-			if(!confirm('기존 데이터를 수정하시겠습니까?')){
-            	return false;
-        	}
-		}else if(valiCheck == 1){
-			if(!confirm('해당 데이터를 새로 추가하시겠습니까?')){
-            	return false;
-        	}
-		}				
-		
-		//저장 처리
-		let url = '/groupshift/save';
-		
 		$.ajax({
 			url: url,
-			type: 'POST',
+			type: 'PUT',
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
-				alert("저장 되였습니다.");
-				location.reload();
+				
+				$table = $("#shiftinfo");
+				$table.bootstrapTable('refresh');
+				
+				$('#addGroupShiftInfoModal').modal('hide');
+				alert("수정 되었습니다.");
 			}
-		});		
-	});
+		});
+	});		
 	
 	$gridRemoveBtn.click(function() {	
 		
@@ -123,9 +150,7 @@ function initSetting() {
 		let selections = [];
 
 		$grid.bootstrapTable('getSelections').forEach(function(data) {
-
-			selections.push({"companyid":data.companyid, "factoryid":data.factoryid, "shiftid":data.shiftid});
-			
+			selections.push(data.dataseq);	
 		});
 
 		let url = '/groupshift/remove';
@@ -142,18 +167,41 @@ function initSetting() {
 			}
 		});
 	});
-	
 };
- 
-function gridData(data){
 
-	$("#factoryCodes option:selected").val(data.factoryid).text(data.factoryname);
-	$("#shiftid").val(data.shiftid);
-	$("#shiftname").val(data.shiftname);
-	$("#shifttype").val(data.shifttype);
-	$("#starttime").val(data.starttime);
-	$("#endtime").val(data.endtime);
-	$("#isusable").val(data.isusable);
+function groupShiftInfoOperateFormatter(value, row, index) {
+	return [
+		'<a class="groupShiftInfoModify" href="javascript:void(0)" title="수정">',
+		'<i class="fa-solid fa-pen"></i>',
+		'</a>'
+	].join('');
+}
+
+window.operateEvents = {
+	"click .groupShiftInfoModify": function(e, value, row, index) {
+		
+		s_groupshiftinfo = row;
+		
+		groupShiftInfoDetail(row);
+
+		$("#addGroupShiftInfoModalCreate").css('display', "none");
+		$("#addGroupShiftInfoModalModify").css('display', "block");
+
+		$('#addGroupShiftInfoModal').modal('show');
+
+		s_groupshiftinfo(row);
+	}
+}
+
+ 
+function groupShiftInfoDetail(data){
+	$("select[name=factoryid]").val(data.factoryid);
+	$("input[name=shiftid]").val(data.shiftid);
+	$("select[name=shiftname]").val(data.shiftname);
+	$("input[name=shifttype]").val(data.shifttype);
+	$("input[name=starttime]").val(data.starttime);
+	$("input[name=endtime]").val(data.endtime);
+	$("select[name=isusable]").val(data.isusable);
 }
   
 function initGroupShiftInfo() {
@@ -163,6 +211,16 @@ function initGroupShiftInfo() {
 	};
 	
 	return data;
+}
+
+function refreshGroupShiftInfo() {
+	$("select[name=factoryid]").val("");
+	$("input[name=shiftid]").val("");
+	$("select[name=shiftname]").val("");
+	$("input[name=shifttype]").val("");
+	$("input[name=starttime]").val("");
+	$("input[name=endtime]").val("");
+	$("select[name=isusable]").val("");
 }
 
 function factroy() {

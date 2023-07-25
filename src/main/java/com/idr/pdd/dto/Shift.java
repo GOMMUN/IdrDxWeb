@@ -5,6 +5,8 @@ import lombok.Data;
 @Data 
 public class Shift {
 
+	private int rownum;
+	private int dataseq;
 	private String companyid;
 	private String shiftid;
 	private String factoryid;

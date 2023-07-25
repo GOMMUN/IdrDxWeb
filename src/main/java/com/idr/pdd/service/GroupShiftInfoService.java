@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.idr.pdd.dto.Shift;
-import com.idr.pdd.dto.Vendor;
 import com.idr.pdd.mapper.GroupShiftInfoMapper;
 
 @Service
@@ -19,17 +18,16 @@ public class GroupShiftInfoService {
 		
 		return mapper.findAll();
 	}
-	
-	public int checkCnt(Shift param) {
-		
-		return mapper.checkCnt(param);
-	}
-	
+
 	public int save(Shift param) {	
-		return mapper.save(param);
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		}else {
+			return mapper.modify(param);
+		}
 	}
 	
-	public int remove(List<Shift> param) {
+	public int remove(List<Integer> param) {
 		return mapper.remove(param);
 	}	
 	

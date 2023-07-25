@@ -7,52 +7,27 @@
 
     <select id="findAll" resultType="Shift">
 		SELECT
-			   A.COMPANYID
-             , A.SHIFTID
-             , A.FACTORYID
-             ,(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
-             , A.SHIFTNAME
-             , A.SHIFTTYPE
-             , A.STARTTIME 
-             , A.ENDTIME
-             , A.CREATOR
-             , FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
-             , A.EVENT
-             , A.EVENTUSER
-             , FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
-             , A.ISUSABLE
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM
+			,DATASEQ
+			,A.SHIFTID
+			,A.FACTORYID
+			,(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
+			,A.SHIFTNAME
+			,A.SHIFTTYPE
+			,A.STARTTIME 
+			,A.ENDTIME
+			,A.CREATOR
+			,FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
+			,A.EVENT
+			,A.EVENTUSER
+			,FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
+			,A.ISUSABLE
 		FROM DSP_SHIFT A
 		WHERE 1=1
-    </select>  
+    </select>    
     
-	<select id="checkCnt" parameterType="Shift" resultType="int">
-		SELECT COUNT(*)
-		FROM DSP_SHIFT
-		WHERE 1=1
-			AND SHIFTID = #{shiftid}
-			AND FACTORYID = #{factoryid}
-	</select>    
-    
-	<update id="save" parameterType="Shift" >
-		MERGE INTO DSP_SHIFT AS A
-		USING (
-			SELECT 1 AS DUM
-		) AS B
-		ON (
-			A.FACTORYID = #{factoryid} AND
-			A.SHIFTID = #{shiftid}
-			)
-		WHEN MATCHED THEN
-			UPDATE SET 
-				 SHIFTNAME		= #{shiftname}
-				,SHIFTTYPE		= #{shifttype}
-				,STARTTIME		= #{starttime}
-				,ENDTIME		= #{endtime}
-				,EVENTUSER		= 'idrAdmin'
-				,EVENTTIME		= GETDATE()
-				,ISUSABLE		= #{isusable}
-		WHEN NOT MATCHED THEN 
-			INSERT(
+	<insert id="create" parameterType="Shift" >
+        INSERT INTO DSP_SHIFT (
 				 COMPANYID
 				,FACTORYID
 				,SHIFTID
@@ -64,9 +39,9 @@
 				,CREATETIME
 				,EVENTUSER
 				,EVENTTIME				
-				,ISUSABLE				
-			) 
-			VALUES(
+				,ISUSABLE	
+        )
+        VALUES (
 				 'dx'
 				,#{factoryid}
 				,#{shiftid}
@@ -78,22 +53,32 @@
 				,GETDATE()
 				,'idrAdmin'
 				,GETDATE()				
-				,#{isusable}				
-			)
-		;
-	</update>
+				,#{isusable}		
+        )
+    </insert>
+    
+    <update id="modify" parameterType="Shift" >
+		UPDATE DSP_SHIFT
+           SET
+				 SHIFTNAME		= #{shiftname}
+				,SHIFTTYPE		= #{shifttype}
+				,STARTTIME		= #{starttime}
+				,ENDTIME		= #{endtime}
+				,EVENTUSER		= 'idrAdmin'
+				,EVENTTIME		= GETDATE()
+				,ISUSABLE		= #{isusable}
+		WHERE DATASEQ	= 	#{dataseq}
+    </update>  
 
     <update id="remove" parameterType="list">
-		<foreach collection="list" item="data" open="" close="" separator=";">
 		UPDATE DSP_SHIFT 
 		SET ISUSABLE= 'N'
 			,EVENTUSER = 'idrAdmin'
 			,EVENTTIME = GETDATE()		
-    	WHERE
-			COMPANYID = 'dx' 
-			AND FACTORYID = #{data.factoryid} 
-			AND SHIFTID = #{data.shiftid}
-		</foreach>
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
     </update>
 
 </mapper>

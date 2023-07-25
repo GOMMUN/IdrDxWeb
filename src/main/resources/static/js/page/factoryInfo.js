@@ -12,7 +12,7 @@ $(function(){
 	 
 	let $grid = $("#factoryinfo");					//그리드
 	let $gridAddBtn = $("#addFactoryinfo");			//그리드 add버튼
-	let $gridRemoveBtn = $("#removeFactoryinfo");	//그리드 delete
+	let $gridRemoveBtn = $("#removeFactoryinfo");	//그리드 delete버튼
 	let $modalCreateBtn = $("#addFactoryInfoModalCreate");	// 모달 insert 버튼
 	let $modalModifyBtn = $("#addFactoryInfoModalModify");	// 모달 update 버튼	
 	let $modalCloseBtn = $("#addFactoryInfoModalClose");	// 모달 close 버튼 
@@ -200,12 +200,6 @@ function factoryInfoDetail(data) {
 }
 
 function initFactoryInfo() {
-//	$("input[name=factoryid]").val("");
-//	$("input[name=factoryname]").val("");
-//	$("input[name=description]").val("");
-//	$("input[name=erpplant]").val("");
-//	$("input[name=factorytype]").val("");
-//	$("select[name=isusable]").val("");
 	
 	let data = {
 		"factoryid": "", "factoryname": "", "description": "", "erpplant": "",
@@ -222,6 +216,5 @@ function refreshFactoryInfo() {
 	$("input[name=erpplant]").val("");
 	$("input[name=factorytype]").val("");
 	$("select[name=isusable]").val("");
-	
 }
 

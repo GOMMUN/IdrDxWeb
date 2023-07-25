@@ -41,15 +41,13 @@ $(function(){
 	});
 	
 	$modalCloseBtn.click(function() {
-		initFactoryInfo();
+		refreshFactoryInfo();
 		$('#addFactoryInfoModal').modal('hide');
 	});
 	
 	$modalCreateBtn.click(function() {
 
 		let data = initFactoryInfo();
-		
-//		$("#factoryinfo").bootstrapTable('refresh');
 		
 		data.factoryid = $("input[name=factoryid]").val();
 		data.factoryname = $("input[name=factoryname]").val();
@@ -216,3 +214,14 @@ function initFactoryInfo() {
 	
 	return data;
 }
+
+function refreshFactoryInfo() {
+	$("input[name=factoryid]").val("");
+	$("input[name=factoryname]").val("");
+	$("input[name=description]").val("");
+	$("input[name=erpplant]").val("");
+	$("input[name=factorytype]").val("");
+	$("select[name=isusable]").val("");
+	
+}
+

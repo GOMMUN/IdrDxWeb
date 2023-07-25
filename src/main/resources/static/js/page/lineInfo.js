@@ -7,7 +7,6 @@ let s_workerInput = null;
 $(function(){
 	initSetting();
 	setEventListener();
-	formatAdvancedSearch();
 });
 
 function initSetting() {
@@ -97,12 +96,11 @@ function initSetting() {
 				
 				$('#addLineinfoModal').modal('hide');
 				alert("저장되었습니다.");
-				location.reload();
 			},
-				error: function(xhr, textStatus, errorThrown) {
+			error: function(xhr, textStatus, errorThrown) {
 	        	// 실패 시 실행할 코드
-	        		alert("라인코드와 공장을 확인해주세요");
-	    		}
+	        	alert("라인코드와 공장을 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -140,7 +138,6 @@ function initSetting() {
 				
 				$('#addLineinfoModal').modal('hide');
 				alert("수정 되었습니다.");
-				location.reload();
 			}
 		});
 	});
@@ -167,22 +164,16 @@ function initSetting() {
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
-				alert("삭제 되었습니다.");
-				location.reload();
+				alert("비사용으로 변경되였습니다.");
 			}
 		});
 	});
-	
-	$factoryCodes = $("#factoryCodes");
 };
  
 function lineinfo(data) {
 	var url = '/lineinfo/find';
 
-	var params = {
-		start : $("input[name=sLocationdateStart]").val(),
-		end : $("input[name=sLocationdateEnd]").val()
-	}
+	var params = {}
 
 	$.get(url + '?' + $.param(params)).then(function(res) {
 		$table = $("#lineinfo");
@@ -237,14 +228,12 @@ window.operateEvents = {
 
 		$('#addLineinfoModal').modal('show');
 
-		$factoryCodes = $("#factoryCodes");
-		$factoryCodes.trigger('change');
-
 		lineinfoDetail(row);
 	}
 }
 
 function lineinfoDetail(data) {
+	
 	$("select[name=factoryid]").val(data.factoryid);
 	$("input[name=locationid]").val(data.locationid);
 	$("input[name=locationname]").val(data.locationname);
@@ -258,8 +247,4 @@ function refreshLineInfo() {
 	$("input[name=locationname]").val("");
 	$("select[name=isusable]").val("");
 	
-}
-
-function formatAdvancedSearch(){
-	return "검색조건";
 }

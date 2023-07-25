@@ -43,7 +43,7 @@ public class StorageInfoController {
 	@ResponseBody
 	@PostMapping("/create")
     public int create(@RequestBody Storage param) {
-			return service.save(param);
+		return service.save(param);
     }
 	
 	@ResponseBody

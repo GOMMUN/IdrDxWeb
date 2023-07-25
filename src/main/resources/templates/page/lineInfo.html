@@ -64,6 +64,7 @@
 							<thead class="thead-light">
 								<tr>
 									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 	<!--								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>-->
 									<th data-field="factoryname" data-sortable="true" data-align="center">공장</th>
 									<th data-field="locationid" data-sortable="true" data-align="center">라인코드</th>
@@ -112,11 +113,12 @@
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<input type="text" name="locationname" class="form-control-custom form-control-user"
-											id="" placeholder="수량">
+											id="" placeholder="라인명">
 										</div>
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<select id="isusable" name="isusable"
 												class="form-select-custom form-control-user" aria-label="사용여부">
+												<option value="">사용여부 선택</option>
 												<option value="Y">Y</option>
 												<option value="N">N</option>
 											</select>

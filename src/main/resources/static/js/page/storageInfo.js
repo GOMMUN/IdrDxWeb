@@ -7,7 +7,6 @@ let s_storageInfo = null;
 $(function(){
 	initSetting();
 	setEventListener();
-	formatAdvancedSearch();
 });
 
 function initSetting() {
@@ -48,7 +47,7 @@ function initSetting() {
 		storageinfo();
 	});
 	
-	$gridAddBtn.click(function() {		// 라인정보 add 버튼
+	$gridAddBtn.click(function() {		// 창고정보 add 버튼
 		
 		$("#addStorageinfoModalCreate").css('display', "block");
 		$("#addStorageinfoModalModify").css('display', "none");
@@ -100,12 +99,11 @@ function initSetting() {
 				
 				$('#addStorageinfoModal').modal('hide');
 				alert("저장되었습니다.");
-				location.reload();
 			},
-				error: function(xhr, textStatus, errorThrown) {
+			error: function(xhr, textStatus, errorThrown) {
 	        	// 실패 시 실행할 코드
-	        		alert("창고코드와 공장을 확인해주세요");
-	    		}
+	        	alert("창고코드와 공장을 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -146,7 +144,6 @@ function initSetting() {
 				
 				$('#addStorageinfoModal').modal('hide');
 				alert("수정 되었습니다.");
-				location.reload();
 			}
 		});
 	});
@@ -173,22 +170,16 @@ function initSetting() {
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
-				alert("삭제 되었습니다.");
-				location.reload();
+				alert("비사용으로 변경되였습니다.");
 			}
 		});
 	});
-	
-	$factoryCodes = $("#factoryCodes");
 };
  
 function storageinfo(data) {
 	var url = '/storageinfo/find';
 
-	var params = {
-		start : $("input[name=sStoragedateStart]").val(),
-		end : $("input[name=sStoragedateEnd]").val()
-	}
+	var params = {}
 
 	$.get(url + '?' + $.param(params)).then(function(res) {
 		$table = $("#storageinfo");
@@ -243,21 +234,19 @@ window.operateEvents = {
 
 		$('#addStorageinfoModal').modal('show');
 
-		$factoryCodes = $("#factoryCodes");
-		$factoryCodes.trigger('change');
-
 		storageInfoDetail(row);
 	}
 }
 
 function storageInfoDetail(data) {
-		data.factoryid = $("select[name=factoryid]").val();
-		data.storageid = $("input[name=storageid]").val();
-		data.storagename = $("input[name=storagename]").val();
-		data.failurerate = $("input[name=failurerate]").val();
-		data.recoverytime = $("input[name=recoverytime]").val();
-		data.buffer = $("input[name=buffer]").val();
-		data.isusable = $("select[name=isusable]").val();
+	
+		$("select[name=factoryid]").val(data.factoryid);
+		$("input[name=storageid]").val(data.storageid);
+		$("input[name=storagename]").val(data.storagename);
+		$("input[name=failurerate]").val(data.failurerate);
+		$("input[name=recoverytime]").val(data.recoverytime);
+		$("input[name=buffer]").val(data.buffer);
+		$("select[name=isusable]").val(data.isusable);
 }
 
 function refreshStorageInfo() {
@@ -270,8 +259,4 @@ function refreshStorageInfo() {
 	$("input[name=buffer]").val("");
 	$("select[name=isusable]").val("");
 	
-}
-
-function formatAdvancedSearch(){
-	return "검색조건";
 }

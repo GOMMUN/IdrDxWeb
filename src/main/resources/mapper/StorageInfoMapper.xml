@@ -7,6 +7,7 @@
 
     <select id="findAll" resultType="Storage">
 		SELECT  
+			 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
 			A.DATASEQ,
         	A.FACTORYID,
         	(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME,  
@@ -23,7 +24,6 @@
         	A.ISUSABLE 
         FROM DSP_STORAGE as A
         WHERE 1=1
-        AND ISUSABLE IS NOT NULL 
     </select>
     
     <insert id="create" parameterType="Storage">
@@ -54,6 +54,7 @@
 				,#{isusable}			
 			)
 	</insert>
+	
     <update id="modify" parameterType="Storage" >
 			UPDATE DSP_STORAGE
 			SET 
@@ -70,8 +71,9 @@
 
     <update id="remove" parameterType="list">
     	UPDATE DSP_STORAGE
-		SET ISUSABLE	= null,
-			STORAGEID	= ''
+		SET ISUSABLE	= 'N',
+			EVENTUSER 	= 'idrAdmin',
+			EVENTTIME 	= GETDATE()
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}

@@ -63,7 +63,7 @@
 				,EVENTUSER		= 'idrAdmin'
 				,EVENTTIME		= GETDATE()
 				,ISUSABLE		= #{isusable}
-		WHERE DATASEQ	= 	#{dataseq}
+		WHERE 	 DATASEQ		= #{dataseq}
     </update>    
 
     <update id="remove" parameterType="list">

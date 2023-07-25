@@ -5,6 +5,7 @@ import lombok.Data;
 @Data 
 public class Location {
 	
+	private int rownum;
 	private int dataseq;
 	private String companyid;
 	private String locationid;

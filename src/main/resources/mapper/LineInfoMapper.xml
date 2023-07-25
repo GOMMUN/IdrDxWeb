@@ -7,6 +7,7 @@
 
     <select id="findAll" resultType="Location">
 		SELECT 
+			  ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
 			A.DATASEQ,
         	A.COMPANYID,
         	A.LOCATIONID,
@@ -25,15 +26,16 @@
         	A.TID 
         FROM DSP_LOCATION as A
         WHERE 1=1 
-        AND ISUSABLE IS NOT NULL
     </select>  
+    
     <select id="validationcheck" parameterType="Location" resultType="Integer">
         SELECT 
         	COUNT(*) AS val
 		FROM DSP_LOCATION A
 		WHERE FACTORYID  = #{factoryid}
-		AND LOCATIONID  = #{locationid}
+		AND LOCATIONID   = #{locationid}
     </select>
+    
     <insert id="create" parameterType="Location">
 			INSERT INTO DSP_LOCATION(
 				 COMPANYID
@@ -60,6 +62,7 @@
 				,#{isusable}			
 			)
 	</insert>
+	
     <update id="modify" parameterType="Location" >
 			UPDATE DSP_LOCATION
 			SET 
@@ -74,8 +77,9 @@
 
     <update id="remove" parameterType="list">
     	UPDATE DSP_LOCATION
-		SET ISUSABLE	= null,
-			LOCATIONID	= null
+		SET ISUSABLE	= 'N',
+			EVENTUSER 	= 'idrAdmin',
+			EVENTTIME 	= GETDATE()
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}

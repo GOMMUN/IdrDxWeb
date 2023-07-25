@@ -4,6 +4,39 @@
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
 
 <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/factoryInfo.js}"></script>
+<style>
+	.form-control-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+
+	.form-select-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+</style>
 
 <body>
 	<div class="d-flex bd-highlight">
@@ -14,19 +47,21 @@
 				</div>
 				<div class="card-body">
 					<div id="toolbarFactoryinfo">
-						<button type="button" class="btn btn-primary" id="addFactoryinfo">
+						<button type="button" class="btn btn-primary" id="addFactoryinfo" data-toggle="modal"
+								data-target="#addFactoryInfoModal">
 							<i class="fa-solid fa-plus"></i> Add
 						</button>
 						<button id="removeFactoryinfo" class="btn btn-danger" disabled>
 							<i class="fa fa-trash"></i> Delete
 						</button>
 					</div>					
-					<table id="factoryinfo" data-toggle="table" data-toolbar="#toolbarFactoryinfo" data-height="350"
+					<table id="factoryinfo" data-toggle="table" data-toolbar="#toolbarFactoryinfo" data-height="750"
 						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/factoryinfo/find" data-show-columns="true"
 						data-show-columns-toggle-all="true">
 						<thead class="thead-light">
 							<tr>
-								<th data-field="state" data-checkbox="true"></th>								
+								<th data-field="state" data-checkbox="true"></th>										
+								<th data-field="rownum" data-sortable="true" data-align="center">순번</th>						
 								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
 								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
 								<th data-field="description" data-sortable="true" data-align="center">설명</th>
@@ -37,36 +72,90 @@
 								<th data-field="eventuser" data-sortable="true" data-align="center">수정자</th>
 								<th data-field="eventtime" data-sortable="true" data-align="center">수정시간</th>
 								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
+								<th data-field="notworkcolumn" data-sortable="false" data-align="center"
+									data-formatter="factoryInfoOperateFormatter" data-events="operateEvents">#
+								</th>								
 							</tr>
 						</thead>
 					</table>
 				</div>
-				<div>
-					<div class="card-header">
-						<div class="row">							
-							<label class="control-label font-weight-bold col-lg-6">*공장코드<input type="text" id="factoryid" name="factoryid" class="form-control col-lg-12 "></label>							
-							<label class="control-label font-weight-bold col-lg-6">공장명<input type="text" id="factoryname" name="factoryname" class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">설명<input type="text" id="description" name="description" class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">ERP코드<input type="text" id="erpplant" name="erpplant" class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">공장유형<input type="text" id="factorytype" name="factorytype" class="form-control col-lg-12 "></label>
-							<label class="control-label font-weight-bold col-lg-6">사용여부							
-								<select id="isusable" name="isusable"
-									class="form-select-custom form-control col-lg-12" aria-label="사용여부">
-									<option value="Y">Y</option>
-									<option value="N">N</option>
-								</select>								
-							</label>							
+			</div>		
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="addFactoryInfoModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">공장정보</h1>
+								</div>
+								<form class="user">
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="factoryid" class="form-control-custom form-control-user"
+											id="" placeholder="공장코드">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="factoryname" class="form-control-custom form-control-user"
+											id="" placeholder="공장명">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="description" class="form-control-custom form-control-user"
+											id="" placeholder="설명">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="erpplant" class="form-control-custom form-control-user"
+											id="" placeholder="ERP코드">
+										</div>										
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="factorytype" class="form-control-custom form-control-user"
+											id="" placeholder="공장유형">
+										</div>
+										<div class="col-sm-6">
+											<select id="isusable" name="isusable"
+												class="form-select-custom form-control-user" aria-label="공장">
+												<option value="">사용여부</option>
+												<option value="Y">Y</option>
+												<option value="N">N</option>
+											</select>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-lg-10">
+											<a id="addFactoryInfoModalCreate"
+												class="btn btn-primary btn-user btn-block">
+												Save
+											</a>
+											<a id="addFactoryInfoModalModify"
+												class="btn btn-primary btn-user btn-block mt-0">
+												Save
+											</a>
+										</div>
+										<div class="col-lg-2">
+											<a id="addFactoryInfoModalClose"
+												class="btn btn-google btn-user btn-block">
+												X
+											</a>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class= "float-right">		
-				<button type="button" class="btn btn-primary" id="saveFactoryinfo">
-					<i class="fa-solid"></i> 저장
-				</button>
-			</div>			
 		</div>
-	</div>
+	</div>	
 </body>
 
 </html>

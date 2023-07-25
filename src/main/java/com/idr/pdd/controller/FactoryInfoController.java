@@ -37,21 +37,20 @@ public class FactoryInfoController {
     }
 	
 	@ResponseBody
-	@PostMapping("/check")
-    public int checkCnt(@RequestBody Factory param) {
-		int cnt = service.checkCnt(param);
-		return cnt;
-    }	
-	
-	@ResponseBody
-	@PostMapping("/save")
-    public int save(@RequestBody Factory param) {
+	@PostMapping("/create")
+    public int create(@RequestBody Factory param) {
 		return service.save(param);
     }
 	
 	@ResponseBody
+	@PutMapping("/modify")
+    public int modify(@RequestBody Factory param) {
+		return service.save(param);
+    }	
+	
+	@ResponseBody
 	@PutMapping("/remove")
-    public int remove(@RequestBody List<Factory> param) {
+    public int remove(@RequestBody List<Integer> param) {
 		return service.remove(param);
     }
 }

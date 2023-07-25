@@ -11,8 +11,8 @@ import com.idr.pdd.dto.Factory;
 public interface FactoryInfoMapper {
 
 	List<Factory> findAll();
-	int checkCnt(Factory param);
 	
-	int save(Factory param);
-	int remove(List<Factory> param);
+	int create(Factory param);
+	int modify(Factory param);
+	int remove(List<Integer> param);
 }

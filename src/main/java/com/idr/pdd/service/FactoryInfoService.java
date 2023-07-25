@@ -19,16 +19,15 @@ public class FactoryInfoService {
 		return mapper.findAll();
 	}
 	
-	public int checkCnt(Factory param) {
-		
-		return mapper.checkCnt(param);
-	}
-	
 	public int save(Factory param) {	
-		return mapper.save(param);
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		}else {
+			return mapper.modify(param);
+		}
 	}
 	
-	public int remove(List<Factory> param) {
+	public int remove(List<Integer> param) {
 		return mapper.remove(param);
 	}
 }

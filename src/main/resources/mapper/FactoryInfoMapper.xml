@@ -6,48 +6,26 @@
 <mapper namespace="com.idr.pdd.mapper.FactoryInfoMapper">
 
     <select id="findAll" resultType="Factory">
-          SELECT COMPANYID
-	             ,FACTORYID
-	             ,FACTORYNAME
-	             ,DESCRIPTION
-	             ,ERPPLANT
-	             ,FACTORYTYPE
-	             ,CREATOR
-	             ,FORMAT(CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
-	             ,EVENT
-	             ,EVENTUSER
-	             ,FORMAT(EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
-	             ,ISUSABLE
+          SELECT 
+          		 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM
+          		,DATASEQ
+	            ,FACTORYID
+	            ,FACTORYNAME
+	            ,DESCRIPTION
+	            ,ERPPLANT
+	            ,FACTORYTYPE
+	            ,CREATOR
+	            ,FORMAT(CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
+	            ,EVENT
+	            ,EVENTUSER
+	            ,FORMAT(EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
+	            ,ISUSABLE
           FROM DSP_FACTORY
          WHERE 1=1
-    </select>
+    </select>  
     
-    <select id="checkCnt" parameterType="Factory" resultType="int">
-		SELECT COUNT(*)
-		FROM DSP_FACTORY
-		WHERE 1=1
-			AND FACTORYID = #{factoryid}
-	</select>   
-    
-	<update id="save" parameterType="Factory" >
-		MERGE INTO DSP_FACTORY AS A
-		USING (
-			SELECT 1 AS DUM
-		) AS B
-		ON (
-			A.FACTORYID = #{factoryid}
-			)
-		WHEN MATCHED THEN
-			UPDATE SET 
-				 FACTORYNAME	= #{factoryname}
-				,DESCRIPTION	= #{description}
-				,ERPPLANT		= #{erpplant}
-				,FACTORYTYPE	= #{factorytype}
-				,EVENTUSER		= 'idrAdmin'
-				,EVENTTIME		= GETDATE()
-				,ISUSABLE		= #{isusable}
-		WHEN NOT MATCHED THEN 
-			INSERT(
+	<insert id="create" parameterType="Factory" >
+        INSERT INTO DSP_FACTORY (
 				 COMPANYID
 				,FACTORYID
 				,FACTORYNAME
@@ -58,9 +36,9 @@
 				,CREATETIME
 				,EVENTUSER
 				,EVENTTIME
-				,ISUSABLE		
-			) 
-			VALUES(
+				,ISUSABLE	
+        )
+        VALUES (
 				 'dx'
 				,#{factoryid}
 				,#{factoryname}
@@ -71,21 +49,32 @@
 				,GETDATE()
 				,'idrAdmin'
 				,GETDATE()				
-				,#{isusable}			
-			)
-		;
-	</update>
+				,#{isusable}		
+        )
+    </insert>
+    
+    <update id="modify" parameterType="Factory" >
+		UPDATE DSP_FACTORY
+           SET
+				 FACTORYNAME	= #{factoryname}
+				,DESCRIPTION	= #{description}
+				,ERPPLANT		= #{erpplant}
+				,FACTORYTYPE	= #{factorytype}
+				,EVENTUSER		= 'idrAdmin'
+				,EVENTTIME		= GETDATE()
+				,ISUSABLE		= #{isusable}
+		WHERE DATASEQ	= 	#{dataseq}
+    </update>    
 
     <update id="remove" parameterType="list">
-		<foreach collection="list" item="data" open="" close="" separator=";">
 		UPDATE DSP_FACTORY 
 		SET ISUSABLE= 'N'
 			,EVENTUSER = 'idrAdmin'
 			,EVENTTIME = GETDATE()
-    	WHERE
-			COMPANYID = 'dx' 
-			AND FACTORYID = #{data.factoryid}
-		</foreach>
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
     </update>    
 
 </mapper>

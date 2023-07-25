@@ -1,6 +1,8 @@
 /**
  * 
  */
+let s_factoryInfo = null;
+
 $(function(){
 	
 	setEventListener();
@@ -8,13 +10,14 @@ $(function(){
 
  function setEventListener (){
 	 
-	let $grid = $("#factoryinfo");
-	let $gridAddBtn = $("#addFactoryinfo");			//행추가
-	let $gridSaveBtn = $("#saveFactoryinfo");		//수정
-	let $gridRemoveBtn = $("#removeFactoryinfo");	//삭제
-	 
+	let $grid = $("#factoryinfo");					//그리드
+	let $gridAddBtn = $("#addFactoryinfo");			//그리드 add버튼
+	let $gridRemoveBtn = $("#removeFactoryinfo");	//그리드 delete
+	let $modalCreateBtn = $("#addFactoryInfoModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addFactoryInfoModalModify");	// 모달 update 버튼	
+	let $modalCloseBtn = $("#addFactoryInfoModalClose");	// 모달 close 버튼 
+	
 	$grid.on('check.bs.table', function (row, $element, field) {
-		gridData($element);
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length);
 	});
 	
@@ -30,27 +33,33 @@ $(function(){
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
-	$gridAddBtn.click(function() {			//행추가
-		$grid.bootstrapTable('append', initFactoryInfo());
-		$grid.bootstrapTable('scrollTo', 'bottom');
-		$grid.bootstrapTable('check', ($grid.bootstrapTable('getData').length-1));	
-		$gridAddBtn.prop('disabled',true);
+	$gridAddBtn.click(function() {
+		$("#addFactoryInfoModalCreate").css('display', "block");
+		$("#addFactoryInfoModalModify").css('display', "none");
+
+		$('#addFactoryInfoModal').modal('show');
 	});
 	
-	$gridSaveBtn.click(function() {		//수정
-		let data = initFactoryInfo();
+	$modalCloseBtn.click(function() {
+		initFactoryInfo();
+		$('#addFactoryInfoModal').modal('hide');
+	});
+	
+	$modalCreateBtn.click(function() {
 
+		let data = initFactoryInfo();
+		
+//		$("#factoryinfo").bootstrapTable('refresh');
+		
 		data.factoryid = $("input[name=factoryid]").val();
-		data.creator = $("input[name=creator]").val();
 		data.factoryname = $("input[name=factoryname]").val();
 		data.description = $("input[name=description]").val();
 		data.erpplant = $("input[name=erpplant]").val();
 		data.factorytype = $("input[name=factorytype]").val();
 		data.isusable = $("select[name=isusable]").val();
-		data.tid = $("input[name=tid]").val();
 
 		//validation check
-		 if (data.factoryid == "") {
+		if (data.factoryid == "") {
 			alert("공장코드를 입력하세요.");
 			$("input[name=factoryid]").focus();
 			return;
@@ -60,44 +69,12 @@ $(function(){
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택하세요.");
-			$("select[name=isusable]").focus();
+			$("input[name=isusable]").focus();
 			return;
 		}
-		
-		//데이터 이미 존재하는지 체크(중복=0, 아니면=1)
-		let valiCheck;
-		let url_val = '/factoryinfo/check';
-		
-		$.ajax({
-			url: url_val,
-			type: 'POST',
-			data: JSON.stringify(data),
-			dataType: "json",
-			async:false,
-			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
-				if(data > 0){
-					valiCheck = 0;
-				}else {
-					valiCheck = 1;
-				}
-			}
-		});		
 
-		if(valiCheck == 0){
-			if(!confirm('기존 데이터를 수정하시겠습니까?')){
-            	return false;
-        	}
-		}else if(valiCheck == 1){
-			if(!confirm('해당 데이터를 새로 추가하시겠습니까?')){
-            	return false;
-        	}
-		}				
-		
-		//저장 처리
-		
-		let url = '/factoryinfo/save';
-		
+		let url = '/factoryinfo/create';
+
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -105,11 +82,59 @@ $(function(){
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
-				alert("저장 되였습니다.");
-				location.reload();
+				
+				$table = $("#factoryinfo");
+				$table.bootstrapTable('refresh');
+				
+				$('#addFactoryInfoModal').modal('hide');
+				alert("저장되었습니다.");
 			}
-		});		
+		});
 	});
+	
+	$modalModifyBtn.click(function() {
+		let data = s_factoryInfo;
+
+		data.factoryid = $("input[name=factoryid]").val();
+		data.factoryname = $("input[name=factoryname]").val();
+		data.description = $("input[name=description]").val();
+		data.erpplant = $("input[name=erpplant]").val();
+		data.factorytype = $("input[name=factorytype]").val();
+		data.isusable = $("select[name=isusable]").val();
+
+		//validation check
+		if (data.factoryid == "") {
+			alert("공장코드를 입력하세요.");
+			$("input[name=factoryid]").focus();
+			return;
+		} else if (data.factoryname == "") {
+			alert("공장명을 입력하세요.");
+			$("input[name=factoryname]").focus();
+			return;
+		} else if (data.isusable == "") {
+			alert("사용여부를 선택하세요.");
+			$("input[name=isusable]").focus();
+			return;
+		}
+		
+		let url = '/factoryinfo/modify';
+
+		$.ajax({
+			url: url,
+			type: 'PUT',
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function(data) {
+				
+				$table = $("#factoryinfo");
+				$table.bootstrapTable('refresh');
+				
+				$('#addFactoryInfoModal').modal('hide');
+				alert("수정 되었습니다.");
+			}
+		});
+	});	
 	
 	$gridRemoveBtn.click(function() {	
 		
@@ -120,9 +145,7 @@ $(function(){
 		let selections = [];
 
 		$grid.bootstrapTable('getSelections').forEach(function(data) {
-
-			selections.push({"factoryid":data.factoryid});
-			
+			selections.push(data.dataseq);
 		});
 
 		let url = '/factoryinfo/remove';
@@ -134,29 +157,61 @@ $(function(){
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
+				
+				$table = $("#factoryinfo");
+				$table.bootstrapTable('refresh');
+				
+				$gridRemoveBtn.prop('disabled', true);
 				alert("비사용으로 변경되였습니다.");
-				location.reload();
 			}
 		});
 	});			
 };
- 
-function gridData(data){
 
-	$("#factoryid").val(data.factoryid);
-	$("#factoryname").val(data.factoryname);
-	$("#description").val(data.description);
-	$("#erpplant").val(data.erpplant);
-	$("#factorytype").val(data.factorytype);
-	$("#creator").val(data.creator);
-	$("#isusable").val(data.isusable);
+function factoryInfoOperateFormatter(value, row, index) {
+	return [
+		'<a class="factoryInfoModify" href="javascript:void(0)" title="수정">',
+		'<i class="fa-solid fa-pen"></i>',
+		'</a>'
+	].join('');
+}
 
+window.operateEvents = {
+	"click .factoryInfoModify": function(e, value, row, index) {
+		
+		s_factoryInfo = row;
+		
+		factoryInfoDetail(row);
+
+		$("#addFactoryInfoModalCreate").css('display', "none");
+		$("#addFactoryInfoModalModify").css('display', "block");
+
+		$('#addFactoryInfoModal').modal('show');
+
+		factoryInfoDetail(row);
+	}
+}
+
+function factoryInfoDetail(data) {
+	$("input[name=factoryid]").val(data.factoryid);
+	$("input[name=factoryname]").val(data.factoryname);
+	$("input[name=description]").val(data.description);
+	$("input[name=erpplant]").val(data.erpplant);
+	$("input[name=factorytype]").val(data.factorytype);
+	$("select[name=isusable]").val(data.isusable);
 }
 
 function initFactoryInfo() {
+//	$("input[name=factoryid]").val("");
+//	$("input[name=factoryname]").val("");
+//	$("input[name=description]").val("");
+//	$("input[name=erpplant]").val("");
+//	$("input[name=factorytype]").val("");
+//	$("select[name=isusable]").val("");
+	
 	let data = {
 		"factoryid": "", "factoryname": "", "description": "", "erpplant": "",
-		"factorytype": "", "creator": "", "isusable": ""
+		"factorytype": "", "isusable": ""
 	};
 	
 	return data;

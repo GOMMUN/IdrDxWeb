@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.MonitoringMapper">
+
+	<select id="find" resultType="Monitoring"
+		parameterType="Monitoring">
+		SELECT
+		A.PROD_QTY,
+		B.PLAN_QTY,
+		B.SHIFTID
+		FROM DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ = B.DATASEQ
+		WHERE
+		B.WORK_DATE=CONVERT(VARCHAR, CONVERT(DATE, #{workDate}), 112)
+		AND
+		A.ISUSABLE ='USABLE'
+		AND
+		B.ISUSABLE ='USABLE'
+
+	</select>
+
+
+
+</mapper>

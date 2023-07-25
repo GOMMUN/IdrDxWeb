@@ -1,248 +1,257 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>작업모니터링</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>작업모니터링</title>
 </head>
 <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/monitoring.js}"></script>
-<link th:inline="css" th:href="@{/static/css/page/style.css}" rel="stylesheet"/>
-<body>
-  <div class="monitor-wrap">
-    <div class="section-row">
-      <div class="tbs tbs-50">
-        <div class="tbs-head">
-            구매
-        </div>
-        <div class="tbs-row">
-          <div class="tbs-col">
-            <div class="tbs-col-head">
-              구매
-            </div>
-            <div class="tbs-col-body">
-              <div class="tbs-col-title item">
-                발주
-              </div>
-              <div class="item">
-                8,000
-              </div>
-              <div class="tbs-col-title item">
-                입고
-              </div>
-              <div class="item">
-                <div class="num-per">
-                  80%
-                </div>
-                <div class="num-wrap">
-                  <span class="ing">8,000</span><span>/</span><span>10,000</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tbs-col detection">
-            <div class="tbs-col-head">
-              외주
-            </div>
-            <div class="tbs-col-body">
-              <div class="tbs-col-title item">
-                발주
-              </div>
-              <div class="item">
-                8,000
-              </div>
-              <div class="tbs-col-title item">
-                입고
-              </div>
-              <div class="item">
-                <div class="num-per">
-                  80%
-                </div>
-                <div class="num-wrap">
-                  <span class="ing">8,000</span><span>/</span><span>10,000</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tbs tbs-50">
-        <div class="tbs-head">
-          재고/물류이동
-        </div>
-        <div class="tbs-row">
-          <div class="tbs-col">
-            <div class="tbs-col-head">
-              자재창고
-            </div>
-            <div class="tbs-col-body1">
-              <div class="item">
-                <div class="num-per-c">
-                  80%
-                </div>
-                <div class="num-wrap">
-                  <span class="ing">8,000</span><span>/</span><span>10,000</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tbs-col">
-            <div class="tbs-col-head">
-              반제품창고
-            </div>
-            <div class="tbs-col-body1">
-              <div class="item">
-                <div class="num-per-c">
-                  80%
-                </div>
-                <div class="num-wrap">
-                  <span class="ing">8,000</span><span>/</span><span>10,000</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tbs-col detection">
-            <div class="tbs-col-head">
-              현장창고
-            </div>
-            <div class="tbs-col-body1">
-              <div class="item-center">
-                <div class="num-per-c">
-                  80%
-                </div>
-                <div class="num-wrap">
-                  <span class="ing">8,000</span><span>/</span><span>10,000</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="marquee">
-      <div class="detection-text">
-        <span>밸류체인 생산 이상감지 발생</span>
-        <span>밸류체인 생산 이상감지 발생</span>      </div>
-    </div>
-    <div class="section-row">
-      <div class="tbs tbs-50">
-        <div class="tbs-head">
-          생산
-        </div>
-        <div class="tbs-row">
-          <div class="tbs-col w-33">
-            <div class="tbs-col-head">
-              생산진행
-            </div>
-            <div class="tbs-col-body3">
-              <div class="tbs-col-title item">
-                생산계획
-              </div>
-              <div class="item">
-                8,000
-              </div>
-              <div class="tbs-col-title item">
-                WIP(투입)
-              </div>
-              <div class="item">
-                8,000
-              </div>
-              <div class="tbs-col-title item">
-                재작업
-              </div>
-              <div class="item">
-                8,000
-              </div>
-            </div>
-          </div>
-          <div class="tbs-col w-33">
-            <div class="tbs-col-head">
-              생산실적
-            </div>
-            <div class="tbs-col-body3">
-              <div class="tbs-col-title item">
-                양품<br>실적
-              </div>
-              <div class="item">
-                8,000
-              </div>
-              <div class="tbs-col-title item">
-                불량
-              </div>
-              <div class="item">
-                8,000
-              </div>
-            </div>
-          </div>
-          <div class="tbs-col w-33">
-            <div class="tbs-col-head">
-              비가동
-            </div>
-            <div class="tbs-col-body3">
-              <div class="tbs-col-title item">
-                이상
-              </div>
-              <div class="item">
-                <div class="num-wrap">
-                  <span class="ing">8,000</span>건<span>/</span><span>10,000</span>분
-                </div>
-              </div>
-              <div class="tbs-col-title item">
-                계획<br>관리
-              </div>
-              <div class="item">
-                <div class="num-wrap">
-                  <span class="ing">8,000</span>건<span>/</span><span>10,000</span>분
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tbs tbs-50">
-        <div class="tbs-head">
-            조달
-        </div>
-        <div class="tbs-row">
-          <div class="tbs-col">
-            <div class="tbs-col detection">
-              <div class="tbs-col-head">
-                출하계획
-              </div>
-              <div class="tbs-col-body1">
-                <div class="item-center">
-                  <div class="num-per-c">
-                    80%
-                  </div>
-                  <div class="num-wrap">
-                    <span class="ing">8,000</span><span>/</span><span>10,000</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tbs-col">
-            <div class="tbs-col">
-              <div class="tbs-col-head">
-                완제품 입고창고
-              </div>
-              <div class="tbs-col-body1">
-                <div class="item-center">
-                  <div class="num-per-c">
-                    80%
-                  </div>
-                  <div class="num-wrap">
-                    <span class="ing">8,000</span><span>/</span><span>10,000</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<link th:inline="css" th:href="@{/static/css/page/style.css}" rel="stylesheet" />
 
-    </div>
-  </div>
+<body>
+	<form class="user">
+		<div class="form-group row">
+			<div class="col-sm-8"></div>
+			<div class="col-sm-1 mb-3 mb-sm-0">
+				<input type="date" name="workDate" class="form-control-custom form-control-user" id="" placeholder="날짜">
+			</div>
+			<div class="col-sm-1">
+				<select id="factoryCodes" name="factoryid" class="form-select-custom form-control-user" aria-label="공장">
+					<option value="">공장 선택</option>
+				</select>
+			</div>
+			<div class="col-sm-1">
+				<select id="lineCodes" name="lineid" class="form-select-custom form-control-user" aria-label="공장">
+					<option value="">공정 선택</option>
+				</select>
+			</div>
+			<div class="col-sm-1">
+				<a id="search" class="btn btn-primary btn-user btn-block mt-0">
+					Searach
+				</a>
+			</div>
+		</div>
+	</form>
+
+	<div class="monitor-wrap">
+		<div class="section-row">
+			<div class="tbs tbs-50">
+				<div class="tbs-head">
+					생산
+				</div>
+				<div class="tbs-row">
+					<div class="tbs-col">
+						<div class="tbs-col-head">
+							오전
+						</div>
+						<div class="tbs-col-body">
+							<div class="tbs-col-title item">
+								계획
+							</div>
+							<div class="item">
+								<div id="dayplan"></div>
+							</div>
+							<div class="tbs-col-title item">
+								실적
+							</div>
+							<div class="item">
+								<div class="num-per">
+									<div id="dayperformance"></div>
+								</div>
+								<div class="num-wrap">
+									<span id="daypl"></span><span>/</span><span id="dayper"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tbs-col ">
+						<div class="tbs-col-head">
+							오후
+						</div>
+						<div class="tbs-col-body">
+							<div class="tbs-col-title item">
+								계획
+							</div>
+							<div class="item">
+								<div id="nightplan"></div>
+							</div>
+							<div class="tbs-col-title item">
+								실적
+							</div>
+							<div class="item">
+								<div class="num-per">
+									<div id="nightperformance"></div>
+								</div>
+								<div class="num-wrap">
+									<span id="nightpl"></span><span>/</span><span id="nightper"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tbs tbs-50">
+				<div class="tbs-head">
+					재고
+				</div>
+				<div class="tbs-row">
+					<div class="tbs-col">
+						<div class="tbs-col-head">
+							자재창고
+						</div>
+						<div class="tbs-col-body">
+							<div class="tbs-col-title item">
+								품명
+							</div>
+							<div class="item">
+								<select>
+									<option>AAA</option>
+								</select>
+							</div>
+							<div class="tbs-col-title item">
+								수량
+							</div>
+							<div class="item">
+								<div class="num-per">
+									<div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tbs-col ">
+						<div class="tbs-col-head">
+							제품창고
+						</div>
+						<div class="tbs-col-body">
+							<div class="tbs-col-title item">
+								품명
+							</div>
+							<div class="item">
+								<select>
+									<option>AAA</option>
+								</select>
+							</div>
+							<div class="tbs-col-title item">
+								수량
+							</div>
+							<div class="item">
+								<div class="num-per">
+									<div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section-row">
+			<div class="tbs tbs-50">
+				<div class="tbs-head">
+					불량
+				</div>
+				<div class="tbs-row">
+					<div class="tbs-col w-33">
+						<div class="tbs-col-head">
+							불량율
+						</div>
+						<div class="tbs-col-body3">
+							<div class="tbs-col-title item">
+								불량율
+							</div>
+							<div class="item">
+								<div></div>
+							</div>
+							<div class="tbs-col-title item">
+								불량수
+							</div>
+							<div class="item">
+								<div></div>
+							</div>
+							<div class="tbs-col-title item">
+								생산수
+							</div>
+							<div class="item">
+								<div></div>
+							</div>
+						</div>
+					</div>
+					<div class="tbs-col w-33">
+						<div class="tbs-col-head">
+							불량구분
+						</div>
+						<div class="tbs-col-body3">
+							<div class="tbs-col-title item">
+								외관불량
+							</div>
+							<div class="item">
+								<div></div>
+							</div>
+							<div class="tbs-col-title item">
+								기능불량
+							</div>
+							<div class="item">
+								<div></div>
+							</div>
+							<div class="tbs-col-title item">
+								조립불량
+							</div>
+							<div class="item">
+								<div></div>
+							</div>
+							<div class="tbs-col-title item">
+								재질불량
+							</div>
+							<div class="item">
+								<div></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tbs tbs-50">
+				<div class="tbs-head">
+					비가동
+				</div>
+				<div class="tbs-row">
+					<div class="tbs-col">
+						<div class="tbs-col">
+							<div class="tbs-col-head">
+								설비명
+							</div>
+							<div class="tbs-col-body1">
+								<div class="item-center">
+									<div class="num-per-c">
+										설비A
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tbs-col">
+						<div class="tbs-col">
+							<div class="tbs-col-head">
+								완제품 입고창고
+							</div>
+							<div class="tbs-col-body1">
+								<div class="item-center">
+									<div class="num-per-c">
+										80%
+									</div>
+									<div class="num-wrap">
+										<span class="ing">8,000</span><span>/</span><span>10,000</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 </body>
+
 </html>

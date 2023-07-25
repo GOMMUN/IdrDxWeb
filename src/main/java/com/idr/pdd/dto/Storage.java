@@ -5,7 +5,9 @@ import lombok.Data;
 @Data
 public class Storage {
 
+	private int dataseq;
 	private String factoryid;
+	private String factoryname;
 	private String storageid;
 	private String storagename;
 	private int failurerate;

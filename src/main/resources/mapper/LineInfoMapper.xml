@@ -10,7 +10,8 @@
 			A.DATASEQ,
         	A.COMPANYID,
         	A.LOCATIONID,
-        	A.FACTORYID, (SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME, 
+        	A.FACTORYID, 
+        	(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME, 
         	A.LOCATIONNAME,
         	A.DESCRIPTION,
         	A.LOCATIONCLASSID,
@@ -40,7 +41,9 @@
 				,FACTORYID
 				,LOCATIONNAME
 				,LOCATIONTYPE
+				,CREATOR
 				,CREATETIME
+				,EVENTUSER
 				,EVENTTIME
 				,ISUSABLE			
 			) 
@@ -50,7 +53,9 @@
 				,#{factoryid}
 				,#{locationname}			
 				,'LINE'
+				,'idrAdmin'
 				,GETDATE()
+				,'idrAdmin'
 				,GETDATE()
 				,#{isusable}			
 			)

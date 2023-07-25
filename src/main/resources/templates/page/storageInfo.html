@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
 
-<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/lineInfo.js}"></script>
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/storageInfo.js}"></script>
 <style>
 	.form-control-custom {
 		display: block;
@@ -44,37 +44,39 @@
 			<div class="col-lg-12">
 				<div class="card shadow mb-4">
 					<div class="card-header py-3">
-						<h6 class="m-0 font-weight-bold text-primary">라인 정보</h6>
+						<h6 class="m-0 font-weight-bold text-primary">창고 정보</h6>
 					</div>
 					<div class="card-body">
-						<div id="toolbarLineinfo" class="">
-							<button type="button" class="btn btn-primary" id="addLineinfo"
-								data-target="#addLineinfoModal">
+						<div id="toolbarStorageinfo" class="">
+							<button type="button" class="btn btn-primary" id="addStorageinfo"
+								data-target="#addStorageinfoModal">
 								<i class="fa-solid fa-plus"></i> Add
 							</button>
-							<button id="removeLineinfo" class="btn btn-danger" disabled>
+							<button id="removeStorageinfo" class="btn btn-danger" disabled>
 								<i class="fa fa-trash"></i> Delete
 							</button>
 						</div>
-						<table id="lineinfo" data-toggle="table" data-toolbar="#toolbarLineinfo" 
+						<table id="storageinfo" data-toggle="table" data-toolbar="#toolbarStorageinfo" 
 							data-height="810" data-multiple-select-row="true" data-click-to-select="true" 
 							data-show-refresh="true" data-filter-control="true"
-							data-search="true" data-url="/lineinfo/find" data-show-columns="true"
+							data-search="true" data-url="/storageinfo/find" data-show-columns="true"
 							data-show-columns-toggle-all="true" data-pagination="true">
 							<thead class="thead-light">
 								<tr>
 									<th data-field="state" data-checkbox="true"></th>
 	<!--								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>-->
 									<th data-field="factoryname" data-sortable="true" data-align="center">공장</th>
-									<th data-field="locationid" data-sortable="true" data-align="center">라인코드</th>
-									<th data-field="locationname" data-sortable="true" data-align="center">라인명</th>
+									<th data-field="storageid" data-sortable="true" data-align="center">창고코드</th>
+									<th data-field="storagename" data-sortable="true" data-align="center">창고명</th>
+									<th data-field="failurerate" data-sortable="true" data-align="center">불량률</th>
+									<th data-field="recoverytime" data-sortable="true" data-align="center">회복시간</th>
 									<th data-field="creator" data-sortable="true" data-align="center">등록자</th>
 									<th data-field="createtime" data-sortable="true" data-align="center">등록일</th>
 									<th data-field="eventuser" data-sortable="true" data-align="center">수정자</th>
 									<th data-field="eventtime" data-sortable="true" data-align="center">수정일</th>
 									<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
 									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
-										data-formatter="lineinfoOperateFormatter" data-events="operateEvents">#
+										data-formatter="storageinfoOperateFormatter" data-events="operateEvents">#
 									</th>								
 								</tr>
 							</thead>
@@ -85,7 +87,7 @@
 		</div>
 	</div>
 		<!-- Modal -->
-	<div class="modal fade" id="addLineinfoModal" tabindex="-1" role="dialog"
+	<div class="modal fade" id="addStorageinfoModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
@@ -94,7 +96,7 @@
 						<div class="col-lg-12">
 							<div class="p-5">
 								<div class="text-center">
-									<h1 class="h4 text-gray-900 mb-4">재고현황</h1>
+									<h1 class="h4 text-gray-900 mb-4">창고현황</h1>
 								</div>
 								<form class="user">
 									<div class="form-group row">
@@ -105,15 +107,31 @@
 											</select>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" name="locationid" class="form-control-custom form-control-user"
-											id="" placeholder="라인코드">
+											<input type="text" name="storageid" class="form-control-custom form-control-user"
+											id="" placeholder="창고코드">
 										</div>
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-6">
-											<input type="text" name="locationname" class="form-control-custom form-control-user"
-											id="" placeholder="수량">
+											<input type="text" name="storagename" class="form-control-custom form-control-user"
+											id="" placeholder="창고명">
 										</div>
+										<div class="col-sm-6">
+											<input type="text" name="failurerate" class="form-control-custom form-control-user"
+											id="" placeholder="불량률">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="recoverytime" class="form-control-custom form-control-user"
+											id="" placeholder="회복시간">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="buffer" class="form-control-custom form-control-user"
+											id="" placeholder="재고">
+										</div>
+									</div>
+									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<select id="isusable" name="isusable"
 												class="form-select-custom form-control-user" aria-label="사용여부">
@@ -125,17 +143,17 @@
 									<hr>
 									<div class="row">
 										<div class="col-lg-10">
-											<a id="addLineinfoModalCreate"
+											<a id="addStorageinfoModalCreate"
 												class="btn btn-primary btn-user btn-block">
 												Save
 											</a>
-											<a id="addLineinfoModalModify"
+											<a id="addStorageinfoModalModify"
 												class="btn btn-primary btn-user btn-block mt-0">
 												Save
 											</a>
 										</div>
 										<div class="col-lg-2">
-											<a id="addLineinfoModalClose"
+											<a id="addStorageinfoModalClose"
 												class="btn btn-google btn-user btn-block">
 												X
 											</a>

@@ -13,45 +13,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.idr.pdd.dto.Location;
+import com.idr.pdd.dto.Storage;
 import com.idr.pdd.dto.WorkDailyReport;
-import com.idr.pdd.service.LineInfoService;
+import com.idr.pdd.service.StorageInfoService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/lineinfo")
-public class LineInfoController {
+@RequestMapping("storageinfo")
+public class StorageInfoController {
 
 	@Autowired
-	private LineInfoService service;
+	private StorageInfoService service;
 	
 	
 	@GetMapping("")
     public String init() {
-        return "page/lineInfo";
+        return "page/storageInfo";
     }
 	
 	@ResponseBody
 	@GetMapping("/find")
-    public List<Location> find() {
-		List<Location> list = service.findAll();
+    public List<Storage> find() {
+		List<Storage> list = service.findAll();
 		return list;
     }
 	
 	@ResponseBody
 	@PostMapping("/create")
-    public int create(@RequestBody Location param) {
+    public int create(@RequestBody Storage param) {
 			return service.save(param);
     }
 	
 	@ResponseBody
 	@PutMapping("/modify")
-    public int modify(@RequestBody Location param) {
+    public int modify(@RequestBody Storage param) {
 		return service.save(param);
     }
-	
 	
 	@ResponseBody
 	@PutMapping("/remove")

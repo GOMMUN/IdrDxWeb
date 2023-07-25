@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.StorageInfoMapper">
+
+    <select id="findAll" resultType="Storage">
+		SELECT  
+			A.DATASEQ,
+        	A.FACTORYID,
+        	(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME,  
+        	A.STORAGEID, 
+        	A.STORAGENAME, 
+        	A.FAILURERATE, 
+        	A.RECOVERYTIME, 
+        	A.BUFFER, 
+        	A.CREATOR, 
+        	FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME, 
+        	A.ISUSABLE 
+        FROM DSP_STORAGE as A
+        WHERE 1=1
+        AND ISUSABLE IS NOT NULL 
+    </select>
+    
+    <insert id="create" parameterType="Storage">
+			INSERT INTO DSP_STORAGE(
+        		 FACTORYID 
+        		,STORAGEID 
+        		,STORAGENAME 
+        		,FAILURERATE 
+        		,RECOVERYTIME 
+        		,BUFFER 
+        		,CREATOR
+        		,CREATETIME
+        		,EVENTUSER
+        		,EVENTTIME
+				,ISUSABLE			
+			) 
+			VALUES(
+				 #{factoryid}
+				,#{storageid}
+				,#{storagename}
+				,#{failurerate}			
+				,#{recoverytime}
+				,#{buffer}
+				,'idrAdmin'
+				,getdate()
+				,'idrAdmin'
+				,getdate()	
+				,#{isusable}			
+			)
+	</insert>
+    <update id="modify" parameterType="Storage" >
+			UPDATE DSP_STORAGE
+			SET 
+				 FACTORYID 	 	= #{factoryid}
+				,STORAGEID		= #{storageid}
+				,STORAGENAME	= #{storagename}
+				,FAILURERATE	= #{failurerate}			
+				,RECOVERYTIME   = #{recoverytime}
+				,BUFFER   		= #{buffer}	
+				,EVENTTIME 		= GETDATE()
+				,ISUSABLE   	= #{isusable}
+			WHERE DATASEQ		= #{dataseq}
+	</update>
+
+    <update id="remove" parameterType="list">
+    	UPDATE DSP_STORAGE
+		SET ISUSABLE	= null,
+			STORAGEID	= ''
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
+
+
+</mapper>

@@ -2,7 +2,7 @@
  * 
  */
 let c_factory = null;
-let s_workerInput = null;
+let s_storageInfo = null;
 
 $(function(){
 	initSetting();
@@ -11,18 +11,18 @@ $(function(){
 });
 
 function initSetting() {
-	factroy();		// 라인코드 조회
+	factroy();		// 코드 조회
 }
 
 
  function setEventListener (){
 
-	let $grid = $("#lineinfo");					//조회
-	let $gridAddBtn = $("#addLineinfo");			// 라인정보 add 버튼
-	let $gridRemoveBtn = $("#removeLineinfo");		// 라인정보 delete 버튼
-	let $modalCloseBtn = $("#addLineinfoModalClose");	// 라인정보 모달 close 버튼
-	let $modalCreateBtn = $("#addLineinfoModalCreate");	// 라인정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addLineinfoModalModify");	// 라인정보 모달 update 버튼 
+	let $grid = $("#storageinfo");					//조회
+	let $gridAddBtn = $("#addStorageinfo");			// 창고정보 add 버튼
+	let $gridRemoveBtn = $("#removeStorageinfo");		// 창고정보 delete 버튼
+	let $modalCloseBtn = $("#addStorageinfoModalClose");	// 창고정보 모달 close 버튼
+	let $modalCreateBtn = $("#addStorageinfoModalCreate");	// 창고정보 모달 insert 버튼
+	let $modalModifyBtn = $("#addStorageinfoModalModify");	// 창고정보 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -45,21 +45,21 @@ function initSetting() {
 	});
 	
 	$grid.on('refresh.bs.table', function(params) {
-		lineinfo();
+		storageinfo();
 	});
 	
 	$gridAddBtn.click(function() {		// 라인정보 add 버튼
 		
-		$("#addLineinfoModalCreate").css('display', "block");
-		$("#addLineinfoModalModify").css('display', "none");
+		$("#addStorageinfoModalCreate").css('display', "block");
+		$("#addStorageinfoModalModify").css('display', "none");
 
-		$('#addLineinfoModal').modal('show');
+		$('#addStorageinfoModal').modal('show');
 		
 	});
 	
 	$modalCloseBtn.click(function() {
-		refreshLineInfo();
-		$('#addLineinfoModal').modal('hide');
+		refreshStorageInfo();
+		$('#addStorageinfoModal').modal('hide');
 	});
 	
 	$modalCreateBtn.click(function() {
@@ -67,8 +67,11 @@ function initSetting() {
 		let data = {};
 		
 		data.factoryid = $("select[name=factoryid]").val();
-		data.locationid = $("input[name=locationid]").val();
-		data.locationname = $("input[name=locationname]").val();
+		data.storageid = $("input[name=storageid]").val();
+		data.storagename = $("input[name=storagename]").val();
+		data.failurerate = $("input[name=failurerate]").val();
+		data.recoverytime = $("input[name=recoverytime]").val();
+		data.buffer = $("input[name=buffer]").val();
 		data.isusable = $("select[name=isusable]").val();
 	
 		//validation check
@@ -82,7 +85,7 @@ function initSetting() {
 			return;
 		} 
 
-		let url = '/lineinfo/create';
+		let url = '/storageinfo/create';
 
 		$.ajax({
 			url: url,
@@ -92,26 +95,29 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#lineinfo");
+				$table = $("#storageinfo");
 				$table.bootstrapTable('refresh');
 				
-				$('#addLineinfoModal').modal('hide');
+				$('#addStorageinfoModal').modal('hide');
 				alert("저장되었습니다.");
 				location.reload();
 			},
 				error: function(xhr, textStatus, errorThrown) {
 	        	// 실패 시 실행할 코드
-	        		alert("라인코드와 공장을 확인해주세요");
+	        		alert("창고코드와 공장을 확인해주세요");
 	    		}
 		});
 	});
 	
 	$modalModifyBtn.click(function() {
-		let data = s_workerInput;
+		let data = s_storageInfo;
 
 		data.factoryid = $("select[name=factoryid]").val();
-		data.locationid = $("input[name=locationid]").val();
-		data.locationname = $("input[name=locationname]").val();
+		data.storageid = $("input[name=storageid]").val();
+		data.storagename = $("input[name=storagename]").val();
+		data.failurerate = $("input[name=failurerate]").val();
+		data.recoverytime = $("input[name=recoverytime]").val();
+		data.buffer = $("input[name=buffer]").val();
 		data.isusable = $("select[name=isusable]").val();
 
 		//validation check
@@ -125,7 +131,7 @@ function initSetting() {
 			return;
 		} 
 		
-		let url = '/lineinfo/modify';
+		let url = '/storageinfo/modify';
 
 		$.ajax({
 			url: url,
@@ -135,10 +141,10 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#lineinfo");
+				$table = $("#storageinfo");
 				$table.bootstrapTable('refresh');
 				
-				$('#addLineinfoModal').modal('hide');
+				$('#addStorageinfoModal').modal('hide');
 				alert("수정 되었습니다.");
 				location.reload();
 			}
@@ -153,7 +159,7 @@ function initSetting() {
 			selections.push(data.dataseq);
 		});
 
-		let url = '/lineinfo/remove';
+		let url = '/storageinfo/remove';
 
 		$.ajax({
 			url: url,
@@ -163,7 +169,7 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#lineinfo");
+				$table = $("#storageinfo");
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
@@ -176,16 +182,16 @@ function initSetting() {
 	$factoryCodes = $("#factoryCodes");
 };
  
-function lineinfo(data) {
-	var url = '/lineinfo/find';
+function storageinfo(data) {
+	var url = '/storageinfo/find';
 
 	var params = {
-		start : $("input[name=sLocationdateStart]").val(),
-		end : $("input[name=sLocationdateEnd]").val()
+		start : $("input[name=sStoragedateStart]").val(),
+		end : $("input[name=sStoragedateEnd]").val()
 	}
 
 	$.get(url + '?' + $.param(params)).then(function(res) {
-		$table = $("#lineinfo");
+		$table = $("#storageinfo");
 		$table.bootstrapTable('removeAll');
 		$table.bootstrapTable('append', res);
 	})
@@ -217,45 +223,51 @@ function factroy() {
 	});
 }
 
-function lineinfoOperateFormatter(value, row, index) {
+function storageinfoOperateFormatter(value, row, index) {
 	return [
-		'<a class="lineinfoModify" href="javascript:void(0)" title="수정">',
+		'<a class="storageModify" href="javascript:void(0)" title="수정">',
 		'<i class="fa-solid fa-pen"></i>',
 		'</a>'
 	].join('');
 }
 
 window.operateEvents = {
-	"click .lineinfoModify": function(e, value, row, index) {
+	"click .storageModify": function(e, value, row, index) {
 		
-		s_workerInput = row;
+		s_storageInfo = row;
 		
-		lineinfoDetail(row);
+		storageInfoDetail(row);
 
-		$("#addLineinfoModalCreate").css('display', "none");
-		$("#addLineinfoModalModify").css('display', "block");
+		$("#addStorageinfoModalCreate").css('display', "none");
+		$("#addStorageinfoModalModify").css('display', "block");
 
-		$('#addLineinfoModal').modal('show');
+		$('#addStorageinfoModal').modal('show');
 
 		$factoryCodes = $("#factoryCodes");
 		$factoryCodes.trigger('change');
 
-		lineinfoDetail(row);
+		storageInfoDetail(row);
 	}
 }
 
-function lineinfoDetail(data) {
-	$("select[name=factoryid]").val(data.factoryid);
-	$("input[name=locationid]").val(data.locationid);
-	$("input[name=locationname]").val(data.locationname);
-	$("select[name=isusable]").val(data.isusable);
+function storageInfoDetail(data) {
+		data.factoryid = $("select[name=factoryid]").val();
+		data.storageid = $("input[name=storageid]").val();
+		data.storagename = $("input[name=storagename]").val();
+		data.failurerate = $("input[name=failurerate]").val();
+		data.recoverytime = $("input[name=recoverytime]").val();
+		data.buffer = $("input[name=buffer]").val();
+		data.isusable = $("select[name=isusable]").val();
 }
 
-function refreshLineInfo() {
+function refreshStorageInfo() {
 	
 	$("select[name=factoryid]").val("");
-	$("input[name=locationid]").val("");
-	$("input[name=locationname]").val("");
+	$("input[name=storageid]").val("");
+	$("input[name=storagename]").val("");
+	$("input[name=failurerate]").val("");
+	$("input[name=recoverytime]").val("");
+	$("input[name=buffer]").val("");
 	$("select[name=isusable]").val("");
 	
 }

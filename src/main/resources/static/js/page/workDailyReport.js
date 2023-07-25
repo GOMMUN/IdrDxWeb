@@ -841,10 +841,10 @@ function setWorkContentsEventListener() {
 		data.reworkFailQty = $("input[name=reworkFailQty]").val();
 		data.notes = $("input[name=workcontentnotes]").val();
 		
-		data.plant=s_workDailyReport.factoryid;
-		data.line=s_workDailyReport.lineid;
-		data.shift=s_workDailyReport.shiftid;
-		data.date=s_workDailyReport.workDate;
+//		data.plant=s_workDailyReport.factoryid;
+//		data.line=s_workDailyReport.lineid;
+//		data.shift=s_workDailyReport.shiftid;
+//		data.date=s_workDailyReport.workDate;
 		
 		if (data.worktimeFrom == "") {
 			alert("작업시간을 선택 하세요.");
@@ -883,8 +883,8 @@ function setWorkContentsEventListener() {
 			return;
 		}
 
-		//let url = '/workContents/create';
-		let url = 'http://idrenvision.iptime.org:8271/work-contents';
+		let url = '/workContents/create';
+//		let url = 'http://idrenvision.iptime.org:8271/work-contents';
 
 		$.ajax({
 			url: url,

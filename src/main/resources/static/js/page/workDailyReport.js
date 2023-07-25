@@ -8,6 +8,7 @@ let c_shift = null;
 let c_model = null;
 let c_input_item = null;
 let c_material=null;
+let c_reject_item=null;
 //let c_model_item=null;
 let s_workDailyReport = null;
 let dataseq = null;
@@ -152,18 +153,28 @@ function setWorkDailyReportEventListener() {
 			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.lineid == "") {
-			alert("라인을 선택해주세요.");
+			alert("공정을 선택해주세요.");
 			$("select[name=lineid]").focus();
 			return;
 		}else if (data.shiftid == "") {
-			alert("주/야구분을 선택해주세요.");
+			alert("작업구분을 선택해주세요.");
 			$("select[name=shiftid]").focus();
+			return;
+		}else if (data.materialid == "") {
+			alert("자재를 선택해주세요.");
+			$("select[name=wdrmatarial]").focus();
+			return;
+		}else if (data.modelid == "") {
+			alert("차종을 선택해주세요.");
+			$("select[name=wdrmodel]").focus();
 			return;
 		}else if (data.planQty == "") {
 			alert("계획수량을 선택해주세요.");
 			$("select[name=planqty]").focus();
 			return;
 		}
+		
+		
 
 		let url = '/workDailyReport/create';
 
@@ -873,7 +884,7 @@ function setWorkContentsEventListener() {
 		}
 
 		//let url = '/workContents/create';
-		let url = 'http://localhost:8171/work-contents/';
+		let url = 'http://idrenvision.iptime.org:8271/work-contents';
 
 		$.ajax({
 			url: url,
@@ -1036,13 +1047,19 @@ function setNonconFormityEventListener() {
 	$modalModifyBtn.click(function() {
 		// s_workDailyReport
 		data.dataseq = s_NonconFormity.dataseq;
-		data.modelid = $("select[name=modelid2]").val();
-		data.operationid=$("input[name=operationid]").val();
-		data.rejectItemid=$("input[name=rejectItemid]").val();
+		data.rejectItemid=$("select[name=rejectItemId]").val();
 		data.firsttimeRejectQty=$("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty=$("input[name=reworkRejectQty]").val();
-		if (data.personid == "") {
-			alert("작업자를 선택 하세요.");
+		if (data.rejectItemid == "") {
+			alert("불량을 선택 하세요.");
+			return;
+		}
+		if (data.firsttimeRejectQty == "") {
+			alert("본을 선택 하세요.");
+			return;
+		}
+		if (data.reworkRejectQty == "") {
+			alert("재투입을 선택 하세요.");
 			return;
 		}
 
@@ -1353,18 +1370,18 @@ function input_item() {
 function reject_item() {
 	let url = '/code/rejectItem';
 
-	c_input_item = null;
+	c_reject_item = null;
 
 	$.ajax({
 		url: url,
 		type: 'GET',
 		success: function(data) {
-			c_input_item = data;
+			c_reject_item = data;
 
 			let $dropdown = $("#rejectItemCode");
 			$dropdown.empty();
 
-			if (c_input_item) {
+			if (c_reject_item) {
 				$dropdown.append($("<option/>").val("").text("불량"));
 				$.each(data, function() {
 					$dropdown.append($("<option/>").val(this.code).text(this.value));
@@ -1542,6 +1559,7 @@ window.operateEvents = {
 		$("#addNonconFormityModalModify").css('display', "block");
 
 		$('#addNonconFormityModal').modal('show');
+		reject_item();
 
 
 	},

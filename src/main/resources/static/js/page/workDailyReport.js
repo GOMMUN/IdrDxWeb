@@ -1155,10 +1155,10 @@ function setNonOperationEventListener() {
 		data.cause=$("input[name=cause]").val();
 		data.correctiveAction=$("input[name=correctiveAction]").val();
 		
-		data.plant=s_workDailyReport.factoryid;
-		data.line=s_workDailyReport.lineid;
-		data.shift=s_workDailyReport.shiftid;
-		data.date=s_workDailyReport.workDate;
+//		data.plant=s_workDailyReport.factoryid;
+//		data.line=s_workDailyReport.lineid;
+//		data.shift=s_workDailyReport.shiftid;
+//		data.date=s_workDailyReport.workDate;
 		
 		
 		if (data.notoperatetimeFrom == "") {
@@ -1182,8 +1182,8 @@ function setNonOperationEventListener() {
 			return;
 		}
 
-		//let url = '/notoperateContents/create';
-		let url = 'http://localhost:8171/notoperate-contents/';
+		let url = '/notoperateContents/create';
+//		let url = 'http://localhost:8171/notoperate-contents/';
 		$.ajax({
 			url: url,
 			type: 'POST',

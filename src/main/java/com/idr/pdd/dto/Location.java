@@ -5,9 +5,11 @@ import lombok.Data;
 @Data 
 public class Location {
 	
+	private int dataseq;
 	private String companyid;
 	private String locationid;
 	private String factoryid;
+	private String factoryname;
 	private String locationname;
 	private String description;
 	private String locationclassid;

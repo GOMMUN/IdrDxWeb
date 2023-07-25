@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.LineInfoMapper">
+
+    <select id="findAll" resultType="Location">
+		SELECT 
+			A.DATASEQ,
+        	A.COMPANYID,
+        	A.LOCATIONID,
+        	A.FACTORYID, (SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME, 
+        	A.LOCATIONNAME,
+        	A.DESCRIPTION,
+        	A.LOCATIONCLASSID,
+        	A.LOCATIONTYPE,
+        	A.CREATOR,
+        	FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME,
+        	A.EVENT,
+        	A.EVENTUSER,
+        	FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME,
+        	A.ISUSABLE,
+        	A.TID 
+        FROM DSP_LOCATION as A
+        WHERE 1=1 
+        AND ISUSABLE IS NOT NULL
+    </select>  
+    <select id="validationcheck" parameterType="Location" resultType="Integer">
+        SELECT 
+        	COUNT(*) AS val
+		FROM DSP_LOCATION A
+		WHERE FACTORYID  = #{factoryid}
+		AND LOCATIONID  = #{locationid}
+    </select>
+    <insert id="create" parameterType="Location">
+			INSERT INTO DSP_LOCATION(
+				 COMPANYID
+				,LOCATIONID
+				,FACTORYID
+				,LOCATIONNAME
+				,LOCATIONTYPE
+				,CREATETIME
+				,EVENTTIME
+				,ISUSABLE			
+			) 
+			VALUES(
+				 'dx'
+				,#{locationid}
+				,#{factoryid}
+				,#{locationname}			
+				,'LINE'
+				,GETDATE()
+				,GETDATE()
+				,#{isusable}			
+			)
+	</insert>
+    <update id="modify" parameterType="Location" >
+			UPDATE DSP_LOCATION
+			SET 
+				 FACTORYID		= #{factoryid}
+				,LOCATIONID     = #{locationid}
+				,LOCATIONNAME   = #{locationname}
+				,LOCATIONTYPE	='LINE'
+				,EVENTTIME 		= GETDATE()
+				,ISUSABLE		= #{isusable}
+			WHERE DATASEQ		= #{dataseq}
+	</update>
+
+    <update id="remove" parameterType="list">
+    	UPDATE DSP_LOCATION
+		SET ISUSABLE	= null,
+			LOCATIONID	= null
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
+
+
+</mapper>

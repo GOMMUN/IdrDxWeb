@@ -5,7 +5,7 @@ let c_factory = null;
 let c_storage = null;
 let c_material = null;
 
-let s_workerInput = null;
+let s_inventory = null;
 
 $(function() {
 	initSetting();
@@ -104,6 +104,13 @@ function setInventoryEventListener() {
 	});
 
 	$modalCreateBtn.click(function() {
+		
+		
+		$("select[name=factoryid]").val("");
+		$("select[name=storageid]").val("");
+		$("select[name=materialid]").val("");
+		$("input[name=qty]").val("");
+		$("input[name=inventorydate]").val("");
 
 		let data = {};
 		
@@ -156,7 +163,7 @@ function setInventoryEventListener() {
 	});
 
 	$modalModifyBtn.click(function() {
-		let data = s_workerInput;
+		let data = s_inventory;
 
 		data.factoryid = $("select[name=factoryid]").val();
 		data.storageid = $("select[name=storageid]").val();
@@ -349,7 +356,7 @@ function inventoryOperateFormatter(value, row, index) {
 window.operateEvents = {
 	"click .inventoryModify": function(e, value, row, index) {
 		
-		s_workerInput = row;
+		s_inventory = row;
 		
 		inventoryDetail(row);
 

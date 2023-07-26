@@ -77,9 +77,9 @@ function initSetting() {
 
 	
 		//validation check
-		if (data.vendorid == "") {
-			alert("공급업체ID를 입력하세요.");
-			$("select[name=vendorid]").focus();
+		if (data.materialid == "") {
+			alert("자재마스터ID를 입력하세요.");
+			$("input[name=materialid]").focus();
 			return;
 		} else if (data.factoryid == "") {
 			alert("공장을 선택해주세요.");
@@ -128,9 +128,9 @@ function initSetting() {
 		data.isusable = $("select[name=isusable]").val();
 		
 		//validation check
-		if (data.vendorid == "") {
-			alert("공급업체ID를 입력하세요.");
-			$("select[name=vendorid]").focus();
+		if (data.materialid == "") {
+			alert("자재마스터ID를 입력하세요.");
+			$("input[name=materialid]").focus();
 			return;
 		} else if (data.factoryid == "") {
 			alert("공장을 선택해주세요.");
@@ -180,7 +180,7 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#MaterialMaster");
+				$table = $("#materialmaster");
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);

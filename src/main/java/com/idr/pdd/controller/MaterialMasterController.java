@@ -26,7 +26,7 @@ public class MaterialMasterController {
 	
 	@GetMapping("")
     public String init() {
-        return "page/supplierInfo";
+        return "page/materialMaster";
     }
 	
 	@ResponseBody

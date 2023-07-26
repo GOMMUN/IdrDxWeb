@@ -81,7 +81,7 @@
 	</update>
 
     <update id="remove" parameterType="list">
-    	UPDATE DSP_LOTINFO
+    	UPDATE DSP_MATERIAL
 		SET ISUSABLE	= 'N',
 			EVENTUSER 	= 'idrAdmin',
 			EVENTTIME 	= GETDATE()

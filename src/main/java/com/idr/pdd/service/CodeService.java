@@ -121,7 +121,6 @@ public class CodeService {
 		
 		for (ModelNM model : modelMapper.modelfind()) {
 			Code code = new Code();
-			code.setMCode(model.getFactoryid());
 			code.setCode(model.getModelid());
 			code.setValue(model.getModelname());
 			list.add(code);

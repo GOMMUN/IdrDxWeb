@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/lotInfo.js}"></script>
+<style>
+	.form-control-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+
+	.form-select-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+</style>
+
+<body>
+	<div class="container-fluid mt-4">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">Lot 정보</h6>
+					</div>
+					<div class="card-body">
+						<div id="toolbarLotInfo" class="">
+							<button type="button" class="btn btn-primary" id="addLotInfo"
+								data-target="#addLotInfoModal">
+								<i class="fa-solid fa-plus"></i> Add
+							</button>
+							<button id="removeLotInfo" class="btn btn-danger" disabled>
+								<i class="fa fa-trash"></i> Delete
+							</button>
+						</div>
+						<table id="lotinfo" data-toggle="table" data-toolbar="#toolbarLotInfo" 
+							data-height="810" data-multiple-select-row="true" data-click-to-select="true" 
+							data-show-refresh="true" data-filter-control="true"
+							data-search="true" data-url="/lotinfo/find" data-show-columns="true"
+							data-show-columns-toggle-all="true" data-pagination="true">
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
+									<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
+									<th data-field="materialname" data-sortable="true" data-align="center">자재명</th>
+									<th data-field="lotid" data-sortable="true" data-align="center">LOT ID</th>
+									<th data-field="lotname" data-sortable="true" data-align="center">LOT명</th>
+									<th data-field="lotsize" data-sortable="true" data-align="center">크기</th>
+									<th data-field="lotunit" data-sortable="true" data-align="center">단위</th>
+									<th data-field="fromlinecode" data-sortable="true" data-align="center">From 공정코드</th>
+									<th data-field="fromlinecnt" data-sortable="true" data-align="center">From 수량</th>
+									<th data-field="tolinecode" data-sortable="true" data-align="center">To 공정코드</th>
+									<th data-field="tolinecnt" data-sortable="true" data-align="center">To 수량</th>
+									<th data-field="creator" data-sortable="true" data-align="center">등록자</th>
+									<th data-field="createtime" data-sortable="true" data-align="center">등록일</th>
+									<th data-field="eventuser" data-sortable="true" data-align="center">수정자</th>
+									<th data-field="eventtime" data-sortable="true" data-align="center">수정일</th>
+									<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
+									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
+										data-formatter="lotInfoOperateFormatter" data-events="operateEvents">#
+									</th>								
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<!-- Modal -->
+	<div class="modal fade" id="addLotInfoModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">LOT 현황</h1>
+								</div>
+								<form class="user">
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<select id="factoryCodes" name="factoryid"
+												class="form-select-custom form-control-user" aria-label="공장">
+												<option value="">공장 선택</option>
+											</select>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="materialid" class="form-control-custom form-control-user"
+											id="" placeholder="자재코드">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="materialname" class="form-control-custom form-control-user"
+											id="" placeholder="자재명">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="lotid" class="form-control-custom form-control-user"
+											id="" placeholder="LOT ID">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="lotname" class="form-control-custom form-control-user"
+											id="" placeholder="LOT명">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="lotsize" class="form-control-custom form-control-user"
+											id="" placeholder="크기">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="lotunit" class="form-control-custom form-control-user"
+											id="" placeholder="단위">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="fromlinecode" class="form-control-custom form-control-user"
+											id="" placeholder="From 공정코드">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="fromlinecnt" class="form-control-custom form-control-user"
+											id="" placeholder="From 수량">
+										</div>
+										<div class="col-sm-6">
+											<input type="text" name="tolinecode" class="form-control-custom form-control-user"
+											id="" placeholder="To 공정코드">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="tolinecnt" class="form-control-custom form-control-user"
+											id="" placeholder="To 수량">
+										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<select id="isusable" name="isusable"
+												class="form-select-custom form-control-user" aria-label="사용여부">
+												<option value="">사용여부 선택</option>
+												<option value="Y">Y</option>
+												<option value="N">N</option>
+											</select>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-lg-10">
+											<a id="addLotInfoModalCreate"
+												class="btn btn-primary btn-user btn-block">
+												Save
+											</a>
+											<a id="addLotInfoModalModify"
+												class="btn btn-primary btn-user btn-block mt-0">
+												Save
+											</a>
+										</div>
+										<div class="col-lg-2">
+											<a id="addLotInfoModalClose"
+												class="btn btn-google btn-user btn-block">
+												X
+											</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

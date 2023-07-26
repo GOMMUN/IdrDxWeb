@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.LotInfoMapper">
+
+    <select id="findAll" resultType="LotInfo">
+		SELECT  
+			 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			A.DATASEQ,
+        	A.FACTORYID,
+        	(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME,  
+        	A.MATERIALID, 
+        	A.MATERIALNAME, 
+        	A.LOTID, 
+        	A.LOTNAME,
+        	A.LOTSIZE, 
+        	A.LOTUNIT, 
+        	A.FROMLINECODE, 
+        	A.FROMLINECNT,
+        	A.TOLINECODE,
+        	A.TOLINECNT,
+        	A.CREATOR,
+        	FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME, 
+        	A.ISUSABLE 
+        FROM DSP_LOTINFO as A
+        WHERE 1=1
+    </select>
+    
+    <insert id="create" parameterType="LotInfo">
+			INSERT INTO DSP_LOTINFO(
+        		 FACTORYID
+        		,MATERIALID
+        		,MATERIALNAME 
+        		,LOTID 
+        		,LOTNAME 
+        		,LOTSIZE 
+        		,LOTUNIT
+        		,FROMLINECODE 
+        		,FROMLINECNT
+        		,TOLINECODE
+        		,TOLINECNT
+        		,CREATOR
+        		,CREATETIME
+        		,EVENTUSER
+        		,EVENTTIME
+				,ISUSABLE			
+			) 
+			VALUES(
+				 #{factoryid}
+				,#{materialid}
+				,#{materialname}
+				,#{lotid}			
+				,#{lotname}
+				,#{lotsize}
+				,#{lotunit}
+				,#{fromlinecode}
+				,#{fromlinecnt}
+				,#{tolinecode}
+				,#{tolinecnt}
+				,'idrAdmin'
+				,getdate()
+				,'idrAdmin'
+				,getdate()	
+				,#{isusable}			
+			)
+	</insert>
+	
+    <update id="modify" parameterType="LotInfo" >
+			UPDATE DSP_LOTINFO
+			SET 
+				 FACTORYID 	 	= #{factoryid}
+				,MATERIALID		= #{materialid}
+				,MATERIALNAME	= #{materialname}
+				,LOTID			= #{lotid}			
+				,LOTNAME   		= #{lotname}
+				,LOTSIZE		= #{lotsize}
+				,LOTUNIT    	= #{lotunit}	
+				,FROMLINECODE   = #{fromlinecode}
+				,FROMLINECNT   	= #{fromlinecnt}
+				,TOLINECODE   	= #{tolinecode}
+				,TOLINECNT   	= #{tolinecnt}
+				,EVENTTIME 		= GETDATE()
+				,ISUSABLE   	= #{isusable}
+			WHERE DATASEQ		= #{dataseq}
+	</update>
+
+    <update id="remove" parameterType="list">
+    	UPDATE DSP_LOTINFO
+		SET ISUSABLE	= 'N',
+			EVENTUSER 	= 'idrAdmin',
+			EVENTTIME 	= GETDATE()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
+
+
+</mapper>

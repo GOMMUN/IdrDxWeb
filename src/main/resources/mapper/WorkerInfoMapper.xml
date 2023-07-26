@@ -7,7 +7,9 @@
 
 	<select id="findAll" resultType="WorkerInfo">
 		SELECT
-			 A.COMPANYID
+		     ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM
+          	,A.DATASEQ
+			,A.COMPANYID
 			,A.PERSONID
 			,A.FACTORYID
 			,(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
@@ -28,31 +30,8 @@
 		ORDER BY PERSONID ASC;
 	</select>
 	
-	<select id="checkCnt" parameterType="WorkerInfo" resultType="int">
-		SELECT COUNT(*)
-		FROM DSP_PERSON
-		WHERE 1=1
-			AND PERSONID = #{personid}
-			AND FACTORYID = #{factoryid}
-	</select>   	
-
-	<update id="save" parameterType="WorkerInfo" >
-		MERGE INTO DSP_PERSON AS A
-		USING (
-			SELECT 1 AS DUM
-		) AS B
-		ON (
-			A.PERSONID = #{personid} AND
-			A.FACTORYID = #{factoryid}
-			)
-		WHEN MATCHED THEN
-			UPDATE SET 
-				 PERSONNAME		= #{personname}
-				,EVENTUSER		= 'idrAdmin'
-				,EVENTTIME		= GETDATE()
-				,ISUSABLE		= #{isusable}
-		WHEN NOT MATCHED THEN 
-			INSERT(
+	<insert id="create" parameterType="WorkerInfo" >
+        INSERT INTO DSP_PERSON (
 				 COMPANYID
 				,PERSONID
 				,FACTORYID
@@ -61,9 +40,9 @@
 				,CREATETIME
 				,EVENTUSER
 				,EVENTTIME
-				,ISUSABLE		
-			) 
-			VALUES(
+				,ISUSABLE	
+        )
+        VALUES (
 				 'dx'
 				,#{personid}
 				,#{factoryid}
@@ -72,22 +51,29 @@
 				,GETDATE()
 				,'idrAdmin'
 				,GETDATE()	
-				,#{isusable}			
-			)
-		;
-	</update>
+				,#{isusable}
+        )
+    </insert>	
+    
+	<update id="modify" parameterType="WorkerInfo" >
+		UPDATE DSP_PERSON
+           SET
+				 PERSONNAME		= #{personname}
+				,EVENTUSER		= 'idrAdmin'
+				,EVENTTIME		= GETDATE()
+				,ISUSABLE		= #{isusable}
+		WHERE DATASEQ	= 	#{dataseq}
+	</update> 
 
     <update id="remove" parameterType="list">
-		<foreach collection="list" item="data" open="" close="" separator=";">
 		UPDATE DSP_PERSON 
 		SET ISUSABLE= 'N'
 			,EVENTUSER = 'idrAdmin'
 			,EVENTTIME = GETDATE()
-    	WHERE
-			COMPANYID = 'dx' 
-			AND PERSONID = #{data.personid}
-			AND FACTORYID = #{data.factoryid}
-		</foreach>
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
     </update>
 
 </mapper>

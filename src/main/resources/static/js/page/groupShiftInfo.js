@@ -38,7 +38,7 @@ function initSetting() {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
-	$gridAddBtn.click(function() {			//행추가
+	$gridAddBtn.click(function() {
 		$("#addGroupShiftInfoModalCreate").css('display', "block");
 		$("#addGroupShiftInfoModalModify").css('display', "none");
 
@@ -189,11 +189,10 @@ window.operateEvents = {
 
 		$('#addGroupShiftInfoModal').modal('show');
 
-		s_groupshiftinfo(row);
+		groupShiftInfoDetail(row);
 	}
 }
 
- 
 function groupShiftInfoDetail(data){
 	$("select[name=factoryid]").val(data.factoryid);
 	$("input[name=shiftid]").val(data.shiftid);

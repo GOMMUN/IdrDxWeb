@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.Shift;
 import com.idr.pdd.dto.WorkerInfo;
 import com.idr.pdd.mapper.WorkerInfoMapper;
@@ -20,16 +21,15 @@ public class WorkerInfoService {
 		return mapper.findAll();
 	}
 	
-	public int checkCnt(WorkerInfo param) {
-		
-		return mapper.checkCnt(param);
-	}	
-	
 	public int save(WorkerInfo param) {	
-		return mapper.save(param);
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		}else {
+			return mapper.modify(param);
+		}
 	}
 	
-	public int remove(List<WorkerInfo> param) {
+	public int remove(List<Integer> param) {
 		return mapper.remove(param);
 	}	
 }

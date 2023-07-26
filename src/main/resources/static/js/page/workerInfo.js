@@ -1,6 +1,8 @@
 /** 
  * 
  */
+let s_workerinfo = null;
+
 $(function(){
 	initSetting();
 	setEventListener();
@@ -12,13 +14,14 @@ function initSetting() {
 
  function setEventListener (){
 	 
-	let $grid = $("#workerinfo");
-	let $gridAddBtn = $("#addWorkerinfo");			//행추가
-	let $gridSaveBtn = $("#saveWorkerinfo");		//수정
-	let $gridRemoveBtn = $("#removeWorkerinfo");	//삭제
+	let $grid = $("#workerinfo");	//그리드
+	let $gridAddBtn = $("#addWorkerInfo");			//그리드 add버튼
+	let $gridRemoveBtn = $("#removeWorkerinfo");	//그리드 delete버튼
+	let $modalCreateBtn = $("#addWorkerInfoModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addWorkerInfoModalModify");	// 모달 update 버튼	
+	let $modalCloseBtn = $("#addWorkerInfoModalClose");		// 모달 close 버튼 
 	 
 	$grid.on('check.bs.table', function (row, $element, field) {
-		gridData($element);
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length);
 	});
 
@@ -34,15 +37,67 @@ function initSetting() {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
     
-   $gridAddBtn.click(function() {			//행추가
-		$grid.bootstrapTable('append', initWorkerInfo());
-		$grid.bootstrapTable('scrollTo', 'bottom');
-		$grid.bootstrapTable('check', ($grid.bootstrapTable('getData').length-1));
-		$gridAddBtn.prop('disabled',true);
+   $gridAddBtn.click(function() {
+		$("#addWorkerInfoModalCreate").css('display', "block");
+		$("#addWorkerInfoModalModify").css('display', "none");
+
+		$('#addWorkerInfoModal').modal('show');
 	});
 	
-	$gridSaveBtn.click(function() {		//수정
+	$modalCloseBtn.click(function() {
+		refreshWorkerInfo();
+		$('#addWorkerInfoModal').modal('hide');
+	});		
+	
+	$modalCreateBtn.click(function() {
+
 		let data = initWorkerInfo();
+		
+		data.personid = $("input[name=personid]").val();
+		data.factoryid = $("select[name=factoryid]").val();
+		data.personname = $("input[name=personname]").val();
+		data.isusable = $("select[name=isusable]").val();
+
+		//validation check
+		 if (data.personid == "") {
+			alert("작업자 ID를 입력하세요.");
+			$("input[name=personid]").focus();
+			return;
+		} else if (data.factoryid == "") {
+			alert("공장명을 선택하세요.");
+			$("select[name=factoryid]").focus();
+			return;
+		} else if (data.personname == "") {
+			alert("작업자명을 입력하세요.");
+			$("input[name=daynight]").focus();
+			return;
+		} else if (data.useyn == "") {
+			alert("사용유무를 선택하세요.");
+			$("select[name=useyn]").focus();
+			return;
+		}
+
+		let url = '/workerinfo/create';
+
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function(data) {
+				
+				$table = $("#workerinfo");
+				$table.bootstrapTable('refresh');
+				
+				$('#addWorkerInfoModal').modal('hide');
+				alert("저장되었습니다.");
+			}
+		});
+	});
+		
+	$modalModifyBtn.click(function() {
+		let data = s_workerinfo;
 
 		data.personid = $("input[name=personid]").val();
 		data.factoryid = $("select[name=factoryid]").val();
@@ -68,52 +123,24 @@ function initSetting() {
 			return;
 		}
 		
-		//데이터 이미 존재하는지 체크(중복=0, 아니면=1)
-		let valiCheck;
-		let url_val = '/workerinfo/check';
-		
-		$.ajax({
-			url: url_val,
-			type: 'POST',
-			data: JSON.stringify(data),
-			dataType: "json",
-			async:false,
-			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
-				if(data > 0){
-					valiCheck = 0;
-				}else {
-					valiCheck = 1;
-				}
-			}
-		});
+		let url = '/workerinfo/modify';
 
-		if(valiCheck == 0){
-			if(!confirm('기존 데이터를 수정하시겠습니까?')){
-            	return false;
-        	}
-		}else if(valiCheck == 1){
-			if(!confirm('해당 데이터를 새로 추가하시겠습니까?')){
-            	return false;
-        	}
-		}				
-		
-		//저장 처리
-		
-		let url = '/workerinfo/save';
-		
 		$.ajax({
 			url: url,
-			type: 'POST',
+			type: 'PUT',
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
-				alert("저장 되였습니다.");
-				location.reload();
+				
+				$table = $("#workerinfo");
+				$table.bootstrapTable('refresh');
+				
+				$('#addWorkerInfoModal').modal('hide');
+				alert("수정 되었습니다.");
 			}
-		});		
-	});
+		});
+	});			
 	
 	$gridRemoveBtn.click(function() {	
 		
@@ -124,9 +151,7 @@ function initSetting() {
 		let selections = [];
 
 		$grid.bootstrapTable('getSelections').forEach(function(data) {
-
-			selections.push({"personid":data.personid, "factoryid":data.factoryid});
-			
+			selections.push(data.dataseq);	
 		});
 
 		let url = '/workerinfo/remove';
@@ -145,23 +170,51 @@ function initSetting() {
 	});	
     	
 };
- 
-function gridData(data){
-	
-	$("#personid").val(data.personid);
-	$("#factoryCodes option:selected").val(data.factoryid).text(data.factoryname);
-	$("#personname").val(data.personname);
-	$("#isusable").val(data.isusable);
-	
+
+function workerInfoOperateFormatter(value, row, index) {
+	return [
+		'<a class="workerInfoModify" href="javascript:void(0)" title="수정">',
+		'<i class="fa-solid fa-pen"></i>',
+		'</a>'
+	].join('');
+}
+
+window.operateEvents = {
+	"click .workerInfoModify": function(e, value, row, index) {
+		
+		s_workerinfo = row;
+
+		workerInfoDetail(row);
+
+		$("#addWorkerInfoModalCreate").css('display', "none");
+		$("#addWorkerInfoModalModify").css('display', "block");
+
+		$('#addWorkerInfoModal').modal('show');
+
+		workerInfoDetail(row);
+	}
+}
+
+function workerInfoDetail(data){
+	$("input[name=personid]").val(data.personid);
+	$("select[name=factoryid]").val(data.factoryid);
+	$("input[name=personname]").val(data.personname);
+	$("select[name=isusable]").val(data.isusable);
 }
 
 function initWorkerInfo() {
 	let data = {
-		"companyid": "dx", "personid": "", "factoryid": "", "personname": "", "createtime": "", 
-		"eventtime": "", "isusable": "", "factoryname": ""
+		"personid": "", "factoryid": "", "personname": "", "isusable": "", "factoryname": ""
 	};
 	
 	return data;
+}
+
+function refreshWorkerInfo() {
+	$("input[name=personid]").val("");
+	$("select[name=factoryid]").val("");
+	$("input[name=personname]").val("");
+	$("select[name=isusable]").val("");
 }
 
 function factroy() {

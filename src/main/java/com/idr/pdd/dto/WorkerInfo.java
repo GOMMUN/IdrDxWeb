@@ -5,6 +5,8 @@ import lombok.Data;
 @Data 
 public class WorkerInfo {
 
+	private int rownum;
+	private int dataseq;
 	private	String companyid;
 	private String personid;
 	private String factoryid;

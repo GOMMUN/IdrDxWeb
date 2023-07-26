@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.WorkerInfo;
 import com.idr.pdd.service.WorkerInfoService;
 
@@ -36,24 +37,23 @@ public class WorkerInfoController {
     public List<WorkerInfo> find() {
 		List<WorkerInfo> list = service.findAll();
 		return list;
+    }	
+	
+	@ResponseBody
+	@PostMapping("/create")
+    public int create(@RequestBody WorkerInfo param) {
+		return service.save(param);
     }
 	
 	@ResponseBody
-	@PostMapping("/check")
-    public int checkCnt(@RequestBody WorkerInfo param) {
-		int cnt = service.checkCnt(param);
-		return cnt;
-    }		
-	
-	@ResponseBody
-	@PostMapping("/save")
-    public int save(@RequestBody WorkerInfo param) {
+	@PutMapping("/modify")
+    public int modify(@RequestBody WorkerInfo param) {
 		return service.save(param);
     }
 	
 	@ResponseBody
 	@PutMapping("/remove")
-    public int remove(@RequestBody List<WorkerInfo> param) {
+    public int remove(@RequestBody List<Integer> param) {
 		return service.remove(param);
     }
 }

@@ -459,29 +459,32 @@ function setWorkerInputEventListener() {
 			alert("잔업여부를 선택 하세요.");
 			return;
 		}
+		
+		let flag = true;
 
 		c_person.forEach(function(element) {
 			if (element.personid == data.personid) {
 				alert("동일한 작업자가 이미 등록 되었습니다.");
-				return;
-			}
-		})
-
-
-		let url = '/workerInput/create';
-
-		$.ajax({
-			url: url,
-			type: 'POST',
-			data: JSON.stringify(data),
-			dataType: "json",
-			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
-				$('#addWorkerIntputModal').modal('hide');
-				alert("저장완료");
-				workerInput(s_workDailyReport);
+				flag = false;
 			}
 		});
+		
+		if(flag){
+			let url = '/workerInput/create';
+
+			$.ajax({
+				url: url,
+				type: 'POST',
+				data: JSON.stringify(data),
+				dataType: "json",
+				contentType: 'application/json; charset=utf-8',
+				success: function(data) {
+					$('#addWorkerIntputModal').modal('hide');
+					alert("저장완료");
+					workerInput(s_workDailyReport);
+				}
+			});
+		}
 	});
 
 	$modalModifyBtn.click(function() {
@@ -1770,7 +1773,6 @@ function resetWorkDailyReport() {
 	$("select[name=wdrmodel]").val("");
 	$("input[name=planqty]").val("");
 }
-
 
 function resetWorkerManhour() {
 	$("input[name=hands]").val("");

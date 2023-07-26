@@ -10,10 +10,6 @@
         	*
         FROM DSP_PERSON
         WHERE FACTORYID in(#{factoryid})
-        AND PERSONID NOT IN (
-			SELECT PERSONID  FROM DSP_WORKER_INPUT B
-			WHERE B.WORKDAILY_SEQ = #{workDailySeq}
-		)
     </select>
 
 </mapper>

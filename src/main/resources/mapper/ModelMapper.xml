@@ -6,13 +6,12 @@
 <mapper namespace="com.idr.pdd.mapper.ModelMapper">
 
 
-     <select id="modelfind"  resultType="ModelNM">
-        SELECT 
-        	FACTORYID ,
-        	MODELID AS MODELID,
-        	MODELNAME AS MODELNAME
-        FROM DSP_MODEL
-        WHERE 1=1
-    </select>
+	<select id="modelfind" resultType="ModelNM">
+		SELECT
+		MODEL_ID AS MODELID,
+		MODEL_NM AS MODELNAME
+		FROM CM0501
+		WHERE 1=1
+	</select>
 
 </mapper>

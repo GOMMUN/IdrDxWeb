@@ -5,6 +5,7 @@ import lombok.Data;
 @Data 
 public class Person {
 
+	private int workDailySeq;
 	private String companyid;
 	private String personid;
 	private String factoryid;

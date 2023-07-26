@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Storage {
 
+	private int rownum;
 	private int dataseq;
 	private String factoryid;
 	private String factoryname;

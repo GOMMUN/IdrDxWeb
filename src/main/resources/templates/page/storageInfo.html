@@ -64,12 +64,13 @@
 							<thead class="thead-light">
 								<tr>
 									<th data-field="state" data-checkbox="true"></th>
-	<!--								<th data-field="companyid" data-sortable="true" data-align="center">회사코드</th>-->
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
 									<th data-field="factoryname" data-sortable="true" data-align="center">공장</th>
 									<th data-field="storageid" data-sortable="true" data-align="center">창고코드</th>
 									<th data-field="storagename" data-sortable="true" data-align="center">창고명</th>
-									<th data-field="failurerate" data-sortable="true" data-align="center">불량률</th>
-									<th data-field="recoverytime" data-sortable="true" data-align="center">회복시간</th>
+									<th data-field="failurerate" data-sortable="true" data-align="center">고장률(%)</th>
+									<th data-field="recoverytime" data-sortable="true" data-align="center">복구시간(Min)</th>
+									<th data-field="buffer" data-sortable="true" data-align="center">Buffer</th>
 									<th data-field="creator" data-sortable="true" data-align="center">등록자</th>
 									<th data-field="createtime" data-sortable="true" data-align="center">등록일</th>
 									<th data-field="eventuser" data-sortable="true" data-align="center">수정자</th>
@@ -118,17 +119,17 @@
 										</div>
 										<div class="col-sm-6">
 											<input type="text" name="failurerate" class="form-control-custom form-control-user"
-											id="" placeholder="불량률">
+											id="" placeholder="고장률(%)">
 										</div>
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-6">
 											<input type="text" name="recoverytime" class="form-control-custom form-control-user"
-											id="" placeholder="회복시간">
+											id="" placeholder="복구시간(Min)">
 										</div>
 										<div class="col-sm-6">
 											<input type="text" name="buffer" class="form-control-custom form-control-user"
-											id="" placeholder="재고">
+											id="" placeholder="Buffer">
 										</div>
 									</div>
 									<div class="form-group row">

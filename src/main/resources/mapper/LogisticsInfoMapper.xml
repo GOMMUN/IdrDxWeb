@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.LogisticsInfoMapper">
+
+    <select id="findAll" resultType="LogisticsInfo">
+		SELECT  
+			 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			A.DATASEQ,
+        	A.FACTORYID,
+        	(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME,  
+        	A.LOGISTICSID, 
+        	A.LOGISTICSNAME, 
+        	A.FAILURERATE, 
+        	A.RECOVERYTIME,
+        	A.SPEED, 
+        	A.LOADINGTIME, 
+        	A.UNLOADINGTIME, 
+        	A.LOTSIZE,
+        	A.CREATOR,
+        	FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME, 
+        	A.ISUSABLE 
+        FROM DSP_LOGISTICS as A
+        WHERE 1=1
+    </select>
+    
+    <insert id="create" parameterType="LogisticsInfo">
+			INSERT INTO DSP_LOGISTICS(
+        		 FACTORYID 
+        		,LOGISTICSID 
+        		,LOGISTICSNAME 
+        		,FAILURERATE 
+        		,RECOVERYTIME
+        		,SPEED 
+        		,LOADINGTIME
+        		,UNLOADINGTIME
+        		,LOTSIZE
+        		,CREATOR
+        		,CREATETIME
+        		,EVENTUSER
+        		,EVENTTIME
+				,ISUSABLE			
+			) 
+			VALUES(
+				 #{factoryid}
+				,#{logisticsid}
+				,#{logisticsname}
+				,#{failurerate}			
+				,#{recoverytime}
+				,#{speed}
+				,#{loadingtime}
+				,#{unloadingtime}
+				,#{lotsize}
+				,'idrAdmin'
+				,getdate()
+				,'idrAdmin'
+				,getdate()	
+				,#{isusable}			
+			)
+	</insert>
+	
+    <update id="modify" parameterType="LogisticsInfo" >
+			UPDATE DSP_LOGISTICS
+			SET 
+				 FACTORYID 	 	= #{factoryid}
+				,LOGISTICSID	= #{logisticsid}
+				,LOGISTICSNAME	= #{logisticsname}
+				,FAILURERATE	= #{failurerate}			
+				,RECOVERYTIME   = #{recoverytime}
+				,SPEED			= #{speed}
+				,LOADINGTIME    = #{loadingtime}	
+				,UNLOADINGTIME  = #{unloadingtime}
+				,LOTSIZE   		= #{lotsize}
+				,EVENTTIME 		= GETDATE()
+				,ISUSABLE   	= #{isusable}
+			WHERE DATASEQ		= #{dataseq}
+	</update>
+
+    <update id="remove" parameterType="list">
+    	UPDATE DSP_LOGISTICS
+		SET ISUSABLE	= 'N',
+			EVENTUSER 	= 'idrAdmin',
+			EVENTTIME 	= GETDATE()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
+
+
+</mapper>

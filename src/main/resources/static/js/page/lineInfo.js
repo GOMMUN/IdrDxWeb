@@ -135,6 +135,7 @@ function initSetting() {
 				
 				$table = $("#lineinfo");
 				$table.bootstrapTable('refresh');
+				refreshLineInfo()
 				
 				$('#addLineinfoModal').modal('hide');
 				alert("수정 되었습니다.");

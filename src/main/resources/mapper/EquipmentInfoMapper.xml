@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.EquipmentInfoMapper">
+
+    <select id="findAll" resultType="Equipment">
+		SELECT  
+			 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			A.DATASEQ,
+        	A.FACTORYID,
+        	(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME,  
+        	A.EQUIPMENTID, 
+        	A.EQUIPMENTNAME, 
+        	A.FAILURERATE, 
+        	A.RECOVERYTIME,
+        	A.ERRORRATE, 
+        	A.BUFFER, 
+        	A.CREATOR, 
+        	FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME, 
+        	A.ISUSABLE 
+        FROM DSP_EQUIPMENT as A
+        WHERE 1=1
+    </select>
+    
+    <insert id="create" parameterType="Equipment">
+			INSERT INTO DSP_EQUIPMENT(
+        		 FACTORYID 
+        		,EQUIPMENTID 
+        		,EQUIPMENTNAME 
+        		,FAILURERATE 
+        		,RECOVERYTIME
+        		,ERRORRATE 
+        		,BUFFER 
+        		,CREATOR
+        		,CREATETIME
+        		,EVENTUSER
+        		,EVENTTIME
+				,ISUSABLE			
+			) 
+			VALUES(
+				 #{factoryid}
+				,#{equipmentid}
+				,#{equipmentname}
+				,#{failurerate}			
+				,#{recoverytime}
+				,#{errorrate}
+				,#{buffer}
+				,'idrAdmin'
+				,getdate()
+				,'idrAdmin'
+				,getdate()	
+				,#{isusable}			
+			)
+	</insert>
+	
+    <update id="modify" parameterType="Equipment" >
+			UPDATE DSP_EQUIPMENT
+			SET 
+				 FACTORYID 	 	= #{factoryid}
+				,EQUIPMENTID	= #{equipmentid}
+				,EQUIPMENTNAME	= #{equipmentname}
+				,FAILURERATE	= #{failurerate}			
+				,RECOVERYTIME   = #{recoverytime}
+				,ERRORRATE		= #{errorrate}
+				,BUFFER   		= #{buffer}	
+				,EVENTTIME 		= GETDATE()
+				,ISUSABLE   	= #{isusable}
+			WHERE DATASEQ		= #{dataseq}
+	</update>
+
+    <update id="remove" parameterType="list">
+    	UPDATE DSP_EQUIPMENT
+		SET ISUSABLE	= 'N',
+			EVENTUSER 	= 'idrAdmin',
+			EVENTTIME 	= GETDATE()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
+
+
+</mapper>

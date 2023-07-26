@@ -2,7 +2,7 @@
  * 
  */
 let c_factory = null;
-let s_storageInfo = null;
+let s_logisticsInfo = null;
 
 $(function(){
 	initSetting();
@@ -16,12 +16,12 @@ function initSetting() {
 
  function setEventListener (){
 
-	let $grid = $("#storageinfo");					//조회
-	let $gridAddBtn = $("#addStorageinfo");			// 창고정보 add 버튼
-	let $gridRemoveBtn = $("#removeStorageinfo");		// 창고정보 delete 버튼
-	let $modalCloseBtn = $("#addStorageinfoModalClose");	// 창고정보 모달 close 버튼
-	let $modalCreateBtn = $("#addStorageinfoModalCreate");	// 창고정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addStorageinfoModalModify");	// 창고정보 모달 update 버튼 
+	let $grid = $("#logisticsinfo");					//조회
+	let $gridAddBtn = $("#addLogisticsInfo");			// 장비정보 add 버튼
+	let $gridRemoveBtn = $("#removeLogisticsInfo");		// 장비정보 delete 버튼
+	let $modalCloseBtn = $("#addLogisticsInfoModalClose");	// 장비정보 모달 close 버튼
+	let $modalCreateBtn = $("#addLogisticsInfoModalCreate");	// 장비정보 모달 insert 버튼
+	let $modalModifyBtn = $("#addLogisticsInfoModalModify");	// 장비정보 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -44,21 +44,21 @@ function initSetting() {
 	});
 	
 	$grid.on('refresh.bs.table', function(params) {
-		storageinfo();
+		logisticsinfo();
 	});
 	
 	$gridAddBtn.click(function() {		// 창고정보 add 버튼
 		
-		$("#addStorageinfoModalCreate").css('display', "block");
-		$("#addStorageinfoModalModify").css('display', "none");
+		$("#addLogisticsInfoModalCreate").css('display', "block");
+		$("#addLogisticsInfoModalModify").css('display', "none");
 
-		$('#addStorageinfoModal').modal('show');
+		$('#addLogisticsInfoModal').modal('show');
 		
 	});
 	
 	$modalCloseBtn.click(function() {
-		refreshStorageInfo();
-		$('#addStorageinfoModal').modal('hide');
+		refreshLogisticsInfo();
+		$('#addLogisticsInfoModal').modal('hide');
 	});
 	
 	$modalCreateBtn.click(function() {
@@ -66,11 +66,14 @@ function initSetting() {
 		let data = {};
 		
 		data.factoryid = $("select[name=factoryid]").val();
-		data.storageid = $("input[name=storageid]").val();
-		data.storagename = $("input[name=storagename]").val();
+		data.logisticsid = $("input[name=logisticsid]").val();
+		data.logisticsname = $("input[name=logisticsname]").val();
 		data.failurerate = $("input[name=failurerate]").val();
 		data.recoverytime = $("input[name=recoverytime]").val();
-		data.buffer = $("input[name=buffer]").val();
+		data.speed = $("input[name=speed]").val();
+		data.loadingtime = $("input[name=loadingtime]").val();
+		data.unloadingtime = $("input[name=unloadingtime]").val();
+		data.lotsize = $("input[name=lotsize]").val();
 		data.isusable = $("select[name=isusable]").val();
 	
 		//validation check
@@ -84,7 +87,7 @@ function initSetting() {
 			return;
 		} 
 
-		let url = '/storageinfo/create';
+		let url = '/logisticsinfo/create';
 
 		$.ajax({
 			url: url,
@@ -94,27 +97,28 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#storageinfo");
+				$table = $("#logisticsinfo");
 				$table.bootstrapTable('refresh');
 				
-				$('#addStorageinfoModal').modal('hide');
+				$('#addLogisticsInfoModal').modal('hide');
 				alert("저장되었습니다.");
 			},
 			error: function(xhr, textStatus, errorThrown) {
 	        	// 실패 시 실행할 코드
-	        	alert("창고코드와 공장을 확인해주세요");
+	        	alert("물류코드와 공장을 확인해주세요");
 	    	}
 		});
 	});
 	
 	$modalModifyBtn.click(function() {
-		let data = s_storageInfo;
+		let data = s_logisticsInfo;
 
 		data.factoryid = $("select[name=factoryid]").val();
-		data.storageid = $("input[name=storageid]").val();
-		data.storagename = $("input[name=storagename]").val();
+		data.equipmentid = $("input[name=equipmentid]").val();
+		data.equipmentname = $("input[name=equipmentname]").val();
 		data.failurerate = $("input[name=failurerate]").val();
 		data.recoverytime = $("input[name=recoverytime]").val();
+		data.errorrate = $("input[name=errorrate]").val();
 		data.buffer = $("input[name=buffer]").val();
 		data.isusable = $("select[name=isusable]").val();
 
@@ -129,7 +133,7 @@ function initSetting() {
 			return;
 		} 
 		
-		let url = '/storageinfo/modify';
+		let url = '/logisticsinfo/modify';
 
 		$.ajax({
 			url: url,
@@ -139,11 +143,11 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#storageinfo");
+				$table = $("#logisticsinfo");
 				$table.bootstrapTable('refresh');
-				refreshStorageInfo()
+				refreshLogisticsInfo()
 				
-				$('#addStorageinfoModal').modal('hide');
+				$('#addLogisticsInfoModal').modal('hide');
 				alert("수정 되었습니다.");
 			}
 		});
@@ -157,7 +161,7 @@ function initSetting() {
 			selections.push(data.dataseq);
 		});
 
-		let url = '/storageinfo/remove';
+		let url = '/logisticsinfo/remove';
 
 		$.ajax({
 			url: url,
@@ -167,7 +171,7 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#storageinfo");
+				$table = $("#logisticsinfo");
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
@@ -177,13 +181,13 @@ function initSetting() {
 	});
 };
  
-function storageinfo(data) {
-	var url = '/storageinfo/find';
+function logisticsinfo(data) {
+	var url = '/logisticsinfo/find';
 
 	var params = {}
 
 	$.get(url + '?' + $.param(params)).then(function(res) {
-		$table = $("#storageinfo");
+		$table = $("#logisticsinfo");
 		$table.bootstrapTable('removeAll');
 		$table.bootstrapTable('append', res);
 	})
@@ -215,49 +219,55 @@ function factroy() {
 	});
 }
 
-function storageinfoOperateFormatter(value, row, index) {
+function logisticsInfoOperateFormatter(value, row, index) {
 	return [
-		'<a class="storageModify" href="javascript:void(0)" title="수정">',
+		'<a class="logisticsModify" href="javascript:void(0)" title="수정">',
 		'<i class="fa-solid fa-pen"></i>',
 		'</a>'
 	].join('');
 }
 
 window.operateEvents = {
-	"click .storageModify": function(e, value, row, index) {
+	"click .logisticsModify": function(e, value, row, index) {
 		
-		s_storageInfo = row;
+		s_logisticsInfo = row;
 		
-		storageInfoDetail(row);
+		logisticsInfoDetail(row);
 
-		$("#addStorageinfoModalCreate").css('display', "none");
-		$("#addStorageinfoModalModify").css('display', "block");
+		$("#addLogisticsInfoModalCreate").css('display', "none");
+		$("#addLogisticsInfoModalModify").css('display', "block");
 
-		$('#addStorageinfoModal').modal('show');
+		$('#addLogisticsInfoModal').modal('show');
 
-		storageInfoDetail(row);
+		logisticsInfoDetail(row);
 	}
 }
 
-function storageInfoDetail(data) {
+function logisticsInfoDetail(data) {
 	
 		$("select[name=factoryid]").val(data.factoryid);
-		$("input[name=storageid]").val(data.storageid);
-		$("input[name=storagename]").val(data.storagename);
+		$("input[name=logisticsid]").val(data.logisticsid);
+		$("input[name=logisticsname]").val(data.logisticsname);
 		$("input[name=failurerate]").val(data.failurerate);
 		$("input[name=recoverytime]").val(data.recoverytime);
-		$("input[name=buffer]").val(data.buffer);
+		$("input[name=speed]").val(data.speed);
+		$("input[name=loadingtime]").val(data.loadingtime);
+		$("input[name=unloadingtime]").val(data.unloadingtime);
+		$("input[name=lotsize]").val(data.lotsize);
 		$("select[name=isusable]").val(data.isusable);
 }
 
-function refreshStorageInfo() {
+function refreshLogisticsInfo() {
 	
-	$("select[name=factoryid]").val("");
-	$("input[name=storageid]").val("");
-	$("input[name=storagename]").val("");
-	$("input[name=failurerate]").val("");
-	$("input[name=recoverytime]").val("");
-	$("input[name=buffer]").val("");
-	$("select[name=isusable]").val("");
+		$("select[name=factoryid]").val("");
+		$("input[name=logisticsid]").val("");
+		$("input[name=logisticsname]").val("");
+		$("input[name=failurerate]").val("");
+		$("input[name=recoverytime]").val("");
+		$("input[name=speed]").val("");
+		$("input[name=loadingtime]").val("");
+		$("input[name=unloadingtime]").val("");
+		$("input[name=lotsize]").val("");
+		$("select[name=isusable]").val("");
 	
 }

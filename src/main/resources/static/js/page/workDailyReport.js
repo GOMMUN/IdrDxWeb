@@ -719,7 +719,7 @@ function setWorkerSupportEventListener() {
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
 
-		data.manhour = $("input[name=manhour]").val();
+		data.manhour = $("input[name=supportmanhour]").val();
 		data.lineid = $("select[name=inputLineid]").val();
 		data.supporttimeFrom = $("input[name=supporttimeFrom]").val();
 		data.supporttimeTo = $("input[name=supporttimeTo]").val();

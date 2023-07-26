@@ -71,7 +71,7 @@ function setEventListener() {
 			result = res;
 
 			result.forEach(element => {
-				if (element.shiftid == 'KEM-AM') {
+				if (element.shiftid.includes('AM', 4)) {
 					$("#dayplan").text(element.planQty);
 					let dayper=(element.prodQty/ element.planQty)*100;
 					$("#dayperformance").text(dayper+'%');

@@ -5,6 +5,8 @@ import lombok.Data;
 @Data 
 public class Vendor {
 	
+	public int rownum;
+	public int dataseq;
 	public String vendorid;
 	public String factoryid;
 	public String factoryname;

@@ -21,16 +21,16 @@ public class SupplierInfoService {
 		return mapper.findAll();
 	}
 	
-	public int checkCnt(Vendor param) {
-		
-		return mapper.checkCnt(param);
+	public int save(Vendor param) {
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		} else {
+			return mapper.modify(param);
+		}
 	}
 	
-	public int save(Vendor param) {	
-		return mapper.save(param);
-	}
-	
-	public int remove(List<Vendor> param) {
+	public int remove(List<Integer> param) {
 		return mapper.remove(param);
-	}		
+	}
+			
 }

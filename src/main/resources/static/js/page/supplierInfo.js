@@ -16,12 +16,12 @@ function initSetting() {
 
  function setEventListener (){
 
-	let $grid = $("#lotinfo");					//조회
-	let $gridAddBtn = $("#addLotInfo");			// 장비정보 add 버튼
-	let $gridRemoveBtn = $("#removeLotInfo");		// 장비정보 delete 버튼
-	let $modalCloseBtn = $("#addLotInfoModalClose");	// 장비정보 모달 close 버튼
-	let $modalCreateBtn = $("#addLotInfoModalCreate");	// 장비정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addLotInfoModalModify");	// 장비정보 모달 update 버튼 
+	let $grid = $("#supplierinfo");					//조회
+	let $gridAddBtn = $("#addSupplierInfo");			// 장비정보 add 버튼
+	let $gridRemoveBtn = $("#removeSupplierInfo");		// 장비정보 delete 버튼
+	let $modalCloseBtn = $("#addSupplierInfoModalClose");	// 장비정보 모달 close 버튼
+	let $modalCreateBtn = $("#addSupplierInfoModalCreate");	// 장비정보 모달 insert 버튼
+	let $modalModifyBtn = $("#addSupplierInfoModalModify");	// 장비정보 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -44,21 +44,21 @@ function initSetting() {
 	});
 	
 	$grid.on('refresh.bs.table', function(params) {
-		lotinfo();
+		supplierinfo();
 	});
 	
 	$gridAddBtn.click(function() {		// 창고정보 add 버튼
 		
-		$("#addLotInfoModalCreate").css('display', "block");
-		$("#addLotInfoModalModify").css('display', "none");
+		$("#addSupplierInfoModalCreate").css('display', "block");
+		$("#addSupplierInfoModalModify").css('display', "none");
 
-		$('#addLotInfoModal').modal('show');
+		$('#addSupplierInfoModal').modal('show');
 		
 	});
 	
 	$modalCloseBtn.click(function() {
-		refreshLotInfo();
-		$('#addLotInfoModal').modal('hide');
+		refreshSupplierInfo();
+		$('#addSupplierInfoModal').modal('hide');
 	});
 	
 	$modalCreateBtn.click(function() {
@@ -66,20 +66,22 @@ function initSetting() {
 		let data = {};
 		
 		data.factoryid = $("select[name=factoryid]").val();
-		data.materialid = $("input[name=materialid]").val();
-		data.materialname = $("input[name=materialname]").val();
-		data.lotid = $("input[name=lotid]").val();
-		data.lotname = $("input[name=lotname]").val();
-		data.lotsize = $("input[name=lotsize]").val();
-		data.lotunit = $("input[name=lotunit]").val();
-		data.fromlinecode = $("input[name=fromlinecode]").val();
-		data.fromlinecnt = $("input[name=fromlinecnt]").val();
-		data.tolinecode = $("input[name=tolinecode]").val();
-		data.tolinecnt = $("input[name=tolinecnt]").val();
+		data.vendorid = $("input[name=vendorid]").val();
+		data.vendorname = $("input[name=vendorname]").val();		
+		data.vendornickname = $("input[name=vendornickname]").val();
+		data.vendoraddress = $("input[name=vendoraddress]").val();
+		data.vendorchargeid = $("input[name=vendorchargeid]").val();
+		data.vendorcontactemail = $("input[name=vendorcontactemail]").val();
+		data.vendorcontactphoneno = $("input[name=vendorcontactphoneno]").val();
 		data.isusable = $("select[name=isusable]").val();
+
 	
 		//validation check
-		if (data.factoryid == "") {
+		if (data.vendorid == "") {
+			alert("공급업체ID를 입력하세요.");
+			$("select[name=vendorid]").focus();
+			return;
+		} else if (data.factoryid == "") {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
@@ -89,7 +91,7 @@ function initSetting() {
 			return;
 		} 
 
-		let url = '/lotinfo/create';
+		let url = '/supplierinfo/create';
 
 		$.ajax({
 			url: url,
@@ -99,37 +101,38 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#lotinfo");
+				$table = $("#supplierinfo");
 				$table.bootstrapTable('refresh');
 				
-				$('#addLotInfoModal').modal('hide');
+				$('#addSupplierInfoModal').modal('hide');
 				alert("저장되었습니다.");
 			},
 			error: function(xhr, textStatus, errorThrown) {
 	        	// 실패 시 실행할 코드
-	        	alert("LOT ID와 공장을 확인해주세요");
+	        	alert("공급업체ID와 공장을 확인해주세요");
 	    	}
 		});
 	});
 	
 	$modalModifyBtn.click(function() {
-		let data = s_lotInfo;
+		let data = s_supplierInfo;
 
 		data.factoryid = $("select[name=factoryid]").val();
-		data.materialid = $("input[name=materialid]").val();
-		data.materialname = $("input[name=materialname]").val();
-		data.lotid = $("input[name=lotid]").val();
-		data.lotname = $("input[name=lotname]").val();
-		data.lotsize = $("input[name=lotsize]").val();
-		data.lotunit = $("input[name=lotunit]").val();
-		data.fromlinecode = $("input[name=fromlinecode]").val();
-		data.fromlinecnt = $("input[name=fromlinecnt]").val();
-		data.tolinecode = $("input[name=tolinecode]").val();
-		data.tolinecnt = $("input[name=tolinecnt]").val();
+		data.vendorid = $("input[name=vendorid]").val();
+		data.vendorname = $("input[name=vendorname]").val();		
+		data.vendornickname = $("input[name=vendornickname]").val();
+		data.vendoraddress = $("input[name=vendoraddress]").val();
+		data.vendorchargeid = $("input[name=vendorchargeid]").val();
+		data.vendorcontactemail = $("input[name=vendorcontactemail]").val();
+		data.vendorcontactphoneno = $("input[name=vendorcontactphoneno]").val();
 		data.isusable = $("select[name=isusable]").val();
-
+		
 		//validation check
-		if (data.factoryid == "") {
+		if (data.vendorid == "") {
+			alert("공급업체ID를 입력하세요.");
+			$("select[name=vendorid]").focus();
+			return;
+		} else if (data.factoryid == "") {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
@@ -139,7 +142,7 @@ function initSetting() {
 			return;
 		} 
 		
-		let url = '/lotinfo/modify';
+		let url = '/supplierinfo/modify';
 
 		$.ajax({
 			url: url,
@@ -149,11 +152,11 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#lotinfo");
+				$table = $("#supplierinfo");
 				$table.bootstrapTable('refresh');
-				refreshLotInfo()
+				refreshSupplierInfo()
 				
-				$('#addLotInfoModal').modal('hide');
+				$('#addSupplierInfoModal').modal('hide');
 				alert("수정 되었습니다.");
 			}
 		});
@@ -167,7 +170,7 @@ function initSetting() {
 			selections.push(data.dataseq);
 		});
 
-		let url = '/lotinfo/remove';
+		let url = '/supplierinfo/remove';
 
 		$.ajax({
 			url: url,
@@ -177,7 +180,7 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#lotinfo");
+				$table = $("#supplierinfo");
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
@@ -187,13 +190,13 @@ function initSetting() {
 	});
 };
  
-function lotinfo(data) {
-	var url = '/lotinfo/find';
+function supplierinfo(data) {
+	var url = '/supplierinfo/find';
 
 	var params = {}
 
 	$.get(url + '?' + $.param(params)).then(function(res) {
-		$table = $("#lotinfo");
+		$table = $("#supplierinfo");
 		$table.bootstrapTable('removeAll');
 		$table.bootstrapTable('append', res);
 	})
@@ -225,59 +228,53 @@ function factroy() {
 	});
 }
 
-function lotInfoOperateFormatter(value, row, index) {
+function supplierInfoOperateFormatter(value, row, index) {
 	return [
-		'<a class="lotModify" href="javascript:void(0)" title="수정">',
+		'<a class="supplierinfoModify" href="javascript:void(0)" title="수정">',
 		'<i class="fa-solid fa-pen"></i>',
 		'</a>'
 	].join('');
 }
 
 window.operateEvents = {
-	"click .lotModify": function(e, value, row, index) {
+	"click .supplierinfoModify": function(e, value, row, index) {
 		
-		s_lotInfo = row;
+		s_supplierInfo = row;
 		
-		lotInfoDetail(row);
+		supplierInfoDetail(row);
 
-		$("#addLotInfoModalCreate").css('display', "none");
-		$("#addLotInfoModalModify").css('display', "block");
+		$("#addSupplierInfoModalCreate").css('display', "none");
+		$("#addSupplierInfoModalModify").css('display', "block");
 
-		$('#addLotInfoModal').modal('show');
+		$('#addSupplierInfoModal').modal('show');
 
-		lotInfoDetail(row);
+		supplierInfoDetail(row);
 	}
 }
 
-function lotInfoDetail(data) {
+function supplierInfoDetail(data) {
 	
 		$("select[name=factoryid]").val(data.factoryid);
-		$("input[name=materialid]").val(data.materialid);
-		$("input[name=materialname]").val(data.materialname);
-		$("input[name=lotid]").val(data.lotid);
-		$("input[name=lotname]").val(data.lotname);
-		$("input[name=lotsize]").val(data.lotsize);
-		$("input[name=lotunit]").val(data.lotunit);
-		$("input[name=fromlinecode]").val(data.fromlinecode);
-		$("input[name=fromlinecnt]").val(data.fromlinecnt);
-		$("input[name=tolinecode]").val(data.tolinecode);
-		$("input[name=tolinecnt]").val(data.tolinecnt);
+		$("input[name=vendorid]").val(data.vendorid);
+		$("input[name=vendorname]").val(data.vendorname);		
+		$("input[name=vendornickname]").val(data.vendornickname);
+		$("input[name=vendoraddress]").val(data.vendoraddress);
+		$("input[name=vendorchargeid]").val(data.vendorchargeid);
+		$("input[name=vendorcontactemail]").val(data.vendorcontactemail);
+		$("input[name=vendorcontactphoneno]").val(data.vendorcontactphoneno);
 		$("select[name=isusable]").val(data.isusable);
 }
 
-function refreshLotInfo() {
+function refreshSupplierInfo() {
 	
 		$("select[name=factoryid]").val("");
-		$("input[name=materialid]").val("");
-		$("input[name=materialname]").val("");
-		$("input[name=lotid]").val("");
-		$("input[name=lotname]").val("");
-		$("input[name=lotsize]").val("");
-		$("input[name=lotunit]").val("");
-		$("input[name=fromlinecode]").val("");
-		$("input[name=fromlinecnt]").val("");
-		$("input[name=tolinecode]").val("");
-		$("input[name=tolinecnt]").val("");
+		$("input[name=vendorid]").val("");
+		$("input[name=vendorname]").val("");		
+		$("input[name=vendornickname]").val("");
+		$("input[name=vendoraddress]").val("");
+		$("input[name=vendorchargeid]").val("");
+		$("input[name=vendorcontactemail]").val("");
+		$("input[name=vendorcontactphoneno]").val("");
 		$("select[name=isusable]").val("");
 	
 }

@@ -12,8 +12,8 @@ import com.idr.pdd.dto.Vendor;
 public interface SupplierInfoMapper {
 
 	List<Vendor> findAll();
-	int checkCnt(Vendor param);
 	
-	int save(Vendor param);
-	int remove(List<Vendor> param);
+	int create(Vendor param);
+	int modify(Vendor param);
+	int remove(List<Integer> param);
 }

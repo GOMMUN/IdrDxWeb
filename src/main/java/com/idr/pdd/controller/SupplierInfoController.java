@@ -21,15 +21,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("supplier")
+@RequestMapping("supplierinfo")
 public class SupplierInfoController {
 
 	@Autowired
 	private SupplierInfoService service;
 	
+	
 	@GetMapping("")
     public String init() {
-        return "page/supplierinfo";
+        return "page/supplierInfo";
     }
 	
 	@ResponseBody
@@ -40,22 +41,20 @@ public class SupplierInfoController {
     }
 	
 	@ResponseBody
-	@PostMapping("/check")
-    public int checkCnt(@RequestBody Vendor param) {
-		int cnt = service.checkCnt(param);
-		return cnt;
-		
+	@PostMapping("/create")
+    public int create(@RequestBody Vendor param) {
+		return service.save(param);
     }
 	
 	@ResponseBody
-	@PostMapping("/save")
-    public int save(@RequestBody Vendor param) {
+	@PutMapping("/modify")
+    public int modify(@RequestBody Vendor param) {
 		return service.save(param);
     }
 	
 	@ResponseBody
 	@PutMapping("/remove")
-    public int remove(@RequestBody List<Vendor> param) {
+    public int remove(@RequestBody List<Integer> param) {
 		return service.remove(param);
     }
 		

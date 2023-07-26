@@ -13,9 +13,8 @@ import com.idr.pdd.dto.Material;
 public interface MaterialMasterMapper {
 
 	List<Material> findAll();
-	List<Material> findMateriaMasterAll(Material data);
-	int checkCnt(Material param);
 	
-	int save(Material param);
-	int remove(List<Material> param);
+	int create(Material param);
+	int modify(Material param);
+	int remove(List<Integer> param);
 }

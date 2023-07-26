@@ -4,102 +4,92 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.idr.pdd.mapper.MaterialMasterMapper">
-	
-	<select id="findAll" resultType="Material" >
-	SELECT
-		FACTORYID,
-		MATERIALID 
-		, MATERIALNAME 
-		FROM DSP_MATERIAL
-		WHERE ISUSABLE='Y'
-	</select>
 
-	<select id="findMateriaMasterAll" resultType="Material">
-		SELECT
-			 A.MATERIALID
-			,A.FACTORYID
-			,(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
-			,A.MATERIALNAME
-			,A.MATERIALTYPE
-			,A.MATERIALKIND
-			,A.MATERIALUNIT
-			,A.VENDORID
-			,A.RECEIVINGINSPECTION
-			,A.CREATOR
-			,FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
-			,A.EVENT
-			,A.EVENTUSER
-			,FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME
-			,A.ISUSABLE
-		FROM DSP_MATERIAL A
-	</select>
-
-	<select id="checkCnt" parameterType="Material" resultType="int">
-		SELECT COUNT(*)
-		FROM DSP_MATERIAL
-		WHERE 1=1
-			AND MATERIALID = #{materialid}
-			AND FACTORYID = #{factoryid}
-	</select>
-	
-	<update id="save" parameterType="Material" >
-		MERGE INTO DSP_MATERIAL AS A
-		USING (
-			SELECT 1 AS DUM
-		) AS B
-		ON (
-			A.MATERIALID = #{materialid} AND
-			A.FACTORYID = #{factoryid}
-			)
-		WHEN MATCHED THEN
-			UPDATE SET 
-				 MATERIALNAME		= #{materialname}
-				,MATERIALTYPE       = #{materialtype}
-				,MATERIALKIND       = #{materialkind}
-				,MATERIALUNIT       = #{materialunit}
-				,VENDORID           = #{vendorid}
-				,RECEIVINGINSPECTION= #{receivinginspection}
-				,EVENTUSER          = 'idrAdmin'
-				,EVENTTIME          = GETDATE()
-				,ISUSABLE           = #{isusable}
-		WHEN NOT MATCHED THEN 
-			INSERT(
-				 MATERIALID
-				,FACTORYID
-				,MATERIALNAME
-				,MATERIALTYPE
-				,MATERIALKIND
-				,MATERIALUNIT
-				,VENDORID
-				,RECEIVINGINSPECTION
-				,CREATOR
-				,CREATETIME
+    <select id="findAll" resultType="Material">
+		SELECT  
+			 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			A.DATASEQ,
+			A.MATERIALID,
+        	A.FACTORYID,
+        	(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME, 
+        	A.MATERIALNAME, 
+        	A.MATERIALTYPE, 
+        	A.MATERIALKIND,
+        	A.MATERIALUNIT, 
+        	A.VENDORID, 
+        	A.RECEIVINGINSPECTION, 
+        	A.CREATOR,
+        	FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME, 
+        	A.ISUSABLE,
+        	A.TID,
+        	A.COMPANY_CD
+        FROM DSP_MATERIAL as A
+        WHERE 1=1
+    </select>
+    
+    <insert id="create" parameterType="Material">
+			INSERT INTO DSP_MATERIAL(
+        		 MATERIALID
+        		,FACTORYID
+        		,MATERIALNAME 
+        		,MATERIALTYPE 
+        		,MATERIALKIND 
+        		,MATERIALUNIT 
+        		,VENDORID
+        		,RECEIVINGINSPECTION 
+        		,CREATOR
+        		,CREATETIME
+        		,EVENTUSER
+        		,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
 				 #{materialid}
 				,#{factoryid}
 				,#{materialname}
-				,#{materialtype}				
+				,#{materialtype}			
 				,#{materialkind}
 				,#{materialunit}
 				,#{vendorid}
 				,#{receivinginspection}
 				,'idrAdmin'
-				,GETDATE()
-				,#{isusable}
+				,getdate()
+				,'idrAdmin'
+				,getdate()	
+				,#{isusable}			
 			)
-		;
+	</insert>
+	
+    <update id="modify" parameterType="Material" >
+			UPDATE DSP_MATERIAL
+			SET 
+				 MATERIALID		= #{materialid}
+				,FACTORYID 	 	= #{factoryid}
+				,MATERIALNAME	= #{materialname}
+				,MATERIALTYPE	= #{materialtype}			
+				,MATERIALKIND   = #{materialkind}
+				,MATERIALUNIT	= #{materialunit}
+				,VENDORID    	= #{vendorid}	
+				,RECEIVINGINSPECTION   = #{receivinginspection}
+				,EVENTUSER 		='idrAdmin'
+				,EVENTTIME 		= GETDATE()
+				,ISUSABLE   	= #{isusable}
+			WHERE DATASEQ		= #{dataseq}
 	</update>
 
     <update id="remove" parameterType="list">
-		<foreach collection="list" item="data" open="" close="" separator=";">
-		UPDATE DSP_MATERIAL 
-		SET ISUSABLE= 'N'
-    	WHERE
-			MATERIALID = #{data.materialid}
-			AND FACTORYID = #{data.factoryid}
-		</foreach>
-    </update>	
+    	UPDATE DSP_LOTINFO
+		SET ISUSABLE	= 'N',
+			EVENTUSER 	= 'idrAdmin',
+			EVENTTIME 	= GETDATE()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
+
 
 </mapper>

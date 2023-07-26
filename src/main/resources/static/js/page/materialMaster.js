@@ -2,7 +2,7 @@
  * 
  */
 let c_factory = null;
-let s_supplierInfo = null;
+let m_materialMaster = null;
 
 $(function(){
 	initSetting();
@@ -16,12 +16,12 @@ function initSetting() {
 
  function setEventListener (){
 
-	let $grid = $("#supplierinfo");					//조회
-	let $gridAddBtn = $("#addSupplierInfo");			// 장비정보 add 버튼
-	let $gridRemoveBtn = $("#removeSupplierInfo");		// 장비정보 delete 버튼
-	let $modalCloseBtn = $("#addSupplierInfoModalClose");	// 장비정보 모달 close 버튼
-	let $modalCreateBtn = $("#addSupplierInfoModalCreate");	// 장비정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addSupplierInfoModalModify");	// 장비정보 모달 update 버튼 
+	let $grid = $("#materialmaster");					//조회
+	let $gridAddBtn = $("#addMaterialMaster");			// 정보 add 버튼
+	let $gridRemoveBtn = $("#removeMaterialMaster");		// 정보 delete 버튼
+	let $modalCloseBtn = $("#addMaterialMasterModalClose");	// 정보 모달 close 버튼
+	let $modalCreateBtn = $("#addMaterialMasterModalCreate");	// 정보 모달 insert 버튼
+	let $modalModifyBtn = $("#addMaterialMasterModalModify");	// 정보 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -44,21 +44,21 @@ function initSetting() {
 	});
 	
 	$grid.on('refresh.bs.table', function(params) {
-		supplierinfo();
+		materialmaster();
 	});
 	
 	$gridAddBtn.click(function() {		// 창고정보 add 버튼
 		
-		$("#addSupplierInfoModalCreate").css('display', "block");
-		$("#addSupplierInfoModalModify").css('display', "none");
+		$("#addMaterialMasterModalCreate").css('display', "block");
+		$("#addMaterialMasterModalModify").css('display', "none");
 
-		$('#addSupplierInfoModal').modal('show');
+		$('#addMaterialMasterModal').modal('show');
 		
 	});
 	
 	$modalCloseBtn.click(function() {
-		refreshSupplierInfo();
-		$('#addSupplierInfoModal').modal('hide');
+		refreshMaterialMaster();
+		$('#addMaterialMasterModal').modal('hide');
 	});
 	
 	$modalCreateBtn.click(function() {
@@ -66,13 +66,13 @@ function initSetting() {
 		let data = {};
 		
 		data.factoryid = $("select[name=factoryid]").val();
+		data.materialid = $("input[name=materialid]").val();
+		data.materialname = $("input[name=materialname]").val();		
+		data.materialtype = $("input[name=materialtype]").val();
+		data.materialkind = $("input[name=materialkind]").val();
+		data.materialunit = $("input[name=materialunit]").val();
 		data.vendorid = $("input[name=vendorid]").val();
-		data.vendorname = $("input[name=vendorname]").val();		
-		data.vendornickname = $("input[name=vendornickname]").val();
-		data.vendoraddress = $("input[name=vendoraddress]").val();
-		data.vendorchargeid = $("input[name=vendorchargeid]").val();
-		data.vendorcontactemail = $("input[name=vendorcontactemail]").val();
-		data.vendorcontactphoneno = $("input[name=vendorcontactphoneno]").val();
+		data.receivinginspection = $("select[name=receivinginspection]").val();
 		data.isusable = $("select[name=isusable]").val();
 
 	
@@ -91,7 +91,7 @@ function initSetting() {
 			return;
 		} 
 
-		let url = '/supplierinfo/create';
+		let url = '/materialmaster/create';
 
 		$.ajax({
 			url: url,
@@ -101,30 +101,30 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#supplierinfo");
+				$table = $("#materialmaster");
 				$table.bootstrapTable('refresh');
 				
-				$('#addSupplierInfoModal').modal('hide');
+				$('#addMaterialMasterModal').modal('hide');
 				alert("저장되었습니다.");
 			},
 			error: function(xhr, textStatus, errorThrown) {
 	        	// 실패 시 실행할 코드
-	        	alert("공급업체ID와 공장을 확인해주세요");
+	        	alert("자재마스터ID와 공장을 확인해주세요");
 	    	}
 		});
 	});
 	
 	$modalModifyBtn.click(function() {
-		let data = s_supplierInfo;
+		let data = m_materialMaster;
 
 		data.factoryid = $("select[name=factoryid]").val();
+		data.materialid = $("input[name=materialid]").val();
+		data.materialname = $("input[name=materialname]").val();		
+		data.materialtype = $("input[name=materialtype]").val();
+		data.materialkind = $("input[name=materialkind]").val();
+		data.materialunit = $("input[name=materialunit]").val();
 		data.vendorid = $("input[name=vendorid]").val();
-		data.vendorname = $("input[name=vendorname]").val();		
-		data.vendornickname = $("input[name=vendornickname]").val();
-		data.vendoraddress = $("input[name=vendoraddress]").val();
-		data.vendorchargeid = $("input[name=vendorchargeid]").val();
-		data.vendorcontactemail = $("input[name=vendorcontactemail]").val();
-		data.vendorcontactphoneno = $("input[name=vendorcontactphoneno]").val();
+		data.receivinginspection = $("select[name=receivinginspection]").val();
 		data.isusable = $("select[name=isusable]").val();
 		
 		//validation check
@@ -142,7 +142,7 @@ function initSetting() {
 			return;
 		} 
 		
-		let url = '/supplierinfo/modify';
+		let url = '/materialmaster/modify';
 
 		$.ajax({
 			url: url,
@@ -152,11 +152,11 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#supplierinfo");
+				$table = $("#materialmaster");
 				$table.bootstrapTable('refresh');
-				refreshSupplierInfo()
+				refreshMaterialMaster()
 				
-				$('#addSupplierInfoModal').modal('hide');
+				$('#addMaterialMasterModal').modal('hide');
 				alert("수정 되었습니다.");
 			}
 		});
@@ -170,7 +170,7 @@ function initSetting() {
 			selections.push(data.dataseq);
 		});
 
-		let url = '/supplierinfo/remove';
+		let url = '/materialmaster/remove';
 
 		$.ajax({
 			url: url,
@@ -180,7 +180,7 @@ function initSetting() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				
-				$table = $("#supplierinfo");
+				$table = $("#MaterialMaster");
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
@@ -190,13 +190,13 @@ function initSetting() {
 	});
 };
  
-function supplierinfo(data) {
-	var url = '/supplierinfo/find';
+function materialmaster(data) {
+	var url = '/materialmaster/find';
 
 	var params = {}
 
 	$.get(url + '?' + $.param(params)).then(function(res) {
-		$table = $("#supplierinfo");
+		$table = $("#materialmaster");
 		$table.bootstrapTable('removeAll');
 		$table.bootstrapTable('append', res);
 	})
@@ -228,53 +228,53 @@ function factroy() {
 	});
 }
 
-function supplierInfoOperateFormatter(value, row, index) {
+function materialMasterOperateFormatter(value, row, index) {
 	return [
-		'<a class="supplierinfoModify" href="javascript:void(0)" title="수정">',
+		'<a class="materialMasterModify" href="javascript:void(0)" title="수정">',
 		'<i class="fa-solid fa-pen"></i>',
 		'</a>'
 	].join('');
 }
 
 window.operateEvents = {
-	"click .supplierinfoModify": function(e, value, row, index) {
+	"click .materialMasterModify": function(e, value, row, index) {
 		
-		s_supplierInfo = row;
+		m_materialMaster = row;
 		
-		supplierInfoDetail(row);
+		materialMasterDetail(row);
 
-		$("#addSupplierInfoModalCreate").css('display', "none");
-		$("#addSupplierInfoModalModify").css('display', "block");
+		$("#addMaterialMasterModalCreate").css('display', "none");
+		$("#addMaterialMasterModalModify").css('display', "block");
 
-		$('#addSupplierInfoModal').modal('show');
+		$('#addMaterialMasterModal').modal('show');
 
-		supplierInfoDetail(row);
+		materialMasterDetail(row);
 	}
 }
 
-function supplierInfoDetail(data) {
+function materialMasterDetail(data) {
 	
 		$("select[name=factoryid]").val(data.factoryid);
+		$("input[name=materialid]").val(data.materialid);
+		$("input[name=materialname]").val(data.materialname);		
+		$("input[name=materialtype]").val(data.materialtype);
+		$("input[name=materialkind]").val(data.materialkind);
+		$("input[name=materialunit]").val(data.materialunit);
 		$("input[name=vendorid]").val(data.vendorid);
-		$("input[name=vendorname]").val(data.vendorname);		
-		$("input[name=vendornickname]").val(data.vendornickname);
-		$("input[name=vendoraddress]").val(data.vendoraddress);
-		$("input[name=vendorchargeid]").val(data.vendorchargeid);
-		$("input[name=vendorcontactemail]").val(data.vendorcontactemail);
-		$("input[name=vendorcontactphoneno]").val(data.vendorcontactphoneno);
+		$("select[name=receivinginspection]").val(data.receivinginspection);
 		$("select[name=isusable]").val(data.isusable);
 }
 
-function refreshSupplierInfo() {
+function refreshMaterialMaster() {
 	
 		$("select[name=factoryid]").val("");
+		$("input[name=materialid]").val("");
+		$("input[name=materialname]").val("");		
+		$("input[name=materialtype]").val("");
+		$("input[name=materialkind]").val("");
+		$("input[name=materialunit]").val("");
 		$("input[name=vendorid]").val("");
-		$("input[name=vendorname]").val("");		
-		$("input[name=vendornickname]").val("");
-		$("input[name=vendoraddress]").val("");
-		$("input[name=vendorchargeid]").val("");
-		$("input[name=vendorcontactemail]").val("");
-		$("input[name=vendorcontactphoneno]").val("");
+		$("select[name=receivinginspection]").val("");
 		$("select[name=isusable]").val("");
 	
 }

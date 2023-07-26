@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class Material {
 
+	public int rownum;
+	public int dataseq;
 	public String materialid;
 	public String factoryid;
 	public String factoryname;

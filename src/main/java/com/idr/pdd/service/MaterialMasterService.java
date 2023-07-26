@@ -16,21 +16,20 @@ public class MaterialMasterService {
 	@Autowired
 	MaterialMasterMapper mapper;
 	
-	public List<Material> findMateriaMasterAll(Material data) {
+	public List<Material> findAll() {
 		
-		return mapper.findMateriaMasterAll(data);
+		return mapper.findAll();
 	}
 	
-	public int checkCnt(Material param) {
-		
-		return mapper.checkCnt(param);
+	public int save(Material param) {
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		} else {
+			return mapper.modify(param);
+		}
 	}
 	
-	public int save(Material param) {	
-		return mapper.save(param);
-	}
-	
-	public int remove(List<Material> param) {
+	public int remove(List<Integer> param) {
 		return mapper.remove(param);
 	}
 	

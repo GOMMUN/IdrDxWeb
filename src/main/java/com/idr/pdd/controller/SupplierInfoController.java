@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.idr.pdd.dto.Factory;
-import com.idr.pdd.dto.Shift;
 import com.idr.pdd.dto.Vendor;
-import com.idr.pdd.service.FactoryInfoService;
 import com.idr.pdd.service.SupplierInfoService;
 
 import lombok.extern.slf4j.Slf4j;

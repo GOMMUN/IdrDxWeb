@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("material")
+@RequestMapping("materialmaster")
 public class MaterialMasterController {
 
 	@Autowired
@@ -26,32 +26,31 @@ public class MaterialMasterController {
 	
 	@GetMapping("")
     public String init() {
-        return "page/materialMaster";
+        return "page/supplierInfo";
     }
 	
 	@ResponseBody
 	@GetMapping("/find")
-    public List<Material> findMateriaMasterAll(Material data) {
-		List<Material> list = service.findMateriaMasterAll(data);
+    public List<Material> find() {
+		List<Material> list = service.findAll();
 		return list;
-    }	
+    }
 	
 	@ResponseBody
-	@PostMapping("/check")
-    public int checkCnt(@RequestBody Material param) {
-		int cnt = service.checkCnt(param);
-		return cnt;
-    }	
+	@PostMapping("/create")
+    public int create(@RequestBody Material param) {
+		return service.save(param);
+    }
 	
 	@ResponseBody
-	@PostMapping("/save")
-    public int save(@RequestBody Material param) {
+	@PutMapping("/modify")
+    public int modify(@RequestBody Material param) {
 		return service.save(param);
     }
 	
 	@ResponseBody
 	@PutMapping("/remove")
-    public int remove(@RequestBody List<Material> param) {
+    public int remove(@RequestBody List<Integer> param) {
 		return service.remove(param);
     }
 	

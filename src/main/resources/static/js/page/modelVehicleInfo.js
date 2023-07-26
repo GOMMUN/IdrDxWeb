@@ -1,6 +1,8 @@
 /**
  * 
  */
+let s_mvinfo = null;
+
 $(function(){
 	
 	setEventListener();
@@ -8,13 +10,14 @@ $(function(){
 
  function setEventListener (){
 	 
-	let $grid = $("#mvinfo");					//조회
-	let $gridAddBtn = $("#addMvinfo");		//행추가
-	let $gridSaveBtn = $("#saveMvinfo");	//수정
-	let $gridRemoveBtn = $("#removeMvinfo");	//삭제
+	let $grid = $("#mvinfo");					//그리드
+	let $gridAddBtn = $("#addMvinfo");			//그리드 add버튼
+	let $gridRemoveBtn = $("#removeMvinfo");	//그리드 delete버튼
+	let $modalCreateBtn = $("#addMvInfoModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addMvInfoModalModify");	// 모달 update 버튼	
+	let $modalCloseBtn = $("#addMvInfoModalClose");		// 모달 close 버튼 	
 	 
 	$grid.on('check.bs.table', function (row, $element, field) {
-		gridData($element);
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length);
 	});
 	
@@ -31,14 +34,66 @@ $(function(){
 	});
 	
 	$gridAddBtn.click(function() {			//행추가
-		$grid.bootstrapTable('append', initMvInfo());
-		$grid.bootstrapTable('scrollTo', 'bottom');
-		$grid.bootstrapTable('check', ($grid.bootstrapTable('getData').length-1));
-		$gridAddBtn.prop('disabled',true);
+		$("#addMvInfoModalCreate").css('display', "block");
+		$("#addMvInfoModalModify").css('display', "none");
+
+		$('#addMvInfoModal').modal('show');
 	});
 	
-	$gridSaveBtn.click(function() {		//수정
+	$modalCloseBtn.click(function() {
+		refreshMvInfo();
+		$('#addMvInfoModal').modal('hide');
+	});		
+	
+	$modalCreateBtn.click(function() {
+
 		let data = initMvInfo();
+		
+		data.modelid = $("input[name=modelid]").val();
+		data.modelnm = $("input[name=modelnm]").val();
+		data.modeldesc = $("input[name=modeldesc]").val();
+		data.useyn = $("select[name=useyn]").val();
+
+		//validation check
+		 if (data.modelid == "") {
+			alert("MODEL ID를 입력하세요.");
+			$("select[name=modelid]").focus();
+			return;
+		} else if (data.modelnm == "") {
+			alert("MODEL 명을 입력하세요.");
+			$("select[name=modelnm]").focus();
+			return;
+		} else if (data.modeldesc == "") {
+			alert("MODEL 설명을 입력하세요.");
+			$("select[name=modeldesc]").focus();
+			return;
+		} else if (data.useyn == "") {
+			alert("사용여부를 선택하세요.");
+			$("select[name=useyn]").focus();
+			return;
+		}
+
+		let url = '/mvinfo/create';
+
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: 'application/json; charset=utf-8',
+			success: function(data) {
+				
+				$table = $("#mvinfo");
+				$table.bootstrapTable('refresh');
+				
+				$('#addMvInfoModal').modal('hide');
+				alert("저장되었습니다.");
+			}
+		});
+	});	
+	
+	$modalModifyBtn.click(function() {
+		let data = s_mvinfo;
 
 		data.modelid = $("input[name=modelid]").val();
 		data.modelnm = $("input[name=modelnm]").val();
@@ -64,53 +119,25 @@ $(function(){
 			return;
 		}
 		
-		//데이터 이미 존재하는지 체크(중복=0, 아니면=1)
-		let valiCheck;
-		let url_val = '/mvinfo/check';
-		
-		$.ajax({
-			url: url_val,
-			type: 'POST',
-			data: JSON.stringify(data),
-			dataType: "json",
-			async:false,
-			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
-				if(data > 0){
-					valiCheck = 0;
-				}else {
-					valiCheck = 1;
-				}
-			}
-		});		
+		let url = '/mvinfo/modify';
 
-		if(valiCheck == 0){
-			if(!confirm('기존 데이터를 수정하시겠습니까?')){
-            	return false;
-        	}
-		}else if(valiCheck == 1){
-			if(!confirm('해당 데이터를 새로 추가하시겠습니까?')){
-            	return false;
-        	}
-		}				
-		
-		//저장 처리		
-		
-		let url = '/mvinfo/save';
-		
 		$.ajax({
 			url: url,
-			type: 'POST',
+			type: 'PUT',
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
-				alert("저장 되였습니다.");
-				location.reload();
+				
+				$table = $("#mvinfo");
+				$table.bootstrapTable('refresh');
+				
+				$('#addMvInfoModal').modal('hide');
+				alert("수정 되었습니다.");
 			}
-		});		
-	});
-	
+		});
+	});			
+		
 	$gridRemoveBtn.click(function() {	
 		
 		if(!confirm('해당 데이터를 사용하지 않겠습니까?')){
@@ -120,9 +147,7 @@ $(function(){
 		let selections = [];
 
 		$grid.bootstrapTable('getSelections').forEach(function(data) {
-
-			selections.push({"modelid":data.modelid});
-			
+			selections.push(data.dataseq);	
 		});
 
 		let url = '/mvinfo/remove';
@@ -140,20 +165,51 @@ $(function(){
 		});
 	});		
 };
- 
- function gridData(data){
-	
-	$("#modelid").val(data.modelid);
-	$("#modelnm").val(data.modelnm);
-	$("#modeldesc").val(data.modeldesc);
-	$("#useyn").val(data.useyn);
+
+function mvInfoOperateFormatter(value, row, index) {
+	return [
+		'<a class="mvInfoModify" href="javascript:void(0)" title="수정">',
+		'<i class="fa-solid fa-pen"></i>',
+		'</a>'
+	].join('');
+}
+
+window.operateEvents = {
+	"click .mvInfoModify": function(e, value, row, index) {
+		
+		s_mvinfo = row;
+		
+		mvInfoDetail(row);
+
+		$("#addMvInfoModalCreate").css('display', "none");
+		$("#addMvInfoModalModify").css('display', "block");
+
+		$('#addMvInfoModal').modal('show');
+
+		mvInfoDetail(row);
+	}
+}
+
+function mvInfoDetail(data){
+	$("input[name=modelid]").val(data.modelid);
+	$("input[name=modelnm]").val(data.modelnm);
+	$("input[name=modeldesc]").val(data.modeldesc);
+	$("select[name=useyn]").val(data.useyn);
 }
 
 function initMvInfo() {
 	let data = {
-		"companycd": "dx", "bizcd": "SP1", "modelid": "", "modelnm": "", "modeldesc": "", "useyn": "",
+		"modelid": "", "modelnm": "", "modeldesc": "", "useyn": "",
 		"fstreguserid": "", "fstregdt": "", "fnledituserid": "", "fnleditdt": ""
 	};
 	
 	return data;
 }
+ 
+function refreshmvInfo(data){
+	$("input[name=modelid]").val("");
+	$("input[name=modelnm]").val("");
+	$("input[name=modeldesc]").val("");
+	$("select[name=useyn]").val("");
+}
+

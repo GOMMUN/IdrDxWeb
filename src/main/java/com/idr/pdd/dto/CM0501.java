@@ -5,6 +5,8 @@ import lombok.Data;
 @Data 
 public class CM0501 {
 
+	private int rownum;
+	private int dataseq;
 	private	String companycd;
 	private String bizcd;
 	private String modelid;
@@ -15,6 +17,5 @@ public class CM0501 {
 	private String fstregdt;
 	private String fnledituserid;
 	private String fnleditdt;
-	
 
 }

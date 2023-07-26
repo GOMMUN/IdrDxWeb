@@ -18,18 +18,17 @@ public class ModelVehicleInfoService {
 	public List<CM0501> findAll() {
 		
 		return mapper.findAll();
-	}
-	
-	public int checkCnt(CM0501 param) {
-		
-		return mapper.checkCnt(param);
 	}	
 	
 	public int save(CM0501 param) {	
-		return mapper.save(param);
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		}else {
+			return mapper.modify(param);
+		}
 	}
 	
-	public int remove(List<CM0501> param) {
+	public int remove(List<Integer> param) {
 		return mapper.remove(param);
 	}	
 	

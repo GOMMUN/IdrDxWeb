@@ -7,7 +7,8 @@
 
 	<select id="findAll" resultType="CM0801">
 		SELECT
-		COMPANY_CD
+		  DATASEQ
+		, COMPANY_CD
 		, BIZ_CD
 		, ACTIVITY_ID
 		, ACTIVITY_NM
@@ -17,59 +18,58 @@
 		, ISUSABLE
 		FROM CM0801
 		WHERE 1=1
-	</select>
-	
-	<select id="checkCnt" parameterType="CM0801" resultType="int">
-		SELECT COUNT(*)
-		FROM CM0801
-		WHERE 1=1
-			AND ACTIVITY_ID = #{activityid}
-			AND PQCD_ID = #{pqcdid}
-	</select>   	
+	</select>  	
 
-	<update id="save" parameterType="CM0801" >
-		MERGE INTO CM0801 AS A
-		USING (
-			SELECT 1 AS DUM
-		) AS B
-		ON (
-			A.ACTIVITY_ID = #{activityid} AND
-			A.PQCD_ID = #{pqcdid}
-			)
-		WHEN MATCHED THEN
-			UPDATE SET 
-				 ACTIVITY_NM	= #{activitynm}
-				,ISUSABLE		= #{isusable}
-		WHEN NOT MATCHED THEN 
-			INSERT(
-				 COMPANY_CD
+<insert id="create" parameterType="CM0801">
+			INSERT INTO CM0801(
+        		 COMPANY_CD
 				,BIZ_CD
 				,ACTIVITY_ID
 				,ACTIVITY_NM
 				,PQCD_ID
+				,FST_REG_USER_ID
+				,FST_REG_DT
+				,FNL_EDIT_USER_ID
+				,FNL_EDIT_DT
 				,ISUSABLE			
 			) 
 			VALUES(
 				 'dx'
 				,'SP1'
 				,#{activityid}
-				,#{activitynm}				
+				,#{activitynm}			
 				,#{pqcdid}
-				,#{isusable}				
+				,'idrAdmin'
+				,getdate()
+				,'idrAdmin'
+				,getdate()
+				,#{isusable}			
 			)
-		;
+	</insert>
+	
+    <update id="modify" parameterType="CM0801" >
+			UPDATE CM0801
+			SET 
+				 COMPANY_CD 	 	= 'dx'
+				,BIZ_CD				= 'SP1'
+				,ACTIVITY_ID		= #{activityid}
+				,ACTIVITY_NM		= #{activitynm}			
+				,PQCD_ID   			= #{pqcdid}
+				,FNL_EDIT_USER_ID	='idrAdmin'
+				,FNL_EDIT_DT    	= getdate()	
+				,ISUSABLE  			= #{isusable}
+			WHERE DATASEQ			= #{dataseq}
 	</update>
-
+	
     <update id="remove" parameterType="list">
-		<foreach collection="list" item="data" open="" close="" separator=";">
-		UPDATE CM0801 
-		SET ISUSABLE= 'N'
-    	WHERE
-			COMPANY_CD = 'dx' 
-			AND BIZ_CD = 'SP1'
-			AND ACTIVITY_ID = #{data.activityid} 
-			AND PQCD_ID = #{data.pqcdid}
-		</foreach>
+    	UPDATE CM0801
+		SET ISUSABLE	= 'N',
+			FNL_EDIT_USER_ID 	= 'idrAdmin',
+			FNL_EDIT_DT 	= GETDATE()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
     </update>
 
 </mapper>

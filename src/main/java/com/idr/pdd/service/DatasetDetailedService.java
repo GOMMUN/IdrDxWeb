@@ -21,16 +21,15 @@ public class DatasetDetailedService {
 		return mapper.findAll();
 	}
 	
-	public int checkCnt(CM0801 param) {
-		
-		return mapper.checkCnt(param);
+	public int save(CM0801 param) {
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		} else {
+			return mapper.modify(param);
+		}
 	}
 	
-	public int save(CM0801 param) {	
-		return mapper.save(param);
-	}
-	
-	public int remove(List<CM0801> param) {
+	public int remove(List<Integer> param) {
 		return mapper.remove(param);
 	}		
 }

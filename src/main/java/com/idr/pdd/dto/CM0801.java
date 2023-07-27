@@ -5,6 +5,7 @@ import lombok.Data;
 @Data 
 public class CM0801 {
 
+	private int dataseq;
 	private String companycd;
 	private String bizcd;
 	private String activityid;

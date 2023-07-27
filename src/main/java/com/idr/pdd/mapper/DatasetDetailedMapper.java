@@ -12,9 +12,9 @@ import com.idr.pdd.dto.Shift;
 @Mapper
 public interface DatasetDetailedMapper {
 
-	List<CM0801 > findAll();
-	int checkCnt(CM0801 param);
+	List<CM0801> findAll();
 	
-	int save(CM0801 param);
-	int remove(List<CM0801> param);
+	int create(CM0801 param);
+	int modify(CM0801 param);
+	int remove(List<Integer> param);
 }

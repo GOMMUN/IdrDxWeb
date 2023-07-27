@@ -43,21 +43,20 @@ public class DatasetDetailedController {
     }
 	
 	@ResponseBody
-	@PostMapping("/check")
-    public int checkCnt(@RequestBody CM0801 param) {
-		int cnt = service.checkCnt(param);
-		return cnt;
+	@PostMapping("/create")
+    public int create(@RequestBody CM0801 param) {
+		return service.save(param);
     }	
 	
 	@ResponseBody
-	@PostMapping("/save")
-    public int save(@RequestBody CM0801 param) {
+	@PutMapping("/modify")
+    public int modify(@RequestBody CM0801 param) {
 		return service.save(param);
     }
 	
 	@ResponseBody
 	@PutMapping("/remove")
-    public int remove(@RequestBody List<CM0801> param) {
+    public int remove(@RequestBody List<Integer> param) {
 		return service.remove(param);
     }
 

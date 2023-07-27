@@ -64,7 +64,6 @@ function setEventListener() {
 			workDate: data.workDate,
 			factoryid: data.factoryid,
 			lineid: data.lineid
-
 		}
 
 		$.get(url + '?' + $.param(params)).then(function(res) {

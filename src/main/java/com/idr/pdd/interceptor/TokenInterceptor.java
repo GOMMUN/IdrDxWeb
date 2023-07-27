@@ -15,6 +15,12 @@ public class TokenInterceptor implements HandlerInterceptor{
         log.debug("===============================================");
         log.debug("==================== BEGIN ====================");
         log.debug("Request URI ===> " + request.getRequestURI());
+        try {
+        	throw new RuntimeException();
+		} catch (Exception e) {
+			// TODO: handle exception
+			response.sendError(404,"에러"); 
+		}
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

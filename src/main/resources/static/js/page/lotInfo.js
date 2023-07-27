@@ -17,11 +17,11 @@ function initSetting() {
  function setEventListener (){
 
 	let $grid = $("#lotinfo");					//조회
-	let $gridAddBtn = $("#addLotInfo");			// 장비정보 add 버튼
-	let $gridRemoveBtn = $("#removeLotInfo");		// 장비정보 delete 버튼
-	let $modalCloseBtn = $("#addLotInfoModalClose");	// 장비정보 모달 close 버튼
-	let $modalCreateBtn = $("#addLotInfoModalCreate");	// 장비정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addLotInfoModalModify");	// 장비정보 모달 update 버튼 
+	let $gridAddBtn = $("#addLotInfo");			//  add 버튼
+	let $gridRemoveBtn = $("#removeLotInfo");		//  delete 버튼
+	let $modalCloseBtn = $("#addLotInfoModalClose");	//  모달 close 버튼
+	let $modalCreateBtn = $("#addLotInfoModalCreate");	//  모달 insert 버튼
+	let $modalModifyBtn = $("#addLotInfoModalModify");	//  모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -47,7 +47,7 @@ function initSetting() {
 		lotinfo();
 	});
 	
-	$gridAddBtn.click(function() {		// 창고정보 add 버튼
+	$gridAddBtn.click(function() {		//  add 버튼
 		
 		$("#addLotInfoModalCreate").css('display', "block");
 		$("#addLotInfoModalModify").css('display', "none");

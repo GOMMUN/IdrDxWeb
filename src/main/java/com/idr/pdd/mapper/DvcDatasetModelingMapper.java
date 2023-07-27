@@ -15,6 +15,7 @@ public interface DvcDatasetModelingMapper {
 	List<CM0701> findGroup(CM0701 param);
 	int checkCnt(CM0701 param);
 	
-	int save(CM0701 param);
-	int remove(List<CM0701> param);
+	int create(CM0701 param);
+	int modify(CM0701 param);
+	int remove(List<Integer> param);
 }

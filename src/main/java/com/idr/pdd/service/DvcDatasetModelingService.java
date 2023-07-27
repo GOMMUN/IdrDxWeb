@@ -25,16 +25,15 @@ public class DvcDatasetModelingService {
 		return mapper.findGroup(param);
 	}
 	
-	public int checkCnt(CM0701 param) {
-		
-		return mapper.checkCnt(param);
+	public int save(CM0701 param) {
+		if(param.getDataseq() == 0) {
+			return mapper.create(param);
+		} else {
+			return mapper.modify(param);
+		}
 	}
 	
-	public int save(CM0701 param) {	
-		return mapper.save(param);
-	}
-	
-	public int remove(List<CM0701> param) {
+	public int remove(List<Integer> param) {
 		return mapper.remove(param);
 	}		
 }

@@ -2,7 +2,7 @@
  * 
  */
 let c_factory = null;
-let s_workerInput = null;
+let s_lineInfo = null;
 
 $(function(){
 	initSetting();
@@ -17,11 +17,11 @@ function initSetting() {
  function setEventListener (){
 
 	let $grid = $("#lineinfo");					//조회
-	let $gridAddBtn = $("#addLineinfo");			// 라인정보 add 버튼
-	let $gridRemoveBtn = $("#removeLineinfo");		// 라인정보 delete 버튼
-	let $modalCloseBtn = $("#addLineinfoModalClose");	// 라인정보 모달 close 버튼
-	let $modalCreateBtn = $("#addLineinfoModalCreate");	// 라인정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addLineinfoModalModify");	// 라인정보 모달 update 버튼 
+	let $gridAddBtn = $("#addLineinfo");			// add 버튼
+	let $gridRemoveBtn = $("#removeLineinfo");		// delete 버튼
+	let $modalCloseBtn = $("#addLineinfoModalClose");	// 모달 close 버튼
+	let $modalCreateBtn = $("#addLineinfoModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addLineinfoModalModify");	// 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -105,7 +105,7 @@ function initSetting() {
 	});
 	
 	$modalModifyBtn.click(function() {
-		let data = s_workerInput;
+		let data = s_lineInfo;
 
 		data.factoryid = $("select[name=factoryid]").val();
 		data.locationid = $("input[name=locationid]").val();
@@ -220,7 +220,7 @@ function lineinfoOperateFormatter(value, row, index) {
 window.operateEvents = {
 	"click .lineinfoModify": function(e, value, row, index) {
 		
-		s_workerInput = row;
+		s_lineInfo = row;
 		
 		lineinfoDetail(row);
 

@@ -17,11 +17,11 @@ function initSetting() {
  function setEventListener (){
 
 	let $grid = $("#logisticsinfo");					//조회
-	let $gridAddBtn = $("#addLogisticsInfo");			// 장비정보 add 버튼
-	let $gridRemoveBtn = $("#removeLogisticsInfo");		// 장비정보 delete 버튼
-	let $modalCloseBtn = $("#addLogisticsInfoModalClose");	// 장비정보 모달 close 버튼
-	let $modalCreateBtn = $("#addLogisticsInfoModalCreate");	// 장비정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addLogisticsInfoModalModify");	// 장비정보 모달 update 버튼 
+	let $gridAddBtn = $("#addLogisticsInfo");			// add 버튼
+	let $gridRemoveBtn = $("#removeLogisticsInfo");		// delete 버튼
+	let $modalCloseBtn = $("#addLogisticsInfoModalClose");	// 모달 close 버튼
+	let $modalCreateBtn = $("#addLogisticsInfoModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addLogisticsInfoModalModify");	// 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -47,7 +47,7 @@ function initSetting() {
 		logisticsinfo();
 	});
 	
-	$gridAddBtn.click(function() {		// 창고정보 add 버튼
+	$gridAddBtn.click(function() {		// 정보 add 버튼
 		
 		$("#addLogisticsInfoModalCreate").css('display', "block");
 		$("#addLogisticsInfoModalModify").css('display', "none");

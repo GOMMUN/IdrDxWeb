@@ -2,7 +2,7 @@
  * 
  */
 let c_factory = null;
-let m_materialMaster = null;
+let s_materialMaster = null;
 
 $(function(){
 	initSetting();
@@ -17,11 +17,11 @@ function initSetting() {
  function setEventListener (){
 
 	let $grid = $("#materialmaster");					//조회
-	let $gridAddBtn = $("#addMaterialMaster");			// 정보 add 버튼
-	let $gridRemoveBtn = $("#removeMaterialMaster");		// 정보 delete 버튼
-	let $modalCloseBtn = $("#addMaterialMasterModalClose");	// 정보 모달 close 버튼
-	let $modalCreateBtn = $("#addMaterialMasterModalCreate");	// 정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addMaterialMasterModalModify");	// 정보 모달 update 버튼 
+	let $gridAddBtn = $("#addMaterialMaster");			// add 버튼
+	let $gridRemoveBtn = $("#removeMaterialMaster");		// delete 버튼
+	let $modalCloseBtn = $("#addMaterialMasterModalClose");	// 모달 close 버튼
+	let $modalCreateBtn = $("#addMaterialMasterModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addMaterialMasterModalModify");	// 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -47,7 +47,7 @@ function initSetting() {
 		materialmaster();
 	});
 	
-	$gridAddBtn.click(function() {		// 창고정보 add 버튼
+	$gridAddBtn.click(function() {		// add 버튼
 		
 		$("#addMaterialMasterModalCreate").css('display', "block");
 		$("#addMaterialMasterModalModify").css('display', "none");
@@ -115,7 +115,7 @@ function initSetting() {
 	});
 	
 	$modalModifyBtn.click(function() {
-		let data = m_materialMaster;
+		let data = s_materialMaster;
 
 		data.factoryid = $("select[name=factoryid]").val();
 		data.materialid = $("input[name=materialid]").val();
@@ -239,7 +239,7 @@ function materialMasterOperateFormatter(value, row, index) {
 window.operateEvents = {
 	"click .materialMasterModify": function(e, value, row, index) {
 		
-		m_materialMaster = row;
+		s_materialMaster = row;
 		
 		materialMasterDetail(row);
 

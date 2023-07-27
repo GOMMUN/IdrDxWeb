@@ -17,11 +17,11 @@ function initSetting() {
  function setEventListener (){
 
 	let $grid = $("#storageinfo");					//조회
-	let $gridAddBtn = $("#addStorageinfo");			// 창고정보 add 버튼
-	let $gridRemoveBtn = $("#removeStorageinfo");		// 창고정보 delete 버튼
-	let $modalCloseBtn = $("#addStorageinfoModalClose");	// 창고정보 모달 close 버튼
-	let $modalCreateBtn = $("#addStorageinfoModalCreate");	// 창고정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addStorageinfoModalModify");	// 창고정보 모달 update 버튼 
+	let $gridAddBtn = $("#addStorageinfo");			// add 버튼
+	let $gridRemoveBtn = $("#removeStorageinfo");		// delete 버튼
+	let $modalCloseBtn = $("#addStorageinfoModalClose");	// 모달 close 버튼
+	let $modalCreateBtn = $("#addStorageinfoModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addStorageinfoModalModify");	// 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)

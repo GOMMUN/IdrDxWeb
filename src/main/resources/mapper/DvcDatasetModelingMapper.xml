@@ -7,7 +7,7 @@
 
 	<select id="findAxis" resultType="CM0701">
 		SELECT DISTINCT 
-		A.COMPANY_CD
+		 A.COMPANY_CD
 		, A.BIZ_CD
 		, A.AXIS_ID
 		, (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'AXIS_ID' AND
@@ -19,7 +19,8 @@
 	
 	<select id="findGroup" parameterType="CM0701" resultType="CM0701">
 		SELECT 
-		A.COMPANY_CD
+		  A.DATASEQ
+		, A.COMPANY_CD
 		, A.BIZ_CD
 		, A.AXIS_ID
 		, (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'AXIS_ID' AND
@@ -33,36 +34,19 @@
 		AND A.AXIS_ID = #{axisid}
 		ORDER BY A.GROUPING_ID ASC
 	</select>	
-		
-	<select id="checkCnt" parameterType="CM0701" resultType="int">
-		SELECT COUNT(*)
-		FROM CM0701
-		WHERE 1=1
-			AND AXIS_ID = #{axisid}
-			AND GROUPING_ID = #{groupingid}
-	</select> 
-
-	<update id="save" parameterType="CM0701" >
-		MERGE INTO CM0701 AS A
-		USING (
-			SELECT 1 AS DUM
-		) AS B
-		ON (
-			A.AXIS_ID 		= #{axisid} AND
-			A.GROUPING_ID 	= #{groupingid}
-			)
-		WHEN MATCHED THEN
-			UPDATE SET 		
-				 GROUPING_NM	= #{groupingnm}
-				,ISUSABLE		= #{isusable}
-		WHEN NOT MATCHED THEN 
-			INSERT(
-				 COMPANY_CD
+	
+	<insert id="create" parameterType="CM0701">
+			INSERT INTO CM0701(
+        		 COMPANY_CD
 				,BIZ_CD
 				,AXIS_ID
 				,GROUPING_ID
 				,GROUPING_NM
-				,ISUSABLE		
+				,FST_REG_USER_ID
+				,FST_REG_DT
+				,FNL_EDIT_USER_ID
+				,FNL_EDIT_DT
+				,ISUSABLE				
 			) 
 			VALUES(
 				 'dx'
@@ -70,21 +54,35 @@
 				,#{axisid}			
 				,#{groupingid}
 				,#{groupingnm}
-				,#{isusable}
+				,'idrAdmin'
+				, getdate()
+				,'idrAdmin'
+				, getdate()
+				,#{isusable}			
 			)
-		;
+	</insert>
+	
+    <update id="modify" parameterType="CM0701" >
+			UPDATE CM0701
+			SET 
+				 AXIS_ID			= #{axisid}
+				,GROUPING_ID		= #{groupingid}
+				,GROUPING_NM		= #{groupingnm}
+				,FNL_EDIT_USER_ID	= 'idrAdmin'
+				,FNL_EDIT_DT		= GETDATE()
+				,ISUSABLE			= #{isusable}
+			WHERE DATASEQ			= #{dataseq}
 	</update>
 
     <update id="remove" parameterType="list">
-		<foreach collection="list" item="data" open="" close="" separator=";">
-		UPDATE CM0701 
-		SET ISUSABLE= 'N'
-    	WHERE
-			COMPANYID = 'dx' 
-			AND BIZ_CD = 'SP1'
-			AND AXIS_ID = #{data.axisid} 
-			AND GROUPING_ID = #{data.groupingid}
-		</foreach>
+    	UPDATE CM0701
+		SET ISUSABLE	= 'N',
+			FNL_EDIT_USER_ID 	= 'idrAdmin',
+			FNL_EDIT_DT 		= GETDATE()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
     </update>
 
 </mapper>

@@ -17,11 +17,11 @@ function initSetting() {
  function setEventListener (){
 
 	let $grid = $("#equipmentinfo");					//조회
-	let $gridAddBtn = $("#addEquipmentInfo");			// 장비정보 add 버튼
-	let $gridRemoveBtn = $("#removeEquipmentInfo");		// 장비정보 delete 버튼
-	let $modalCloseBtn = $("#addEquipmentInfoModalClose");	// 장비정보 모달 close 버튼
-	let $modalCreateBtn = $("#addEquipmentInfoModalCreate");	// 장비정보 모달 insert 버튼
-	let $modalModifyBtn = $("#addEquipmentInfoModalModify");	// 장비정보 모달 update 버튼 
+	let $gridAddBtn = $("#addEquipmentInfo");			// add 버튼
+	let $gridRemoveBtn = $("#removeEquipmentInfo");		// delete 버튼
+	let $modalCloseBtn = $("#addEquipmentInfoModalClose");	// 모달 close 버튼
+	let $modalCreateBtn = $("#addEquipmentInfoModalCreate");	// 모달 insert 버튼
+	let $modalModifyBtn = $("#addEquipmentInfoModalModify");	// 모달 update 버튼 
 	
 	$grid.on('check.bs.table', function(row, $element) { //조회
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -47,8 +47,8 @@ function initSetting() {
 		equipmentinfo();
 	});
 	
-	$gridAddBtn.click(function() {		// 창고정보 add 버튼
-		
+	$gridAddBtn.click(function() {		// add 버튼
+	
 		$("#addEquipmentInfoModalCreate").css('display', "block");
 		$("#addEquipmentInfoModalModify").css('display', "none");
 

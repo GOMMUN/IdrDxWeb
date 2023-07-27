@@ -32,6 +32,7 @@ public class WorkDailyReportController {
 	@GetMapping("")
     public String init(HttpServletRequest request, Model model) {
 		plant = request.getAttribute("plant").toString();
+		model.addAttribute("plant", plant);
         return "page/workDailyReport";
     }
 	

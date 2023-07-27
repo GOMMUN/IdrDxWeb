@@ -22,10 +22,13 @@ let s_NonOperation = null;
 $(function() {
 	initSetting();
 	setEventListener();
+	setBinding();
 });
 
 function initSetting() {
-
+	
+	localStorage.setItem("plant",$("#parameterPlant").val());
+	
 	$("input[name=workDate]").datepicker({
 		format: "yyyy-mm-dd",
 		autoclose: true,
@@ -36,7 +39,7 @@ function initSetting() {
 }
 
 function code() {
-	factroy();		// 공장코드 조회
+	//factroy();		// 공장코드 조회
 	//block();
 	line();
 	shift();		// 주/야간구분 코드 조회
@@ -55,6 +58,10 @@ function setEventListener() {
 	setWorkContentsEventListener();			// 작업내용 이벤트리스너
 	setNonconFormityEventListener();        // 부적합내역 이벤트 리스너
 	setNonOperationEventListener();         // 비가동내역 이벤트 리스너
+}
+
+function setBinding(){
+	$("#factoryCodes").trigger('change');
 }
 
 // 작업일보 이벤트
@@ -289,6 +296,7 @@ function setWorkDailyReportEventListener() {
 
 	// modal 
 	$factoryCodes = $("#factoryCodes");
+	
 
 	$factoryCodes.change(function() {
 
@@ -298,7 +306,7 @@ function setWorkDailyReportEventListener() {
 		if (c_block) {
 			$dropdown1.append($("<option/>").val("").text("블록 선택"));
 			$.each(c_block, function() {
-				if ($factoryCodes.val() == this.mcode) {
+				if (localStorage.getItem('plant') == this.mcode) {
 					$dropdown1.append($("<option/>").val(this.code).text(this.value));
 				}
 			});
@@ -313,7 +321,7 @@ function setWorkDailyReportEventListener() {
 		if (c_line) {
 			$dropdown2.append($("<option/>").val("").text("공정 선택"));
 			$.each(c_line, function() {
-				if ($factoryCodes.val() == this.mcode) {
+				if (localStorage.getItem('plant') == this.mcode) {
 					$dropdown2.append($("<option/>").val(this.code).text(this.value));
 				}
 			});
@@ -321,14 +329,14 @@ function setWorkDailyReportEventListener() {
 			$dropdown2.append($("<option/>").val("").text("공정 선택"));
 		}
 
-
 		let $dropdown3 = $("#shiftCodes");
 		$dropdown3.empty();
 
 		if (c_shift) {
 			$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
 			$.each(c_shift, function() {
-				if ($factoryCodes.val() == this.mcode) {
+				debugger;
+				if (localStorage.getItem('plant') == this.mcode) {
 					$dropdown3.append($("<option/>").val(this.code).text(this.value));
 				}
 			});
@@ -358,7 +366,7 @@ function setWorkDailyReportEventListener() {
 		if (c_material) {
 			$dropdown5.append($("<option/>").val("").text("자재 선택"));
 			$.each(c_material, function() {
-				if ($factoryCodes.val() == this.mcode) {
+				if (localStorage.getItem('plant') == this.mcode) {
 					$dropdown5.append($("<option/>").val(this.code).text(this.value));
 				}
 			});
@@ -1289,7 +1297,7 @@ function block() {
 	});
 }
 
-function line(factoryid) {
+function line() {
 
 	let $dropdown = $("#lineCodes");
 	$dropdown.empty();
@@ -1301,7 +1309,20 @@ function line(factoryid) {
 		type: 'GET',
 		success: function(data) {
 			c_line = data;
-
+			
+			let $dropdown2 = $("#lineCodes");
+			$dropdown2.empty();
+	
+			if (c_line) {
+				$dropdown2.append($("<option/>").val("").text("공정 선택"));
+				$.each(c_line, function() {
+					if (localStorage.getItem('plant') == this.mcode) {
+						$dropdown2.append($("<option/>").val(this.code).text(this.value));
+					}
+				});
+			} else {
+				$dropdown2.append($("<option/>").val("").text("공정 선택"));
+			}
 
 		}
 	});
@@ -1319,7 +1340,21 @@ function shift() {
 		type: 'GET',
 		success: function(data) {
 			c_shift = data;
-
+			
+			let $dropdown3 = $("#shiftCodes");
+			$dropdown3.empty();
+	
+			if (c_shift) {
+				$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
+				$.each(c_shift, function() {
+					if (localStorage.getItem('plant') == this.mcode) {
+						$dropdown3.append($("<option/>").val(this.code).text(this.value));
+					}
+				});
+			} else {
+				$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
+	
+			}
 
 		}
 	});
@@ -1335,7 +1370,18 @@ function model() {
 		type: 'GET',
 		success: function(data) {
 			c_model = data;
-
+			
+			let $dropdown4 = $("#wdrmodelid");
+			$dropdown4.empty();
+	
+			if (c_model) {
+				$dropdown4.append($("<option/>").val("").text("차종 선택"));
+				$.each(c_model, function() {
+					$dropdown4.append($("<option/>").val(this.code).text(this.value));
+				});
+			} else {
+				$dropdown4.append($("<option/>").val("").text("차종 선택"));
+			}
 
 		}
 	});
@@ -1351,7 +1397,21 @@ function matarial() {
 		type: 'GET',
 		success: function(data) {
 			c_material = data;
-
+			
+			let $dropdown5 = $("#wdrmatarialid");
+			$dropdown5.empty();
+	
+			if (c_material) {
+				$dropdown5.append($("<option/>").val("").text("자재 선택"));
+				$.each(c_material, function() {
+					if (localStorage.getItem('plant') == this.mcode) {
+						$dropdown5.append($("<option/>").val(this.code).text(this.value));
+					}
+				});
+			} else {
+				$dropdown5.append($("<option/>").val("").text("자재 선택"));
+	
+			}
 
 		}
 	});

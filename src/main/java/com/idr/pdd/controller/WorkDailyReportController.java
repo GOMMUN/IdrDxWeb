@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.idr.pdd.dto.WorkDailyReport;
 import com.idr.pdd.service.WorkDailyReportService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -23,18 +24,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/workDailyReport")
 public class WorkDailyReportController {
 	
+	private static String plant = null;
+	
 	@Autowired
 	private WorkDailyReportService service;
 
 	@GetMapping("")
-    public String init() {
+    public String init(HttpServletRequest request, Model model) {
+		plant = request.getAttribute("plant").toString();
         return "page/workDailyReport";
     }
 	
 	@ResponseBody
 	@GetMapping("/find")
     public List<WorkDailyReport> find() {
-		List<WorkDailyReport> list = service.findAll();
+		List<WorkDailyReport> list = service.find(plant);
 		return list;
     }
 	

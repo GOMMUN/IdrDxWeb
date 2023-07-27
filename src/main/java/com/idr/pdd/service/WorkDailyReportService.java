@@ -17,6 +17,10 @@ public class WorkDailyReportService {
 		return mapper.findAll();
 	}
 	
+	public List<WorkDailyReport> find(String plant){
+		return mapper.find(plant);
+	}
+	
 	public int save(WorkDailyReport param) {
 		
 		if(param.getDataseq() == 0) {

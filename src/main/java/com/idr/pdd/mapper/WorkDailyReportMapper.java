@@ -10,6 +10,7 @@ import com.idr.pdd.dto.WorkDailyReport;
 public interface WorkDailyReportMapper {
 
 	List<WorkDailyReport> findAll();
+	List<WorkDailyReport> find(String plant);
 	WorkDailyReport find();
 	
 	int create(WorkDailyReport param);

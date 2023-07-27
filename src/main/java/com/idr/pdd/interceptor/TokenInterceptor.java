@@ -5,6 +5,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -12,13 +13,14 @@ public class TokenInterceptor implements HandlerInterceptor{
 
 	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.debug("===============================================");
+
+		log.debug("===============================================");
         log.debug("==================== BEGIN ====================");
         log.debug("Request URI ===> " + request.getRequestURI());
+        
         try {
-        	//throw new RuntimeException();
+        	request.setAttribute("plant", "KEM");
 		} catch (Exception e) {
-			// TODO: handle exception
 			response.sendError(404,"에러"); 
 		}
 

@@ -35,6 +35,12 @@ public class AnomalyDetectionController {
     }
 	
 	@ResponseBody
+	@GetMapping("/find")
+    public List<AnomalyDetection> find() {
+		return service.find();
+    }
+	
+	@ResponseBody
 	@PutMapping("/modify")
     public int modify(@RequestBody AnomalyDetection  param) {
 		return service.modify(param);

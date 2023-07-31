@@ -8,4 +8,6 @@ public class AnomalyDetection {
 	private String value;
 	private String alarmType ;
 	private String typeName;
+	private String value1;
+	private String value2;
 }

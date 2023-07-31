@@ -16,4 +16,7 @@ import com.idr.pdd.dto.WorkerSupport;
 public interface AnomalyDetectionMapper {
 
 	int modify(AnomalyDetection param);
+	int modify2(AnomalyDetection param);
+
+	List<AnomalyDetection> find();
 }

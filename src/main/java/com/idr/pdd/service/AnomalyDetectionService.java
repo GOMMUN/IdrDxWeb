@@ -18,6 +18,22 @@ public class AnomalyDetectionService {
 	AnomalyDetectionMapper mapper;
 
 	public int modify(AnomalyDetection  param) {
-		return mapper.modify(param);
+		
+		if(mapper.modify(param)==1&&mapper.modify2(param)==1)
+		{
+			return 1;
+		}
+		else {
+			return -1;
+		}
+		
+	}
+
+	public int modify2(AnomalyDetection  param) {
+		return mapper.modify2(param);
+	}
+	
+	public List<AnomalyDetection> find() {
+		return mapper.find();
 	}
 }

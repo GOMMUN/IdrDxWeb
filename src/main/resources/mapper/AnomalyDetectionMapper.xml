@@ -5,14 +5,25 @@
 
 <mapper namespace="com.idr.pdd.mapper.AnomalyDetectionMapper">
 
-   
-    
-    <update id="modify" parameterType="AnomalyDetection">
+	<select id="find" resultType="AnomalyDetection">
+		SElECT VALUE ,ALARM_TYPE
+		FROM DSP_ALARM_SETTING
+	</select>
+
+	<update id="modify" parameterType="AnomalyDetection">
 		UPDATE DSP_ALARM_SETTING
 		SET
-		VALUE = #{value}
+		VALUE = #{value1}
 		WHERE
 		DATASEQ = 2
+	</update>
+
+	<update id="modify2" parameterType="AnomalyDetection">
+		UPDATE DSP_ALARM_SETTING
+		SET
+		VALUE = #{value2}
+		WHERE
+		DATASEQ = 3
 	</update>
 
 

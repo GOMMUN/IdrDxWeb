@@ -5,12 +5,11 @@ import lombok.Data;
 @Data 
 public class CM0902 {
 
+	private int dataseq;
 	private String companycd;
 	private String bizcd;
-	private String activityid;
-	private String activitynm;
+	private String scenarioid;
 	private String pqcdid;
-	private String pqcdnm;
-	
+	private String activityid;
 
 }

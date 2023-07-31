@@ -13,7 +13,6 @@ public interface DvcDatasetModelingMapper {
 
 	List<CM0701> findAxis();
 	List<CM0701> findGroup(CM0701 param);
-	int checkCnt(CM0701 param);
 	
 	int create(CM0701 param);
 	int modify(CM0701 param);

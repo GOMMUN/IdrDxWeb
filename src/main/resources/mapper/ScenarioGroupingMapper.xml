@@ -7,7 +7,8 @@
 
 	<select id="findAll1" resultType="CM0901">
 		SELECT
-		 A.COMPANY_CD
+		 A.DATASEQ
+		,A.COMPANY_CD
 		,A.BIZ_CD
 		,A.SCENARIO_ID
 		,A.SCENARIO_NM
@@ -20,7 +21,8 @@
 
 	<select id="findAll2" parameterType="CM0901" resultType="CM0902">
 		SELECT
-		 A.COMPANY_CD
+		 A.DATASEQ
+		,A.COMPANY_CD
 		,A.BIZ_CD
 		,A.SCENARIO_ID
 		,A.PQCD_ID
@@ -34,7 +36,102 @@
 		AND A.SCENARIO_ID = #{scenarioid}
 		ORDER BY A.PQCD_ID ASC
 	</select>
+	
+	<insert id="create1" parameterType="CM0901">
+			INSERT INTO CM0901(
+				 COMPANY_CD
+				,BIZ_CD
+				,SCENARIO_ID
+				,SCENARIO_NM
+				,AXIS_ID
+				,GROUPING_ID
+				,FST_REG_USER_ID
+				,FST_REG_DT
+				,FNL_EDIT_USER_ID
+				,FNL_EDIT_DT			
+			) 
+			VALUES(
+				 'dx'
+				,'SP1'
+				,#{scenarioid}
+				,#{scenarionm}			
+				,#{axisid}
+				,#{groupingid}
+				,'idrAdmin'
+				,GETDATE()
+				,'idrAdmin'
+				,GETDATE()			
+			)
+	</insert>
+	
+    <update id="modify1" parameterType="CM0901" >
+			UPDATE CM0901
+			SET 
+				 SCENARIO_ID 		= #{scenarioid}
+				,SCENARIO_NM 		= #{scenarionm}
+				,AXIS_ID	 		= #{axisid}
+				,GROUPING_ID 		= #{groupingid}
+				,FNL_EDIT_USER_ID	='idrAdmin'
+				,FNL_EDIT_DT		= GETDATE()
+			WHERE DATASEQ	 		= #{dataseq}
+	</update>
 
+    <update id="remove1" parameterType="list">
+    	UPDATE CM0901
+		SET ISUSABLE	= 'N',
+			EVENTUSER 	= 'idrAdmin',
+			EVENTTIME 	= GETDATE()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
 
+	<insert id="create2" parameterType="CM0902">
+			INSERT INTO CM0902(
+				 COMPANY_CD
+				,BIZ_CD
+				,SCENARIO_ID
+				,PQCD_ID
+				,ACTIVITY_ID
+				,FST_REG_USER_ID
+				,FST_REG_DT
+				,FNL_EDIT_USER_ID
+				,FNL_EDIT_DT			
+			) 
+			VALUES(
+				 'dx'
+				,'SP1'
+				,#{scenarioid}
+				,#{pqcdid}			
+				,#{activityid}
+				,'idrAdmin'
+				,GETDATE()
+				,'idrAdmin'
+				,GETDATE()			
+			)
+	</insert>
+	
+    <update id="modify2" parameterType="CM0902" >
+			UPDATE CM0902
+			SET 
+				 SCENARIO_ID 		= #{scenarioid}
+				,PQCD_ID 			= #{pqcdid}
+				,ACTIVITY_ID 		= #{activityid}
+				,FNL_EDIT_USER_ID	='idrAdmin'
+				,FNL_EDIT_DT		= GETDATE()
+			WHERE DATASEQ	 		= #{dataseq}
+	</update>
+
+    <update id="remove2" parameterType="list">
+    	UPDATE CM0902
+		SET ISUSABLE	= 'N',
+			EVENTUSER 	= 'idrAdmin',
+			EVENTTIME 	= GETDATE()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+    </update>
 
 </mapper>

@@ -5,6 +5,40 @@
 
 <script th:inline="javascript" type="text/javascript"  th:src="@{/static/js/page/scenariogrouping.js}" ></script>
 
+<style>
+	.form-control-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+
+	.form-select-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+</style>
+
 <body>
 	<div class="d-flex bd-highlight">
 		<div class="p-2 col-12 bd-highlight">
@@ -16,15 +50,15 @@
 					<strong>시나리오 리스트</strong>
 				</div>
 				<div class="card-body">
-<!--					<div id="toolbarScenarioList">-->
-<!--						<button type="button" class="btn btn-primary" id="addScenarioList">-->
-<!--							<i class="fa-solid fa-plus"></i> Add-->
-<!--						</button>-->
-<!--						<button id="removeScenarioList" class="btn btn-danger" disabled>-->
-<!--							<i class="fa fa-trash"></i> Delete-->
-<!--						</button>-->
-<!--					</div>					-->
-					<table id="scenarioList" data-toggle="table" data-toolbar="#toolbarScenarioList" data-height="350" 
+					<div id="toolbarScenarioList">
+						<button type="button" class="btn btn-primary" id="addScenarioList">
+							<i class="fa-solid fa-plus"></i> Add
+						</button>
+						<button id="removeScenarioList" class="btn btn-danger" disabled>
+							<i class="fa fa-trash"></i> Delete
+						</button>
+					</div>				
+					<table id="scenariolist" data-toggle="table" data-toolbar="#toolbarScenarioList" data-height="350" 
 						data-multiple-select-row="true" data-click-to-select="true"
 						data-search="true" data-url="/scenario/find1" data-show-columns="true"
 						data-show-columns-toggle-all="true">
@@ -35,23 +69,86 @@
 								<th data-field="scenarionm" data-sortable="true" data-align="center">시나리오명</th>
 								<th data-field="axisid" data-sortable="true" data-align="center">분류 축(Axis)</th>
 								<th data-field="groupingid" data-sortable="true" data-align="center">1st DataSet</th>
+								<th data-field="notworkcolumn" data-sortable="false" data-align="center"
+									data-formatter="scenarioListOperateFormatter" data-events="operateEvents">#
+								</th>
 							</tr>
 						</thead>
 					</table>
+				</div>
+				<!-- Modal -->
+				<div class="modal fade" id="addScenarioListModal" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="p-5">
+											<div class="text-center">
+												<h1 class="h4 text-gray-900 mb-4">시나리오 리스트</h1>
+											</div>
+											<form class="user">
+												<div class="form-group row">
+													<div class="col-sm-6">
+														<input type="text" name="scenarioid" class="form-control-custom form-control-user"
+														id="" placeholder="시나리오 ID">
+													</div>
+													<div class="col-sm-6">
+														<input type="text" name="scenarionm" class="form-control-custom form-control-user"
+														id="" placeholder="시나리오명">
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-6">
+														<input type="text" name="axisid" class="form-control-custom form-control-user"
+														id="" placeholder="분류 축(Axis)">
+													</div>
+													<div class="col-sm-6">
+														<input type="text" name="groupingid" class="form-control-custom form-control-user"
+														id="" placeholder="1st DataSet">
+													</div>
+												</div>
+												<hr>
+												<div class="row">
+													<div class="col-lg-10">
+														<a id="addScenarioListModalCreate"
+															class="btn btn-primary btn-user btn-block">
+															Save
+														</a>
+														<a id="addScenarioListModalModify"
+															class="btn btn-primary btn-user btn-block mt-0">
+															Save
+														</a>
+													</div>
+													<div class="col-lg-2">
+														<a id="addScenarioListModalClose"
+															class="btn btn-google btn-user btn-block">
+															X
+														</a>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="card-header py-3">
 					<strong>시나리오별 그룹핑 리스트</strong>
 				</div>
 				<div class="card-body">
-<!--					<div id="toolbarScenarioGroup">-->
-<!--						<button type="button" class="btn btn-primary" id="addScenarioGroup">-->
-<!--							<i class="fa-solid fa-plus"></i> Add-->
-<!--						</button>-->
-<!--						<button id="removeScenarioGroup" class="btn btn-danger" disabled>-->
-<!--							<i class="fa fa-trash"></i> Delete-->
-<!--						</button>-->
-<!--					</div>						-->
-					<table id="scenarioGroup" data-toggle="table" data-toolbar="#toolbarScenarioGroup" data-height="350" data-click-to-select="false"
+					<div id="toolbarScenarioGroup">
+						<button type="button" class="btn btn-primary" id="addScenarioGroup">
+							<i class="fa-solid fa-plus"></i> Add
+						</button>
+						<button id="removeScenarioGroup" class="btn btn-danger" disabled>
+							<i class="fa fa-trash"></i> Delete
+						</button>
+					</div>						
+					<table id="scenariogroup" data-toggle="table" data-toolbar="#toolbarScenarioGroup" data-height="350" data-click-to-select="false"
 						data-search="true" data-show-columns="true"
 						data-show-columns-toggle-all="true">
 						<thead class="thead-light">
@@ -59,9 +156,74 @@
 								<th data-field="state" data-checkbox="true"></th>
 								<th data-field="pqcdid" data-sortable="true" data-align="center">PQCD 분류</th>
 								<th data-field="activityid" data-sortable="true" data-align="center">Activity ID</th>
+								<th data-field="notworkcolumn" data-sortable="false" data-align="center"
+									data-formatter="scenarioGroupOperateFormatter" data-events="operateEvents">#
+								</th>
 							</tr>
 						</thead>
 					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="addScenarioGroupModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">시나리오별 그룹핑 리스트</h1>
+								</div>
+								<form class="user">
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input disabled type="text" name="scenarioid" class="form-control-custom form-control-user"
+											id="" placeholder="시나리오 ID">
+										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<select id="pqcdid" name="pqcdid"
+												class="form-select-custom form-control-user" aria-label="주/야구분">
+												<option value="">주/야구분</option>
+												<option value="P">P</option>
+												<option value="Q">Q</option>
+												<option value="C">C</option>
+												<option value="D">D</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6">
+											<input type="text" name="activityid" class="form-control-custom form-control-user"
+											id="" placeholder="Activity ID">
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-lg-10">
+											<a id="addScenarioGroupModalCreate"
+												class="btn btn-primary btn-user btn-block">
+												Save
+											</a>
+											<a id="addScenarioGroupModalModify"
+												class="btn btn-primary btn-user btn-block mt-0">
+												Save
+											</a>
+										</div>
+										<div class="col-lg-2">
+											<a id="addScenarioGroupModalClose"
+												class="btn btn-google btn-user btn-block">
+												X
+											</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

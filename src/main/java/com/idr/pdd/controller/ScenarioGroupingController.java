@@ -7,6 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,4 +48,39 @@ public class ScenarioGroupingController {
 
     }
 
+	@ResponseBody
+	@PostMapping("/create1")
+    public int create1(@RequestBody CM0901 param) {
+			return service.save1(param);
+    }
+	
+	@ResponseBody
+	@PutMapping("/modify1")
+    public int modify1(@RequestBody CM0901 param) {
+		return service.save1(param);
+    }
+	
+	@ResponseBody
+	@PutMapping("/remove1")
+    public int remove1(@RequestBody List<Integer> param) {
+		return service.remove1(param);
+    }
+	
+	@ResponseBody
+	@PostMapping("/create2")
+    public int create2(@RequestBody CM0902 param) {
+			return service.save2(param);
+    }
+	
+	@ResponseBody
+	@PutMapping("/modify2")
+    public int modify2(@RequestBody CM0902 param) {
+		return service.save2(param);
+    }
+	
+	@ResponseBody
+	@PutMapping("/remove2")
+    public int remove2(@RequestBody List<Integer> param) {
+		return service.remove2(param);
+    }
 }

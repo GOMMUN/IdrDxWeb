@@ -30,8 +30,33 @@ public class MonitoringController {
     }
 	
 	@ResponseBody
-	@GetMapping("/find")
-    public List<Monitoring> find(Monitoring param) {
-		return service.find(param);
+	@GetMapping("/findproduct")
+    public List<Monitoring> findproduct(Monitoring param) {
+		return service.findproduct(param);
     }
+	
+	@ResponseBody
+	@GetMapping("/findstorage")
+    public Monitoring findstorage(Monitoring param) {
+		
+		return service.findstorage(param);
+    }
+	
+	@ResponseBody
+	@GetMapping("/findreject")
+    public Monitoring findreject(Monitoring param) {
+		return service.findreject(param);
+    }
+	
+	@ResponseBody
+	@GetMapping("/findnotoperate")
+    public List<Monitoring> findnotoperate(Monitoring param) {
+		
+		System.out.println(param);
+		System.out.println(param);
+		return service.findnotoperate(param);
+    }
+	
+
+
 }

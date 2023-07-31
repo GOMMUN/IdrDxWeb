@@ -5,7 +5,6 @@
 let c_factory = null;
 let c_line = null;
 let data = s_monitor();
-let result = null;
 
 $(function() {
 	factroy();
@@ -58,38 +57,78 @@ function setEventListener() {
 			return;
 		}
 
-		let url = '/monitoring/find';
+		let findproducturl = '/monitoring/findproduct';
 
 		var params = {
 			workDate: data.workDate,
 			factoryid: data.factoryid,
 			lineid: data.lineid
+
 		}
 
-		$.get(url + '?' + $.param(params)).then(function(res) {
-			result = res;
+		$.get(findproducturl + '?' + $.param(params)).then(function(res) {
+			let result = res;
+			if (result.length > 0) {
+				$("#dayplan").text(result[0].planQty);
+				$("#dayperformance").text(result[0].performancepercent + '%');
+				$("#daypl").text(result[0].prodQty);
+				$("#dayper").text(result[0].planQty);
 
-			result.forEach(element => {
-				if (element.shiftid.includes('AM', 4)) {
-					$("#dayplan").text(element.planQty);
-					let dayper=(element.prodQty/ element.planQty)*100;
-					$("#dayperformance").text(dayper+'%');
-					$("#daypl").text(element.prodQty);
-					$("#dayper").text(element.planQty);
-				}else{
-					$("#nightplan").text(element.planQty);
-					let nightper=(element.prodQty/ element.planQty)*100;
-					$("#nightperformance").text(nightper+'%');
-					$("#nightpl").text(element.prodQty);
-					$("#nightper").text(element.planQty);
-				}
-			});
+
+				$("#nightplan").text(result[1].planQty);
+				$("#nightperformance").text(result[1].performancepercent + '%');
+				$("#nightpl").text(result[1].prodQty);
+				$("#nightper").text(result[1].planQty);
+			} else {
+				$("#dayplan").text("데이터가없습니다");
+				$("#dayperformance").text(0);
+				$("#daypl").text(0);
+				$("#dayper").text(0);
+
+
+				$("#nightplan").text("데이터가없습니다");
+				$("#nightperformance").text(0);
+				$("#nightpl").text(0);
+				$("#nightper").text(0);
+			}
 
 
 		})
 
+		let findstorageurl = '/monitoring/findstorage';
 
+		$.get(findstorageurl + '?' + $.param(params)).then(function(res) {
+			let result = res;
+
+			$("#mqty").text(result.mtotalqty);
+			$("#pqty").text(result.ptotalqty);
+
+		})
+
+		let findrejecturl = '/monitoring/findreject';
+
+		$.get(findrejecturl + '?' + $.param(params)).then(function(res) {
+			let result = res;
+
+			$("#failper").text(result.failpercent + '%');
+			$("#failqty").text(result.totalfailQty);
+			$("#prodqty").text(result.totalprodQty);
+			$("#ri01").text(result.ri01);
+			$("#ri02").text(result.ri02);
+			$("#ri03").text(result.ri03);
+			$("#ri04").text(result.ri04);
+
+		})
+
+		let findnotoperateurl = '/monitoring/findnotoperate';
+
+		$.get(findnotoperateurl + '?' + $.param(params)).then(function(res) {
+			let result = res;
+			
+		})
 	});
+
+
 
 
 }
@@ -148,4 +187,13 @@ function s_monitor() {
 
 	}
 	return data;
+}
+
+function ajaxRequest(params) {
+
+	var url = '/monitoring/findnotoperate'
+
+	$.get(url + '?' + $.param(params.data)).then(function(res) {
+		params.success(res)
+	})
 }

@@ -42,8 +42,7 @@ public class WorkContentsController {
 	@ResponseBody
 	@PostMapping("/create")
     public int create(@RequestBody WorkContents param) {
-		System.out.print(param.getWorktimeTo());
-		System.out.print(param.getWorktimeTo());
+
 		return service.save(param);
     }
 	

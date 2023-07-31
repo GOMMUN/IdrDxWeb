@@ -53,8 +53,8 @@
 		ISUSABLE
 		) VALUES(
 		#{workdailySeq},
-		#{worktimeFrom},
-		#{worktimeTo},
+		CONCAT(REPLACE(#{worktimeFrom},':',''),'00'),
+		CONCAT(REPLACE(#{worktimeTo},':',''),'00'),
 		#{manhour},
 		#{prodQty},
 		#{goodsumQty},

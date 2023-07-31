@@ -17,5 +17,11 @@ import com.idr.pdd.dto.WorkerSupport;
 public interface MonitoringMapper {
 
 
-	List<Monitoring> find(Monitoring param);
+	List<Monitoring> findproduct(Monitoring param);
+
+	List<Monitoring> findstorage(Monitoring param);
+
+	Monitoring findreject(Monitoring param);
+
+	List<Monitoring> findnotoperate(Monitoring param);
 }

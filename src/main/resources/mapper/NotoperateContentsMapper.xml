@@ -5,77 +5,85 @@
 
 <mapper namespace="com.idr.pdd.mapper.NotoperateContentsMapper">
 
-    <select id="findAll" parameterType="NotoperateContents" resultType="NotoperateContents">
-        SELECT 
-        	ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-        	A.DATASEQ, 
-        	A.WORKDAILY_SEQ,       	
-        	A.NOTOPERATETIME_FROM, 
-        	A.NOTOPERATETIME_TO, 
-        	A.HANDS, 
-        	A.MANHOUR, 
-        	A.CAUSE, 
-        	A.CORRECTIVE_ACTION, 
-        	A.NOTES, 
-        	A.CREATOR, 
-        	A.CREATETIME, 
-        	A.EVENT, 
-        	A.EVENTUSER, 
-        	A.EVENTTIME, 
-        	A.ISUSABLE, 
-        	B.TID 
-        FROM DSP_NOTOPERATE_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
-		ON A.WORKDAILY_SEQ = B.DATASEQ 
-        WHERE 1=1
-        	AND A.ISUSABLE = 'Usable'
-        	AND WORKDAILY_SEQ = #{workdailySeq}
-        	
-    </select>
-    
-     <insert id="create" parameterType="NotoperateContents">
-		 INSERT INTO DSP_NOTOPERATE_CONTENTS (
-             WORKDAILY_SEQ
-             , NOTOPERATETIME_FROM
-             , NOTOPERATETIME_TO
-             , HANDS
-             , MANHOUR
-             , CAUSE
-             ,CORRECTIVE_ACTION
-             ,CREATOR
-			 ,CREATETIME
-			 ,EVENT
-			 ,EVENTUSER
-			 ,EVENTTIME
-			 ,ISUSABLE
-        )
-        VALUES (
-            #{workdailySeq},
-			#{notoperatetimeFrom},
-			#{notoperatetimeTo},
-			#{hands},
-			#{manhour},
-			#{cause},
-			#{correctiveAction},
-			#{creator},
-			GETDATE(),
-			#{event},
-			#{eventuser},
-			GETDATE(),
-			'Usable'
-        );
+	<select id="findAll" parameterType="NotoperateContents"
+		resultType="NotoperateContents">
+		SELECT
+		ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+		A.DATASEQ,
+		A.WORKDAILY_SEQ,
+		CONVERT(VARCHAR(8), A.NOTOPERATETIME_TO, 108) AS NOTOPERATETIME_FROM,
+		CONVERT(VARCHAR(8),A.NOTOPERATETIME_FROM, 108)AS NOTOPERATETIME_TO,
+		A.HANDS,
+		A.MANHOUR,
+		A.CAUSE,
+		A.CORRECTIVE_ACTION,
+		A.NOTES,
+		A.CREATOR,
+		A.CREATETIME,
+		A.EVENT,
+		A.EVENTUSER,
+		A.EVENTTIME,
+		A.ISUSABLE,
+		B.TID
+		FROM DSP_NOTOPERATE_CONTENTS A
+		JOIN DSP_WORKDAILY_REPORT B
+		ON
+		A.WORKDAILY_SEQ = B.DATASEQ
+		WHERE 1=1
+		AND
+		A.ISUSABLE = 'Usable'
+		AND WORKDAILY_SEQ = #{workdailySeq}
+
+	</select>
+
+	<insert id="create" parameterType="NotoperateContents">
+		INSERT INTO
+		DSP_NOTOPERATE_CONTENTS (
+		WORKDAILY_SEQ
+		, NOTOPERATETIME_FROM
+		,
+		NOTOPERATETIME_TO
+		, HANDS
+		, MANHOUR
+		, CAUSE
+		,CORRECTIVE_ACTION
+		,CREATOR
+		,CREATETIME
+		,EVENT
+		,EVENTUSER
+		,EVENTTIME
+		,ISUSABLE
+		)
+		VALUES (
+		#{workdailySeq},
+		CONCAT(REPLACE(#{notoperatetimeFrom},':',''),'00'),
+		CONCAT(REPLACE(#{notoperatetimeTo},':',''),'00'),
+		#{hands},
+		#{manhour},
+		#{cause},
+		#{correctiveAction},
+		#{creator},
+		GETDATE(),
+		#{event},
+		#{eventuser},
+		GETDATE(),
+		'Usable'
+		);
 
 	</insert>
 
 	<update id="modify" parameterType="WorkDailyReport">
 		UPDATE DSP_NOTOPERATE_CONTENTS
 		SET
-			 NOTOPERATETIME_FROM= #{notoperatetimeFrom}
-             , NOTOPERATETIME_TO= #{notoperatetimeTo}
-             , HANDS= #{hands}
-             , MANHOUR= #{manhour}
-             , CAUSE= #{cause}
-             ,CORRECTIVE_ACTION= #{correctiveAction}
-             , EVENTTIME = GETDATE()
+		NOTOPERATETIME_FROM= #{notoperatetimeFrom}
+		, NOTOPERATETIME_TO=
+		#{notoperatetimeTo}
+		, HANDS= #{hands}
+		, MANHOUR= #{manhour}
+		, CAUSE=
+		#{cause}
+		,CORRECTIVE_ACTION= #{correctiveAction}
+		, EVENTTIME = GETDATE()
 		WHERE
 		DATASEQ = #{dataseq}
 	</update>
@@ -83,7 +91,8 @@
 	<update id="remove" parameterType="list">
 		UPDATE DSP_NOTOPERATE_CONTENTS
 		SET ISUSABLE= null
-		WHERE 1=1 AND DATASEQ IN
+		WHERE 1=1 AND DATASEQ
+		IN
 		<foreach collection="list" item="data" index="index"
 			separator="," open="(" close=")">
 			#{data}

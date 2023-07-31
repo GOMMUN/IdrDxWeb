@@ -5,20 +5,86 @@
 
 <mapper namespace="com.idr.pdd.mapper.MonitoringMapper">
 
-	<select id="find" resultType="Monitoring"
+	<select id="findproduct" resultType="Monitoring"
 		parameterType="Monitoring">
 		SELECT
 		A.PROD_QTY,
 		B.PLAN_QTY,
 		B.SHIFTID
-		FROM DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
-		ON A.WORKDAILY_SEQ = B.DATASEQ
+		FROM
+		DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ =
+		B.DATASEQ
 		WHERE
-		B.WORK_DATE=CONVERT(VARCHAR, CONVERT(DATE, #{workDate}), 112)
+		B.WORK_DATE=CONVERT(VARCHAR, CONVERT(DATE, #{workDate}),
+		112)
 		AND
-		A.ISUSABLE ='USABLE' AND B.ISUSABLE ='USABLE' 
-		AND B.FACTORYID =#{factoryid}
+		A.ISUSABLE ='USABLE' AND B.ISUSABLE ='USABLE'
+		AND B.FACTORYID
+		=#{factoryid}
 		AND B.LINEID=#{lineid}
+	</select>
+
+	<select id="findstorage" resultType="Monitoring"
+		parameterType="Monitoring">
+		SELECT
+		A.QTY ,
+		B.STORAGENAME,
+		A.MATERIALID
+		FROM
+		DSP_INVENTORY A JOIN DSP_STORAGE B
+		ON A.FACTORYID =#{factoryid} AND
+		B.FACTORYID =#{factoryid}
+		AND A.INVENTORYDATE =#{workDate}
+		AND
+		A.STORAGEID =B.STORAGEID
+		AND A.ISUSABLE ='USABLE' AND B.ISUSABLE ='Y'
+	</select>
+
+	<select id="findreject" resultType="Monitoring"
+		parameterType="Monitoring">
+		SELECT
+		SUM(A.PROD_QTY)as TOTALPROD_QTY,
+		SUM(A.FIRSTTIME_FAIL_QTY)as TOTALFAIL_QTY,
+		COUNT(case when
+		B.REJECT_ITEMID='RI01' then 1 end)AS RI01,
+		COUNT(case when
+		B.REJECT_ITEMID='RI02' then 1 end)AS RI02,
+		COUNT(case when
+		B.REJECT_ITEMID='RI03' then 1 end)AS RI03,
+		COUNT(case when
+		B.REJECT_ITEMID='RI04' then 1 end)AS RI04
+		FROM DSP_WORK_CONTENTS A JOIN
+		DSP_REJECT_CONTENTS B
+		ON A.WORKDAILY_SEQ = B.WORKDAILY_SEQ
+		WHERE
+		(SELECT
+		DATASEQ
+		FROM DSP_WORKDAILY_REPORT
+		WHERE WORK_DATE=
+		CONVERT(VARCHAR,CONVERT(DATE, '2023-07-26'),112)
+		AND
+		FACTORYID=#{factoryid}
+		AND LINEID= #{lineid}
+		AND
+		DATASEQ=A.WORKDAILY_SEQ)=A.WORKDAILY_SEQ
+
+	</select>
+
+	<select id="findnotoperate" resultType="Monitoring"
+		parameterType="Monitoring">
+		SELECT
+		A.NOTOPERATETIME_FROM ,
+		A.NOTOPERATETIME_TO,
+		(SELECT LOCATIONNAME FROM DSP_LOCATION WHERE LOCATIONID=#{lineid})AS LINEID
+		FROM
+		DSP_NOTOPERATE_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
+		ON
+		A.WORKDAILY_SEQ =B.DATASEQ
+		WHERE B.WORK_DATE =CONVERT(VARCHAR, CONVERT(DATE, #{workDate}),112)
+		AND
+		B.FACTORYID =#{factoryid}
+		AND B.LINEID =#{lineid}
 	</select>
 
 

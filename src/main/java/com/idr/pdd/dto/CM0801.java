@@ -12,7 +12,13 @@ public class CM0801 {
 	private String activitynm;
 	private String pqcdid;
 	private String pqcdnm;
+	private String fstreguserid;
+	private String fstregdt;
+	private String fnledituserid;
+	private String fnleditdt;
 	private String isusable;
+	private String tid;
+
 	
 
 }

@@ -39,7 +39,7 @@ function setEventListener (){
 		scenarioGroupDetail($element);
 	});
 	
-	$grid.on('check.bs.table', function(row, $element) { //axis조회
+	$grid.on('check.bs.table', function(row, $element) { //
 		$gridRemoveBtnL.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
@@ -59,7 +59,7 @@ function setEventListener (){
 		$gridRemoveBtnL.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
-	$grid.on('check.bs.table', function(row, $element) { //axis조회
+	$grid.on('check.bs.table', function(row, $element) { //
 		$gridAddBtnG.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
@@ -79,7 +79,7 @@ function setEventListener (){
 		$gridAddBtnG.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 	
-	$grid.on('refresh.bs.table', function(params) {
+	$grid.on('refresh.bs.table', function(params) {//
 		scenarioList();
 	});
 	

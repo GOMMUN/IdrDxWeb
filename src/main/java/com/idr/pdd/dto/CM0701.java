@@ -12,6 +12,11 @@ public class CM0701 {
 	private String axisnm;
 	private String groupingid;
 	private String groupingnm;
+	private String fstreguserid;
+	private String fstregdt;
+	private String fnledituserid;
+	private String fnleditdt;
 	private String isusable;
+	private String tid;
 
 }

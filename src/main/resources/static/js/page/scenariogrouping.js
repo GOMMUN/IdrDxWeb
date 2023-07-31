@@ -39,6 +39,50 @@ function setEventListener (){
 		scenarioGroupDetail($element);
 	});
 	
+	$grid.on('check.bs.table', function(row, $element) { //axis조회
+		$gridRemoveBtnL.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('uncheck.bs.table', function(row, $element) {
+		$gridRemoveBtnL.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+
+	$grid.on('check-all.bs.table', function(rowsAfter, rowsBefore) {
+		$gridRemoveBtnL.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+
+	$grid.on('uncheck-all.bs.table', function(rowsAfter, rowsBefore) {
+		$gridRemoveBtnL.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('page-change.bs.table', function(number, size) {
+		$gridRemoveBtnL.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('check.bs.table', function(row, $element) { //axis조회
+		$gridAddBtnG.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('uncheck.bs.table', function(row, $element) {
+		$gridAddBtnG.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+
+	$grid.on('check-all.bs.table', function(rowsAfter, rowsBefore) {
+		$gridAddBtnG.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+
+	$grid.on('uncheck-all.bs.table', function(rowsAfter, rowsBefore) {
+		$gridAddBtnG.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('page-change.bs.table', function(number, size) {
+		$gridAddBtnG.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+	});
+	
+	$grid.on('refresh.bs.table', function(params) {
+		scenarioList();
+	});
+	
 	$gridGroup.on('check.bs.table', function(row, $element) { //axis조회
 		$gridRemoveBtnG.prop('disabled', !$gridGroup.bootstrapTable('getSelections').length)
 	});
@@ -85,6 +129,7 @@ function setEventListener (){
 		data.scenarionm = $("input[name=scenarionm]").val();
 		data.axisid = $("input[name=axisid]").val();
 		data.groupingid = $("input[name=groupingid]").val();
+		data.isusable = $("select[name=isusable]").val();
 	
 		//validation check
 		if (data.scenarioid == "") {
@@ -128,6 +173,7 @@ function setEventListener (){
 		data.scenarionm = $("input[name=scenarionm]").val();
 		data.axisid = $("input[name=axisid]").val();
 		data.groupingid = $("input[name=groupingid]").val();
+		data.isusable = $("select[name=isusable]").val();
 	
 		//validation check
 		if (data.scenarioid == "") {
@@ -212,6 +258,7 @@ function setEventListener (){
 		data.scenarioid = $("input[name=scenarioid]").val();
 		data.pqcdid = $("select[name=pqcdid]").val();
 		data.activityid = $("input[name=activityid]").val();
+		data.isusable = $("select[name=isusable]").val();
 	
 		//validation check
 		if (data.pqcdid == "") {
@@ -254,6 +301,7 @@ function setEventListener (){
 		data.scenarioid = $("input[name=scenarioid]").val();
 		data.pqcdid = $("select[name=pqcdid]").val();
 		data.activityid = $("input[name=activityid]").val();
+		data.isusable = $("select[name=isusable]").val();
 	
 		//validation check
 		if (data.pqcdid == "") {
@@ -317,6 +365,18 @@ function setEventListener (){
 		});
 	});	
 };
+
+function scenarioList(data) {
+	var url = '/scenario/find1';
+
+	var params = {}
+
+	$.get(url + '?' + $.param(params)).then(function(res) {
+		$table = $("#scenariolist");
+		$table.bootstrapTable('removeAll');
+		$table.bootstrapTable('append', res);
+	})
+}
 
 function scenarioGroup1(data) {
 	var url = '/scenario/find2';

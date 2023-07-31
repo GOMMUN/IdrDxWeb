@@ -14,6 +14,12 @@
 		,A.SCENARIO_NM
 		,A.AXIS_ID
 		,A.GROUPING_ID
+		,A.FST_REG_USER_ID
+		,A.FST_REG_DT
+		,A.FNL_EDIT_USER_ID
+		,A.FNL_EDIT_DT
+		,A.ISUSABLE
+		,A.TID
 		FROM CM0901 A
 		WHERE 1=1
 		ORDER BY A.SCENARIO_ID
@@ -27,6 +33,12 @@
 		,A.SCENARIO_ID
 		,A.PQCD_ID
 		,A.ACTIVITY_ID
+		,A.FST_REG_USER_ID
+		,A.FST_REG_DT
+		,A.FNL_EDIT_USER_ID
+		,A.FNL_EDIT_DT
+		,A.ISUSABLE
+		,A.TID
 		FROM CM0902 A
 		INNER JOIN CM0901 B ON (B.COMPANY_CD = A.COMPANY_CD AND B.BIZ_CD = A.BIZ_CD
 		AND B.SCENARIO_ID = A.SCENARIO_ID)
@@ -48,7 +60,8 @@
 				,FST_REG_USER_ID
 				,FST_REG_DT
 				,FNL_EDIT_USER_ID
-				,FNL_EDIT_DT			
+				,FNL_EDIT_DT
+				,ISUSABLE			
 			) 
 			VALUES(
 				 'dx'
@@ -60,7 +73,8 @@
 				,'idrAdmin'
 				,GETDATE()
 				,'idrAdmin'
-				,GETDATE()			
+				,GETDATE()
+				,#{isusable}			
 			)
 	</insert>
 	
@@ -73,14 +87,15 @@
 				,GROUPING_ID 		= #{groupingid}
 				,FNL_EDIT_USER_ID	='idrAdmin'
 				,FNL_EDIT_DT		= GETDATE()
+				,ISUSABLE 			= #{isusable}
 			WHERE DATASEQ	 		= #{dataseq}
 	</update>
 
     <update id="remove1" parameterType="list">
     	UPDATE CM0901
-		SET ISUSABLE	= 'N',
-			EVENTUSER 	= 'idrAdmin',
-			EVENTTIME 	= GETDATE()
+		SET ISUSABLE			= 'N',
+			FNL_EDIT_USER_ID 	= 'idrAdmin',
+			FNL_EDIT_DT 		= GETDATE()
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
@@ -97,7 +112,8 @@
 				,FST_REG_USER_ID
 				,FST_REG_DT
 				,FNL_EDIT_USER_ID
-				,FNL_EDIT_DT			
+				,FNL_EDIT_DT
+				,ISUSABLE			
 			) 
 			VALUES(
 				 'dx'
@@ -108,7 +124,8 @@
 				,'idrAdmin'
 				,GETDATE()
 				,'idrAdmin'
-				,GETDATE()			
+				,GETDATE()
+				,#{isusable}			
 			)
 	</insert>
 	
@@ -120,14 +137,15 @@
 				,ACTIVITY_ID 		= #{activityid}
 				,FNL_EDIT_USER_ID	='idrAdmin'
 				,FNL_EDIT_DT		= GETDATE()
+				,ISUSABLE			= #{isusable}
 			WHERE DATASEQ	 		= #{dataseq}
 	</update>
 
     <update id="remove2" parameterType="list">
     	UPDATE CM0902
-		SET ISUSABLE	= 'N',
-			EVENTUSER 	= 'idrAdmin',
-			EVENTTIME 	= GETDATE()
+		SET ISUSABLE			= 'N',
+			FNL_EDIT_USER_ID 	= 'idrAdmin',
+			FNL_EDIT_DT 		= GETDATE()
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}

@@ -69,6 +69,11 @@
 								<th data-field="scenarionm" data-sortable="true" data-align="center">시나리오명</th>
 								<th data-field="axisid" data-sortable="true" data-align="center">분류 축(Axis)</th>
 								<th data-field="groupingid" data-sortable="true" data-align="center">1st DataSet</th>
+								<th data-field="fstreguserid" data-sortable="true" data-align="center">등록자</th>
+								<th data-field="fstregdt" data-sortable="true" data-align="center">등록일</th>
+								<th data-field="fnledituserid" data-sortable="true" data-align="center">수정자</th>
+								<th data-field="fnleditdt" data-sortable="true" data-align="center">수정일</th>
+								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
 								<th data-field="notworkcolumn" data-sortable="false" data-align="center"
 									data-formatter="scenarioListOperateFormatter" data-events="operateEvents">#
 								</th>
@@ -109,6 +114,16 @@
 														id="" placeholder="1st DataSet">
 													</div>
 												</div>
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<select id="isusable" name="isusable"
+															class="form-select-custom form-control-user" aria-label="사용여부">
+															<option value="">사용여부 선택</option>
+															<option value="Y">Y</option>
+															<option value="N">N</option>
+														</select>
+													</div>
+												</div>
 												<hr>
 												<div class="row">
 													<div class="col-lg-10">
@@ -141,7 +156,7 @@
 				</div>
 				<div class="card-body">
 					<div id="toolbarScenarioGroup">
-						<button type="button" class="btn btn-primary" id="addScenarioGroup">
+						<button type="button" class="btn btn-primary" id="addScenarioGroup" disabled>
 							<i class="fa-solid fa-plus"></i> Add
 						</button>
 						<button id="removeScenarioGroup" class="btn btn-danger" disabled>
@@ -156,6 +171,11 @@
 								<th data-field="state" data-checkbox="true"></th>
 								<th data-field="pqcdid" data-sortable="true" data-align="center">PQCD 분류</th>
 								<th data-field="activityid" data-sortable="true" data-align="center">Activity ID</th>
+								<th data-field="fstreguserid" data-sortable="true" data-align="center">등록자</th>
+								<th data-field="fstregdt" data-sortable="true" data-align="center">등록일</th>
+								<th data-field="fnledituserid" data-sortable="true" data-align="center">수정자</th>
+								<th data-field="fnleditdt" data-sortable="true" data-align="center">수정일</th>
+								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
 								<th data-field="notworkcolumn" data-sortable="false" data-align="center"
 									data-formatter="scenarioGroupOperateFormatter" data-events="operateEvents">#
 								</th>
@@ -199,6 +219,14 @@
 										<div class="col-sm-6">
 											<input type="text" name="activityid" class="form-control-custom form-control-user"
 											id="" placeholder="Activity ID">
+										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<select id="isusable" name="isusable"
+												class="form-select-custom form-control-user" aria-label="사용여부">
+												<option value="">사용여부 선택</option>
+												<option value="Y">Y</option>
+												<option value="N">N</option>
+											</select>
 										</div>
 									</div>
 									<hr>

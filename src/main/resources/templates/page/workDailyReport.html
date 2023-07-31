@@ -39,7 +39,7 @@
 </style>
 
 <body>
-	<input id="parameterPlant" type="hidden" th:value="${plant}"/>
+	<input id="parameterPlant" type="hidden" th:value="${plant}" />
 	<div class="container-fluid mt-4">
 		<div class="row">
 			<div class="col-lg-12">
@@ -371,7 +371,7 @@
 											</select>
 										</div>
 									</div>
-						
+
 									<div class="form-group row">
 										<div class="col-sm-6 ">
 											<select id="wdrmatarialid" name="wdrmatarial"
@@ -380,14 +380,14 @@
 											</select>
 										</div>
 										<div class="col-sm-6 ">
-											<input type="text" name="planqty" class="form-control-custom form-control-user"
-											id="" placeholder="계획수량">
+											<input type="text" name="planqty"
+												class="form-control-custom form-control-user" id="" placeholder="계획수량">
 										</div>
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-12 mb-3 mb-sm-0">
-											<input type="text" name="notes" class="form-control-custom form-control-user"
-											id="" placeholder="특이사항">
+											<input type="text" name="notes"
+												class="form-control-custom form-control-user" id="" placeholder="특이사항">
 										</div>
 									</div>
 									<hr>
@@ -450,24 +450,28 @@
 								<form class="user">
 									<div class="form-group row">
 										<div class="col-sm-6">
-											<select id="overtimeyn" name="overtimeyn" class="form-select-custom form-control-user">
+											<select id="overtimeyn" name="overtimeyn"
+												class="form-select-custom form-control-user">
 												<option value="" selected disabled>잔업 여부</option>
 												<option value="Y">Y</option>
 												<option value="N">N</option>
 											</select>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" name="workinputdesc" class="form-control-custom form-control-user"
-												id="workinputdesc" placeholder='비고'>
+											<input type="text" name="workinputdesc"
+												class="form-control-custom form-control-user" id="workinputdesc"
+												placeholder='비고'>
 										</div>
 									</div>
 									<hr>
 									<div class="row">
 										<div class="col-lg-10">
-											<a id="addWorkerInputModalCreate" class="btn btn-primary btn-user btn-block">
+											<a id="addWorkerInputModalCreate"
+												class="btn btn-primary btn-user btn-block">
 												Save
 											</a>
-											<a id="addWorkerInputModalModify" class="btn btn-primary btn-user btn-block">
+											<a id="addWorkerInputModalModify"
+												class="btn btn-primary btn-user btn-block">
 												Save
 											</a>
 										</div>
@@ -578,8 +582,8 @@
 								<form class="user">
 									<div class="form-group row">
 										<div class="col-sm-6">
-											<input type="text" name="supportmanhour" class="form-control-custom form-control-user" id=""
-												placeholder="공수">
+											<input type="text" name="supportmanhour"
+												class="form-control-custom form-control-user" id="" placeholder="공수">
 										</div>
 										<div class="col-sm-3 mb-3 mb-sm-0">
 											<input type="time" name="supporttimeFrom"
@@ -595,15 +599,18 @@
 									<hr>
 									<div class="row">
 										<div class="col-lg-10">
-											<a id="addWorkerSupportModalCreate" class="btn btn-primary btn-user btn-block">
+											<a id="addWorkerSupportModalCreate"
+												class="btn btn-primary btn-user btn-block">
 												Save
 											</a>
-											<a id="addWorkerSupportModalModify" class="btn btn-primary btn-user btn-block">
+											<a id="addWorkerSupportModalModify"
+												class="btn btn-primary btn-user btn-block">
 												Save
 											</a>
 										</div>
 										<div class="col-lg-2">
-											<a id="addWorkerSupportModalClose" class="btn btn-google btn-user btn-block">
+											<a id="addWorkerSupportModalClose"
+												class="btn btn-google btn-user btn-block">
 												X
 											</a>
 										</div>
@@ -661,7 +668,7 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										
+
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="prodQty"
 												class="form-control-custom form-control-user" id="personnel"
@@ -679,8 +686,8 @@
 													placeholder='계획수량'>
 											</div>-->
 									</div>
-									<div class="form-group row">										
-										
+									<div class="form-group row">
+
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="reworkGoodQty"
 												class="form-control-custom form-control-user" id="personnel"
@@ -747,18 +754,24 @@
 									</div>-->
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-												<select id="rejectItemCode" name="rejectItemId"
+											<select id="rejectItemCode" name="rejectItemId"
 												class="form-select-custom form-control-user">
-												<option value="">불량</option>
+												<option value="">불량유형</option>
 											</select>
 										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<select id="rejectTypes" name="rejectTypesId"
+												class="form-select-custom form-control-user">
+												<option value="">불량내용</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group row">
 										<div class="col-sm-6">
 											<input type="text" name="firsttimeRejectQty"
 												class="form-control-custom form-control-user" id="Airlift"
 												placeholder='본'>
 										</div>
-									</div>
-									<div class="form-group row">
 										<div class="col-sm-6">
 											<input type="text" name="reworkRejectQty"
 												class="form-control-custom form-control-user" id="Airlift"

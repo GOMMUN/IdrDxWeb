@@ -16,6 +16,15 @@
         </if>
     </select>
     
+    <select id="findRejectType" parameterType="String" resultType="Code">
+        SELECT 
+        	COMM_GRP_CD AS M_CODE,
+			COMM_CD AS CODE,
+			COMM_CD_NM AS VALUE
+        FROM SC_COMM_CD
+		WHERE COMM_GRP_CD IN ('RI01','RI02','RI03','RI04')
+    </select>
+    
 
 
 </mapper>

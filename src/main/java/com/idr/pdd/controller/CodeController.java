@@ -88,6 +88,14 @@ public class CodeController {
     }
 	
 	@ResponseBody
+	@GetMapping("/rejectType")
+	public List<Code> rejectType() {
+		List<Code> list = service.findRejectType();
+		
+		return list;
+	}
+	
+	@ResponseBody
 	@GetMapping("/storage")
     public List<Code> storage() {
     	List<Code> list = service.findStorage();

@@ -17,6 +17,7 @@ import com.idr.pdd.dto.WorkerSupport;
 public interface CodeMapper {
 
 	List<Code> find(String commGrpCd);
+	List<Code> findRejectType();
 
 	
 	

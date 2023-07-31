@@ -159,4 +159,10 @@ public class CodeService {
 		}
 		return list;
 	}
+	
+	public List<Code> findRejectType() {
+		List<Code> list = codeMapper.findRejectType();
+		
+		return list;
+	}
 }

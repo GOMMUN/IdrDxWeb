@@ -22,7 +22,6 @@ let s_NonOperation = null;
 $(function() {
 	initSetting();
 	setEventListener();
-	setBinding();
 });
 
 function initSetting() {
@@ -58,10 +57,6 @@ function setEventListener() {
 	setWorkContentsEventListener();			// 작업내용 이벤트리스너
 	setNonconFormityEventListener();        // 부적합내역 이벤트 리스너
 	setNonOperationEventListener();         // 비가동내역 이벤트 리스너
-}
-
-function setBinding(){
-	$("#factoryCodes").trigger('change');
 }
 
 // 작업일보 이벤트
@@ -140,7 +135,8 @@ function setWorkDailyReportEventListener() {
 
 		data.workDate = $("input[name=workDate]").val();
 		//data.blockid = $("select[name=blockid]").val();
-		data.factoryid = $("select[name=factoryid]").val();
+		//data.factoryid = $("select[name=factoryid]").val();
+		data.factoryid = localStorage.getItem("plant");
 		//data.groupid = $("select[name=groupid]").val();
 		data.lineid = $("select[name=lineid]").val();
 		data.shiftid = $("select[name=shiftid]").val();
@@ -214,7 +210,8 @@ function setWorkDailyReportEventListener() {
 
 			data.workDate = $("input[name=workDate]").val();
 			//data.blockid = $("select[name=blockid]").val();
-			data.factoryid = $("select[name=factoryid]").val();
+			//data.factoryid = $("select[name=factoryid]").val();
+			data.factoryid = localStorage.getItem("plant");
 			//data.groupid = $("select[name=groupid]").val();
 			data.lineid = $("select[name=lineid]").val();
 			data.shiftid = $("select[name=shiftid]").val();
@@ -293,11 +290,10 @@ function setWorkDailyReportEventListener() {
 	});
 
 
-
+	/*
 	// modal 
 	$factoryCodes = $("#factoryCodes");
 	
-
 	$factoryCodes.change(function() {
 
 		let $dropdown1 = $("#blockCodes");
@@ -375,6 +371,7 @@ function setWorkDailyReportEventListener() {
 
 		}
 	});
+	*/
 }
 
 function setWorkerInputEventListener() {
@@ -1577,10 +1574,10 @@ window.operateEvents = {
 
 		$('#addWorkDailyReportModal').modal('show');
 
-		$factoryCodes = $("#factoryCodes");
-		$factoryCodes.trigger('change');
-
-		workDailyReportDetail(row);
+//		$factoryCodes = $("#factoryCodes");
+//		$factoryCodes.trigger('change');
+//
+//		workDailyReportDetail(row);
 	},
 	"click .workerInputModify": function(e, value, row, index) {
 		s_workerManHour = row;
@@ -1672,7 +1669,7 @@ function workDailyReportDetail(data) {
 
 	$("input[name=workDate]").datepicker("setDate", new Date(data.workDate.substring(0, 4), data.workDate.substring(4, 6) - 1, data.workDate.substring(6, 8)));
 	$("select[name=blockid]").val(data.blockid);
-	$("select[name=factoryid]").val(data.factoryid);
+	//$("select[name=factoryid]").val(data.factoryid);
 	$("select[name=groupid]").val(data.groupid);
 	$("select[name=lineid]").val(data.lineid);
 	$("select[name=shiftid]").val(data.shiftid);
@@ -1822,7 +1819,7 @@ function resetWorkDailyReport() {
 	$("input[name=ruleid]").val("");
 	$("input[name=workDate]").val("");
 	$("select[name=blockid]").val("");
-	$("select[name=factoryid]").val("");
+	//$("select[name=factoryid]").val("");
 	$("select[name=groupid]").val("");
 	$("select[name=lineid]").val("");
 	$("select[name=shiftid]").val("");

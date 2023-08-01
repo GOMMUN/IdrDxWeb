@@ -26,7 +26,8 @@
         	A.EVENT, 
         	A.EVENTUSER, 
         	FORMAT(A.EVENTTIME, 'yyyy-MM-dd HH:mm:ss') AS EVENTTIME, 
-        	A.ISUSABLE 
+        	A.ISUSABLE,
+        	A.TID
         FROM DSP_LOTINFO as A
         WHERE 1=1
     </select>

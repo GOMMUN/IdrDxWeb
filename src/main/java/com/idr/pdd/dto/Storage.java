@@ -20,4 +20,5 @@ public class Storage {
 	private String eventuser;
 	private String eventtime;
 	private String isusable;
+	private String tid;
 }

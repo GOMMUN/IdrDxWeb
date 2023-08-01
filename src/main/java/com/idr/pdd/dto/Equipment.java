@@ -21,4 +21,5 @@ public class Equipment {
 	private String eventuser;
 	private String eventtime;
 	private String isusable;
+	private String tid;
 }

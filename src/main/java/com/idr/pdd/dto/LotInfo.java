@@ -25,4 +25,5 @@ public class LotInfo {
 	private String eventuser;
 	private String eventtime;
 	private String isusable;
+	private String tid;
 }

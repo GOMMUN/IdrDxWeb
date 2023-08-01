@@ -23,4 +23,5 @@ public class LogisticsInfo {
 	private String eventuser;
 	private String eventtime;
 	private String isusable;
+	private String tid;
 }

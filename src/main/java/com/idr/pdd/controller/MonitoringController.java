@@ -52,8 +52,6 @@ public class MonitoringController {
 	@GetMapping("/findnotoperate")
     public List<Monitoring> findnotoperate(Monitoring param) {
 		
-		System.out.println(param);
-		System.out.println(param);
 		return service.findnotoperate(param);
     }
 	

@@ -79,7 +79,6 @@ function setInventoryEventListener() {
 	});
 	
 	$grid.on('refresh.bs.table', function(params) {
-		debugger;
 		inventory();
 	});
 //	
@@ -90,6 +89,12 @@ function setInventoryEventListener() {
 	
 
 	$gridAddBtn.click(function() {
+		
+		$("select[name=factoryid]").val("");
+		$("select[name=storageid]").val("");
+		$("select[name=materialid]").val("");
+		$("input[name=qty]").val("");
+		$("input[name=inventorydate]").val("");
 
 //		resetInventory();
 
@@ -106,11 +111,7 @@ function setInventoryEventListener() {
 	$modalCreateBtn.click(function() {
 		
 		
-		$("select[name=factoryid]").val("");
-		$("select[name=storageid]").val("");
-		$("select[name=materialid]").val("");
-		$("input[name=qty]").val("");
-		$("input[name=inventorydate]").val("");
+		
 
 		let data = {};
 		

@@ -624,7 +624,7 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="addWorkContentsModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="addWorkContentsModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
@@ -675,9 +675,9 @@
 												placeholder='생산수량'>
 										</div>
 										<div class="col-sm-6">
-											<input type="text" name="reworkFailQty"
+											<input type="text" name="firsttimeFailQty"
 												class="form-control-custom form-control-user" id="Airlift"
-												placeholder='재작업불량'>
+												placeholder='불량'>
 										</div>
 										<!--
 											<div class="col-sm-6 mb-3 mb-sm-0">
@@ -687,45 +687,49 @@
 											</div>-->
 									</div>
 									<div class="form-group row">
-
+										<div class="col-sm-6">
+											<input type="text" name="reworkFailQty"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='재작업불량'>
+										</div>
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="reworkGoodQty"
 												class="form-control-custom form-control-user" id="personnel"
 												placeholder='재작업양품'>
 										</div>
-										<div class="col-sm-6 mb-3 mb-sm-0">
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-12 mb-3 mb-sm-0">
 											<input type="text" name="workcontentnotes"
 												class="form-control-custom form-control-user" id="personnel"
 												placeholder='특이사항'>
 										</div>
 									</div>
-									<hr>
-									<div class="row">
-										<div class="col-lg-10">
-											<a id="addWorkContentsModalCreate"
-												class="btn btn-primary btn-user btn-block">
-												Save
-											</a>
-											<a id="addWorkContentsModalModify"
-												class="btn btn-primary btn-user btn-block mt-0">
-												Save
-											</a>
-										</div>
-										<div class="col-lg-2">
-											<a id="addWorkContentsModalClose" class="btn btn-google btn-user btn-block">
-												X
-											</a>
-										</div>
-									</div>
-								</form>
 							</div>
+							<hr>
+							<div class="row">
+								<div class="col-lg-10">
+									<a id="addWorkContentsModalCreate" class="btn btn-primary btn-user btn-block">
+										Save
+									</a>
+									<a id="addWorkContentsModalModify" class="btn btn-primary btn-user btn-block mt-0">
+										Save
+									</a>
+								</div>
+								<div class="col-lg-2">
+									<a id="addWorkContentsModalClose" class="btn btn-google btn-user btn-block">
+										X
+									</a>
+								</div>
+							</div>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	</div>
 	<div class="modal fade" id="addNonconFormityModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">

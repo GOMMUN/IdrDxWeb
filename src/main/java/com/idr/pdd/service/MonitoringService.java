@@ -71,9 +71,11 @@ public class MonitoringService {
 
 	public Monitoring findreject(Monitoring param) {
 		try {
-
+			Monitoring mt= mapper.findreject(param);
+			double percent=Math.round((double)mt.getTotalfailQty()/(double)mt.getTotalprodQty()*100);
+			mt.setFailpercent(percent);
 			
-			return mapper.findreject(param);
+			return mt;
 			
 		}catch(Exception e)
 		{

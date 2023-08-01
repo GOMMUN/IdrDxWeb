@@ -15,7 +15,6 @@ $(function() {
 
 function setEventListener() {
 	$search = $("#search");
-
 	$factoryCodes = $("#factoryCodes");
 
 	$factoryCodes.change(function() {
@@ -120,12 +119,9 @@ function setEventListener() {
 
 		})
 
-		let findnotoperateurl = '/monitoring/findnotoperate';
 
-		$.get(findnotoperateurl + '?' + $.param(params)).then(function(res) {
-			let result = res;
-			
-		})
+
+		ajaxRequest(params);
 	});
 
 
@@ -190,10 +186,25 @@ function s_monitor() {
 }
 
 function ajaxRequest(params) {
+	$table = $('#notoperate')
+	$table.bootstrapTable('removeAll')
 
-	var url = '/monitoring/findnotoperate'
+	let findnotoperateurl = '/monitoring/findnotoperate';
 
-	$.get(url + '?' + $.param(params.data)).then(function(res) {
-		params.success(res)
+	$.get(findnotoperateurl + '?' + $.param(params)).then(function(res) {
+		let result=res;
+		result.forEach(function(r) {
+			
+			$table.bootstrapTable('insertRow', {
+				index: 1,
+				row: {
+					lineid: r.lineid,
+					notoperatetime: r.notoperatetime
+
+				}
+			})
+		})
+
+
 	})
 }

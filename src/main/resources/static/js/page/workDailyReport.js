@@ -388,6 +388,8 @@ function setWorkerInputEventListener() {
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 		s_workerInput = $element;
+		$("select[name=overtimeyn]").val($element.overtime);
+		$("input[name=workinputdesc]").val($element.notes);
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -411,7 +413,7 @@ function setWorkerInputEventListener() {
 			return;
 		}
 		$("select[name=overtimeyn]").val("");
-
+		$("input[name=workinputdesc]").val("");
 		$("#addWorkerInputModalCreate").css('display', "block");
 		$("#addWorkerInputModalModify").css('display', "none");
 
@@ -530,6 +532,11 @@ function setWorkerManhourEventListener() {
 
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+		
+		$("input[name=hands]").val($element.hands);
+		$("input[name=manhour]").val($element.manhour);
+		$("select[name=inputItemid]").val($element.inputItemid);
+		
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -664,6 +671,10 @@ function setWorkerSupportEventListener() {
 	let data = initWorkerSupportInput();
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+				
+		$("input[name=supportmanhour]").val($element.manhour);
+		$("input[name=supporttimeFrom]").val($element.supporttimeFrom);
+		$("input[name=supporttimeTo]").val($element.supporttimeTo);
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -686,6 +697,11 @@ function setWorkerSupportEventListener() {
 			alert("작업일보를 선택해주세요.");
 			return;
 		}
+		
+		$("input[name=supportmanhour]").val("");
+		$("input[name=supporttimeFrom]").val("");
+		$("input[name=supporttimeTo]").val("");
+		
 		$("#addWorkerSupportModalCreate").css('display', "block");
 		$("#addWorkerSupportModalModify").css('display', "none");
 
@@ -793,6 +809,18 @@ function setWorkContentsEventListener() {
 	let data = initWorkContentsInput();
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+		
+		$("input[name=worktimeFrom]").val($element.worktimeFrom);
+		$("input[name=workcontenttimeTo]").val($element.worktimeTo);
+		$("input[name=workcontentmanhour]").val($element.manhour);
+		$("select[name=modelid]").val($element.modelid);
+		$("input[name=prodQty]").val($element.prodQty);
+		$("input[name=planQty]").val($element.planQty);
+		$("input[name=goodsumQty]").val($element.goodsumQty);
+		$("input[name=reworkGoodQty]").val($element.reworkGoodQty);
+		$("input[name=reworkFailQty]").val($element.reworkFailQty);
+		$("input[name=firsttimeFailQty]").val($element.firsttimeFailQty);
+		$("input[name=workcontentnotes]").val($element.notes);
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -862,6 +890,7 @@ function setWorkContentsEventListener() {
 		data.goodsumQty = $("input[name=goodsumQty]").val();
 		data.reworkGoodQty = $("input[name=reworkGoodQty]").val();
 		data.reworkFailQty = $("input[name=reworkFailQty]").val();
+		data.firsttimeFailQty = $("input[name=firsttimeFailQty]").val();
 		data.notes = $("input[name=workcontentnotes]").val();
 
 		//		data.plant=s_workDailyReport.factoryid;
@@ -905,6 +934,11 @@ function setWorkContentsEventListener() {
 			alert("재작업불량을 선택 하세요.");
 			return;
 		}
+		if (data.firsttimeFailQty == "") {
+			alert("불량을 선택 하세요.");
+			return;
+		}
+
 
 		let url = '/workContents/create';
 		//		let url = 'http://idrenvision.iptime.org:8271/work-contents';
@@ -968,6 +1002,9 @@ function setNonconFormityEventListener() {
 	let data = initNonconFormity();
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+		
+		
+		
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {

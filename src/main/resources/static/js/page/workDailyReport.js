@@ -1006,8 +1006,14 @@ function setNonconFormityEventListener() {
 	let $modalCloseBtn = $("#addNonconFormityModalClose");		// 작업일보 모달 close 버튼
 	let $modalModifyBtn = $("#addNonconFormityModalModify");	// 작업일보 모달 update 버튼
 	let data = initNonconFormity();
+	
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+		
+		$("select[name=rejectType]").val($element.rejectType);	
+		$("select[name=rejectItemId]").val($element.rejectItemId);
+		$("input[name=firsttimeRejectQty]").val($element.firsttimeRejectQty);
+		$("input[name=reworkRejectQty]").val($element.reworkRejectQty);
 			
 	});
 
@@ -1031,6 +1037,11 @@ function setNonconFormityEventListener() {
 			alert("작업일보를 선택해주세요.");
 			return;
 		}
+		$("select[name=rejectType]").val("");	
+		$("select[name=rejectItemId]").val("");
+		$("input[name=firsttimeRejectQty]").val("");
+		$("input[name=reworkRejectQty]").val("");
+			
 		$("#addNonconFormityModalCreate").css('display', "block");
 		$("#addNonconFormityModalModify").css('display', "none");
 
@@ -1069,30 +1080,29 @@ function setNonconFormityEventListener() {
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
 		data.workdailySeq = dataseq;
-		//data.modelid = $("select[name=modelid2]").val();
-		//data.operationid=$("input[name=operationid]").val();
-		data.rejectItemtype=$("select[name=rejectItemtype]").val();
+		data.rejectType=$("select[name=rejectType]").val();	
 		data.rejectItemid = $("select[name=rejectItemId]").val();
 		data.firsttimeRejectQty = $("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty = $("input[name=reworkRejectQty]").val();
 		data.tid = tid();
 
-		if (data.personid == "") {
-			alert("작업자를 선택 하세요.");
+		if (data.firsttimeRejectQty == "") {
+			alert("본을 선택 하세요.");
 			return;
 		}
-		if (data.modelid == "") {
-			alert("모델/차종을 선택 하세요.");
-			return;
-		}
-		if (data.operationid == "") {
-			alert("공정을 선택 하세요.");
+		if (data.reworkRejectQty == "") {
+			alert("재투입을 선택 하세요.");
 			return;
 		}
 		if (data.rejectItemid == "") {
 			alert("불량내용을 선택 하세요.");
 			return;
 		}
+		if (data.rejectType == "") {
+			alert("불량유형을 선택 하세요.");
+			return;
+		}
+
 
 		let url = '/rejectContents/create';
 
@@ -1116,16 +1126,22 @@ function setNonconFormityEventListener() {
 		data.rejectItemid = $("select[name=rejectItemId]").val();
 		data.firsttimeRejectQty = $("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty = $("input[name=reworkRejectQty]").val();
-		if (data.rejectItemid == "") {
-			alert("불량을 선택 하세요.");
-			return;
-		}
+		data.rejectType=$("select[name=rejectType]").val();
+		
 		if (data.firsttimeRejectQty == "") {
 			alert("본을 선택 하세요.");
 			return;
 		}
 		if (data.reworkRejectQty == "") {
 			alert("재투입을 선택 하세요.");
+			return;
+		}
+		if (data.rejectItemid == "") {
+			alert("불량내용을 선택 하세요.");
+			return;
+		}
+		if (data.rejectType == "") {
+			alert("불량유형을 선택 하세요.");
 			return;
 		}
 
@@ -1996,7 +2012,7 @@ function initNonconFormity() {
 		"lineid": "", "shiftid": "", "workDate": "", "operationid": "","modelid": "","images": "", "movies": "",*/
 		"rejectItemid": "", "firsttimeRejectQty": "", "reworkRejectQty": "",
 		"creator": "", "createtime": "", "event": "",
-		"eventuser": "", "eventtime": "", "isusable": "", "tid": "","rejectItemtype": ""
+		"eventuser": "", "eventtime": "", "isusable": "", "tid": "","rejectType": ""
 	};
 
 	return data;

@@ -16,6 +16,8 @@ public class RejectContents {
 	private String operationid;
 	private String rejectItemid;
 	private String rejectItemname;
+	private String rejectType;
+	private String rejectTypename;
 	private String modelid;
 	private String modelname;
 	private int firsttimeRejectQty;

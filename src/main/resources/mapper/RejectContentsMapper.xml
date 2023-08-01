@@ -12,6 +12,8 @@
         	A.WORKDAILY_SEQ,
         	A.REJECT_ITEMID, 
         	(SELECT  COMM_CD_NM  FROM SC_COMM_CD WHERE COMM_CD IN (A.REJECT_ITEMID) AND COMM_GRP_CD ='REJECT_ITEMID') AS REJECT_ITEMNAME, 
+        	A.REJECT_TYPE,
+        	(SELECT COMM_CD_NM AS VALUE FROM SC_COMM_CD WHERE COMM_GRP_CD IN ('RI01','RI02','RI03','RI04') AND COMM_CD = A.REJECT_TYPE) AS REJECT_TYPENAME,
         	A.FIRSTTIME_REJECT_QTY, 
         	A.REWORK_REJECT_QTY, 
         	A.CREATOR, 
@@ -34,6 +36,7 @@
              , REJECT_ITEMID
              , FIRSTTIME_REJECT_QTY
              , REWORK_REJECT_QTY
+             , REJECT_TYPE
              ,CREATOR
 			 ,CREATETIME
 			 ,EVENT
@@ -47,6 +50,7 @@
 			#{rejectItemid},
 			#{firsttimeRejectQty},
 			#{reworkRejectQty},
+			#{rejectType},
 			#{creator},
 			GETDATE(),
 			#{event},

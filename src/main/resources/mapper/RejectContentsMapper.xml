@@ -40,6 +40,7 @@
 			 ,EVENTUSER
 			 ,EVENTTIME
 			 ,ISUSABLE
+			 ,TID
         )
         VALUES (
             #{workdailySeq},
@@ -51,7 +52,8 @@
 			#{event},
 			#{eventuser},
 			#{eventtime},
-			'Usable'
+			'Usable',
+			#{tid}
         );
 
 	</insert>

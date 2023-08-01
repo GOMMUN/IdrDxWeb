@@ -37,29 +37,31 @@
 
 	<insert id="create" parameterType="WorkerSupport">
 		INSERT INTO DSP_WORKER_SUPPORT (
-		PERSONID,
-		SUPPORTTIME_FROM,
-		SUPPORTTIME_TO,
-		MANHOUR,
-		CREATOR,
-		CREATETIME,
-		EVENT,
-		EVENTUSER,
-		EVENTTIME,
-		ISUSABLE,
-		WORKDAILY_SEQ
+			PERSONID,
+			SUPPORTTIME_FROM,
+			SUPPORTTIME_TO,
+			MANHOUR,
+			CREATOR,
+			CREATETIME,
+			EVENT,
+			EVENTUSER,
+			EVENTTIME,
+			ISUSABLE,
+			WORKDAILY_SEQ,
+			TID
 		) VALUES(
-		#{personid},
-		#{supporttimeFrom},
-		#{supporttimeTo},
-		#{manhour},
-		#{creator},
-		GETDATE(),
-		#{event},
-		#{eventuser},
-		GETDATE(),
-		'Usable',
-		#{workdailySeq}
+			#{personid},
+			#{supporttimeFrom},
+			#{supporttimeTo},
+			#{manhour},
+			#{creator},
+			GETDATE(),
+			#{event},
+			#{eventuser},
+			GETDATE(),
+			'Usable',
+			#{workdailySeq},
+			#{tid}
 		);
 
 

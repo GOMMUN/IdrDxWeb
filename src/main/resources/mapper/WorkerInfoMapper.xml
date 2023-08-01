@@ -40,7 +40,7 @@
 				,CREATETIME
 				,EVENTUSER
 				,EVENTTIME
-				,ISUSABLE	
+				,ISUSABLE
         )
         VALUES (
 				 'dx'

@@ -39,36 +39,38 @@
 
 	<insert id="create" parameterType="NotoperateContents">
 		INSERT INTO
-		DSP_NOTOPERATE_CONTENTS (
-		WORKDAILY_SEQ
-		, NOTOPERATETIME_FROM
-		,
-		NOTOPERATETIME_TO
-		, HANDS
-		, MANHOUR
-		, CAUSE
-		,CORRECTIVE_ACTION
-		,CREATOR
-		,CREATETIME
-		,EVENT
-		,EVENTUSER
-		,EVENTTIME
-		,ISUSABLE
+			DSP_NOTOPERATE_CONTENTS (
+			WORKDAILY_SEQ
+			, NOTOPERATETIME_FROM
+			,
+			NOTOPERATETIME_TO
+			, HANDS
+			, MANHOUR
+			, CAUSE
+			,CORRECTIVE_ACTION
+			,CREATOR
+			,CREATETIME
+			,EVENT
+			,EVENTUSER
+			,EVENTTIME
+			,ISUSABLE
+			,TID
 		)
 		VALUES (
-		#{workdailySeq},
-		CONCAT(REPLACE(#{notoperatetimeFrom},':',''),'00'),
-		CONCAT(REPLACE(#{notoperatetimeTo},':',''),'00'),
-		#{hands},
-		#{manhour},
-		#{cause},
-		#{correctiveAction},
-		#{creator},
-		GETDATE(),
-		#{event},
-		#{eventuser},
-		GETDATE(),
-		'Usable'
+			#{workdailySeq},
+			CONCAT(REPLACE(#{notoperatetimeFrom},':',''),'00'),
+			CONCAT(REPLACE(#{notoperatetimeTo},':',''),'00'),
+			#{hands},
+			#{manhour},
+			#{cause},
+			#{correctiveAction},
+			#{creator},
+			GETDATE(),
+			#{event},
+			#{eventuser},
+			GETDATE(),
+			'Usable',
+			#{tid}
 		);
 
 	</insert>

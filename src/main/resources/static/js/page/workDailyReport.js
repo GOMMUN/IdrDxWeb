@@ -148,6 +148,7 @@ function setWorkDailyReportEventListener() {
 		data.reviewer = $("input[name=reviewer]").val();
 		data.planQty = $("input[name=planqty]").val();
 		data.notes = $("input[name=notes]").val();
+		data.tid = tid();
 
 		//validation check
 		if (data.workDate == "") {
@@ -458,6 +459,7 @@ function setWorkerInputEventListener() {
 		data.workdailySeq = dataseq;
 		data.notes = $("input[name=workinputdesc]").val();
 		data.overtime = $("select[name=overtimeyn]").val();
+		data.tid = tid();
 
 		if (data.personid == "") {
 			alert("작업자를 선택 하세요.");
@@ -579,6 +581,7 @@ function setWorkerManhourEventListener() {
 		data.hands = $("input[name=hands]").val();
 		data.manhour = $("input[name=manhour]").val();
 		data.inputItemid = $("select[name=inputItemid]").val();
+		data.tid = tid();
 
 		if (!data.hands) {
 			alert("인원을  선택해주세요.");
@@ -749,6 +752,8 @@ function setWorkerSupportEventListener() {
 		data.lineid = $("select[name=inputLineid]").val();
 		data.supporttimeFrom = $("input[name=supporttimeFrom]").val();
 		data.supporttimeTo = $("input[name=supporttimeTo]").val();
+		data.tid = tid();
+		
 		if (data.personid == "") {
 			alert("작업자를 선택 하세요.");
 			return;
@@ -892,6 +897,7 @@ function setWorkContentsEventListener() {
 		data.reworkFailQty = $("input[name=reworkFailQty]").val();
 		data.firsttimeFailQty = $("input[name=firsttimeFailQty]").val();
 		data.notes = $("input[name=workcontentnotes]").val();
+		data.tid = tid();
 
 		//		data.plant=s_workDailyReport.factoryid;
 		//		data.line=s_workDailyReport.lineid;
@@ -1069,6 +1075,7 @@ function setNonconFormityEventListener() {
 		data.rejectItemid = $("select[name=rejectItemId]").val();
 		data.firsttimeRejectQty = $("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty = $("input[name=reworkRejectQty]").val();
+		data.tid = tid();
 
 		if (data.personid == "") {
 			alert("작업자를 선택 하세요.");
@@ -1234,6 +1241,7 @@ function setNonOperationEventListener() {
 		data.manhour = $("input[name=nonmanhour]").val();
 		data.cause = $("input[name=cause]").val();
 		data.correctiveAction = $("input[name=correctiveAction]").val();
+		data.tid = tid();
 
 		//		data.plant=s_workDailyReport.factoryid;
 		//		data.line=s_workDailyReport.lineid;
@@ -2006,4 +2014,21 @@ function initNonOperation() {
 	};
 
 	return data;
+}
+
+function tid(){
+	let tid = null;
+	
+	// 7WOR5B3B-242B-4696-AD74-F9D6D8TE0731
+	tid = Math.random().toString(36).substring(2, 10) +"-"+
+		  Math.random().toString(36).substring(2, 6) +"-"+
+		  Math.random().toString(36).substring(2, 6) +"-"+
+		  Math.random().toString(36).substring(2, 6) +"-"+
+		  Math.random().toString(36).substring(2, 16);
+	
+	return tid.toUpperCase();
+}
+
+function sendWorkContentsMsg(work){
+	
 }

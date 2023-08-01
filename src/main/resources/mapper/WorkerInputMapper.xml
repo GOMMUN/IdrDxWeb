@@ -37,27 +37,29 @@
 
 	<insert id="create" parameterType="WorkerInput">
 		INSERT INTO DSP_WORKER_INPUT (
-		PERSONID,
-		CREATOR,
-		CREATETIME,
-		EVENT,
-		EVENTUSER,
-		EVENTTIME,
-		ISUSABLE,
-		WORKDAILY_SEQ,
-		OVERTIME,
-		NOTES
+			PERSONID,
+			CREATOR,
+			CREATETIME,
+			EVENT,
+			EVENTUSER,
+			EVENTTIME,
+			ISUSABLE,
+			WORKDAILY_SEQ,
+			OVERTIME,
+			NOTES,
+			TID
 		) VALUES(
-		#{personid},
-		#{creator},
-		GETDATE(),
-		#{event},
-		#{eventuser},
-		GETDATE(),
-		'Usable',
-		#{workdailySeq},
-		#{overtime},
-		#{notes}
+			#{personid},
+			#{creator},
+			GETDATE(),
+			#{event},
+			#{eventuser},
+			GETDATE(),
+			'Usable',
+			#{workdailySeq},
+			#{overtime},
+			#{notes},
+			#{tid}
 		);
 
 	</insert>

@@ -40,7 +40,8 @@
         	EVENTUSER, 
         	EVENTTIME, 
         	ISUSABLE, 
-        	WORKDAILY_SEQ
+        	WORKDAILY_SEQ,
+        	TID
         ) VALUES(
         	#{inputItemid},
         	#{hands},
@@ -51,7 +52,8 @@
             #{eventuser},
             GETDATE(),
             'Usable',
-            #{workdailySeq}
+            #{workdailySeq},
+			#{tid}
         );
 
     </insert>

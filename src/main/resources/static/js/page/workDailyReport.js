@@ -1002,9 +1002,7 @@ function setNonconFormityEventListener() {
 	let data = initNonconFormity();
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
-		
-		
-		
+			
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -1067,6 +1065,7 @@ function setNonconFormityEventListener() {
 		data.workdailySeq = dataseq;
 		//data.modelid = $("select[name=modelid2]").val();
 		//data.operationid=$("input[name=operationid]").val();
+		data.rejectItemtype=$("select[name=rejectItemtype]").val();
 		data.rejectItemid = $("select[name=rejectItemId]").val();
 		data.firsttimeRejectQty = $("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty = $("input[name=reworkRejectQty]").val();
@@ -1989,7 +1988,7 @@ function initNonconFormity() {
 		"lineid": "", "shiftid": "", "workDate": "", "operationid": "","modelid": "","images": "", "movies": "",*/
 		"rejectItemid": "", "firsttimeRejectQty": "", "reworkRejectQty": "",
 		"creator": "", "createtime": "", "event": "",
-		"eventuser": "", "eventtime": "", "isusable": "", "tid": ""
+		"eventuser": "", "eventtime": "", "isusable": "", "tid": "","rejectItemtype": ""
 	};
 
 	return data;

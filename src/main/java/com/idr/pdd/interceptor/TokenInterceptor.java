@@ -23,16 +23,16 @@ public class TokenInterceptor implements HandlerInterceptor{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		
         // Base64 디코딩 ///////////////////////////////////////////////////
-        Decoder decoder = Base64.getDecoder();
-        byte[] dec_token = decoder.decode(request.getParameter("token"));
-        
-        String token = new String(dec_token);
-        
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(token);
-        
-        String accessToken = (String) jsonObject.get("accessToken");
-        String refreshToken = (String) jsonObject.get("refreshToken");
+//        Decoder decoder = Base64.getDecoder();
+//        byte[] dec_token = decoder.decode(request.getParameter("token"));
+//        
+//        String token = new String(dec_token);
+//        
+//        JSONParser jsonParser = new JSONParser();
+//        JSONObject jsonObject = (JSONObject) jsonParser.parse(token);
+//        
+//        String accessToken = (String) jsonObject.get("accessToken");
+//        String refreshToken = (String) jsonObject.get("refreshToken");
         
         try {	
 //	        URI uri = new URI("https://chat.teamply.co.kr/api/v1/oauth/me");        

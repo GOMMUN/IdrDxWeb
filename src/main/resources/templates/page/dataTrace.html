@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/dataTrace.js}"></script>
+
+<style>
+	.form-control-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+
+	.form-select-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+</style>
+
+<body>
+	<div class="d-flex bd-highlight">
+		<div class="p-2 col-12 bd-highlight">
+			<brdiv class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">Data Trace Log</h6>
+				</div>
+				<div class="card-header py-3">
+					<strong>History Master</strong>
+				</div>
+				<div class="card-body">				
+					<table id="master" data-toggle="table" data-height="300"
+						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/datatrace/findM" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th data-field="check" data-checkbox="true"></th>
+								<th data-field="execmasterseq" data-sortable="true" data-align="center">순번</th>
+								<th data-field="exectid" data-sortable="true" data-align="center">TID</th>
+								<th data-field="execmasterid" data-sortable="true" data-align="center">Master ID</th>
+								<th data-field="execmasternm" data-sortable="true" data-align="center">Master명</th>
+								<th data-field="masterruledescription" data-sortable="true" data-align="center">Master설명</th>
+								<th data-field="state" data-sortable="true" data-align="center">상태</th>
+								<th data-field="execstarttime" data-sortable="true" data-align="center">실행시작시간</th>
+								<th data-field="execendtime" data-sortable="true" data-align="center">실행종료시간</th>
+								<th data-field="lasteventtime" data-sortable="true" data-align="center">최종이벤트시간</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				
+				
+				<div class="card-header py-3">
+					<strong>Data History</strong>
+				</div>
+				<div class="card-body">					
+					<table id="data" data-toggle="table" 
+						data-height="320" data-multiple-select-row="true" data-click-to-select="true" 
+						data-show-refresh="true" data-filter-control="true"
+						data-search="true" data-url="" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th data-field="check" data-checkbox="true"></th>
+								<th data-field="exechistseq" data-sortable="true" data-align="center">순번</th>
+								<th data-field="exectid" data-sortable="true" data-align="center">TID</th>
+								<th data-field="execmasterid" data-sortable="true" data-align="center">Master ID</th>
+								<th data-field="execmasternm" data-sortable="true" data-align="center">Master명</th>
+								<th data-field="masterruledescription" data-sortable="true" data-align="center">Master설명</th>
+								<th data-field="execrulesysid" data-sortable="true" data-align="center">Rule ID</th>
+								<th data-field="execobjectid" data-sortable="true" data-align="center">Object ID</th>
+								<th data-field="execobjectnm" data-sortable="true" data-align="center">Object명</th>
+								<th data-field="state" data-sortable="true" data-align="center">상태</th>
+								<th data-field="execstarttime" data-sortable="true" data-align="center">실행시작시간</th>
+								<th data-field="execendtime" data-sortable="true" data-align="center">실행종료시간</th>
+								<th data-field="lasteventtime" data-sortable="true" data-align="center">최종이벤트시간</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

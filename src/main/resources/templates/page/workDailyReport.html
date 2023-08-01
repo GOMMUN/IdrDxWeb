@@ -306,7 +306,7 @@
 									</th>
 									<th data-field="hands" data-sortable="true" data-align="center">인원</th>
 									<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
-									<th data-field="cause" data-sortable="true" data-align="center">내용/원인</th>
+									<th data-field="causeName" data-sortable="true" data-align="center">내용/원인</th>
 									<th data-field="correctiveaction" data-sortable="true" data-align="center">조치사항
 									</th>
 									<th data-field="" data-sortable="false" data-align="center"
@@ -844,9 +844,15 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="text" name="cause"
+											<!-- <input type="text" name="cause"
 												class="form-control-custom form-control-user" id="personnel"
 												placeholder='내용/원인'>
+											 -->
+											<select id="personnel" name="cause"
+												class="form-select-custom form-control-user">
+												<option value="">내용/원인</option>
+												<option value="NOTOPERATE-PRESS">프레스 설비 작동 이상</option>
+											</select>
 										</div>
 										<div class="col-sm-6">
 											<input type="text" name="correctiveAction"

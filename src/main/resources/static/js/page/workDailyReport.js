@@ -1196,7 +1196,7 @@ function setNonOperationEventListener() {
 		data.notoperatetimeTo = $("input[name=notoperatetimeTo]").val();
 		data.hands = $("input[name=nonhands]").val();
 		data.manhour = $("input[name=nonmanhour]").val();
-		data.cause = $("input[name=cause]").val();
+		data.cause = $("select[name=cause]").val();
 		data.correctiveAction = $("input[name=correctiveAction]").val();
 
 		//		data.plant=s_workDailyReport.factoryid;
@@ -1249,7 +1249,7 @@ function setNonOperationEventListener() {
 		data.notoperatetimeTo = $("input[name=notoperatetimeTo]").val();
 		data.hands = $("input[name=nonhands]").val();
 		data.manhour = $("input[name=nonmanhour]").val();
-		data.cause = $("input[name=cause]").val();
+		data.cause = $("select[name=cause]").val();
 		data.correctiveaction = $("input[name=correctiveaction]").val();
 		if (data.personid == "") {
 			alert("작업자를 선택 하세요.");

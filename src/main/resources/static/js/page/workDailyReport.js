@@ -9,7 +9,6 @@ let c_model = null;
 let c_input_item = null;
 let c_material = null;
 let c_reject_item = null;
-let c_reject_type=null;
 let c_person = null;
 //let c_model_item=null;
 let s_workDailyReport = null;
@@ -26,9 +25,9 @@ $(function() {
 });
 
 function initSetting() {
-
-	localStorage.setItem("plant", $("#parameterPlant").val());
-
+	
+	localStorage.setItem("plant",$("#parameterPlant").val());
+	
 	$("input[name=workDate]").datepicker({
 		format: "yyyy-mm-dd",
 		autoclose: true,
@@ -46,7 +45,6 @@ function code() {
 	input_item();
 	model();
 	matarial();
-	reject_type();
 }
 
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
@@ -466,7 +464,7 @@ function setWorkerInputEventListener() {
 			alert("잔업여부를 선택 하세요.");
 			return;
 		}
-
+		
 		let flag = true;
 
 		c_person.forEach(function(element) {
@@ -475,8 +473,8 @@ function setWorkerInputEventListener() {
 				flag = false;
 			}
 		});
-
-		if (flag) {
+		
+		if(flag){
 			let url = '/workerInput/create';
 
 			$.ajax({
@@ -1100,28 +1098,7 @@ function setNonconFormityEventListener() {
 				rejectContents(s_workDailyReport);
 			}
 		});
-
 	});
-	
-	$rejectItemCode = $("#rejectItemCode");
-
-	$rejectItemCode.change(function() {
-
-		let $dropdown1 = $("#rejectTypes");
-		$dropdown1.empty();
-
-		if (c_reject_type) {
-			$dropdown1.append($("<option/>").val("").text("유형 내용"));
-			$.each(c_reject_type, function() {
-				if ($rejectItemCode.val() == this.mcode) {
-					$dropdown1.append($("<option/>").val(this.code).text(this.value));
-				}
-			});
-		} else {
-			$dropdown1.append($("<option/>").val("").text("유형 내용"));
-		}
-	});
-
 }
 
 function setNonOperationEventListener() {
@@ -1196,7 +1173,7 @@ function setNonOperationEventListener() {
 		data.notoperatetimeTo = $("input[name=notoperatetimeTo]").val();
 		data.hands = $("input[name=nonhands]").val();
 		data.manhour = $("input[name=nonmanhour]").val();
-		data.cause = $("select[name=cause]").val();
+		data.cause = $("input[name=cause]").val();
 		data.correctiveAction = $("input[name=correctiveAction]").val();
 
 		//		data.plant=s_workDailyReport.factoryid;
@@ -1249,7 +1226,7 @@ function setNonOperationEventListener() {
 		data.notoperatetimeTo = $("input[name=notoperatetimeTo]").val();
 		data.hands = $("input[name=nonhands]").val();
 		data.manhour = $("input[name=nonmanhour]").val();
-		data.cause = $("select[name=cause]").val();
+		data.cause = $("input[name=cause]").val();
 		data.correctiveaction = $("input[name=correctiveaction]").val();
 		if (data.personid == "") {
 			alert("작업자를 선택 하세요.");
@@ -1329,10 +1306,10 @@ function line() {
 		type: 'GET',
 		success: function(data) {
 			c_line = data;
-
+			
 			let $dropdown2 = $("#lineCodes");
 			$dropdown2.empty();
-
+	
 			if (c_line) {
 				$dropdown2.append($("<option/>").val("").text("공정 선택"));
 				$.each(c_line, function() {
@@ -1360,10 +1337,10 @@ function shift() {
 		type: 'GET',
 		success: function(data) {
 			c_shift = data;
-
+			
 			let $dropdown3 = $("#shiftCodes");
 			$dropdown3.empty();
-
+	
 			if (c_shift) {
 				$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
 				$.each(c_shift, function() {
@@ -1373,7 +1350,7 @@ function shift() {
 				});
 			} else {
 				$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
-
+	
 			}
 
 		}
@@ -1390,10 +1367,10 @@ function model() {
 		type: 'GET',
 		success: function(data) {
 			c_model = data;
-
+			
 			let $dropdown4 = $("#wdrmodelid");
 			$dropdown4.empty();
-
+	
 			if (c_model) {
 				$dropdown4.append($("<option/>").val("").text("차종 선택"));
 				$.each(c_model, function() {
@@ -1417,10 +1394,10 @@ function matarial() {
 		type: 'GET',
 		success: function(data) {
 			c_material = data;
-
+			
 			let $dropdown5 = $("#wdrmatarialid");
 			$dropdown5.empty();
-
+	
 			if (c_material) {
 				$dropdown5.append($("<option/>").val("").text("자재 선택"));
 				$.each(c_material, function() {
@@ -1430,7 +1407,7 @@ function matarial() {
 				});
 			} else {
 				$dropdown5.append($("<option/>").val("").text("자재 선택"));
-
+	
 			}
 
 		}
@@ -1485,22 +1462,6 @@ function reject_item() {
 			} else {
 				$dropdown.append($("<option/>").val("").text("불량"));
 			}
-		}
-	});
-}
-
-function reject_type() {
-	let url = '/code/rejectType';
-
-	c_reject_type = null;
-
-	$.ajax({
-		url: url,
-		type: 'GET',
-		success: function(data) {
-			c_reject_type = data;
-
-			
 		}
 	});
 }
@@ -1613,10 +1574,10 @@ window.operateEvents = {
 
 		$('#addWorkDailyReportModal').modal('show');
 
-		//		$factoryCodes = $("#factoryCodes");
-		//		$factoryCodes.trigger('change');
-		//
-		//		workDailyReportDetail(row);
+//		$factoryCodes = $("#factoryCodes");
+//		$factoryCodes.trigger('change');
+//
+//		workDailyReportDetail(row);
 	},
 	"click .workerInputModify": function(e, value, row, index) {
 		s_workerManHour = row;
@@ -1830,8 +1791,6 @@ function rejectContents(data) {
 		$table.bootstrapTable('append', res);
 	})
 }
-
-
 
 function personfind(data) {
 	var url = '/person/find';

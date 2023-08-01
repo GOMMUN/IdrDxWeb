@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.AnomalyDetectMapper">
+
+	<select id="findO" resultType="Occur">
+		SELECT
+		  	 A.DATASEQ
+			,A.RULESYSID
+			,A.FACTORYID
+			,A.OCCURID
+			,A.OCCUR_DATETIME
+			,A.OCCUR_UPDATOR
+			,A.OCCUR_TARGET
+			,A.OCCUR_REASON
+			,A.OCCUR_REASONDESCRIPTION
+			,A.CREATOR
+			,A.CREATETIME
+			,A.EVENT
+			,A.EVENTUSER
+			,A.EVENTTIME
+			,ISUSABLE
+			,TID
+		FROM DSP_ANOMALYDETECT_OCCUR A
+		WHERE 1=1
+	</select>  	
+	
+	<select id="findN" resultType="Notice">
+		SELECT
+		  	 A.DATASEQ
+			,A.RULESYSID
+			,A.FACTORYID
+			,A.NOTICEID
+			,A.NOTICE_DATETIME
+			,A.NOTICE_UPDATOR
+			,A.NOTICE_TARGET
+			,A.NOTICE_REASON
+			,A.NOTICE_REASONDESCRIPTION
+			,A.CREATOR
+			,A.CREATETIME
+			,A.EVENT
+			,A.EVENTUSER
+			,A.EVENTTIME
+			,ISUSABLE
+			,TID
+		FROM DSP_ANOMALYDETECT_NOTICE A
+		WHERE 1=1
+	</select>	
+	
+	<select id="findC" resultType="Confirm">
+		SELECT
+		  	 A.DATASEQ
+			,A.RULESYSID
+			,A.FACTORYID
+			,A.CONFIRMID
+			,A.CONFIRM_DATETIME
+			,A.CONFIRM_UPDATOR
+			,A.CONFIRM_TARGET
+			,A.CREATOR
+			,A.CREATETIME
+			,A.EVENT
+			,A.EVENTUSER
+			,A.EVENTTIME
+			,ISUSABLE
+			,TID
+		FROM DSP_ANOMALYDETECT_CONFIRM A
+		WHERE 1=1
+	</select>
+
+</mapper>

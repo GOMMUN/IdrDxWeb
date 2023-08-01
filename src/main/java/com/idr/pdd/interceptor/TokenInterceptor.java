@@ -35,33 +35,35 @@ public class TokenInterceptor implements HandlerInterceptor{
         String refreshToken = (String) jsonObject.get("refreshToken");
         
         try {	
-	        URI uri = new URI("https://chat.teamply.co.kr/api/v1/oauth/me");        
-	        HttpURLConnection con = (HttpURLConnection) uri.toURL().openConnection();
-	        
-	        con.setRequestMethod("GET");
-	        con.setRequestProperty("Content-Type", "application/json");
-	        
-	        con.setRequestProperty("Authorization", new String("Bearer "+accessToken));
-	        con.setRequestProperty("refresh-token", new String(refreshToken));
-	        
-			con.setConnectTimeout(5000); // 연결 타임아웃 설정(5초) 
-			con.setReadTimeout(5000); // 읽기 타임아웃 설정(5초)
-			con.setDoOutput(true);
+//	        URI uri = new URI("https://chat.teamply.co.kr/api/v1/oauth/me");        
+//	        HttpURLConnection con = (HttpURLConnection) uri.toURL().openConnection();
+//	        
+//	        con.setRequestMethod("GET");
+//	        con.setRequestProperty("Content-Type", "application/json");
+//	        
+//	        con.setRequestProperty("Authorization", new String("Bearer "+accessToken));
+//	        con.setRequestProperty("refresh-token", new String(refreshToken));
+//	        
+//			con.setConnectTimeout(5000); // 연결 타임아웃 설정(5초) 
+//			con.setReadTimeout(5000); // 읽기 타임아웃 설정(5초)
+//			con.setDoOutput(true);
+//			
+//			System.out.println("getResponseMessage():" + con.getResponseMessage()); // 응답 메시지 구하기
+//	
+//	        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
+//			StringBuilder res_token = new StringBuilder();
+//			String resLine = null;
+//			while((resLine = br.readLine()) != null) {
+//				res_token.append(resLine.trim());
+//			}
+//			
+//			System.out.println(res_token);
+//			
+//			String res_data = res_token.toString();
+//			jsonObject = (JSONObject) jsonParser.parse(res_data);	
+//			System.out.println(jsonObject.get("data"));
 			
-			System.out.println("getResponseMessage():" + con.getResponseMessage()); // 응답 메시지 구하기
-	
-	        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
-			StringBuilder res_token = new StringBuilder();
-			String resLine = null;
-			while((resLine = br.readLine()) != null) {
-				res_token.append(resLine.trim());
-			}
-			
-			System.out.println(res_token);
-			
-			String res_data = res_token.toString();
-			jsonObject = (JSONObject) jsonParser.parse(res_data);	
-			System.out.println(jsonObject.get("data"));
+			request.setAttribute("plant", "KEM");
 			
 			//TODO 추후 response 받은 데이터에서 공장 정보 받고 비교 필요 
 //        	if(plant != null) {

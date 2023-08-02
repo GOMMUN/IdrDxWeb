@@ -186,25 +186,25 @@ function s_monitor() {
 }
 
 function ajaxRequest(params) {
-	$table = $('#notoperate')
-	$table.bootstrapTable('removeAll')
-
+	
 	let findnotoperateurl = '/monitoring/findnotoperate';
 
 	$.get(findnotoperateurl + '?' + $.param(params)).then(function(res) {
-		let result=res;
-		result.forEach(function(r) {
-			
-			$table.bootstrapTable('insertRow', {
-				index: 1,
-				row: {
-					lineid: r.lineid,
-					notoperatetime: r.notoperatetime
+		let result = res;
 
-				}
-			})
-		})
+        // 테이블 초기화
+        $table = $('#notoperate');
+        $table.bootstrapTable('removeAll');
 
-
+        // 받아온 데이터를 테이블에 추가
+        result.forEach(function(r) {
+            $table.bootstrapTable('append', {
+                
+                    lineid: r.lineid,
+                    notoperatetime: r.notoperatetimeFrom +"~"+ r.notoperatetimeTo
+                
+            });
+        });
+        $table.bootstrapTable('hideLoading')
 	})
 }

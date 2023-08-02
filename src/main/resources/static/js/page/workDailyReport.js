@@ -9,7 +9,7 @@ let c_model = null;
 let c_input_item = null;
 let c_material = null;
 let c_reject_item = null;
-let c_reject_type=null;
+let c_reject_type = null;
 let c_person = null;
 //let c_model_item=null;
 let s_workDailyReport = null;
@@ -46,6 +46,7 @@ function code() {
 	input_item();
 	model();
 	matarial();
+	reject_item();
 	reject_type();
 }
 
@@ -389,8 +390,7 @@ function setWorkerInputEventListener() {
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 		s_workerInput = $element;
-		$("select[name=overtimeyn]").val($element.overtime);
-		$("input[name=workinputdesc]").val($element.notes);
+
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -534,11 +534,9 @@ function setWorkerManhourEventListener() {
 
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
-		
-		$("input[name=hands]").val($element.hands);
-		$("input[name=manhour]").val($element.manhour);
-		$("select[name=inputItemid]").val($element.inputItemid);
-		
+
+
+
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -674,10 +672,8 @@ function setWorkerSupportEventListener() {
 	let data = initWorkerSupportInput();
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
-				
-		$("input[name=supportmanhour]").val($element.manhour);
-		$("input[name=supporttimeFrom]").val($element.supporttimeFrom);
-		$("input[name=supporttimeTo]").val($element.supporttimeTo);
+
+
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -700,11 +696,11 @@ function setWorkerSupportEventListener() {
 			alert("작업일보를 선택해주세요.");
 			return;
 		}
-		
+
 		$("input[name=supportmanhour]").val("");
 		$("input[name=supporttimeFrom]").val("");
 		$("input[name=supporttimeTo]").val("");
-		
+
 		$("#addWorkerSupportModalCreate").css('display', "block");
 		$("#addWorkerSupportModalModify").css('display', "none");
 
@@ -753,7 +749,7 @@ function setWorkerSupportEventListener() {
 		data.supporttimeFrom = $("input[name=supporttimeFrom]").val();
 		data.supporttimeTo = $("input[name=supporttimeTo]").val();
 		data.tid = tid();
-		
+
 		if (data.personid == "") {
 			alert("작업자를 선택 하세요.");
 			return;
@@ -814,18 +810,8 @@ function setWorkContentsEventListener() {
 	let data = initWorkContentsInput();
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
-		
-		$("input[name=worktimeFrom]").val($element.worktimeFrom);
-		$("input[name=workcontenttimeTo]").val($element.worktimeTo);
-		$("input[name=workcontentmanhour]").val($element.manhour);
-		$("select[name=modelid]").val($element.modelid);
-		$("input[name=prodQty]").val($element.prodQty);
-		$("input[name=planQty]").val($element.planQty);
-		$("input[name=goodsumQty]").val($element.goodsumQty);
-		$("input[name=reworkGoodQty]").val($element.reworkGoodQty);
-		$("input[name=reworkFailQty]").val($element.reworkFailQty);
-		$("input[name=firsttimeFailQty]").val($element.firsttimeFailQty);
-		$("input[name=workcontentnotes]").val($element.notes);
+
+
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -848,6 +834,18 @@ function setWorkContentsEventListener() {
 			alert("작업일보를 선택해주세요.");
 			return;
 		}
+		$("input[name=worktimeFrom]").val("");
+		$("input[name=workcontenttimeTo]").val("");
+		$("input[name=workcontentmanhour]").val("");
+		$("select[name=modelid]").val("");
+		$("input[name=prodQty]").val("");
+		$("input[name=planQty]").val("");
+		$("input[name=goodsumQty]").val("");
+		$("input[name=reworkGoodQty]").val("");
+		$("input[name=reworkFailQty]").val("");
+		$("input[name=firsttimeFailQty]").val("");
+		$("input[name=workcontentnotes]").val("");
+
 		$("#addWorkContentsModalCreate").css('display', "block");
 		$("#addWorkContentsModalModify").css('display', "none");
 
@@ -1006,15 +1004,8 @@ function setNonconFormityEventListener() {
 	let $modalCloseBtn = $("#addNonconFormityModalClose");		// 작업일보 모달 close 버튼
 	let $modalModifyBtn = $("#addNonconFormityModalModify");	// 작업일보 모달 update 버튼
 	let data = initNonconFormity();
-	
 	$grid.on('check.bs.table', function(row, $element) {
-		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
-		
-		$("select[name=rejectType]").val($element.rejectType);	
-		$("select[name=rejectItemId]").val($element.rejectItemId);
-		$("input[name=firsttimeRejectQty]").val($element.firsttimeRejectQty);
-		$("input[name=reworkRejectQty]").val($element.reworkRejectQty);
-			
+		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length);
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -1037,17 +1028,17 @@ function setNonconFormityEventListener() {
 			alert("작업일보를 선택해주세요.");
 			return;
 		}
-		$("select[name=rejectType]").val("");	
+		$("select[name=rejectType]").val("");
 		$("select[name=rejectItemId]").val("");
 		$("input[name=firsttimeRejectQty]").val("");
 		$("input[name=reworkRejectQty]").val("");
-			
+
 		$("#addNonconFormityModalCreate").css('display', "block");
 		$("#addNonconFormityModalModify").css('display', "none");
 
 		$('#addNonconFormityModal').modal('show');
 
-		reject_item();
+		//reject_item();
 	});
 
 	$gridRemoveBtn.click(function() {
@@ -1080,7 +1071,7 @@ function setNonconFormityEventListener() {
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
 		data.workdailySeq = dataseq;
-		data.rejectType=$("select[name=rejectType]").val();	
+		data.rejectType = $("select[name=rejectType]").val();
 		data.rejectItemid = $("select[name=rejectItemId]").val();
 		data.firsttimeRejectQty = $("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty = $("input[name=reworkRejectQty]").val();
@@ -1126,8 +1117,8 @@ function setNonconFormityEventListener() {
 		data.rejectItemid = $("select[name=rejectItemId]").val();
 		data.firsttimeRejectQty = $("input[name=firsttimeRejectQty]").val();
 		data.reworkRejectQty = $("input[name=reworkRejectQty]").val();
-		data.rejectType=$("select[name=rejectType]").val();
-		
+		data.rejectType = $("select[name=rejectType]").val();
+
 		if (data.firsttimeRejectQty == "") {
 			alert("본을 선택 하세요.");
 			return;
@@ -1161,7 +1152,7 @@ function setNonconFormityEventListener() {
 		});
 
 	});
-	
+
 	$rejectItemCode = $("#rejectItemCode");
 
 	$rejectItemCode.change(function() {
@@ -1193,6 +1184,7 @@ function setNonOperationEventListener() {
 	let data = initNonOperation();
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
+		
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -1215,6 +1207,13 @@ function setNonOperationEventListener() {
 			alert("작업일보를 선택해주세요.");
 			return;
 		}
+		$("input[name=notoperatetimeFrom]").val("");
+		$("input[name=notoperatetimeTo]").val("");
+		$("input[name=nonhands]").val("");
+		$("input[name=nonmanhour]").val("");
+		$("select[name=cause]").val("");
+		$("input[name=correctiveAction]").val("");
+
 		$("#addNonOperationModalCreate").css('display', "block");
 		$("#addNonOperationModalModify").css('display', "none");
 
@@ -1255,7 +1254,7 @@ function setNonOperationEventListener() {
 		data.notoperatetimeTo = $("input[name=notoperatetimeTo]").val();
 		data.hands = $("input[name=nonhands]").val();
 		data.manhour = $("input[name=nonmanhour]").val();
-		data.cause = $("input[name=cause]").val();
+		data.cause = $("select[name=cause]").val();
 		data.correctiveAction = $("input[name=correctiveAction]").val();
 		data.tid = tid();
 
@@ -1560,7 +1559,7 @@ function reject_type() {
 		success: function(data) {
 			c_reject_type = data;
 
-			
+
 		}
 	});
 }
@@ -1667,20 +1666,26 @@ window.operateEvents = {
 	"click .workDailyReportModify": function(e, value, row, index) {
 
 		workDailyReportDetail(row);
+		
+		$("input[name=workDate]").val(row.workDate);
+		$("select[name=wdrmodel]").val(row.wdrmodel);
+		$("select[name=lineid]").val(row.lineid);
+		$("select[name=shiftid]").val(row.shiftid);
+		$("select[name=wdrmatarial]").val(row.wdrmatarial);
+		$("input[name=planqty]").val(row.planQty);
+		$("input[name=notes]").val(row.notes);
 
 		$("#addWorkDailyReportModalCreate").css('display', "none");
 		$("#addWorkDailyReportModalModify").css('display', "block");
 
 		$('#addWorkDailyReportModal').modal('show');
 
-		//		$factoryCodes = $("#factoryCodes");
-		//		$factoryCodes.trigger('change');
-		//
-		//		workDailyReportDetail(row);
+
 	},
 	"click .workerInputModify": function(e, value, row, index) {
 		s_workerManHour = row;
-
+		$("select[name=overtimeyn]").val(row.overtime);
+		$("input[name=workinputdesc]").val(row.notes);
 		$("#addWorkerInputModalCreate").css('display', "none");
 		$("#addWorkerInputModalModify").css('display', "block");
 
@@ -1690,6 +1695,9 @@ window.operateEvents = {
 	},
 	"click .workerManHourModify": function(e, value, row, index) {
 		s_workerInput = row;
+		$("input[name=hands]").val(row.hands);
+		$("input[name=manhour]").val(row.manhour);
+		$("select[name=inputItemid]").val(row.inputItemid);
 
 		$("#addWorkerManhourModalCreate").css('display', "none");
 		$("#addWorkerManhourModalModify").css('display', "block");
@@ -1700,7 +1708,9 @@ window.operateEvents = {
 	},
 	"click .workerSupportModify": function(e, value, row, index) {
 		s_workerInput = row;
-
+		$("input[name=supportmanhour]").val(row.manhour);
+		$("input[name=supporttimeFrom]").val(row.supporttimeFrom);
+		$("input[name=supporttimeTo]").val(row.supporttimeTo);
 
 
 		$("#addWorkerSupportModalCreate").css('display', "none");
@@ -1712,7 +1722,17 @@ window.operateEvents = {
 	},
 	"click .workContenttModify": function(e, value, row, index) {
 		s_workContent = row;
-
+		$("input[name=worktimeFrom]").val(row.worktimeFrom);
+		$("input[name=workcontenttimeTo]").val(row.worktimeTo);
+		$("input[name=workcontentmanhour]").val(row.manhour);
+		$("select[name=modelid]").val(row.modelid);
+		$("input[name=prodQty]").val(row.prodQty);
+		$("input[name=planQty]").val(row.planQty);
+		$("input[name=goodsumQty]").val(row.goodsumQty);
+		$("input[name=reworkGoodQty]").val(row.reworkGoodQty);
+		$("input[name=reworkFailQty]").val(row.reworkFailQty);
+		$("input[name=firsttimeFailQty]").val(row.firsttimeFailQty);
+		$("input[name=workcontentnotes]").val(row.notes);
 
 
 		$("#addWorkContentsModalCreate").css('display', "none");
@@ -1725,20 +1745,28 @@ window.operateEvents = {
 	"click .NonconFormityModify": function(e, value, row, index) {
 		s_NonconFormity = row;
 
-
+		$("select[name=rejectItemId]").val(row.rejectItemid);
+		$("select[name=rejectType]").val(row.rejectType);
+		$("input[name=firsttimeRejectQty]").val(row.firsttimeRejectQty);
+		$("input[name=reworkRejectQty]").val(row.reworkRejectQty);
 
 		$("#addNonconFormityModalCreate").css('display', "none");
 		$("#addNonconFormityModalModify").css('display', "block");
 
 		$('#addNonconFormityModal').modal('show');
-		reject_item();
+		//reject_item();
 
 
 	},
 	"click .NonOperationModify": function(e, value, row, index) {
 		s_NonOperation = row;
 
-
+		$("input[name=notoperatetimeFrom]").val(row.notoperatetimeFrom);
+		$("input[name=notoperatetimeTo]").val(row.notoperatetimeTo);
+		$("input[name=nonhands]").val(row.hands);
+		$("input[name=nonmanhour]").val(row.manhour);
+		$("select[name=cause]").val(row.cause);
+		$("input[name=correctiveAction]").val(row.correctiveAction);
 
 		$("#addNonOperationModalCreate").css('display', "none");
 		$("#addNonOperationModalModify").css('display', "block");
@@ -2012,7 +2040,7 @@ function initNonconFormity() {
 		"lineid": "", "shiftid": "", "workDate": "", "operationid": "","modelid": "","images": "", "movies": "",*/
 		"rejectItemid": "", "firsttimeRejectQty": "", "reworkRejectQty": "",
 		"creator": "", "createtime": "", "event": "",
-		"eventuser": "", "eventtime": "", "isusable": "", "tid": "","rejectType": ""
+		"eventuser": "", "eventtime": "", "isusable": "", "tid": "", "rejectType": ""
 	};
 
 	return data;
@@ -2032,19 +2060,19 @@ function initNonOperation() {
 	return data;
 }
 
-function tid(){
+function tid() {
 	let tid = null;
-	
+
 	// 7WOR5B3B-242B-4696-AD74-F9D6D8TE0731
-	tid = Math.random().toString(36).substring(2, 10) +"-"+
-		  Math.random().toString(36).substring(2, 6) +"-"+
-		  Math.random().toString(36).substring(2, 6) +"-"+
-		  Math.random().toString(36).substring(2, 6) +"-"+
-		  Math.random().toString(36).substring(2, 16);
-	
+	tid = Math.random().toString(36).substring(2, 10) + "-" +
+		Math.random().toString(36).substring(2, 6) + "-" +
+		Math.random().toString(36).substring(2, 6) + "-" +
+		Math.random().toString(36).substring(2, 6) + "-" +
+		Math.random().toString(36).substring(2, 16);
+
 	return tid.toUpperCase();
 }
 
-function sendWorkContentsMsg(work){
-	
+function sendWorkContentsMsg(work) {
+
 }

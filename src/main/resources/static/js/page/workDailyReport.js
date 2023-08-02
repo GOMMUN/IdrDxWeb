@@ -953,7 +953,7 @@ function setWorkContentsEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result) {
 				$('#addWorkContentsModal').modal('hide');
 				workContents(s_workDailyReport);
 				sendWorkContentsMsg(data);

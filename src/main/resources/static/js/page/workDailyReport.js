@@ -955,8 +955,9 @@ function setWorkContentsEventListener() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
 				$('#addWorkContentsModal').modal('hide');
-				alert("저장완료");
 				workContents(s_workDailyReport);
+				sendWorkContentsMsg(data);
+				alert("저장완료");
 			}
 		});
 	});
@@ -2073,6 +2074,35 @@ function tid() {
 	return tid.toUpperCase();
 }
 
-function sendWorkContentsMsg(work) {
-
+function sendWorkContentsMsg(data){
+	
+	let workContents = {};
+	
+	workContents.date = s_workDailyReport.workDate;
+	workContents.plant = s_workDailyReport.factoryid;
+	workContents.line = s_workDailyReport.lineid;
+	workContents.shift = s_workDailyReport.shiftid;
+	workContents.model = s_workDailyReport.modelid;
+	workContents.material = s_workDailyReport.materialid;
+	workContents.fromtime = data.worktimeFrom;
+	workContents.totime = data.worktimeTo;
+	workContents.manhour = data.manhour;
+	workContents.prodqty = data.prodQty;
+	workContents.firstgoodqty = data.firsttimeGoodQty;
+	workContents.firstfailqty = data.firsttimeFailQty;
+	workContents.reworkgoodqty = data.reworkGoodQty;
+	workContents.reworkfailqty = data.reworkFailQty;
+	workContents.tid = data.tid;
+	
+	$.ajax({
+		url: CORE_URL+"/alarm/workContents",
+		type: 'POST',
+		contentType: 'application/json; charset=utf-8',
+		data : JSON.stringify(workContents),
+		success: function(data) {
+			if(data.status != 200){
+				alert("알람 전송에 실패하였습니다.");
+			}
+		}
+	});
 }

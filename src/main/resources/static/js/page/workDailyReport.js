@@ -192,7 +192,7 @@ function setWorkDailyReportEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				if (data == -1) {
 					alert("중복된 데이터가 있습니다.");
 				}
@@ -260,7 +260,7 @@ function setWorkDailyReportEventListener() {
 				data: JSON.stringify(data),
 				dataType: "json",
 				contentType: 'application/json; charset=utf-8',
-				success: function(data) {
+				success: function(result){
 					$('#addWorkDailyReportModal').modal('hide');
 					alert("수정 되었습니다.");
 					workDailyReport();
@@ -285,7 +285,7 @@ function setWorkDailyReportEventListener() {
 			data: JSON.stringify(selections),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$gridRemoveBtn.prop('disabled', true);
 				alert("삭제 되었습니다.");
 				workDailyReport();
@@ -437,7 +437,7 @@ function setWorkerInputEventListener() {
 			data: JSON.stringify(selections),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$gridRemoveBtn.prop('disabled', true);
 				alert("삭제 되었습니다.");
 				workerInput(s_workDailyReport);
@@ -489,7 +489,7 @@ function setWorkerInputEventListener() {
 				data: JSON.stringify(data),
 				dataType: "json",
 				contentType: 'application/json; charset=utf-8',
-				success: function(data) {
+				success: function(result){
 					$('#addWorkerIntputModal').modal('hide');
 					alert("저장완료");
 					workerInput(s_workDailyReport);
@@ -513,7 +513,7 @@ function setWorkerInputEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addWorkerIntputModal').modal('hide');
 				alert("수정완료");
 				workerInput(s_workDailyReport);
@@ -601,7 +601,7 @@ function setWorkerManhourEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addWorkerManhourModal').modal('hide');
 				alert("저장 완료");
 				workerManhour(s_workDailyReport);
@@ -626,7 +626,7 @@ function setWorkerManhourEventListener() {
 			data: JSON.stringify(selections),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$gridRemoveBtn.prop('disabled', true);
 				alert("삭제되었습니다.");
 				workerManhour(s_workDailyReport);
@@ -652,7 +652,7 @@ function setWorkerManhourEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addWorkerManhourModal').modal('hide');
 				alert("수정 완료");
 				workerManhour(s_workDailyReport);
@@ -723,7 +723,7 @@ function setWorkerSupportEventListener() {
 			data: JSON.stringify(selections),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$gridRemoveBtn.prop('disabled', true);
 				alert("삭제 되었습니다.");
 				workerSupport(s_workDailyReport);
@@ -763,7 +763,7 @@ function setWorkerSupportEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addWorkerSupportModal').modal('hide');
 				alert("저장완료");
 				workerSupport(s_workDailyReport);
@@ -791,7 +791,7 @@ function setWorkerSupportEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addWorkerSupportModal').modal('hide');
 				alert("수정완료");
 				workerSupport(s_workDailyReport);
@@ -870,7 +870,7 @@ function setWorkContentsEventListener() {
 			data: JSON.stringify(selections),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$gridRemoveBtn.prop('disabled', true);
 				alert("삭제 되었습니다.");
 				workContents(s_workDailyReport);
@@ -988,7 +988,7 @@ function setWorkContentsEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addWorkContentsModal').modal('hide');
 				alert("수정완료");
 				workContents(s_workDailyReport);
@@ -1058,7 +1058,7 @@ function setNonconFormityEventListener() {
 			data: JSON.stringify(selections),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$gridRemoveBtn.prop('disabled', true);
 				alert("삭제 되었습니다.");
 				rejectContents(s_workDailyReport);
@@ -1104,7 +1104,7 @@ function setNonconFormityEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addNonconFormityModal').modal('hide');
 				alert("저장완료");
 				rejectContents(s_workDailyReport);
@@ -1145,7 +1145,7 @@ function setNonconFormityEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addNonconFormityModal').modal('hide');
 				alert("수정완료");
 				rejectContents(s_workDailyReport);
@@ -1237,7 +1237,7 @@ function setNonOperationEventListener() {
 			data: JSON.stringify(selections),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$gridRemoveBtn.prop('disabled', true);
 				alert("삭제 되었습니다.");
 				notoperateContents(s_workDailyReport);
@@ -1294,7 +1294,7 @@ function setNonOperationEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addNonOperationModal').modal('hide');
 				alert("저장완료");
 				notoperateContents(s_workDailyReport);
@@ -1324,7 +1324,7 @@ function setNonOperationEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
+			success: function(result){
 				$('#addNonOperationModal').modal('hide');
 				alert("수정완료");
 				notoperateContents(s_workDailyReport);

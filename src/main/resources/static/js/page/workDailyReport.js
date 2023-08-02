@@ -1,6 +1,8 @@
 /**
  * 
  */
+const CORE_URL = "http://localhost:8171";
+
 let c_factory = null;
 let c_block = null;
 let c_line = null;

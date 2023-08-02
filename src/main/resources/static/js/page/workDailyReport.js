@@ -1296,8 +1296,10 @@ function setNonOperationEventListener() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(result){
 				$('#addNonOperationModal').modal('hide');
-				alert("저장완료");
 				notoperateContents(s_workDailyReport);
+				sendNotOperateMsg(data);
+				alert("저장완료");
+				
 			}
 		});
 	});
@@ -2106,3 +2108,36 @@ function sendWorkContentsMsg(data){
 		}
 	});
 }
+
+function sendNotOperateMsg(data){
+	
+	let workContents = {};
+	
+	workContents.date = s_workDailyReport.workDate;
+	workContents.plant = s_workDailyReport.factoryid;
+	workContents.line = s_workDailyReport.lineid;
+	workContents.shift = s_workDailyReport.shiftid;
+	workContents.model = s_workDailyReport.modelid;
+	workContents.material = s_workDailyReport.materialid;
+	workContents.fromtime = data.notoperatetimeFrom;
+	workContents.totime = data.notoperatetimeTo;
+	workContents.man = data.hands;
+	workContents.manhour = data.manhour;
+	workContents.contentcause = data.cause;
+	workContents.correctiveaction = data.correctiveAction;
+	workContents.tid = data.tid;
+	
+	$.ajax({
+		url: CORE_URL+"/alarm/notoperate",
+		type: 'POST',
+		contentType: 'application/json; charset=utf-8',
+		data : JSON.stringify(workContents),
+		success: function(data) {
+			if(data.status != 200){
+				alert("알람 전송에 실패하였습니다.");
+			}
+		}
+	});
+}
+
+

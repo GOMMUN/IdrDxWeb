@@ -5,9 +5,11 @@ $(function(){
 	chart1();
 	chart2();
 	chart3();
+	chart4();
 	chart5();
 	chart6();
 	chart7();
+	chart8();
 });
 
 
@@ -159,7 +161,56 @@ function chart3(){
 });
 
 }
-
+function chart4(){
+	Highcharts.chart('chart4', {
+    chart: {
+        type: 'variablepie'
+    },
+    title: {
+        text: 'Countries compared by population density and total area, 2022.',
+        align: 'left'
+    },
+    tooltip: {
+        headerFormat: '',
+        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+            'Area (square km): <b>{point.y}</b><br/>' +
+            'Population density (people per square km): <b>{point.z}</b><br/>'
+    },
+    series: [{
+        minPointSize: 10,
+        innerSize: '70%',
+        zMin: 0,
+        name: 'countries',
+        borderRadius: 5,
+        data: [{
+            name: 'Spain',
+            y: 505992,
+            z: 120
+        }, {
+            name: 'France',
+            y: 551695,
+            z: 120
+        }, {
+            name: 'Poland',
+            y: 312679,
+            z: 120
+        }, {
+            name: 'bzxcb',
+            y: 312679,
+            z: 120
+        }],
+        colors: [
+            '#4caefe',
+            '#3dc3e8',
+            '#2dd9db',
+            '#1feeaf',
+            '#0ff3a0',
+            '#00e887',
+            '#23e274'
+        ]
+    }]
+});
+}
 function chart5(){
 	Highcharts.chart('chart5', {
 
@@ -254,19 +305,7 @@ Highcharts.chart('chart6', {
             ['Sweden', 38, 462057],
             ['France', 35.6, 2228857],
             ['Netherlands', 34.3, 702641],
-            ['Finland', 33.2, 215615],
-            ['Germany', 33.0, 3144050],
-            ['Austria', 32.7, 349344],
-            ['Ireland', 30.4, 275567],
-            ['Italy', 27.8, 1672438],
-            ['United Kingdom', 26.7, 2366911],
-            ['Spain', 21.3, 1113851],
-            ['Greece', 14.2, 175887],
-            ['Portugal', 13.7, 184933],
-            ['Czech Republic', 10.2, 176564],
-            ['Poland', 8.6, 424269],
-            ['Romania', 5.5, 169578]
-
+            ['Finland', 33.2, 215615]
         ],
         dataLabels: {
             enabled: true,
@@ -333,6 +372,42 @@ Highcharts.chart('chart7', {
     tooltip: {
         headerFormat: '<span style="font-size: 16px"><b>{point.key}</b></span><br>'
     }
+});
+
+}
+
+function chart8(){
+	Highcharts.chart('chart8', {
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: 'UEFA CL top scorers by season'
+    },
+    xAxis: {
+        categories: ['2020/21', '2019/20', '2018/19', '2017/18']
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Goals'
+        }
+    },
+    legend: {
+        reversed: true
+    },
+    plotOptions: {
+        series: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    series: [{
+        name: 'Cristiano Ronaldo',
+        data: [4, 4, 6, 15]
+    }]
 });
 
 }

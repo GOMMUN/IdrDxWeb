@@ -2121,7 +2121,10 @@ function sendNotOperateMsg(data){
 	workContents.shift = s_workDailyReport.shiftid;
 	workContents.model = s_workDailyReport.modelid;
 	workContents.material = s_workDailyReport.materialid;
-	workContents.fromtime = data.notoperatetimeFrom;
+	
+	let parsetime=data.notoperatetimeFrom.replace(/:/g, '');
+	parsetime=parsetime+'00';
+	workContents.fromtime = parsetime;
 	workContents.totime = data.notoperatetimeTo;
 	workContents.man = data.hands;
 	workContents.manhour = data.manhour;

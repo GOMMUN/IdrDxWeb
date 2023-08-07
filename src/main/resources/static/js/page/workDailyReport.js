@@ -1,7 +1,7 @@
 /**
  * 
  */
-const CORE_URL = "http://localhost:8171/";
+const CORE_URL = "http://localhost:8171";
 
 let c_factory = null;
 let c_block = null;
@@ -191,7 +191,7 @@ function setWorkDailyReportEventListener() {
 
 
 
-		let url = CORE_URL + 'workdaily-report/';
+		let url = CORE_URL + '/workdaily-report/';
 
 		$.ajax({
 			url: url,
@@ -495,7 +495,7 @@ function setWorkerInputEventListener() {
 		});
 
 		if (flag) {
-			let url = CORE_URL + 'worker-input/';
+			let url = CORE_URL + '/worker-input/';
 
 			$.ajax({
 				url: url,
@@ -614,7 +614,7 @@ function setWorkerManhourEventListener() {
 			alert("구분을 선택해주세요.");
 			return;
 		}
-		let url = CORE_URL + 'worker-manhour/';
+		let url = CORE_URL + '/worker-manhour/';
 
 		$.ajax({
 			url: url,
@@ -781,7 +781,7 @@ function setWorkerSupportEventListener() {
 			return;
 		}
 
-		let url = CORE_URL + 'worker-support/';
+		let url = CORE_URL + '/worker-support/';
 
 		$.ajax({
 			url: url,
@@ -977,7 +977,7 @@ function setWorkContentsEventListener() {
 		}
 
 
-		let url = CORE_URL + 'work-contents/';
+		let url = CORE_URL + '/work-contents/';
 		//		let url = 'http://idrenvision.iptime.org:8271/work-contents';
 
 		$.ajax({
@@ -1136,7 +1136,7 @@ function setNonconFormityEventListener() {
 		}
 
 
-		let url = CORE_URL + 'reject-contents/';
+		let url = CORE_URL + '/reject-contents/';
 
 		$.ajax({
 			url: url,

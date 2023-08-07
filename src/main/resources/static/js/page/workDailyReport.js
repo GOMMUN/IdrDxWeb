@@ -1,7 +1,7 @@
 /**
  * 
  */
-const CORE_URL = "http://localhost:8171";
+const CORE_URL = "http://localhost:8171/";
 
 let c_factory = null;
 let c_block = null;
@@ -138,47 +138,52 @@ function setWorkDailyReportEventListener() {
 
 		let data = initWorkDailyReport();
 
-		data.workDate = $("input[name=workDate]").val();
+		 // 현재 입력 요소의 값을 가져옵니다.
+	    let originalWorkDate = $("input[name=workDate]").val();
+	
+	    // 하이픈(-)을 제거하여 원하는 형식으로 변환합니다.
+	    let convertedWorkDate = originalWorkDate.replace(/-/g, '');
+	
+	    // 변환된 값을 data.workDate에 저장합니다.
+	    data.date = convertedWorkDate;
 		//data.blockid = $("select[name=blockid]").val();
 		//data.factoryid = $("select[name=factoryid]").val();
-		data.factoryid = localStorage.getItem("plant");
+		data.plant = localStorage.getItem("plant");
 		//data.groupid = $("select[name=groupid]").val();
-		data.lineid = $("select[name=lineid]").val();
-		data.shiftid = $("select[name=shiftid]").val();
-		data.materialid = $("select[name=wdrmatarial]").val();
-		data.modelid = $("select[name=wdrmodel]").val();
-		data.approver = $("input[name=approver]").val();
-		data.reviewer = $("input[name=reviewer]").val();
-		data.planQty = $("input[name=planqty]").val();
+		data.line = $("select[name=lineid]").val();
+		data.shift = $("select[name=shiftid]").val();
+		data.material = $("select[name=wdrmatarial]").val();
+		data.model = $("select[name=wdrmodel]").val();
+		data.planqty = $("input[name=planqty]").val();
 		data.notes = $("input[name=notes]").val();
 		data.tid = tid();
 
 		//validation check
-		if (data.workDate == "") {
+		if (data.date == "") {
 			alert("날짜를 선택해주세요.");
 			$("input[name=workDate]").focus();
 			return;
-		} else if (data.factoryid == "") {
+		} else if (data.plant == "") {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
-		} else if (data.lineid == "") {
+		} else if (data.line == "") {
 			alert("공정을 선택해주세요.");
 			$("select[name=lineid]").focus();
 			return;
-		} else if (data.shiftid == "") {
+		} else if (data.shift == "") {
 			alert("작업구분을 선택해주세요.");
 			$("select[name=shiftid]").focus();
 			return;
-		} else if (data.materialid == "") {
+		} else if (data.material == "") {
 			alert("자재를 선택해주세요.");
 			$("select[name=wdrmatarial]").focus();
 			return;
-		} else if (data.modelid == "") {
+		} else if (data.model == "") {
 			alert("차종을 선택해주세요.");
 			$("select[name=wdrmodel]").focus();
 			return;
-		} else if (data.planQty == "") {
+		} else if (data.planqty == "") {
 			alert("계획수량을 선택해주세요.");
 			$("select[name=planqty]").focus();
 			return;
@@ -186,7 +191,7 @@ function setWorkDailyReportEventListener() {
 
 
 
-		let url = '/workDailyReport/create';
+		let url = CORE_URL + 'workdaily-report/';
 
 		$.ajax({
 			url: url,
@@ -194,7 +199,7 @@ function setWorkDailyReportEventListener() {
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(result){
+			success: function(data){
 				if (data == -1) {
 					alert("중복된 데이터가 있습니다.");
 				}
@@ -448,22 +453,29 @@ function setWorkerInputEventListener() {
 	});
 
 	$selectworker.on('check.bs.table', function(row, $element, field) {
-		data.personid = null;
-		data.personid = $element.personid;
+		data.worker = null;
+		data.worker = $element.personid;
 
 	});
 
 	$modalCloseBtn.click(function() {
 		$('#addWorkerIntputModal').modal('hide');
 	});
+	
 	$modalCreateBtn.click(function() {
-		// s_workDailyReport
+		data.date = s_workDailyReport.workDate;
+		data.line = s_workDailyReport.lineid;
+		data.material = s_workDailyReport.materialid;
+		data.model = s_workDailyReport.modelid;
+		data.plant = s_workDailyReport.factoryid;
+		data.shift = s_workDailyReport.shiftid;
+		
 		data.workdailySeq = dataseq;
 		data.notes = $("input[name=workinputdesc]").val();
 		data.overtime = $("select[name=overtimeyn]").val();
 		data.tid = tid();
 
-		if (data.personid == "") {
+		if (data.worker == "") {
 			alert("작업자를 선택 하세요.");
 			return;
 		}
@@ -476,14 +488,14 @@ function setWorkerInputEventListener() {
 		let flag = true;
 
 		c_person.forEach(function(element) {
-			if (element.personid == data.personid) {
+			if (element.personid == data.worker) {
 				alert("동일한 작업자가 이미 등록 되었습니다.");
 				flag = false;
 			}
 		});
 
 		if (flag) {
-			let url = '/workerInput/create';
+			let url = CORE_URL + 'worker-input/';
 
 			$.ajax({
 				url: url,
@@ -576,14 +588,21 @@ function setWorkerManhourEventListener() {
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
 		let data = initWorkerManhour();
+		
+		data.date = s_workDailyReport.workDate;
+		data.line = s_workDailyReport.lineid;
+		data.material = s_workDailyReport.materialid;
+		data.model = s_workDailyReport.modelid;
+		data.plant = s_workDailyReport.factoryid;
+		data.shift = s_workDailyReport.shiftid;
 
 		data.workdailySeq = s_workDailyReport.dataseq;
-		data.hands = $("input[name=hands]").val();
+		data.man = $("input[name=hands]").val();
 		data.manhour = $("input[name=manhour]").val();
-		data.inputItemid = $("select[name=inputItemid]").val();
+		data.separation = $("select[name=inputItemid]").val();
 		data.tid = tid();
 
-		if (!data.hands) {
+		if (!data.man) {
 			alert("인원을  선택해주세요.");
 			return;
 		}
@@ -591,11 +610,11 @@ function setWorkerManhourEventListener() {
 			alert("공수를 선택해주세요.");
 			return;
 		}
-		if (!data.inputItemid) {
+		if (!data.separation) {
 			alert("구분을 선택해주세요.");
 			return;
 		}
-		let url = '/workerManhour/create';
+		let url = CORE_URL + 'worker-manhour/';
 
 		$.ajax({
 			url: url,
@@ -735,7 +754,7 @@ function setWorkerSupportEventListener() {
 
 	$selectworker.on('check.bs.table', function(row, $element, field) {
 
-		data.personid = $element.personid;
+		data.man = $element.personid;
 		data.workdailySeq = dataseq;
 
 	});
@@ -745,19 +764,24 @@ function setWorkerSupportEventListener() {
 	});
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
+		data.date = s_workDailyReport.workDate;
+		data.line = s_workDailyReport.lineid;
+		data.material = s_workDailyReport.materialid;
+		data.model = s_workDailyReport.modelid;
+		data.plant = s_workDailyReport.factoryid;
+		data.shift = s_workDailyReport.shiftid;
 
 		data.manhour = $("input[name=supportmanhour]").val();
-		data.lineid = $("select[name=inputLineid]").val();
-		data.supporttimeFrom = $("input[name=supporttimeFrom]").val();
-		data.supporttimeTo = $("input[name=supporttimeTo]").val();
+		data.fromtime = $("input[name=supporttimeFrom]").val();
+		data.totime = $("input[name=supporttimeTo]").val();
 		data.tid = tid();
 
-		if (data.personid == "") {
+		if (data.man == "") {
 			alert("작업자를 선택 하세요.");
 			return;
 		}
 
-		let url = '/workerSupport/create';
+		let url = CORE_URL + 'worker-support/';
 
 		$.ajax({
 			url: url,
@@ -885,17 +909,24 @@ function setWorkContentsEventListener() {
 	});
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
+		data.date = s_workDailyReport.workDate;
+		data.line = s_workDailyReport.lineid;
+		data.material = s_workDailyReport.materialid;
+		data.plant = s_workDailyReport.factoryid;
+		data.shift = s_workDailyReport.shiftid;
+		data.model = s_workDailyReport.modelid;
+		
 		data.workdailySeq = dataseq;
-		data.worktimeFrom = $("input[name=worktimeFrom]").val();
-		data.worktimeTo = $("input[name=workcontenttimeTo]").val();
+		data.fromtime = $("input[name=worktimeFrom]").val();
+		data.totime = $("input[name=workcontenttimeTo]").val();
 		data.manhour = $("input[name=workcontentmanhour]").val();
-		data.modelid = $("select[name=modelid]").val();
-		data.prodQty = $("input[name=prodQty]").val();
-		data.planQty = $("input[name=planQty]").val();
+		data.prodqty = $("input[name=prodQty]").val();
+		data.planqty = $("input[name=planQty]").val();
 		data.goodsumQty = $("input[name=goodsumQty]").val();
-		data.reworkGoodQty = $("input[name=reworkGoodQty]").val();
-		data.reworkFailQty = $("input[name=reworkFailQty]").val();
-		data.firsttimeFailQty = $("input[name=firsttimeFailQty]").val();
+		data.reworkgoodqty = $("input[name=reworkGoodQty]").val();
+		data.reworkfailqty = $("input[name=reworkFailQty]").val();
+		data.firstgoodqty = $("input[name=firsttimeGoodQty]").val();
+		data.firstfailqty = $("input[name=firsttimeFailQty]").val();
 		data.notes = $("input[name=workcontentnotes]").val();
 		data.tid = tid();
 
@@ -904,11 +935,11 @@ function setWorkContentsEventListener() {
 		//		data.shift=s_workDailyReport.shiftid;
 		//		data.date=s_workDailyReport.workDate;
 
-		if (data.worktimeFrom == "") {
+		if (data.fromtime == "") {
 			alert("작업시간을 선택 하세요.");
 			return;
 		}
-		if (data.worktimeTo == "") {
+		if (data.totime == "") {
 			alert("작업종료시간을 선택 하세요.");
 			return;
 		}
@@ -916,37 +947,37 @@ function setWorkContentsEventListener() {
 			alert("공수를 선택 하세요.");
 			return;
 		}
-		if (data.modelid == "") {
+		if (data.model == "") {
 			alert("모델/차종을 선택 하세요.");
 			return;
 		}
-		if (data.prodQty == "") {
+		if (data.prodqty == "") {
 			alert("생산수량을 선택 하세요.");
 			return;
 		}
-		if (data.planQty == "") {
+		if (data.planqty == "") {
 			alert("계획수량을 선택 하세요.");
 			return;
 		}
-		if (data.goodsumQty == "") {
-			alert("양품합계를 선택 하세요.");
+		if (data.firstgoodqty == "") {
+			alert("양품을선택 하세요.");
 			return;
 		}
-		if (data.reworkGoodQty == "") {
+		if (data.reworkgoodqty == "") {
 			alert("재작업양품을 선택 하세요.");
 			return;
 		}
-		if (data.reworkFailQty == "") {
+		if (data.reworkfailqty == "") {
 			alert("재작업불량을 선택 하세요.");
 			return;
 		}
-		if (data.firsttimeFailQty == "") {
+		if (data.firstfailqty == "") {
 			alert("불량을 선택 하세요.");
 			return;
 		}
 
 
-		let url = '/workContents/create';
+		let url = CORE_URL + 'work-contents/';
 		//		let url = 'http://idrenvision.iptime.org:8271/work-contents';
 
 		$.ajax({
@@ -1073,32 +1104,39 @@ function setNonconFormityEventListener() {
 	});
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
+		data.date = s_workDailyReport.workDate;
+		data.line = s_workDailyReport.lineid;
+		data.material = s_workDailyReport.materialid;
+		data.plant = s_workDailyReport.factoryid;
+		data.shift = s_workDailyReport.shiftid;
+		data.model = s_workDailyReport.modelid;
+		
 		data.workdailySeq = dataseq;
-		data.rejectType = $("select[name=rejectType]").val();
-		data.rejectItemid = $("select[name=rejectItemId]").val();
-		data.firsttimeRejectQty = $("input[name=firsttimeRejectQty]").val();
-		data.reworkRejectQty = $("input[name=reworkRejectQty]").val();
+		data.rejecttype = $("select[name=rejectType]").val();
+		data.rejectcode = $("select[name=rejectItemId]").val();
+		data.firstrejectqty = $("input[name=firsttimeRejectQty]").val();
+		data.reworkrejectqty = $("input[name=reworkRejectQty]").val();
 		data.tid = tid();
 
-		if (data.firsttimeRejectQty == "") {
+		if (data.firstrejectqty == "") {
 			alert("본을 선택 하세요.");
 			return;
 		}
-		if (data.reworkRejectQty == "") {
+		if (data.reworkrejectqty == "") {
 			alert("재투입을 선택 하세요.");
 			return;
 		}
-		if (data.rejectItemid == "") {
+		if (data.rejectcode == "") {
 			alert("불량내용을 선택 하세요.");
 			return;
 		}
-		if (data.rejectType == "") {
+		if (data.rejecttype == "") {
 			alert("불량유형을 선택 하세요.");
 			return;
 		}
 
 
-		let url = '/rejectContents/create';
+		let url = CORE_URL + 'reject-contents/';
 
 		$.ajax({
 			url: url,
@@ -1252,13 +1290,20 @@ function setNonOperationEventListener() {
 	});
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
+		data.date = s_workDailyReport.workDate;
+		data.line = s_workDailyReport.lineid;
+		data.material = s_workDailyReport.materialid;
+		data.plant = s_workDailyReport.factoryid;
+		data.shift = s_workDailyReport.shiftid;
+		data.model = s_workDailyReport.modelid;
+		
 		data.workdailySeq = dataseq;
-		data.notoperatetimeFrom = $("input[name=notoperatetimeFrom]").val();
-		data.notoperatetimeTo = $("input[name=notoperatetimeTo]").val();
-		data.hands = $("input[name=nonhands]").val();
+		data.fromtime = $("input[name=notoperatetimeFrom]").val();
+		data.totime = $("input[name=notoperatetimeTo]").val();
+		data.man = $("input[name=nonhands]").val();
 		data.manhour = $("input[name=nonmanhour]").val();
-		data.cause = $("select[name=cause]").val();
-		data.correctiveAction = $("input[name=correctiveAction]").val();
+		data.contentcause = $("select[name=cause]").val();
+		data.correctiveaction = $("input[name=correctiveAction]").val();
 		data.tid = tid();
 
 		//		data.plant=s_workDailyReport.factoryid;
@@ -1267,15 +1312,15 @@ function setNonOperationEventListener() {
 		//		data.date=s_workDailyReport.workDate;
 
 
-		if (data.notoperatetimeFrom == "") {
+		if (data.fromtime == "") {
 			alert("비가동시작을 선택 하세요.");
 			return;
 		}
-		if (data.notoperatetimeTo == "") {
+		if (data.totime == "") {
 			alert("비가동종료를 선택 하세요.");
 			return;
 		}
-		if (data.hands == "") {
+		if (data.man == "") {
 			alert("인원을 선택 하세요.");
 			return;
 		}
@@ -1283,12 +1328,12 @@ function setNonOperationEventListener() {
 			alert("공수를 선택 하세요.");
 			return;
 		}
-		if (data.cause == "") {
+		if (data.contentcause == "") {
 			alert("내용/원인을 선택 하세요.");
 			return;
 		}
 
-		let url = '/notoperateContents/create';
+		let url = CORE_URL + 'notoperate-contents/';
 		//		let url = 'http://localhost:8171/notoperate-contents/';
 		$.ajax({
 			url: url,

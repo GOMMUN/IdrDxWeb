@@ -3,158 +3,102 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.idr.pdd.mapper.WorkDailyReportMapper">
+<mapper namespace="com.idr.pdd.mapper.WorkContentsMapper">
 
-    <select id="findAll" resultType="WorkDailyReport">
+    <select id="findAll" parameterType="WorkContents" resultType="WorkContents">
         SELECT 
-        		ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-				A.DATASEQ, 
-				A.RULESYSID, 
-				A.FACTORYID,
-				(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME, 
-				A.WORK_DATE, 
-				A.LINEID,
-				(SELECT LOCATIONNAME FROM DSP_LOCATION WHERE LOCATIONTYPE = 'LINE' AND LOCATIONID IN (A.LINEID) AND FACTORYID IN (A.FACTORYID)) AS LINENAME, 
-				A.SHIFTID,
-				(SELECT SHIFTNAME FROM DSP_SHIFT WHERE SHIFTID IN (A.SHIFTID) AND ISUSABLE = 'Y' ) AS SHIFTNAME, 
-				A.MODELID,
-				(SELECT MODELNAME FROM DSP_MODEL WHERE MODELID IN (A.MODELID) AND FACTORYID IN (A.FACTORYID) ) AS MODELNAME, 
-				A.MATERIALID,
-				(SELECT MATERIALNAME FROM DSP_MATERIAL WHERE MATERIALID IN (A.MATERIALID) AND FACTORYID IN (A.FACTORYID)  ) AS MATERIALNAME, 
-				A.REGISTER, 
-				A.REVIEWER, 
-				A.APPROVER, 
-				A.NOTES, 
-				A.CREATOR, 
-				A.CREATETIME, 
-				A.EVENT, 
-				A.EVENTUSER, 
-				A.EVENTTIME, 
-				A.ISUSABLE, 
-				A.TID,
-				A.PLAN_QTY
-		 FROM DSP_WORKDAILY_REPORT A
-		WHERE ISUSABLE IS NOT NULL
-		AND A.ISUSABLE = 'Usable'
-		ORDER BY CREATETIME DESC
+            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+        	A.DATASEQ,
+        	A.WORKDAILY_SEQ, 
+        	LEFT(CONCAT(SUBSTRING(A.WORKTIME_FROM,1,2),':',SUBSTRING(A.WORKTIME_FROM,3,4)),5) AS WORKTIME_FROM,
+			LEFT(CONCAT(SUBSTRING(A.WORKTIME_TO,1,2),':',SUBSTRING(A.WORKTIME_TO,3,4)),5) AS WORKTIME_TO,      	
+        	A.MANHOUR, 
+        	A.PROD_QTY, 
+        	(A.FIRSTTIME_GOOD_QTY + A.REWORK_GOOD_QTY) AS GOODSUM_QTY, 
+        	A.FIRSTTIME_GOOD_QTY, 
+        	A.FIRSTTIME_FAIL_QTY, 
+        	A.REWORK_GOOD_QTY, 
+        	A.REWORK_FAIL_QTY, 
+        	A.NOTES, 
+        	A.CREATOR, 
+        	A.CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	A.EVENTTIME, 
+        	A.ISUSABLE, 
+        	B.TID 
+        FROM DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ = B.DATASEQ 
+        WHERE 1=1
+       		AND A.ISUSABLE = 'Usable'
+            AND WORKDAILY_SEQ = #{workdailySeq}
     </select>
     
-    <select id="find" parameterType="String" resultType="WorkDailyReport">
-        SELECT 
-        		ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-				A.DATASEQ, 
-				A.RULESYSID, 
-				A.FACTORYID,
-				(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME, 
-				A.WORK_DATE, 
-				A.LINEID,
-				(SELECT LOCATIONNAME FROM DSP_LOCATION WHERE LOCATIONTYPE = 'LINE' AND LOCATIONID IN (A.LINEID) AND FACTORYID IN (A.FACTORYID)) AS LINENAME, 
-				A.SHIFTID,
-				(SELECT SHIFTNAME FROM DSP_SHIFT WHERE SHIFTID IN (A.SHIFTID) AND ISUSABLE = 'Y' ) AS SHIFTNAME, 
-				A.MODELID,
-				(SELECT MODELNAME FROM DSP_MODEL WHERE MODELID IN (A.MODELID) AND FACTORYID IN (A.FACTORYID) ) AS MODELNAME, 
-				A.MATERIALID,
-				(SELECT MATERIALNAME FROM DSP_MATERIAL WHERE MATERIALID IN (A.MATERIALID) AND FACTORYID IN (A.FACTORYID)  ) AS MATERIALNAME, 
-				A.REGISTER, 
-				A.REVIEWER, 
-				A.APPROVER, 
-				A.NOTES, 
-				A.CREATOR, 
-				A.CREATETIME, 
-				A.EVENT, 
-				A.EVENTUSER, 
-				A.EVENTTIME, 
-				A.ISUSABLE, 
-				A.TID,
-				A.PLAN_QTY
-		 FROM DSP_WORKDAILY_REPORT A
-		WHERE ISUSABLE IS NOT NULL
-		AND A.ISUSABLE = 'Usable'
-		AND A.FACTORYID = #{plant}
-		ORDER BY CREATETIME DESC
-    </select>
-    
-     <select id="validationcheck" parameterType="WorkDailyReport" resultType="Integer">
-        SELECT 
-        		COUNT(*) AS val
-		 FROM DSP_WORKDAILY_REPORT A
-		WHERE ISUSABLE IS NOT NULL
-		AND ISUSABLE = 'Usable'
-		AND LINEID =#{lineid} 
-		AND SHIFTID =#{shiftid}
-		AND WORK_DATE =CONVERT(VARCHAR, CONVERT(DATE, #{workDate}), 112)
-		AND FACTORYID  =#{factoryid}
-    </select>
-    
-    <insert id="create" parameterType="WorkDailyReport" >
-        INSERT INTO DSP_WORKDAILY_REPORT (
-               RULESYSID
-             , FACTORYID
-             , WORK_DATE
-             , LINEID
-             , SHIFTID
-             , MODELID
-             , MATERIALID
-             , REGISTER
-             , REVIEWER
-             , APPROVER
-             , NOTES
-             , CREATOR
-             , CREATETIME
-             , EVENT
-             , EVENTUSER
-             , EVENTTIME
-             , ISUSABLE
-             , TID
-             , PLAN_QTY
-        )
-        VALUES (
-               1
-             , #{factoryid}
-             , CONVERT(VARCHAR, CONVERT(DATE, #{workDate}), 112)
-             , #{lineid}
-             , #{shiftid}
-             , #{modelid}
-             , #{materialid}
-             , #{register}
-             , #{reviewer}
-             , #{approver}
-             , #{notes}
-             , #{creator}
-             , GETDATE()
-             , #{event}
-             , #{eventuser}
-             , #{eventtime}
-             ,'Usable'
-             , #{tid}
-             , #{planQty}
-        )
-    </insert>
-    
-    <update id="modify" parameterType="WorkDailyReport" >
-        UPDATE DSP_WORKDAILY_REPORT
-           SET
-           	   WORK_DATE		= REPlACE(#{workDate}, '-', '')
-           	 , FACTORYID		= #{factoryid}
-             , LINEID			= #{lineid}
-             , SHIFTID          = #{shiftid}
-             , MODELID			= #{modelid}
-             , MATERIALID		= #{materialid}
-             , NOTES			= #{notes}
-             , EVENTTIME = GETDATE()
-             ,REVIEWER=#{reviewer}
-             ,APPROVER=#{approver}
-             ,PLAN_QTY=#{planQty}
-         WHERE DATASEQ          = #{dataseq}
-    </update>
-    
-    <update id="remove" parameterType="list">
-    	UPDATE DSP_WORKDAILY_REPORT 
+    <insert id="create" parameterType="WorkContents">
+		INSERT INTO DSP_WORK_CONTENTS (
+			WORKDAILY_SEQ,
+			WORKTIME_FROM,
+			WORKTIME_TO,
+			MANHOUR,
+			PROD_QTY,
+			GOODSUM_QTY,
+			FIRSTTIME_FAIL_QTY,
+			REWORK_GOOD_QTY,
+			REWORK_FAIL_QTY,
+			NOTES,
+			CREATOR,
+			CREATETIME,
+			EVENT,
+			EVENTUSER,
+			EVENTTIME,
+			ISUSABLE,
+			TID
+		) VALUES(
+			#{workdailySeq},
+			CONCAT(REPLACE(#{worktimeFrom},':',''),'00'),
+			CONCAT(REPLACE(#{worktimeTo},':',''),'00'),
+			#{manhour},
+			#{prodQty},
+			#{goodsumQty},
+			#{firsttimeFailQty},
+			#{reworkGoodQty},
+			#{reworkFailQty},
+			#{notes},
+			#{creator},
+			GETDATE(),
+			#{event},
+			#{eventuser},
+			#{eventtime},
+			'Usable',
+			#{tid}
+		)
+
+	</insert>
+	
+	<update id="modify" parameterType="WorkContents">
+		UPDATE DSP_WORK_CONTENTS
+		SET
+		WORKTIME_FROM = #{worktimeFrom}
+		, WORKTIME_TO = #{worktimeTo}
+		, MANHOUR = #{manhour}
+		, PROD_QTY = #{prodQty}
+		, GOODSUM_QTY = #{goodsumQty}
+		, REWORK_GOOD_QTY = #{reworkGoodQty}
+		, REWORK_FAIL_QTY = #{reworkFailQty}
+		, NOTES = #{notes}
+		, EVENTTIME = GETDATE()
+		WHERE
+		DATASEQ = #{dataseq}
+	</update>
+	
+	<update id="remove" parameterType="list">
+		UPDATE DSP_WORK_CONTENTS
 		SET ISUSABLE= null
 		WHERE 1=1 AND DATASEQ IN
-		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
-	        #{data}
-	     </foreach>
-    </update>
+		<foreach collection="list" item="data" index="index"
+			separator="," open="(" close=")">
+			#{data}
+		</foreach>
+	</update>
 
 </mapper>

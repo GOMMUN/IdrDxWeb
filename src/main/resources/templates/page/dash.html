@@ -2,6 +2,9 @@
 <!-- Default Layout Import-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/treemap.js"></script>
+
 <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/dash.js}"></script>
 <style>
 	.highcharts-figure,
@@ -102,8 +105,7 @@
 					</div>
 				</div>
 		    </div>
-		  </div>
-			
+		</div>
 	</div>
 	
 	<div class="container-fluid mt-3">
@@ -113,12 +115,7 @@
 					<div class="card-body">
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
-								<div class="h2 font-weight-bold text-primary text-uppercase mb-1">
-									Production</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-							</div>
-							<div class="col-auto">
-								<i class="fas fa-calendar fa-2x text-gray-300"></i>
+								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">P</span>roduction</div>
 							</div>
 						</div>
 					</div>
@@ -129,12 +126,7 @@
 					<div class="card-body">
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
-								<div class="h2 font-weight-bold text-primary text-uppercase mb-1">
-									Quality</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-							</div>
-							<div class="col-auto">
-								<i class="fas fa-calendar fa-2x text-gray-300"></i>
+								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">Q</span>uality</div>
 							</div>
 						</div>
 					</div>
@@ -145,12 +137,7 @@
 					<div class="card-body">
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
-								<div class="h2 font-weight-bold text-primary text-uppercase mb-1">
-									Cost</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-							</div>
-							<div class="col-auto">
-								<i class="fas fa-calendar fa-2x text-gray-300"></i>
+								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">C</span>ost</div>
 							</div>
 						</div>
 					</div>
@@ -161,12 +148,7 @@
 					<div class="card-body">
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
-								<div class="h2 font-weight-bold text-primary text-uppercase mb-1">
-									Delivery</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-							</div>
-							<div class="col-auto">
-								<i class="fas fa-calendar fa-2x text-gray-300"></i>
+								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">D</span>elivery</div>
 							</div>
 						</div>
 					</div>
@@ -177,57 +159,7 @@
 		</div>
 	</div>
 
-<div class="container-fluid mt-3">
-  <!-- 첫 번째 열 -->
-  <div class="row">
-    <div class="col-lg-3">
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <!-- 첫 번째 열 내용 -->
-        </div>
-      </div>
-    </div>
-
-  <!-- 두 번째 열 -->
-    <div class="col-lg-3">
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <!-- 두 번째 열 내용 -->
-        </div>
-      </div>
-    </div>
-
-  <!-- 세 번째, 네 번째 열과 가로로 긴 열 -->
-    <!-- 세 번째 열 -->
-    <div class="col-lg-3">
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <!-- 세 번째 열 내용 -->
-        </div>
-      </div>
-    </div>
-    
-    <!-- 네 번째 열 -->
-    <div class="col-lg-3">
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <!-- 네 번째 열 내용 -->
-        </div>
-      </div>
-    </div>
-    
-    <!-- 가로로 긴 열 -->
-    <div class="col-lg-6">
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <!-- 가로로 긴 열 내용 -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-	<!--<div class="container-fluid mt-3">
+	<div class="container-fluid mt-3">
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="card shadow mb-4">
@@ -265,115 +197,10 @@
 					</div>
 				</div>
 			</div>
-
+	
 			<div class="col-lg-3">
 				<div class="card shadow mb-4">
 					<div class="card-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="card shadow mb-4">
-
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-12">
-												<figure class="highcharts-figure">
-													<div id="chart4"></div>
-												</figure>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="card shadow mb-4">
-
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-12">
-												<figure class="highcharts-figure">
-													<div id="chart6"></div>
-												</figure>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-lg-3" style="height: 300px;">
-				<div class="card shadow mb-4">
-					<div class="card-body" style="height: 510px;">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="card shadow mb-4">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-12">
-												<figure class="highcharts-figure">
-													<div id="chart5"></div>
-												</figure>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="card shadow mb-4"  style="width: 1405px;">
-					<div class="card-body" style=" height: 503px;">
-						<div class="row">
-							<div class="col-lg-4" style="height: 465px;">
-								<div class="card border-left-primary shadow h-100 py-2">
-									<div class="card-body">
-										<div class="row no-gutters align-items-center">
-											<div class="col mr-2">
-												<div class="h2 font-weight-bold text-primary text-uppercase mb-1">
-													비정형 데이터</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div class="card shadow mb-4">
-									<div class="card-body" style="height: 465px;">
-										<div class="row">
-											<div class="col-lg-12">
-												<figure class="highcharts-figure">
-													<div id="chart7"></div>
-												</figure>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div class="card shadow mb-4">
-									<div class="card-body" style="height: 465px;">
-										<div class="row">
-											<div class="col-lg-12">
-												<figure class="highcharts-figure">
-													<div id="chart8"></div>
-												</figure>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3" style="height: 300px;">
-				<div class="card shadow mb-4">
-					<div class="card-body" style="height: 510px;">
 						<div class="row">
 							<div class="col-lg-12">
 								<div class="card shadow mb-4">
@@ -389,11 +216,122 @@
 								</div>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="card shadow mb-4">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-lg-12">
+												<figure class="highcharts-figure">
+													<div id="chart4"></div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-lg-6">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="card shadow mb-1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="card shadow">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<figure class="highcharts-figure">
+															<div id="chart5"></div>
+														</figure>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				    
+					<div class="col-lg-6">
+						<div class="card shadow mb-1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="card shadow">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<figure class="highcharts-figure">
+															<div id="chart6"></div>
+														</figure>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card shadow mb-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-4">
+										<div class="card border-left-primary shadow h-100 py-2">
+											<div class="card-body">
+												<div class="row no-gutters align-items-center">
+													<div class="col mr-2">
+														<div class="h2 font-weight-bold text-primary text-uppercase mb-1">비정형 데이터</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="card shadow">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<figure class="highcharts-figure">
+															<div id="chart7"></div>
+														</figure>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="card shadow">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<figure class="highcharts-figure">
+															<div id="chart8"></div>
+														</figure>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>-->
+	</div>
 
 </body>
 

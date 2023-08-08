@@ -45,29 +45,24 @@ function chart1(){
     series: [
         {
             name: '공정A',
-            data: [260, 340, 410, 240, 340, 220]
+            data: [260, 340, 410, 240, 340, 220],
+            color: '#0D70C6'
         },
         {
             name: '공정B',
-            data: [250, 180, 280, 230, 180, 90]
+            data: [250, 180, 280, 230, 180, 90],
+            color: '#009CD8'
         },
         {
             name: '공정C',
-            data: [200, 310, 220, 190, 300, 205]
+            data: [200, 310, 220, 190, 300, 205],
+            color: '#09D0D9'
         },
         {
             name: '공정D',
-            data: [190, 300, 230, 190, 290, 105]
+            data: [190, 300, 230, 190, 290, 105],
+            color: '#0DCF9C'
         }
-    ],
-    colors: [
-		'#4caefe',
-        '#3dc3e8',
-        '#2dd9db',
-        '#1feeaf',
-        '#0ff3a0',
-        '#00e887',
-        '#23e274'
     ]
 });
 
@@ -104,35 +99,226 @@ function chart2(){
     series: [
         {
             name: '공정A',
-            data: [100, 105, 148, 180, 190, 170]
+            data: [100, 105, 148, 180, 190, 170],
+            color: '#0D70C6'
         },
         {
             name: '공정B',
-            data: [85, 109, 84, 130, 180, 170]
+            data: [85, 109, 84, 130, 180, 170],
+            color: '#009CD7'
         }
-    ],
-    colors: [
-		'#0D70C6',
-        '#009CD7'
     ]
 });
 
 }
-
 function chart3(){
 	Highcharts.chart('chart3', {
+    chart: {
+        type: 'variablepie'
+    },
+    title: {
+        text: '불량 발생 비중',
+        align: 'left'
+    },
+    series: [{
+        minPointSize: 10,
+        innerSize: '70%',
+        zMin: 0,
+        name: 'failurerate',
+        borderRadius: 5,
+        data: [{
+            name: '손상',
+            y: 52,
+            z: 120
+        }, {
+            name: '치수',
+            y: 22,
+            z: 120
+        }, {
+            name: '외관',
+            y: 16,
+            z: 120
+        }, {
+            name: '기타',
+            y: 10,
+            z: 120
+        }],
+        colors: [
+            '#C00500',
+            '#FF85FF',
+            '#993601',
+            '#F78E00'
+        ]
+    }]
+});
+}
+
+function chart4(){
+Highcharts.chart('chart4', {
+    series: [{
+        type: 'treemap',
+        layoutAlgorithm: 'stripes',
+        alternateStartingDirection: true,
+        borderColor: '#fff',
+        borderWidth: 2,
+        dataLabels: {
+            style: {
+                textOutline: 'none'
+            }
+        },
+        levels: [{
+            level: 1,
+            layoutAlgorithm: 'stripes',
+            dataLabels: {
+                enabled: true,
+                align: 'left',
+                verticalAlign: 'top',
+                style: {
+                    fontSize: '15px',
+                    fontWeight: 'bold'
+                }
+            }
+        }],
+        data: [{
+            id: 'A',
+            name: '손상',
+            color: '#C00500'
+        }, {
+            id: 'B',
+            name: '치수',
+            color: '#FF85FF'
+        }, {
+            id: 'C',
+            name: '외관',
+            color: '#993601'
+        }, {
+            id: 'D',
+            name: '기타',
+            color: '#F78E00'
+        }, {
+            name: '찍힘',
+            parent: 'A',
+            value: 30
+        }, {
+            name: '변형',
+            parent: 'A',
+            value: 30
+        }, {
+            name: '함몰',
+            parent: 'A',
+            value: 20
+        }, {
+            name: '평행',
+            parent: 'B',
+            value: 10
+        }, {
+            name: '무게',
+            parent: 'B',
+            value: 10
+        }, {
+            name: '변색',
+            parent: 'C',
+            value: 45
+        }, {
+            name: '오염',
+            parent: 'C',
+            value: 30
+        }, {
+            name: '누락',
+            parent: 'D',
+            value: 30
+        }, {
+            name: '소재',
+            parent: 'D',
+            value: 25
+        }, {
+            name: '조립',
+            parent: 'D',
+            value: 20
+        },
+        {
+            name: '검사구',
+            parent: 'D',
+            value: 20
+        },
+        {
+            name: '작동',
+            parent: 'D',
+            value: 5
+        }]
+    }],
+    title: {
+        text: '불량 상세 유형별 빈도 수',
+        align: 'left'
+    }
+});
+
+}
+
+function chart5(){
+	Highcharts.chart('chart5', {
+
+    title: {
+        text: '대표기업 월별 설비 가동율 현황',
+        align: 'left'
+    },
+
+
+    legend: {
+        verticalAlign: 'bottom',
+        align: 'center'
+    },
+
+    xAxis: {
+        categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
+        crosshair: true,
+        accessibility: {
+            description: 'Month'
+        }
+    },
+    
+    yAxis: {
+        title: {
+            text: ''
+        }
+    },
+
+    series: [{
+        name: '설비A',
+        data: [85, 89, 90, 100, 99, 85],
+        color:'#94F5F9'
+    }, {
+        name: '설비B',
+        data: [94, 92, 100, 100, 98, 97],
+        color:'#7D9632'
+    }, {
+        name: '설비C',
+        data: [90, 95, 93, 99, 93, 100],
+        color:'#0A9B73'
+    }, {
+        name: '설비D',
+        data: [99, 100, 93, 98, 96, 99],
+        color:'#4FCDFF'
+    }]
+
+});
+
+}
+
+function chart6(){
+Highcharts.chart('chart6', {
     chart: {
         type: 'column'
     },
     title: {
-        text: '대표기업 월별 평균 재고 수량',
+        text: '대표 기업 월별 계획 대비 실적',
         align: 'left'
     },
     xAxis: {
         categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
         crosshair: true,
         accessibility: {
-            description: 'Month'
+            description: 'Countries'
         }
     },
     yAxis: {
@@ -149,188 +335,28 @@ function chart3(){
     },
     series: [
         {
-            name: '재고수량',
-            data: [12, 19, 15, 4, 2, 10]
+            name: '계획',
+            data: [1000, 1000, 1200, 1400, 1500, 1600],
+            color : '#983501'
+        },
+        {
+            name: '실적',
+            data: [800, 700, 1100, 1100, 1500, 1580],
+            color : '#FC6D00'
         }
-       
-    ],
-    colors: [
-		'#0D70C6'
     ]
-});
-
-}
-function chart4(){
-	Highcharts.chart('chart4', {
-    chart: {
-        type: 'variablepie'
-    },
-    title: {
-        text: 'Countries compared by population density and total area, 2022.',
-        align: 'left'
-    },
-    tooltip: {
-        headerFormat: '',
-        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-            'Area (square km): <b>{point.y}</b><br/>' +
-            'Population density (people per square km): <b>{point.z}</b><br/>'
-    },
-    series: [{
-        minPointSize: 10,
-        innerSize: '70%',
-        zMin: 0,
-        name: 'countries',
-        borderRadius: 5,
-        data: [{
-            name: 'Spain',
-            y: 505992,
-            z: 120
-        }, {
-            name: 'France',
-            y: 551695,
-            z: 120
-        }, {
-            name: 'Poland',
-            y: 312679,
-            z: 120
-        }, {
-            name: 'bzxcb',
-            y: 312679,
-            z: 120
-        }],
-        colors: [
-            '#4caefe',
-            '#3dc3e8',
-            '#2dd9db',
-            '#1feeaf',
-            '#0ff3a0',
-            '#00e887',
-            '#23e274'
-        ]
-    }]
-});
-}
-function chart5(){
-	Highcharts.chart('chart5', {
-
-    title: {
-        text: 'U.S Solar Employment Growth',
-        align: 'left'
-    },
-
-
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-    },
-
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            },
-            pointStart: 2010
-        }
-    },
-
-    series: [{
-        
-        data: [43934, 48656, 65165, 81827, 112143, 142383,
-            171533, 165174, 155157, 161454, 154610]
-    }, {
-        
-        data: [24916, 37941, 29742, 29851, 32490, 30282,
-            38121, 36885, 33726, 34243, 31050]
-    }, {
-        
-        data: [11744, 30000, 16005, 19771, 20185, 24377,
-            32147, 30912, 29243, 29213, 25663]
-    }],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
-    }
-
-});
-
-}
-
-function chart6(){
-Highcharts.chart('chart6', {
-
-    chart: {
-        type: 'variwide'
-    },
-
-    title: {
-        text: 'Labor Costs in Europe, 2016'
-    },
-
-    subtitle: {
-        text: 'Source: <a href="http://ec.europa.eu/eurostat/web/' +
-            'labour-market/labour-costs/main-tables">eurostat</a>'
-    },
-
-    xAxis: {
-        type: 'category'
-    },
-
-    caption: {
-        text: 'Column widths are proportional to GDP'
-    },
-
-    legend: {
-        enabled: false
-    },
-
-    series: [{
-        name: 'Labor Costs',
-        data: [
-            ['Norway', 50.2, 335504],
-            ['Denmark', 42, 277339],
-            ['Belgium', 39.2, 421611],
-            ['Sweden', 38, 462057],
-            ['France', 35.6, 2228857],
-            ['Netherlands', 34.3, 702641],
-            ['Finland', 33.2, 215615]
-        ],
-        dataLabels: {
-            enabled: true,
-            format: '€{point.y:.0f}'
-        },
-        tooltip: {
-            pointFormat: 'Labor Costs: <b>€ {point.y}/h</b><br>' +
-                'GDP: <b>€ {point.z} million</b><br>'
-        },
-        borderRadius: 3,
-        colorByPoint: true
-    }]
-
 });
 
 }
 
 function chart7(){
 	const text =
-        'Chapter 1. Down the Rabbit-Hole ' +
-        'Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: ' +
-        'once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations ' +
-        'in it, \'and what is the use of a book,\' thought Alice \'without pictures or conversation?\'' +
-        'So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy ' +
-        'and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking ' +
-        'the daisies, when suddenly a White Rabbit with pink eyes ran close by her.',
+        'A라인 이상발생 불량 작업자 관리자 회의 요청' +
+        'A라인 이상발생 불량 알람 요청 이메일 전화 현장 공지' +
+        '불량 \' A라인 \' A라인 \' 불량 \'' +
+        'A라인 이상발생 불량 이상 언제 몇시까지 협력사 회의실 공지 ' +
+        '이상발생 불량 ' +
+        '불량',
     lines = text.replace(/[():'?0-9]+/g, '').split(/[,\. ]+/g),
     data = lines.reduce((arr, word) => {
         let obj = Highcharts.find(arr, obj => obj.name === word);
@@ -361,15 +387,8 @@ Highcharts.chart('chart7', {
         name: 'Occurrences'
     }],
     title: {
-        text: 'Wordcloud of Alice\'s Adventures in Wonderland',
+        text: '메신저 키워드 클라우드',
         align: 'left'
-    },
-    subtitle: {
-        text: 'An excerpt from chapter 1: Down the Rabbit-Hole',
-        align: 'left'
-    },
-    tooltip: {
-        headerFormat: '<span style="font-size: 16px"><b>{point.key}</b></span><br>'
     }
 });
 
@@ -381,31 +400,20 @@ function chart8(){
         type: 'bar'
     },
     title: {
-        text: 'UEFA CL top scorers by season'
+        text: '스마트 알람 키워드 발생 빈도 수'
     },
     xAxis: {
-        categories: ['2020/21', '2019/20', '2018/19', '2017/18']
+        categories: ['불량', '이상발생', '설비이상', 'A 라인']
     },
     yAxis: {
         min: 0,
         title: {
-            text: 'Goals'
-        }
-    },
-    legend: {
-        reversed: true
-    },
-    plotOptions: {
-        series: {
-            stacking: 'normal',
-            dataLabels: {
-                enabled: true
-            }
+            text: ''
         }
     },
     series: [{
-        name: 'Cristiano Ronaldo',
-        data: [4, 4, 6, 15]
+		name:'',
+        data: [15, 10, 7, 4]
     }]
 });
 

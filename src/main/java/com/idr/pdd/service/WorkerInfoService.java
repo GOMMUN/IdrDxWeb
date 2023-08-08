@@ -14,7 +14,7 @@ import com.idr.pdd.mapper.WorkerInfoMapper;
 public class WorkerInfoService {
 
 	@Autowired
-	WorkerInfoMapper  mapper;
+	WorkerInfoMapper mapper;
 
 	public List<WorkerInfo> findAll() {
 		

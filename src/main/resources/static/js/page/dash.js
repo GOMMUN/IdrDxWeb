@@ -24,20 +24,17 @@ function chart1(){
         align: 'left'
     },
     xAxis: {
-        categories: ['USA', 'China', 'Brazil', 'EU', 'India', 'Russia'],
+        categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
         crosshair: true,
         accessibility: {
-            description: 'Countries'
+            description: 'Month'
         }
     },
     yAxis: {
         min: 0,
         title: {
-            text: '1000 metric tons (MT)'
+            text: ''
         }
-    },
-    tooltip: {
-        valueSuffix: ' (1000 MT)'
     },
     plotOptions: {
         column: {
@@ -47,17 +44,30 @@ function chart1(){
     },
     series: [
         {
-            name: 'Corn',
-            data: [406292, 260000, 107000, 68300, 27500, 14500]
+            name: '공정A',
+            data: [260, 340, 410, 240, 340, 220]
         },
         {
-            name: 'Wheat',
-            data: [51086, 136000, 5500, 141000, 107180, 77000]
+            name: '공정B',
+            data: [250, 180, 280, 230, 180, 90]
         },
         {
-            name: 'asf',
-            data: [51086, 136000, 5500, 141000, 107180, 77000]
+            name: '공정C',
+            data: [200, 310, 220, 190, 300, 205]
+        },
+        {
+            name: '공정D',
+            data: [190, 300, 230, 190, 290, 105]
         }
+    ],
+    colors: [
+		'#4caefe',
+        '#3dc3e8',
+        '#2dd9db',
+        '#1feeaf',
+        '#0ff3a0',
+        '#00e887',
+        '#23e274'
     ]
 });
 
@@ -69,30 +79,21 @@ function chart2(){
         type: 'column'
     },
     title: {
-        text: 'Corn vs wheat estimated production for 2020',
-        align: 'left'
-    },
-    subtitle: {
-        text:
-            'Source: <a target="_blank" ' +
-            'href="https://www.indexmundi.com/agriculture/?commodity=corn">indexmundi</a>',
+        text: '협력사 A 월별 공정별 생산실적',
         align: 'left'
     },
     xAxis: {
-        categories: ['USA', 'China', 'Brazil', 'EU', 'India', 'Russia'],
+        categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
         crosshair: true,
         accessibility: {
-            description: 'Countries'
+            description: 'Month'
         }
     },
     yAxis: {
         min: 0,
         title: {
-            text: '1000 metric tons (MT)'
+            text: ''
         }
-    },
-    tooltip: {
-        valueSuffix: ' (1000 MT)'
     },
     plotOptions: {
         column: {
@@ -102,13 +103,17 @@ function chart2(){
     },
     series: [
         {
-            name: 'Corn',
-            data: [406292, 260000, 107000, 68300, 27500, 14500]
+            name: '공정A',
+            data: [100, 105, 148, 180, 190, 170]
         },
         {
-            name: 'Wheat',
-            data: [51086, 136000, 5500, 141000, 107180, 77000]
+            name: '공정B',
+            data: [85, 109, 84, 130, 180, 170]
         }
+    ],
+    colors: [
+		'#0D70C6',
+        '#009CD7'
     ]
 });
 
@@ -120,30 +125,21 @@ function chart3(){
         type: 'column'
     },
     title: {
-        text: 'Corn vs wheat estimated production for 2020',
-        align: 'left'
-    },
-    subtitle: {
-        text:
-            'Source: <a target="_blank" ' +
-            'href="https://www.indexmundi.com/agriculture/?commodity=corn">indexmundi</a>',
+        text: '대표기업 월별 평균 재고 수량',
         align: 'left'
     },
     xAxis: {
-        categories: ['USA', 'China', 'Brazil', 'EU', 'India', 'Russia'],
+        categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
         crosshair: true,
         accessibility: {
-            description: 'Countries'
+            description: 'Month'
         }
     },
     yAxis: {
         min: 0,
         title: {
-            text: '1000 metric tons (MT)'
+            text: ''
         }
-    },
-    tooltip: {
-        valueSuffix: ' (1000 MT)'
     },
     plotOptions: {
         column: {
@@ -153,10 +149,13 @@ function chart3(){
     },
     series: [
         {
-            name: 'Corn',
-            data: [406292, 260000, 107000, 68300, 27500, 14500]
+            name: '재고수량',
+            data: [12, 19, 15, 4, 2, 10]
         }
        
+    ],
+    colors: [
+		'#0D70C6'
     ]
 });
 

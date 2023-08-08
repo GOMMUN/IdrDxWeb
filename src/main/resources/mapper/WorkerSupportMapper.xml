@@ -71,8 +71,8 @@
 		UPDATE DSP_WORKER_SUPPORT
 		SET
 		PERSONID = #{personid}
-		, SUPPORTTIME_FROM = #{supporttimeFrom}
-		, SUPPORTTIME_TO = #{supporttimeTo}
+		, SUPPORTTIME_FROM = CONCAT(REPLACE(#{supporttimeFrom},':',''),'00')
+		, SUPPORTTIME_TO = CONCAT(REPLACE(#{supporttimeTo},':',''),'00')
 		, MANHOUR = #{manhour}
 		, EVENTTIME = GETDATE()
 		WHERE

@@ -455,6 +455,7 @@ function setWorkerInputEventListener() {
 	$selectworker.on('check.bs.table', function(row, $element, field) {
 		data.worker = null;
 		data.worker = $element.personid;
+		data.personid = $element.personid;
 
 	});
 
@@ -755,6 +756,7 @@ function setWorkerSupportEventListener() {
 	$selectworker.on('check.bs.table', function(row, $element, field) {
 
 		data.man = $element.personid;
+		data.personid = $element.personid;
 		data.workdailySeq = dataseq;
 
 	});
@@ -800,7 +802,7 @@ function setWorkerSupportEventListener() {
 	$modalModifyBtn.click(function() {
 		// s_workDailyReport
 		data.dataseq = s_workerInput.dataseq;
-		data.manhour = $("input[name=manhour]").val();
+		data.manhour = $("input[name=supportmanhour]").val();
 		data.lineid = $("select[name=inputLineid]").val();
 		data.supporttimeFrom = $("input[name=supporttimeFrom]").val();
 		data.supporttimeTo = $("input[name=supporttimeTo]").val();

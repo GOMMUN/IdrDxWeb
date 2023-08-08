@@ -78,9 +78,8 @@
 	<update id="modify" parameterType="WorkDailyReport">
 		UPDATE DSP_NOTOPERATE_CONTENTS
 		SET
-		NOTOPERATETIME_FROM= #{notoperatetimeFrom}
-		, NOTOPERATETIME_TO=
-		#{notoperatetimeTo}
+		NOTOPERATETIME_FROM = CONCAT(REPLACE(#{notoperatetimeFrom},':',''),'00')
+		, NOTOPERATETIME_TO = CONCAT(REPLACE(#{notoperatetimeTo},':',''),'00')
 		, HANDS= #{hands}
 		, MANHOUR= #{manhour}
 		, CAUSE=

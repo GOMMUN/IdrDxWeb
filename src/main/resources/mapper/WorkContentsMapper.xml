@@ -76,8 +76,8 @@
 	<update id="modify" parameterType="WorkContents">
 		UPDATE DSP_WORK_CONTENTS
 		SET
-		WORKTIME_FROM = #{worktimeFrom}
-		, WORKTIME_TO = #{worktimeTo}
+		WORKTIME_FROM = CONCAT(REPLACE(#{worktimeFrom},':',''),'00')
+		, WORKTIME_TO = CONCAT(REPLACE(#{worktimeTo},':',''),'00')
 		, MANHOUR = #{manhour}
 		, PROD_QTY = #{prodQty}
 		, GOODSUM_QTY = #{goodsumQty}

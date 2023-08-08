@@ -283,7 +283,10 @@ function setWorkDailyReportEventListener() {
 		$grid.bootstrapTable('getSelections').forEach(function(data) {
 			selections.push(data.dataseq);
 		});
-
+		if(!confirm("작업일보 마스터 삭제시 연관된 세부데이터도 전부 삭제됩니다.\n정말 삭제하시겠습니까?")){
+			return;
+		}
+		
 		let url = '/workDailyReport/remove';
 
 		$.ajax({
@@ -1335,7 +1338,7 @@ function setNonOperationEventListener() {
 			return;
 		}
 
-		let url = CORE_URL + 'notoperate-contents/';
+		let url = CORE_URL + '/notoperate-contents/';
 		//		let url = 'http://localhost:8171/notoperate-contents/';
 		$.ajax({
 			url: url,

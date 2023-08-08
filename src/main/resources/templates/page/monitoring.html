@@ -14,7 +14,7 @@
 <body>
 	<form class="user">
 		<div class="form-group row">
-			<div class="col-sm-8"></div>
+			<div class="col-sm-7"></div>
 			<div class="col-sm-1 mb-3 mb-sm-0">
 				<input type="date" name="workDate" class="form-control-custom form-control-user" id="" placeholder="날짜">
 			</div>
@@ -26,6 +26,11 @@
 			<div class="col-sm-1">
 				<select id="lineCodes" name="lineid" class="form-select-custom form-control-user" aria-label="공장">
 					<option value="">공정 선택</option>
+				</select>
+			</div>
+			<div class="col-sm-1">
+				<select id="matarial" name="matarialid" class="form-select-custom form-control-user" aria-label="품명">
+					<option value="">MOT-DK</option>
 				</select>
 			</div>
 			<div class="col-sm-1">
@@ -104,14 +109,6 @@
 						</div>
 						<div class="tbs-col-body">
 							<div class="tbs-col-title item">
-								품명
-							</div>
-							<div class="item">
-								<select id="matarial">
-									<option>MOT-DK</option>
-								</select>
-							</div>
-							<div class="tbs-col-title item">
 								수량
 							</div>
 							<div class="item">
@@ -126,14 +123,6 @@
 							제품창고
 						</div>
 						<div class="tbs-col-body">
-							<div class="tbs-col-title item">
-								품명
-							</div>
-							<div class="item">
-								<select>
-									<option>MOT-DK</option>
-								</select>
-							</div>
 							<div class="tbs-col-title item">
 								수량
 							</div>

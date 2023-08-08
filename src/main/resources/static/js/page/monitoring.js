@@ -7,6 +7,11 @@ let c_line = null;
 let data = s_monitor();
 
 $(function() {
+	$("input[name=workDate]").datepicker({
+		format: "yyyy-mm-dd",
+		autoclose: true,
+		language: "ko"
+	}).datepicker("setDate", new Date());
 	factroy();
 	line();
 	setEventListener();

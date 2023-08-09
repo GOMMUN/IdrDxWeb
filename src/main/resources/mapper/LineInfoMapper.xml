@@ -7,7 +7,7 @@
 
     <select id="findAll" resultType="Location">
 		SELECT 
-			  ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			  ROW_NUMBER() OVER(ORDER BY (SELECT EVENTTIME) DESC) AS ROWNUM,
 			A.DATASEQ,
         	A.COMPANYID,
         	A.LOCATIONID,
@@ -26,6 +26,7 @@
         	A.TID 
         FROM DSP_LOCATION as A
         WHERE 1=1 
+        ORDER BY EVENTTIME DESC
     </select>  
     
     <select id="validationcheck" parameterType="Location" resultType="Integer">

@@ -79,6 +79,22 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
+		} else if (isNaN(data.failurerate) || data.failurerate == "") {
+			alert("고장률을 확인해주세요.");
+			$("input[name=failurerate]").focus();
+			return;
+		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
+			alert("복구시간을 확인해주세요.");
+			$("input[name=recoverytime]").focus();
+			return;
+		} else if (isNaN(data.errorrate) || data.errorrate == "") {
+			alert("불량률을 확인해주세요.");
+			$("input[name=errorrate]").focus();
+			return;
+		} else if (isNaN(data.buffer) || data.buffer == "") {
+			alert("Buffer를 확인해주세요.");
+			$("input[name=buffer]").focus();
+			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
@@ -97,6 +113,7 @@ function initSetting() {
 				
 				$table = $("#equipmentinfo");
 				$table.bootstrapTable('refresh');
+				refreshEquipmentInfo()
 				
 				$('#addEquipmentInfoModal').modal('hide');
 				alert("저장되었습니다.");
@@ -130,7 +147,27 @@ function initSetting() {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
-		} 
+		} else if (isNaN(data.failurerate) || data.failurerate == "") {
+			alert("고장률을 확인해주세요.");
+			$("input[name=failurerate]").focus();
+			return;
+		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
+			alert("복구시간을 확인해주세요.");
+			$("input[name=recoverytime]").focus();
+			return;
+		} else if (isNaN(data.errorrate) || data.errorrate == "") {
+			alert("불량률을 확인해주세요.");
+			$("input[name=errorrate]").focus();
+			return;
+		}  else if (isNaN(data.buffer) || data.buffer == "") {
+			alert("Buffer를 확인해주세요.");
+			$("input[name=buffer]").focus();
+			return;
+		} else if (data.isusable == "") {
+			alert("사용여부를 선택해주세요.");
+			$("select[name=isusable]").focus();
+			return;
+		}  
 		
 		let url = '/equipmentinfo/modify';
 
@@ -148,7 +185,11 @@ function initSetting() {
 				
 				$('#addEquipmentInfoModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("장비코드와 공장을 확인해주세요");
+	    	}
 		});
 		
 	});
@@ -264,6 +305,6 @@ function refreshEquipmentInfo() {
 		$("input[name=recoverytime]").val("");
 		$("input[name=errorrate]").val("");
 		$("input[name=buffer]").val("");
-		$("select[name=isusable]").val("");
+		$("select[name=isusable]").val("Y");
 	
 }

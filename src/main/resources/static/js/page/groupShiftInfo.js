@@ -68,7 +68,7 @@ function initSetting() {
 			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.shiftid == "") {
-			alert("그룹/SHIFT 명을 선텍하세요.");
+			alert("그룹/SHIFT 코드를 선텍하세요.");
 			$("select[name=shiftid]").focus();
 			return;
 		} else if (data.isusable == "") {
@@ -89,10 +89,15 @@ function initSetting() {
 				
 				$table = $("#shiftinfo");
 				$table.bootstrapTable('refresh');
+				refreshGroupShiftInfo()
 				
 				$('#addGroupShiftInfoModal').modal('hide');
 				alert("저장되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("그룹/SHIFT 코드와 공장을 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -134,10 +139,15 @@ function initSetting() {
 				
 				$table = $("#shiftinfo");
 				$table.bootstrapTable('refresh');
+				refreshGroupShiftInfo()
 				
 				$('#addGroupShiftInfoModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("그룹/SHIFT 코드와 공장을 확인해주세요");
+	    	}
 		});
 	});		
 	
@@ -219,7 +229,7 @@ function refreshGroupShiftInfo() {
 	$("input[name=shifttype]").val("");
 	$("input[name=starttime]").val("");
 	$("input[name=endtime]").val("");
-	$("select[name=isusable]").val("");
+	$("select[name=isusable]").val("Y");
 }
 
 function factroy() {

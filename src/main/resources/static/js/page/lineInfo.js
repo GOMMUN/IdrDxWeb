@@ -93,6 +93,7 @@ function initSetting() {
 				
 				$table = $("#lineinfo");
 				$table.bootstrapTable('refresh');
+				refreshLineInfo()
 				
 				$('#addLineinfoModal').modal('hide');
 				alert("저장되었습니다.");
@@ -139,7 +140,11 @@ function initSetting() {
 				
 				$('#addLineinfoModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("라인코드와 공장을 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -246,6 +251,6 @@ function refreshLineInfo() {
 	$("select[name=factoryid]").val("");
 	$("input[name=locationid]").val("");
 	$("input[name=locationname]").val("");
-	$("select[name=isusable]").val("");
+	$("select[name=isusable]").val("Y");
 	
 }

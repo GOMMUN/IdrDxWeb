@@ -62,8 +62,8 @@
 							<tr>
 								<th data-field="state" data-checkbox="true"></th>
 								<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
-								<th data-field="personid" data-sortable="true" data-align="center">작업자ID</th>
-								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>								
+								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
+								<th data-field="personid" data-sortable="true" data-align="center">작업자ID</th>								
 								<th data-field="personname" data-sortable="true" data-align="center">작업자명</th>
 								<th data-field="creator" data-sortable="true" data-align="center">생성자</th>
 								<th data-field="createtime" data-sortable="true" data-align="center">생성시간</th>
@@ -94,15 +94,15 @@
 								</div>
 								<form class="user">
 									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="text" name="personid" class="form-control-custom form-control-user"
-											id="" placeholder="작업자ID">
-										</div>
 										<div class="col-sm-6">
 											<select id="factoryCodes" name="factoryid"
 												class="form-select-custom form-control-user" aria-label="공장">
 												<option value="">공장 선택</option>
 											</select>
+										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<input type="text" name="personid" class="form-control-custom form-control-user"
+											id="" placeholder="작업자ID">
 										</div>
 									</div>
 									<div class="form-group row">
@@ -113,7 +113,6 @@
 										<div class="col-sm-6">
 											<select id="isusable" name="isusable"
 												class="form-select-custom form-control-user" aria-label="공장">
-												<option value="">사용여부</option>
 												<option value="Y">Y</option>
 												<option value="N">N</option>
 											</select>

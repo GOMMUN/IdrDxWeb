@@ -7,15 +7,15 @@
 
     <select id="findAll" resultType="Shift">
 		SELECT
-			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM
-			,DATASEQ
+			ROW_NUMBER() OVER(ORDER BY (SELECT EVENTTIME) DESC) AS ROWNUM
+			,A.DATASEQ
 			,A.SHIFTID
 			,A.FACTORYID
 			,(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME
 			,A.SHIFTNAME
 			,A.SHIFTTYPE
-			,A.STARTTIME 
-			,A.ENDTIME
+			,LEFT(CONCAT(SUBSTRING(A.STARTTIME,1,2),':',SUBSTRING(A.STARTTIME,3,4)),5) AS STARTTIME
+			,LEFT(CONCAT(SUBSTRING(A.ENDTIME,1,2),':',SUBSTRING(A.ENDTIME,3,4)),5) AS ENDTIME
 			,A.CREATOR
 			,FORMAT(A.CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
 			,A.EVENT
@@ -24,6 +24,7 @@
 			,A.ISUSABLE
 		FROM DSP_SHIFT A
 		WHERE 1=1
+		ORDER BY EVENTTIME DESC
     </select>    
     
 	<insert id="create" parameterType="Shift" >
@@ -47,8 +48,8 @@
 				,#{shiftid}
 				,#{shiftname}				
 				,#{shifttype}
-				,#{starttime}
-				,#{endtime}
+				,CONCAT(REPLACE(#{starttime},':',''),'00')
+			  	,CONCAT(REPLACE(#{endtime},':',''),'00')
 				,'idrAdmin'
 				,GETDATE()
 				,'idrAdmin'
@@ -60,10 +61,12 @@
     <update id="modify" parameterType="Shift" >
 		UPDATE DSP_SHIFT
            SET
-				 SHIFTNAME		= #{shiftname}
+          		 FACTORYID		= #{factoryid}
+				,SHIFTID		= #{shiftid}
+				,SHIFTNAME		= #{shiftname}
 				,SHIFTTYPE		= #{shifttype}
-				,STARTTIME		= #{starttime}
-				,ENDTIME		= #{endtime}
+				,STARTTIME		= CONCAT(REPLACE(#{starttime},':',''),'00')
+				,ENDTIME		= CONCAT(REPLACE(#{endtime},':',''),'00')
 				,EVENTUSER		= 'idrAdmin'
 				,EVENTTIME		= GETDATE()
 				,ISUSABLE		= #{isusable}

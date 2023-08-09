@@ -52,7 +52,6 @@ $(function(){
 		data.factoryid = $("input[name=factoryid]").val();
 		data.factoryname = $("input[name=factoryname]").val();
 		data.description = $("input[name=description]").val();
-		data.erpplant = $("input[name=erpplant]").val();
 		data.factorytype = $("input[name=factorytype]").val();
 		data.isusable = $("select[name=isusable]").val();
 
@@ -83,10 +82,15 @@ $(function(){
 				
 				$table = $("#factoryinfo");
 				$table.bootstrapTable('refresh');
+				refreshFactoryInfo()
 				
 				$('#addFactoryInfoModal').modal('hide');
 				alert("저장되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("공장코드를 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -96,7 +100,6 @@ $(function(){
 		data.factoryid = $("input[name=factoryid]").val();
 		data.factoryname = $("input[name=factoryname]").val();
 		data.description = $("input[name=description]").val();
-		data.erpplant = $("input[name=erpplant]").val();
 		data.factorytype = $("input[name=factorytype]").val();
 		data.isusable = $("select[name=isusable]").val();
 
@@ -127,10 +130,15 @@ $(function(){
 				
 				$table = $("#factoryinfo");
 				$table.bootstrapTable('refresh');
+				refreshFactoryInfo()
 				
 				$('#addFactoryInfoModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("공장코드를 확인해주세요");
+	    	}
 		});
 	});	
 	
@@ -194,7 +202,6 @@ function factoryInfoDetail(data) {
 	$("input[name=factoryid]").val(data.factoryid);
 	$("input[name=factoryname]").val(data.factoryname);
 	$("input[name=description]").val(data.description);
-	$("input[name=erpplant]").val(data.erpplant);
 	$("input[name=factorytype]").val(data.factorytype);
 	$("select[name=isusable]").val(data.isusable);
 }
@@ -202,7 +209,7 @@ function factoryInfoDetail(data) {
 function initFactoryInfo() {
 	
 	let data = {
-		"factoryid": "", "factoryname": "", "description": "", "erpplant": "",
+		"factoryid": "", "factoryname": "", "description": "", 
 		"factorytype": "", "isusable": ""
 	};
 	
@@ -213,8 +220,7 @@ function refreshFactoryInfo() {
 	$("input[name=factoryid]").val("");
 	$("input[name=factoryname]").val("");
 	$("input[name=description]").val("");
-	$("input[name=erpplant]").val("");
 	$("input[name=factorytype]").val("");
-	$("select[name=isusable]").val("");
+	$("select[name=isusable]").val("Y");
 }
 

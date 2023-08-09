@@ -28,16 +28,16 @@
 		, A.GROUPING_ID
 		, A.GROUPING_NM
 		, A.FST_REG_USER_ID
-		, A.FST_REG_DT
+		, FORMAT(A.FST_REG_DT, 'yyyy-MM-dd HH:mm:ss') AS FST_REG_DT
 		, A.FNL_EDIT_USER_ID
-		, A.FNL_EDIT_DT
+		, FORMAT(A.FNL_EDIT_DT, 'yyyy-MM-dd HH:mm:ss') AS FNL_EDIT_DT
 		, A.ISUSABLE
 		, A.TID
 		FROM CM0701 A
 		WHERE A.COMPANY_CD = 'dx'
 		AND A.BIZ_CD = 'SP1'
 		AND A.AXIS_ID = #{axisid}
-		ORDER BY A.GROUPING_ID ASC
+		ORDER BY FNL_EDIT_DT DESC
 	</select>	
 	
 	<insert id="create" parameterType="CM0701">

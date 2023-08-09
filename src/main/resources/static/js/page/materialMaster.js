@@ -71,7 +71,6 @@ function initSetting() {
 		data.materialtype = $("input[name=materialtype]").val();
 		data.materialkind = $("input[name=materialkind]").val();
 		data.materialunit = $("input[name=materialunit]").val();
-		data.vendorid = $("input[name=vendorid]").val();
 		data.receivinginspection = $("select[name=receivinginspection]").val();
 		data.isusable = $("select[name=isusable]").val();
 
@@ -103,6 +102,7 @@ function initSetting() {
 				
 				$table = $("#materialmaster");
 				$table.bootstrapTable('refresh');
+				refreshMaterialMaster()
 				
 				$('#addMaterialMasterModal').modal('hide');
 				alert("저장되었습니다.");
@@ -123,7 +123,6 @@ function initSetting() {
 		data.materialtype = $("input[name=materialtype]").val();
 		data.materialkind = $("input[name=materialkind]").val();
 		data.materialunit = $("input[name=materialunit]").val();
-		data.vendorid = $("input[name=vendorid]").val();
 		data.receivinginspection = $("select[name=receivinginspection]").val();
 		data.isusable = $("select[name=isusable]").val();
 		
@@ -260,7 +259,6 @@ function materialMasterDetail(data) {
 		$("input[name=materialtype]").val(data.materialtype);
 		$("input[name=materialkind]").val(data.materialkind);
 		$("input[name=materialunit]").val(data.materialunit);
-		$("input[name=vendorid]").val(data.vendorid);
 		$("select[name=receivinginspection]").val(data.receivinginspection);
 		$("select[name=isusable]").val(data.isusable);
 }
@@ -273,8 +271,7 @@ function refreshMaterialMaster() {
 		$("input[name=materialtype]").val("");
 		$("input[name=materialkind]").val("");
 		$("input[name=materialunit]").val("");
-		$("input[name=vendorid]").val("");
 		$("select[name=receivinginspection]").val("");
-		$("select[name=isusable]").val("");
+		$("select[name=isusable]").val("Y");
 	
 }

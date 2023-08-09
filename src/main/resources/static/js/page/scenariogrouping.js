@@ -154,6 +154,7 @@ function setEventListener (){
 				
 				$table = $("#scenariolist");
 				$table.bootstrapTable('refresh');
+				refreshScenarioList()
 				
 				$('#addScenarioListModal').modal('hide');
 				alert("저장되었습니다.");
@@ -283,6 +284,7 @@ function setEventListener (){
 				
 				$table = $("#scenariogroup");
 				$table.bootstrapTable('refresh');
+				refreshScenarioGroup()
 				
 				$('#addScenarioGroupModal').modal('hide');
 				alert("저장되었습니다.");
@@ -455,6 +457,7 @@ function scenarioListDetail(data){ //Axis 값 수정 불가
 		$("input[name=scenarionm]").val(data.scenarionm);
 		$("input[name=axisid]").val(data.axisid);
 		$("input[name=groupingid]").val(data.groupingid);
+		$("input[name=isusable]").val(data.isusable);
 
 }
 
@@ -464,6 +467,7 @@ function refreshScenarioList() {
 		$("input[name=scenarionm]").val("");
 		$("input[name=axisid]").val("");
 		$("input[name=groupingid]").val("");
+		$("select[name=isusable]").val("Y");
 }
 
 function scenarioGroupDetail(data){ //Axis 값 수정 불가
@@ -471,6 +475,7 @@ function scenarioGroupDetail(data){ //Axis 값 수정 불가
 		$("input[name=scenarioid]").val(data.scenarioid);
 		$("select[name=pqcdid]").val(data.pqcdid);
 		$("input[name=activityid]").val(data.activityid);
+		$("input[name=isusable]").val(data.isusable);
 
 }
 
@@ -478,4 +483,5 @@ function refreshScenarioGroup() {
 	
 		$("select[name=pqcdid]").val("");
 		$("input[name=activityid]").val("");
+		$("select[name=isusable]").val("Y");
 }

@@ -85,10 +85,15 @@ $(function(){
 				
 				$table = $("#mvinfo");
 				$table.bootstrapTable('refresh');
+				refreshMvInfo()
 				
 				$('#addMvInfoModal').modal('hide');
 				alert("저장되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("MODEL ID를 확인해주세요");
+	    	}
 		});
 	});	
 	
@@ -131,10 +136,15 @@ $(function(){
 				
 				$table = $("#mvinfo");
 				$table.bootstrapTable('refresh');
+				refreshMvInfo()
 				
 				$('#addMvInfoModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("MODEL ID를 확인해주세요");
+	    	}
 		});
 	});			
 		
@@ -206,10 +216,10 @@ function initMvInfo() {
 	return data;
 }
  
-function refreshmvInfo(data){
+function refreshMvInfo(){
 	$("input[name=modelid]").val("");
 	$("input[name=modelnm]").val("");
 	$("input[name=modeldesc]").val("");
-	$("select[name=useyn]").val("");
+	$("select[name=useyn]").val("Y");
 }
 

@@ -107,6 +107,7 @@ function setEventListener (){
 				
 				$table = $("#datasetgroup");
 				$table.bootstrapTable('refresh');
+				refreshDvcModel()
 				
 				$('#addDvcModelModal').modal('hide');
 				alert("저장되었습니다.");
@@ -159,7 +160,11 @@ function setEventListener (){
 				
 				$('#addDvcModelModal').modal('hide');
 				alert("수정되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("그룹핑ID와 그룹핑Name을 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -256,7 +261,7 @@ function refreshDvcModel() {
 	
 		$("input[name=groupingid]").val("");
 		$("input[name=groupingnm]").val("");
-		$("select[name=isusable]").val("");
+		$("select[name=isusable]").val("Y");
 }
 
  

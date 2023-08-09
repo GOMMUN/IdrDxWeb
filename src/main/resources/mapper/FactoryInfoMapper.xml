@@ -7,12 +7,11 @@
 
     <select id="findAll" resultType="Factory">
           SELECT 
-          		 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM
+          		 ROW_NUMBER() OVER(ORDER BY (SELECT EVENTTIME) DESC) AS ROWNUM
           		,DATASEQ
 	            ,FACTORYID
 	            ,FACTORYNAME
 	            ,DESCRIPTION
-	            ,ERPPLANT
 	            ,FACTORYTYPE
 	            ,CREATOR
 	            ,FORMAT(CREATETIME, 'yyyy-MM-dd HH:mm:ss') AS CREATETIME
@@ -22,6 +21,7 @@
 	            ,ISUSABLE
           FROM DSP_FACTORY
          WHERE 1=1
+         ORDER BY EVENTTIME DESC
     </select>  
     
 	<insert id="create" parameterType="Factory" >
@@ -30,7 +30,6 @@
 				,FACTORYID
 				,FACTORYNAME
 				,DESCRIPTION
-				,ERPPLANT
 				,FACTORYTYPE
 				,CREATOR
 				,CREATETIME
@@ -42,8 +41,7 @@
 				 'dx'
 				,#{factoryid}
 				,#{factoryname}
-				,#{description}				
-				,#{erpplant}
+				,#{description}
 				,#{factorytype}
 				,'idrAdmin'
 				,GETDATE()
@@ -58,7 +56,6 @@
            SET
 				 FACTORYNAME	= #{factoryname}
 				,DESCRIPTION	= #{description}
-				,ERPPLANT		= #{erpplant}
 				,FACTORYTYPE	= #{factorytype}
 				,EVENTUSER		= 'idrAdmin'
 				,EVENTTIME		= GETDATE()

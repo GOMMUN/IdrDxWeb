@@ -85,7 +85,27 @@ function initSetting() {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
-		} 
+		} else if (isNaN(data.failurerate) || data.failurerate == "") {
+			alert("고장률을 확인해주세요.");
+			$("input[name=failurerate]").focus();
+			return;
+		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
+			alert("복구시간을 확인해주세요.");
+			$("input[name=recoverytime]").focus();
+			return;
+		} else if (isNaN(data.speed) || data.speed == "") {
+			alert("속도를 확인해주세요.");
+			$("input[name=speed]").focus();
+			return;
+		} else if (isNaN(data.loadingtime) || data.loadingtime == "") {
+			alert("로딩시간을 확인해주세요.");
+			$("input[name=loadingtime]").focus();
+			return;
+		} else if (isNaN(data.unloadingtime) || data.unloadingtime == "") {
+			alert("언로딩시간을 확인해주세요.");
+			$("input[name=unloadingtime]").focus();
+			return;
+		}  
 
 		let url = '/logisticsinfo/create';
 
@@ -99,6 +119,7 @@ function initSetting() {
 				
 				$table = $("#logisticsinfo");
 				$table.bootstrapTable('refresh');
+				refreshLogisticsInfo()
 				
 				$('#addLogisticsInfoModal').modal('hide');
 				alert("저장되었습니다.");
@@ -131,6 +152,26 @@ function initSetting() {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
+		} else if (isNaN(data.failurerate) || data.failurerate == "") {
+			alert("고장률을 확인해주세요.");
+			$("input[name=failurerate]").focus();
+			return;
+		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
+			alert("복구시간을 확인해주세요.");
+			$("input[name=recoverytime]").focus();
+			return;
+		} else if (isNaN(data.speed) || data.speed == "") {
+			alert("속도를 확인해주세요.");
+			$("input[name=speed]").focus();
+			return;
+		} else if (isNaN(data.loadingtime) || data.loadingtime == "") {
+			alert("로딩시간을 확인해주세요.");
+			$("input[name=loadingtime]").focus();
+			return;
+		} else if (isNaN(data.unloadingtime) || data.unloadingtime == "") {
+			alert("언로딩시간을 확인해주세요.");
+			$("input[name=unloadingtime]").focus();
+			return;
 		} 
 		
 		let url = '/logisticsinfo/modify';
@@ -149,7 +190,11 @@ function initSetting() {
 				
 				$('#addLogisticsInfoModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("물류코드와 공장을 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -268,6 +313,6 @@ function refreshLogisticsInfo() {
 		$("input[name=loadingtime]").val("");
 		$("input[name=unloadingtime]").val("");
 		$("input[name=lotsize]").val("");
-		$("select[name=isusable]").val("");
+		$("select[name=isusable]").val("Y");
 	
 }

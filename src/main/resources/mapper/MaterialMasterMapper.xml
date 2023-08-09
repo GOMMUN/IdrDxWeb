@@ -6,8 +6,8 @@
 <mapper namespace="com.idr.pdd.mapper.MaterialMasterMapper">
 
     <select id="findAll" resultType="Material">
-		SELECT  
-			 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+		SELECT   
+			 ROW_NUMBER() OVER(ORDER BY (SELECT EVENTTIME) DESC) AS ROWNUM,
 			A.DATASEQ,
 			A.MATERIALID,
         	A.FACTORYID,
@@ -28,6 +28,7 @@
         	A.COMPANY_CD
         FROM DSP_MATERIAL as A
         WHERE 1=1
+        ORDER BY EVENTTIME DESC
     </select>
     
     <insert id="create" parameterType="Material">

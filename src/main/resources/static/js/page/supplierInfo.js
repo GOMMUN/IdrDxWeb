@@ -103,6 +103,7 @@ function initSetting() {
 				
 				$table = $("#supplierinfo");
 				$table.bootstrapTable('refresh');
+				refreshSupplierInfo()
 				
 				$('#addSupplierInfoModal').modal('hide');
 				alert("저장되었습니다.");
@@ -275,6 +276,6 @@ function refreshSupplierInfo() {
 		$("input[name=vendorchargeid]").val("");
 		$("input[name=vendorcontactemail]").val("");
 		$("input[name=vendorcontactphoneno]").val("");
-		$("select[name=isusable]").val("");
+		$("select[name=isusable]").val("Y");
 	
 }

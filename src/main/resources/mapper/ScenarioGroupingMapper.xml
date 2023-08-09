@@ -15,14 +15,14 @@
 		,A.AXIS_ID
 		,A.GROUPING_ID
 		,A.FST_REG_USER_ID
-		,A.FST_REG_DT
+		,FORMAT(A.FST_REG_DT, 'yyyy-MM-dd HH:mm:ss') AS FST_REG_DT
 		,A.FNL_EDIT_USER_ID
-		,A.FNL_EDIT_DT
+		,FORMAT(A.FNL_EDIT_DT, 'yyyy-MM-dd HH:mm:ss') AS FNL_EDIT_DT
 		,A.ISUSABLE
 		,A.TID
 		FROM CM0901 A
 		WHERE 1=1
-		ORDER BY A.SCENARIO_ID
+		ORDER BY FNL_EDIT_DT DESC
 	</select>
 
 	<select id="findAll2" parameterType="CM0901" resultType="CM0902">
@@ -34,9 +34,9 @@
 		,A.PQCD_ID
 		,A.ACTIVITY_ID
 		,A.FST_REG_USER_ID
-		,A.FST_REG_DT
+		,FORMAT(A.FST_REG_DT, 'yyyy-MM-dd HH:mm:ss') AS FST_REG_DT
 		,A.FNL_EDIT_USER_ID
-		,A.FNL_EDIT_DT
+		,FORMAT(A.FNL_EDIT_DT, 'yyyy-MM-dd HH:mm:ss') AS FNL_EDIT_DT
 		,A.ISUSABLE
 		,A.TID
 		FROM CM0902 A
@@ -46,7 +46,7 @@
 		AND A.COMPANY_CD = 'dx'
 		AND A.BIZ_CD = 'SP1'
 		AND A.SCENARIO_ID = #{scenarioid}
-		ORDER BY A.PQCD_ID ASC
+		ORDER BY FNL_EDIT_DT DESC
 	</select>
 	
 	<insert id="create1" parameterType="CM0901">

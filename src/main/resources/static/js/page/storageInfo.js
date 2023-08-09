@@ -82,6 +82,18 @@ function initSetting() {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
+		} else if (isNaN(data.failurerate) || data.failurerate == "") {
+			alert("고장률을 확인해주세요.");
+			$("input[name=failurerate]").focus();
+			return;
+		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
+			alert("복구시간을 확인해주세요.");
+			$("input[name=recoverytime]").focus();
+			return;
+		} else if (isNaN(data.buffer) || data.buffer == "") {
+			alert("Buffer를 확인해주세요.");
+			$("input[name=buffer]").focus();
+			return;
 		} 
 
 		let url = '/storageinfo/create';
@@ -96,6 +108,7 @@ function initSetting() {
 				
 				$table = $("#storageinfo");
 				$table.bootstrapTable('refresh');
+				refreshStorageInfo()
 				
 				$('#addStorageinfoModal').modal('hide');
 				alert("저장되었습니다.");
@@ -127,6 +140,18 @@ function initSetting() {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
+		} else if (isNaN(data.failurerate) || data.failurerate == "") {
+			alert("고장률을 확인해주세요.");
+			$("input[name=failurerate]").focus();
+			return;
+		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
+			alert("복구시간을 확인해주세요.");
+			$("input[name=recoverytime]").focus();
+			return;
+		} else if (isNaN(data.buffer) || data.buffer == "") {
+			alert("Buffer를 확인해주세요.");
+			$("input[name=buffer]").focus();
+			return;
 		} 
 		
 		let url = '/storageinfo/modify';
@@ -145,7 +170,11 @@ function initSetting() {
 				
 				$('#addStorageinfoModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("창고코드와 공장을 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -258,6 +287,6 @@ function refreshStorageInfo() {
 	$("input[name=failurerate]").val("");
 	$("input[name=recoverytime]").val("");
 	$("input[name=buffer]").val("");
-	$("select[name=isusable]").val("");
+	$("select[name=isusable]").val("Y");
 	
 }

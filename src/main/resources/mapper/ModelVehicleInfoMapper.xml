@@ -7,7 +7,9 @@
 
 	<select id="findAll" resultType="CM0501">
 		SELECT
-		A.COMPANY_CD
+		  ROW_NUMBER() OVER(ORDER BY (SELECT A.FNL_EDIT_DT) DESC) AS ROWNUM
+		, A.DATASEQ
+		, A.COMPANY_CD
 		, A.BIZ_CD
 		, A.MODEL_ID
 		, A.MODEL_NM
@@ -20,70 +22,57 @@
 		FROM CM0501 A
 		WHERE 1=1
 		AND A.COMPANY_CD = 'dx'
-		ORDER BY A.MODEL_ID ASC
-	</select>
-	
-	<select id="checkCnt" parameterType="CM0501" resultType="int">
-		SELECT COUNT(*)
-		FROM CM0501
-		WHERE 1=1
-			AND MODEL_ID = #{modelid}
-	</select>  	
+		ORDER BY A.FNL_EDIT_DT DESC
+	</select> 	
 
-	<update id="save" parameterType="CM0501" >
-		MERGE INTO CM0501 AS A
-		USING (
-			SELECT 1 AS DUM
-		) AS B
-		ON (
-			A.MODEL_ID = #{modelid}
-			)
-		WHEN MATCHED THEN
-			UPDATE SET 
-				 MODEL_NM			= #{modelnm}
-				,MODEL_DESC			= #{modeldesc}
-				,USE_YN				= #{useyn}
-				,FNL_EDIT_USER_ID	= 'idrAdmin'
-				,FNL_EDIT_DT		= FORMAT(SYSDATETIME(), 'yyyy-MM-dd HH:mm:ss')
-		WHEN NOT MATCHED THEN 
-			INSERT(
-				 COMPANY_CD
-				,BIZ_CD
-				,MODEL_ID
-				,MODEL_NM
-				,MODEL_DESC
-				,FST_REG_USER_ID
-				,FST_REG_DT		
-				,FNL_EDIT_USER_ID	
-				,FNL_EDIT_DT					
-				,USE_YN
+	<insert id="create" parameterType="CM0501">
+			INSERT INTO CM0501(
+        		 COMPANY_CD 
+        		,BIZ_CD 
+        		,MODEL_ID
+        		,MODEL_NM 
+        		,MODEL_DESC
+        		,USE_YN 
+        		,FST_REG_USER_ID 
+        		,FST_REG_DT
+        		,FNL_EDIT_USER_ID
+        		,FNL_EDIT_DT			
 			) 
 			VALUES(
 				 'dx'
 				,'SP1'
 				,#{modelid}
-				,#{modelnm}
+				,#{modelnm}			
 				,#{modeldesc}
-				,'idrAdmin'
-				,GETDATE()
-				,'idrAdmin'
-				,GETDATE()
 				,#{useyn}
+				,'idrAdmin'
+				,getdate()
+				,'idrAdmin'
+				,getdate()		
 			)
-		;
+	</insert>
+	
+    <update id="modify" parameterType="CM0501" >
+			UPDATE CM0501
+			SET 
+				 MODEL_ID			= #{modelid}
+				,MODEL_NM			= #{modelnm}			
+				,MODEL_DESC   		= #{modeldesc}
+				,USE_YN				= #{useyn}
+				,FNL_EDIT_USER_ID   = 'idrAdmin'
+				,FNL_EDIT_DT  		= getdate()
+			WHERE DATASEQ			= #{dataseq}
 	</update>
-
+	
     <update id="remove" parameterType="list">
-		<foreach collection="list" item="data" open="" close="" separator=";">
-		UPDATE CM0501 
-		SET USE_YN= 'N'
-			,FNL_EDIT_USER_ID = 'idrAdmin'
-			,FNL_EDIT_DT = FORMAT(SYSDATETIME(), 'yyyy-MM-dd HH:mm:ss')
-    	WHERE
-			COMPANY_CD = 'dx' 
-			AND BIZ_CD = 'SP1' 
-			AND MODEL_ID = #{data.modelid}
-		</foreach>
+    	UPDATE CM0501
+		SET USE_YN				= 'N',
+			FNL_EDIT_USER_ID 	= 'idrAdmin',
+			FNL_EDIT_DT  		= getdate()
+		WHERE 1=1 AND DATASEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
     </update>
 
 </mapper>

@@ -60,12 +60,11 @@
 						data-show-columns-toggle-all="true">
 						<thead class="thead-light">
 							<tr>
-								<th data-field="state" data-checkbox="true"></th>										
-								<th data-field="rownum" data-sortable="true" data-align="center">순번</th>						
+								<th data-field="state" data-checkbox="true"></th>	
+								<th data-field="rownum" data-sortable="true" data-align="center">순번</th>															
 								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>
 								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
 								<th data-field="description" data-sortable="true" data-align="center">설명</th>
-								<th data-field="erpplant" data-sortable="true" data-align="center">ERP코드</th>
 								<th data-field="factorytype" data-sortable="true" data-align="center">공장유형</th>
 								<th data-field="creator" data-sortable="true" data-align="center">생성자</th>
 								<th data-field="createtime" data-sortable="true" data-align="center">생성시간</th>
@@ -110,20 +109,15 @@
 											<input type="text" name="description" class="form-control-custom form-control-user"
 											id="" placeholder="설명">
 										</div>
-										<div class="col-sm-6">
-											<input type="text" name="erpplant" class="form-control-custom form-control-user"
-											id="" placeholder="ERP코드">
-										</div>										
-									</div>
-									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input type="text" name="factorytype" class="form-control-custom form-control-user"
 											id="" placeholder="공장유형">
-										</div>
+										</div>									
+									</div>
+									<div class="form-group row">
 										<div class="col-sm-6">
 											<select id="isusable" name="isusable"
 												class="form-select-custom form-control-user" aria-label="공장">
-												<option value="">사용여부</option>
 												<option value="Y">Y</option>
 												<option value="N">N</option>
 											</select>

@@ -16,13 +16,14 @@
 		, (SELECT COMM_CD_NM FROM SC_COMM_CD WHERE COMM_GRP_CD = 'PQCD_TYPE'
 		AND COMM_CD = PQCD_ID) PQCD_NM
 		, FST_REG_USER_ID
-		, FST_REG_DT
+		, FORMAT(FST_REG_DT, 'yyyy-MM-dd HH:mm:ss') AS FST_REG_DT
 		, FNL_EDIT_USER_ID
-		, FNL_EDIT_DT
+		, FORMAT(FNL_EDIT_DT, 'yyyy-MM-dd HH:mm:ss') AS FNL_EDIT_DT
 		, ISUSABLE
 		, TID
 		FROM CM0801
 		WHERE 1=1
+		ORDER BY FNL_EDIT_DT DESC
 	</select>  	
 
 	<insert id="create" parameterType="CM0801">

@@ -69,11 +69,11 @@ function initSetting() {
 			return;
 		} else if (data.personname == "") {
 			alert("작업자명을 입력하세요.");
-			$("input[name=daynight]").focus();
+			$("input[name=personname]").focus();
 			return;
 		} else if (data.useyn == "") {
 			alert("사용유무를 선택하세요.");
-			$("select[name=useyn]").focus();
+			$("select[name=isusable]").focus();
 			return;
 		}
 
@@ -89,10 +89,15 @@ function initSetting() {
 				
 				$table = $("#workerinfo");
 				$table.bootstrapTable('refresh');
+				refreshWorkerInfo()
 				
 				$('#addWorkerInfoModal').modal('hide');
 				alert("저장되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("작업자ID와 공장을 확인해주세요");
+	    	}
 		});
 	});
 		
@@ -115,11 +120,11 @@ function initSetting() {
 			return;
 		} else if (data.personname == "") {
 			alert("작업자명을 입력하세요.");
-			$("input[name=daynight]").focus();
+			$("input[name=personname]").focus();
 			return;
 		} else if (data.useyn == "") {
 			alert("사용유무를 선택하세요.");
-			$("select[name=useyn]").focus();
+			$("select[name=isusable]").focus();
 			return;
 		}
 		
@@ -135,10 +140,15 @@ function initSetting() {
 				
 				$table = $("#workerinfo");
 				$table.bootstrapTable('refresh');
+				refreshWorkerInfo()
 				
 				$('#addWorkerInfoModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("작업자ID와 공장을 확인해주세요");
+	    	}
 		});
 	});			
 	
@@ -214,7 +224,7 @@ function refreshWorkerInfo() {
 	$("input[name=personid]").val("");
 	$("select[name=factoryid]").val("");
 	$("input[name=personname]").val("");
-	$("select[name=isusable]").val("");
+	$("select[name=isusable]").val("Y");
 }
 
 function factroy() {

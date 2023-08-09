@@ -7,7 +7,7 @@
 
     <select id="findAll" resultType="Equipment">
 		SELECT  
-			 ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+			 ROW_NUMBER() OVER(ORDER BY (SELECT EVENTTIME) DESC) AS ROWNUM,
 			A.DATASEQ,
         	A.FACTORYID,
         	(SELECT FACTORYNAME FROM DSP_FACTORY WHERE FACTORYID IN (A.FACTORYID)) AS FACTORYNAME,  
@@ -26,6 +26,7 @@
         	A.TID
         FROM DSP_EQUIPMENT as A
         WHERE 1=1
+        ORDER BY EVENTTIME DESC
     </select>
     
     <insert id="create" parameterType="Equipment">

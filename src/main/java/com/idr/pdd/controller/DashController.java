@@ -16,7 +16,9 @@ import com.idr.pdd.dto.Factory;
 import com.idr.pdd.dto.Location;
 import com.idr.pdd.dto.ModelNM;
 import com.idr.pdd.dto.Shift;
+import com.idr.pdd.dto.WorkContents;
 import com.idr.pdd.service.CodeService;
+import com.idr.pdd.service.WorkContentsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,4 +32,16 @@ public class DashController {
         return "page/dash";
     }
 
+	@Autowired
+	private WorkContentsService service;
+
+	@ResponseBody
+	@GetMapping("/find")
+    public List<WorkContents> find(
+    		int workDailySeq
+    		) {
+		
+		List<WorkContents> list = service.findAll(workDailySeq);
+		return list;
+    }
 }

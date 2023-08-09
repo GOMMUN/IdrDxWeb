@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.WorkContentsMapper">
+
+    <select id="findAll" parameterType="WorkContents" resultType="WorkContents">
+        SELECT 
+            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
+        	A.DATASEQ,
+        	A.WORKDAILY_SEQ, 
+        	LEFT(CONCAT(SUBSTRING(A.WORKTIME_FROM,1,2),':',SUBSTRING(A.WORKTIME_FROM,3,4)),5) AS WORKTIME_FROM,
+			LEFT(CONCAT(SUBSTRING(A.WORKTIME_TO,1,2),':',SUBSTRING(A.WORKTIME_TO,3,4)),5) AS WORKTIME_TO,      	
+        	A.MANHOUR, 
+        	A.PROD_QTY, 
+        	(A.FIRSTTIME_GOOD_QTY + A.REWORK_GOOD_QTY) AS GOODSUM_QTY, 
+        	A.FIRSTTIME_GOOD_QTY, 
+        	A.FIRSTTIME_FAIL_QTY, 
+        	A.REWORK_GOOD_QTY, 
+        	A.REWORK_FAIL_QTY, 
+        	A.NOTES, 
+        	A.CREATOR, 
+        	A.CREATETIME, 
+        	A.EVENT, 
+        	A.EVENTUSER, 
+        	A.EVENTTIME, 
+        	A.ISUSABLE, 
+        	B.TID 
+        FROM DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
+		ON A.WORKDAILY_SEQ = B.DATASEQ 
+        WHERE 1=1
+       		AND A.ISUSABLE = 'Usable'
+            AND WORKDAILY_SEQ = #{workdailySeq}
+    </select>
+
+</mapper>

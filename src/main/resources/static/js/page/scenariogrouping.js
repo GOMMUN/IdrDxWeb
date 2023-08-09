@@ -107,7 +107,8 @@ function setEventListener (){
 		scenarioGroup2();
 	});
 	
-	$gridAddBtnL.click(function() {			
+	$gridAddBtnL.click(function() {		
+		refreshScenarioList();	
 	
 		$("#addScenarioListModalCreate").css('display', "block");
 		$("#addScenarioListModalModify").css('display', "none");

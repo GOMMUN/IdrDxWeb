@@ -39,6 +39,10 @@ function initSetting() {
 	});
 	
 	$gridAddBtn.click(function() {
+		
+		$("#groupshiftForm input[name=shiftid]").prop("disabled", false);
+        $("#groupshiftForm select[name=factoryid]").prop("disabled", false);
+        
 		$("#addGroupShiftInfoModalCreate").css('display', "block");
 		$("#addGroupShiftInfoModalModify").css('display', "none");
 
@@ -193,6 +197,9 @@ window.operateEvents = {
 		s_groupshiftinfo = row;
 		
 		groupShiftInfoDetail(row);
+		
+		$("#groupshiftForm input[name=shiftid]").prop("disabled", true);
+        $("#groupshiftForm select[name=factoryid]").prop("disabled", true);
 
 		$("#addGroupShiftInfoModalCreate").css('display', "none");
 		$("#addGroupShiftInfoModalModify").css('display', "block");

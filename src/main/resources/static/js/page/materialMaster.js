@@ -48,6 +48,9 @@ function initSetting() {
 	});
 	
 	$gridAddBtn.click(function() {		// add 버튼
+	
+		$("#materialForm input[name='materialid']").prop("disabled", false);
+        $("#materialForm select[name='factoryid']").prop("disabled", false);
 		
 		$("#addMaterialMasterModalCreate").css('display', "block");
 		$("#addMaterialMasterModalModify").css('display', "none");
@@ -157,7 +160,11 @@ function initSetting() {
 				
 				$('#addMaterialMasterModal').modal('hide');
 				alert("수정 되었습니다.");
-			}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+	        	// 실패 시 실행할 코드
+	        	alert("자재마스터ID와 공장을 확인해주세요");
+	    	}
 		});
 	});
 	
@@ -241,6 +248,8 @@ window.operateEvents = {
 		s_materialMaster = row;
 		
 		materialMasterDetail(row);
+		$("#materialForm input[name=materialid]").prop("disabled", true);
+        $("#materialForm select[name=factoryid]").prop("disabled", true);
 
 		$("#addMaterialMasterModalCreate").css('display', "none");
 		$("#addMaterialMasterModalModify").css('display', "block");

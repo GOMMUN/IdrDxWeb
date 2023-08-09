@@ -29,7 +29,13 @@ public class LineInfoService {
 				throw new IllegalArgumentException("error");
 			}
 		}else {
-			return mapper.modify(param);
+			int count = mapper.validationcheck(param);
+			if (count == 1 || count == 0) {
+				return mapper.modify(param);
+			}
+			else {
+				throw new IllegalArgumentException("error");
+			}
 		}
 	}
 	

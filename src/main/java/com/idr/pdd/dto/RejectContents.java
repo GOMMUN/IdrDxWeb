@@ -31,4 +31,5 @@ public class RejectContents {
 	private String eventtime;
 	private String isusable;
 	private String tid;
+	private String month;
 }

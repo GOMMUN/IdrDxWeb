@@ -3,35 +3,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.idr.pdd.mapper.WorkContentsMapper">
+<mapper namespace="com.idr.pdd.mapper.DashMapper">
 
-    <select id="findAll" parameterType="WorkContents" resultType="WorkContents">
+    <select id="findAll1" parameterType="WorkContents" resultType="WorkContents">
+        SELECT
+		    SUM(A.PROD_QTY) AS PROD_QTY, 
+		    SUM(A.FIRSTTIME_FAIL_QTY) AS FIRSTTIME_FAIL_QTY,
+		    CONVERT(DATE, A.EVENTTIME) AS EVENTTIME
+		FROM DSP_WORK_CONTENTS A  
+		WHERE 1=1
+		    AND A.ISUSABLE = 'Usable'
+		    AND CONVERT(DATE, A.EVENTTIME) = CONVERT(DATE, GETDATE())
+		GROUP BY CONVERT(DATE, A.EVENTTIME);
+    </select>
+    
+    <select id="findAll2" parameterType="RejectContents" resultType="RejectContents">
         SELECT 
-            ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-        	A.DATASEQ,
-        	A.WORKDAILY_SEQ, 
-        	LEFT(CONCAT(SUBSTRING(A.WORKTIME_FROM,1,2),':',SUBSTRING(A.WORKTIME_FROM,3,4)),5) AS WORKTIME_FROM,
-			LEFT(CONCAT(SUBSTRING(A.WORKTIME_TO,1,2),':',SUBSTRING(A.WORKTIME_TO,3,4)),5) AS WORKTIME_TO,      	
-        	A.MANHOUR, 
-        	A.PROD_QTY, 
-        	(A.FIRSTTIME_GOOD_QTY + A.REWORK_GOOD_QTY) AS GOODSUM_QTY, 
-        	A.FIRSTTIME_GOOD_QTY, 
-        	A.FIRSTTIME_FAIL_QTY, 
-        	A.REWORK_GOOD_QTY, 
-        	A.REWORK_FAIL_QTY, 
-        	A.NOTES, 
-        	A.CREATOR, 
-        	A.CREATETIME, 
-        	A.EVENT, 
-        	A.EVENTUSER, 
-        	A.EVENTTIME, 
-        	A.ISUSABLE, 
-        	B.TID 
-        FROM DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B
-		ON A.WORKDAILY_SEQ = B.DATASEQ 
+        	A.REJECT_ITEMID,
+        	A.FIRSTTIME_REJECT_QTY,
+        	A.REJECT_TYPE,
+        	A.EVENTTIME	
+        FROM DSP_REJECT_CONTENTS A
         WHERE 1=1
-       		AND A.ISUSABLE = 'Usable'
-            AND WORKDAILY_SEQ = #{workdailySeq}
+       	 	AND A.ISUSABLE = 'Usable'
+       	 	AND DATEPART(YEAR, A.EVENTTIME) = DATEPART(YEAR, GETDATE())
+       	 	AND DATEPART(MONTH, A.EVENTTIME) = #{month}
+    </select>
+    
+    <select id="findAll3" parameterType="RejectContents" resultType="RejectContents">
+        SELECT 
+        	A.REJECT_ITEMID,
+        	A.FIRSTTIME_REJECT_QTY,
+        	A.REJECT_TYPE
+        FROM DSP_REJECT_CONTENTS A
+        WHERE 1=1
+       	 	AND A.ISUSABLE = 'Usable'
     </select>
 
 </mapper>

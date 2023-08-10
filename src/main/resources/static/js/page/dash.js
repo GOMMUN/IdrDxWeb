@@ -12,8 +12,6 @@ $(function(){
 	chart8();
 });
 
-
-
 function chart1(){
 	Highcharts.chart('chart1', {
     chart: {
@@ -111,7 +109,8 @@ function chart2(){
 });
 
 }
-function chart3(){
+
+function chart3(cnt1, cnt2, cnt3, cnt4){
 	Highcharts.chart('chart3', {
     chart: {
         type: 'variablepie'
@@ -127,20 +126,20 @@ function chart3(){
         name: 'failurerate',
         borderRadius: 5,
         data: [{
-            name: '손상',
-            y: 52,
-            z: 120
-        }, {
-            name: '치수',
-            y: 22,
-            z: 120
-        }, {
             name: '외관',
-            y: 16,
+            y: cnt1,
             z: 120
         }, {
-            name: '기타',
-            y: 10,
+            name: '기능',
+            y: cnt2,
+            z: 120
+        }, {
+            name: '조립',
+            y: cnt3,
+            z: 120
+        }, {
+            name: '재질',
+            y: cnt4,
             z: 120
         }],
         colors: [
@@ -153,7 +152,7 @@ function chart3(){
 });
 }
 
-function chart4(){
+function chart4(cnt1, cnt2, cnt3, cnt4, cnt5, cnt6, cnt7, cnt8, cnt9, cnt10, cnt11, cnt12){
 Highcharts.chart('chart4', {
     series: [{
         type: 'treemap',
@@ -181,70 +180,70 @@ Highcharts.chart('chart4', {
         }],
         data: [{
             id: 'A',
-            name: '손상',
+            name: '외관',
             color: '#C00500'
         }, {
             id: 'B',
-            name: '치수',
+            name: '기능',
             color: '#FF85FF'
         }, {
             id: 'C',
-            name: '외관',
+            name: '조립',
             color: '#993601'
         }, {
             id: 'D',
-            name: '기타',
+            name: '재질',
             color: '#F78E00'
         }, {
-            name: '찍힘',
+            name: '도장',
             parent: 'A',
-            value: 30
+            value: cnt1
+        }, {
+            name: '긁힘',
+            parent: 'A',
+            value: cnt2
         }, {
             name: '변형',
             parent: 'A',
-            value: 30
+            value: cnt3
         }, {
-            name: '함몰',
+            name: '이색',
             parent: 'A',
-            value: 20
+            value: cnt4
         }, {
-            name: '평행',
+            name: '성능',
             parent: 'B',
-            value: 10
+            value: cnt5
         }, {
-            name: '무게',
+            name: '안전',
             parent: 'B',
-            value: 10
+            value: cnt6
         }, {
-            name: '변색',
-            parent: 'C',
-            value: 45
+            name: '동작',
+            parent: 'B',
+            value: cnt7
         }, {
-            name: '오염',
+            name: '결합',
             parent: 'C',
-            value: 30
+            value: cnt8
         }, {
             name: '누락',
-            parent: 'D',
-            value: 30
+            parent: 'C',
+            value: cnt9
         }, {
+            name: '결합',
+            parent: 'C',
+            value: cnt10
+        },
+        {
             name: '소재',
             parent: 'D',
-            value: 25
-        }, {
-            name: '조립',
-            parent: 'D',
-            value: 20
+            value: cnt11
         },
         {
-            name: '검사구',
+            name: '강도',
             parent: 'D',
-            value: 20
-        },
-        {
-            name: '작동',
-            parent: 'D',
-            value: 5
+            value: cnt12
         }]
     }],
     title: {
@@ -418,3 +417,123 @@ function chart8(){
 });
 
 }
+
+function workContents() {
+    var url = '/dash/find1';
+
+    $.get(url).then(function(res) {
+        var result = res;
+        var FirstTimeFailQty = 0;
+        var ProdQty = 0;
+
+        result.forEach(function(r) {
+            FirstTimeFailQty = r.firsttimeFailQty;
+            ProdQty = r.prodQty;
+        });
+
+        var failRate = (FirstTimeFailQty / ProdQty) * 100;
+        $('#failQty').text(failRate.toFixed(0) + '%');
+    });
+}
+
+function rejectContents1(data) {
+    var url = '/dash/find2';
+
+  	var params = {
+		month: data
+	};
+	
+	$.get(url + '?' + $.param(params)).then(function(res) {
+        var result = res;
+        var cnt1 = 0;
+        var cnt2 = 0;
+        var cnt3 = 0;
+        var cnt4 = 0;
+
+        result.forEach(function(r) {
+            if (r.rejectItemid == 'RI01'){
+                cnt1 += r.firsttimeRejectQty;
+            } else if (r.rejectItemid == 'RI02'){
+                cnt2 += r.firsttimeRejectQty;
+            } else if (r.rejectItemid == 'RI03'){
+                cnt3 += r.firsttimeRejectQty;
+            } else if (r.rejectItemid == 'RI04'){
+                cnt4 += r.firsttimeRejectQty;
+            }
+        });
+
+        chart3(cnt1, cnt2, cnt3, cnt4);
+	});
+}
+
+function rejectContents2() {
+    var url = '/dash/find3';
+
+  
+	$.get(url).then(function(res) {
+        var result = res;
+        var cnt1= 0, cnt2= 0, cnt3= 0, cnt4= 0, cnt5= 0, cnt6= 0, cnt7= 0, cnt8= 0, cnt9= 0, cnt10= 0, cnt11= 0, cnt12= 0;
+
+
+        result.forEach(function(r) {
+            if (r.rejectItemid == 'RI01'){
+				if (r.rejectType == 'A') {
+					cnt1 += r.firsttimeRejectQty;
+				} else if (r.rejectType == 'B') {
+					cnt2 += r.firsttimeRejectQty;
+				} else if (r.rejectType == 'C') {
+					cnt3 += r.firsttimeRejectQty;
+				} else if (r.rejectType == 'D') {
+					cnt4 += r.firsttimeRejectQty;
+				}
+                
+            } else if (r.rejectItemid == 'RI02'){
+                if (r.rejectType == 'A') {
+					cnt5 += r.firsttimeRejectQty;
+				} else if (r.rejectType == 'B') {
+					cnt6 += r.firsttimeRejectQty;
+				} else if (r.rejectType == 'C') {
+					cnt7 += r.firsttimeRejectQty;
+				} 
+            } else if (r.rejectItemid == 'RI03'){
+                if (r.rejectType == 'A') {
+					cnt8 += r.firsttimeRejectQty;
+				} else if (r.rejectType == 'B') {
+					cnt9 += r.firsttimeRejectQty;
+				} else if (r.rejectType == 'C') {
+					cnt10 += r.firsttimeRejectQty;
+				}
+            } else if (r.rejectItemid == 'RI04'){
+                if (r.rejectType == 'A') {
+					cnt11 += r.firsttimeRejectQty;
+				} else if (r.rejectType == 'B') {
+					cnt12 += r.firsttimeRejectQty;
+				}
+            }
+        });
+
+        chart4(cnt1, cnt2, cnt3, cnt4, cnt5, cnt6, cnt7, cnt8, cnt9, cnt10, cnt11, cnt12);
+	});
+}
+
+$(document).ready(function() {
+	workContents();
+	rejectContents1("8");
+	rejectContents2();
+	
+	var currentMonth = new Date().getMonth() - 4;
+	
+	$(".addMonth").click(function() {
+        var value = $(this).val(); // 클릭한 버튼의 value 값 추출
+        var data = value; // rejectContents1 함수 호출하면서 month 파라미터 전달
+        rejectContents1(data);
+        
+        $(".addMonth").each(function(index) {
+            var newValue = currentMonth + index;
+            $(this).text(newValue + "월");
+        });
+    });
+    
+    $(".addMonth[value='" + currentMonth + "']").addClass("active"); // 현재 월 버튼에 active 클래스 추가
+    rejectContents1(currentMonth);
+});

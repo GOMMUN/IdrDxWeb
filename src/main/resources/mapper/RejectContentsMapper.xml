@@ -55,7 +55,7 @@
 			GETDATE(),
 			#{event},
 			#{eventuser},
-			#{eventtime},
+			GETDATE(),
 			'Usable',
 			#{tid}
         );

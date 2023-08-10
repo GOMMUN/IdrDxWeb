@@ -11,14 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.idr.pdd.dto.Code;
-import com.idr.pdd.dto.Factory;
-import com.idr.pdd.dto.Location;
-import com.idr.pdd.dto.ModelNM;
-import com.idr.pdd.dto.Shift;
+
 import com.idr.pdd.dto.WorkContents;
-import com.idr.pdd.service.CodeService;
-import com.idr.pdd.service.WorkContentsService;
+import com.idr.pdd.dto.RejectContents;
+import com.idr.pdd.service.DashService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,15 +29,29 @@ public class DashController {
     }
 
 	@Autowired
-	private WorkContentsService service;
+	private DashService service;
 
 	@ResponseBody
-	@GetMapping("/find")
-    public List<WorkContents> find(
-    		int workDailySeq
-    		) {
+	@GetMapping("/find1")
+    public List<WorkContents> find1() {
 		
-		List<WorkContents> list = service.findAll(workDailySeq);
+		List<WorkContents> list = service.findAll1();
+		return list;
+    }
+	
+	@ResponseBody
+	@GetMapping("/find2")
+    public List<RejectContents> find2(String month) {
+		
+		List<RejectContents> list = service.findAll2(month);
+		return list;
+    }
+	
+	@ResponseBody
+	@GetMapping("/find3")
+    public List<RejectContents> find3() {
+		
+		List<RejectContents> list = service.findAll3();
 		return list;
     }
 }

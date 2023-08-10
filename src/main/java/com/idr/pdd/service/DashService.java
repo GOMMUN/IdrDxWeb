@@ -5,22 +5,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.idr.pdd.dto.WorkContents;
-import com.idr.pdd.mapper.WorkContentsMapper;
+import com.idr.pdd.dto.RejectContents;
+import com.idr.pdd.mapper.DashMapper;
 
 @Service
 public class DashService {
 
 	@Autowired
-	WorkContentsMapper mapper;
+	DashMapper mapper;
 	
-	public List<WorkContents> findAll(
-			int workDailySeq
-			){
-		WorkContents param = new WorkContents();
-		param.setWorkdailySeq(workDailySeq);
+	public List<WorkContents> findAll1(){
 		
-		return mapper.findAll(param);
+		return mapper.findAll1();
 	}
 
-
+	public List<RejectContents> findAll2(String month){
+		
+		RejectContents param = new RejectContents();
+		param.setMonth(month);
+		
+		return mapper.findAll2(param);
+	}
+	
+	public List<RejectContents> findAll3(){
+		
+		return mapper.findAll3();
+	}
 }

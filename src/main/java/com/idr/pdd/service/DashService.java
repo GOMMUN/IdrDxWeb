@@ -14,26 +14,17 @@ public class DashService {
 	@Autowired
 	DashMapper mapper;
 	
-	public List<WorkContents> findAllTo(){
+	public List<WorkContents> findAllW(){
 		
-		return mapper.findAllTo();
-	}
-	
-	public List<WorkContents> findAllYe(){
-		
-		return mapper.findAllYe();
+		return mapper.findAllW();
 	}
 
-	public List<RejectContents> findAllSpe(String month){
+	public List<RejectContents> findAllR(String month){
 		
 		RejectContents param = new RejectContents();
 		param.setMonth(month);
 		
-		return mapper.findAllSpe(param);
+		return mapper.findAllR(param);
 	}
-	
-	public List<RejectContents> findAllFre(){
-		
-		return mapper.findAllFre();
-	}
+
 }

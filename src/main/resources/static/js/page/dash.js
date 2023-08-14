@@ -110,7 +110,7 @@ function chart2(){
 
 }
 
-function chart3(cnt1, cnt2, cnt3, cnt4){
+function chart3(data1, data2, data3, data4){
 	Highcharts.chart('chart3', {
     chart: {
         type: 'variablepie'
@@ -127,19 +127,19 @@ function chart3(cnt1, cnt2, cnt3, cnt4){
         borderRadius: 5,
         data: [{
             name: '외관',
-            y: cnt1,
+            y: data1,
             z: 120
         }, {
             name: '기능',
-            y: cnt2,
+            y: data2,
             z: 120
         }, {
             name: '조립',
-            y: cnt3,
+            y: data3,
             z: 120
         }, {
             name: '재질',
-            y: cnt4,
+            y: data4,
             z: 120
         }],
         colors: [
@@ -417,49 +417,37 @@ function chart8(){
 });
 
 }
-
-var failRate;
-		
-function workContentsTo() {
-    var url = '/dash/findTo';
+	
+function workContents() {
+    var url = '/dash/findW';
 
     $.get(url).then(function(res) {
         var result = res;
-        var FirstTimeFailQty = 0;
-        var ProdQty = 0;
+        var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0;
+        
+        var today = new Date();
+
+		var year = today.getFullYear();
+		var month = (today.getMonth() + 1).toString().padStart(2, '0');
+		var day = today.getDate().toString().padStart(2, '0');
+
+		var formattedDate = year + month + day;
 		
         result.forEach(function(r) {
-            FirstTimeFailQty = r.firsttimeFailQty;
-            ProdQty = r.prodQty;
+			if (r.workdate == formattedDate) {
+	            FirstTimeFailQtyTo = r.firsttimeFailQty;
+	            ProdQtyTo = r.prodQty;
+            } else {
+				FirstTimeFailQtyYe = r.firsttimeFailQty;
+	            ProdQtyYe = r.prodQty;
+			}
         });
 
-        failRate = (FirstTimeFailQty / ProdQty) * 100;
+        failRate = (FirstTimeFailQtyTo / ProdQtyTo) * 100;
         $('#failQtyTo').text(failRate.toFixed(2) + '%');
-    });
-}
-
-function workContentsYe() {
-    var url = '/dash/findYe';
-
-    $.get(url).then(function(res) {
-        var result = res;
         
-
-	    var FirstTimeFailQty = 0;
-	    var ProdQty = 0;
-	
-	    result.forEach(function(r) {
-			if (r != null) {
-	        FirstTimeFailQty = r.firsttimeFailQty;
-	        ProdQty = r.prodQty;
-	        } else {
-				$('#failQtyYe').text('전일대비 - ');
-			}
-	        
-	    });
-	
-	    var prefailRate = (FirstTimeFailQty / ProdQty) * 100;
-	    var comparefailRate = failRate-prefailRate
+        prefailRate = (FirstTimeFailQtyYe / ProdQtyYe) * 100;
+	    comparefailRate = failRate-prefailRate
 	        
 	    if (comparefailRate > 0) {
 			$('#failQtyYe').text('전일대비 ▲'+ comparefailRate.toFixed(2) + '%');
@@ -468,12 +456,11 @@ function workContentsYe() {
 		} else if (comparefailRate < 0) {
 			$('#failQtyYe').text('전일대비 ▼'+ comparefailRate.toFixed(2) + '%');
 		}
-        
     });
 }
 
-function rejectContentsSpe(data) {
-    var url = '/dash/findSpe';
+function rejectContents(data) {
+    var url = '/dash/findR';
 
   	var params = {
 		month: data
@@ -481,38 +468,15 @@ function rejectContentsSpe(data) {
 	
 	$.get(url + '?' + $.param(params)).then(function(res) {
         var result = res;
-        var cnt1 = 0;
-        var cnt2 = 0;
-        var cnt3 = 0;
-        var cnt4 = 0;
-
-        result.forEach(function(r) {
-            if (r.rejectItemid == 'RI01'){
-                cnt1 += r.firsttimeRejectQty;
-            } else if (r.rejectItemid == 'RI02'){
-                cnt2 += r.firsttimeRejectQty;
-            } else if (r.rejectItemid == 'RI03'){
-                cnt3 += r.firsttimeRejectQty;
-            } else if (r.rejectItemid == 'RI04'){
-                cnt4 += r.firsttimeRejectQty;
-            }
-        });
-
-        chart3(cnt1, cnt2, cnt3, cnt4);
-	});
-}
-
-function rejectContentsFre() {
-    var url = '/dash/findFre';
-
-  
-	$.get(url).then(function(res) {
-        var result = res;
+        var data1 = 0, data2 = 0, data3 = 0, data4 = 0;
         var cnt1= 0, cnt2= 0, cnt3= 0, cnt4= 0, cnt5= 0, cnt6= 0, cnt7= 0, cnt8= 0, cnt9= 0, cnt10= 0, cnt11= 0, cnt12= 0;
 
 
-        result.forEach(function(r) {
+        result.forEach(function(r) { 
             if (r.rejectItemid == 'RI01'){
+				
+				data1 += r.firsttimeRejectQty;
+				
 				if (r.rejectType == 'A') {
 					cnt1 += r.firsttimeRejectQty;
 				} else if (r.rejectType == 'B') {
@@ -524,6 +488,9 @@ function rejectContentsFre() {
 				}
                 
             } else if (r.rejectItemid == 'RI02'){
+				
+				data2 += r.firsttimeRejectQty;
+				
                 if (r.rejectType == 'A') {
 					cnt5 += r.firsttimeRejectQty;
 				} else if (r.rejectType == 'B') {
@@ -532,6 +499,9 @@ function rejectContentsFre() {
 					cnt7 += r.firsttimeRejectQty;
 				} 
             } else if (r.rejectItemid == 'RI03'){
+				
+				data3 += r.firsttimeRejectQty;
+				
                 if (r.rejectType == 'A') {
 					cnt8 += r.firsttimeRejectQty;
 				} else if (r.rejectType == 'B') {
@@ -540,6 +510,9 @@ function rejectContentsFre() {
 					cnt10 += r.firsttimeRejectQty;
 				}
             } else if (r.rejectItemid == 'RI04'){
+				
+				data4 += r.firsttimeRejectQty;
+				
                 if (r.rejectType == 'A') {
 					cnt11 += r.firsttimeRejectQty;
 				} else if (r.rejectType == 'B') {
@@ -548,15 +521,16 @@ function rejectContentsFre() {
             }
         });
 
+        chart3(data1, data2, data3, data4);
+        
         chart4(cnt1, cnt2, cnt3, cnt4, cnt5, cnt6, cnt7, cnt8, cnt9, cnt10, cnt11, cnt12);
 	});
 }
 
 $(document).ready(function() {
-	workContentsTo();
-	workContentsYe();
-	rejectContentsSpe("8");
-	rejectContentsFre();
+	workContents();
+	rejectContents("8");
+	//rejectContentsFre();
 	
 	var Month= (new Date().getMonth()) % 12 + 1;
 	var currentMonth = new Date().getMonth() - 5;
@@ -570,9 +544,9 @@ $(document).ready(function() {
 	$(".addMonth").click(function() {
         var value = $(this).val(); 
         var data = value; 
-        rejectContentsSpe(data);
+        rejectContents(data);
     });
     
     $(".addMonth[value='" + Month + "']").addClass("active"); 
-    rejectContentsSpe(Month);
+    rejectContents(Month);
 });

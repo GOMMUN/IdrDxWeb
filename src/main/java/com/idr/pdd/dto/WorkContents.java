@@ -36,4 +36,5 @@ public class WorkContents {
 	private String eventtime;
 	private String isusable;
 	private String tid;
+	private String workdate;
 }

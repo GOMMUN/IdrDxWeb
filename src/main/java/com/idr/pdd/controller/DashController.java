@@ -32,34 +32,19 @@ public class DashController {
 	private DashService service;
 
 	@ResponseBody
-	@GetMapping("/findTo")
-    public List<WorkContents> findTo() {
+	@GetMapping("/findW")
+    public List<WorkContents> findW() {
 		
-		List<WorkContents> list = service.findAllTo();
+		List<WorkContents> list = service.findAllW();
 		return list;
     }
 	
 	@ResponseBody
-	@GetMapping("/findYe")
-    public List<WorkContents> findYe() {
+	@GetMapping("/findR")
+    public List<RejectContents> findR(String month) {
 		
-		List<WorkContents> list = service.findAllYe();
+		List<RejectContents> list = service.findAllR(month);
 		return list;
     }
-	
-	@ResponseBody
-	@GetMapping("/findSpe")
-    public List<RejectContents> findSpe(String month) {
-		
-		List<RejectContents> list = service.findAllSpe(month);
-		return list;
-    }
-	
-	@ResponseBody
-	@GetMapping("/findFre")
-    public List<RejectContents> findFre() {
-		
-		List<RejectContents> list = service.findAllFre();
-		return list;
-    }
+
 }

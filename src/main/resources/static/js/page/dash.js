@@ -423,7 +423,7 @@ function workContents() {
 
     $.get(url).then(function(res) {
         var result = res;
-        var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0;
+        var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0, ManhourTo = 0, ManhourYe = 0, PlanQtyTo = 0, PlanQtyYe = 0;
         
         var today = new Date();
 
@@ -437,11 +437,29 @@ function workContents() {
 			if (r.workdate == formattedDate) {
 	            FirstTimeFailQtyTo = r.firsttimeFailQty;
 	            ProdQtyTo = r.prodQty;
+	            ManhourTo = r.manhour;
+	            PlanQtyTo = r.planQty;
             } else {
 				FirstTimeFailQtyYe = r.firsttimeFailQty;
 	            ProdQtyYe = r.prodQty;
+	            ManhourYe = r.manhour;
+	            PlanQtyYe = r.planQty;
 			}
         });
+        
+        Uph = ProdQtyTo / ManhourTo;
+        $('#Uph').text(Uph.toFixed(0));
+        
+        preUph = ProdQtyYe / ManhourYe;
+	    compareUph = Uph-preUph
+	    
+	    if (compareUph > 0) {
+			$('#preUph').text('전일대비 ▲ '+ compareUph.toFixed(0));
+		} else if (compareUph == 0) {
+			$('#preUph').text('전일대비 - ');
+		} else if (compareUph < 0) {
+			$('#preUph').text('전일대비 ▼ '+ compareUph.toFixed(0));
+		}
 
         failRate = (FirstTimeFailQtyTo / ProdQtyTo) * 100;
         $('#failQtyTo').text(failRate.toFixed(2) + '%');
@@ -449,13 +467,23 @@ function workContents() {
         prefailRate = (FirstTimeFailQtyYe / ProdQtyYe) * 100;
 	    comparefailRate = failRate-prefailRate
 	        
-	    if (comparefailRate > 0) {
-			$('#failQtyYe').text('전일대비 ▲'+ comparefailRate.toFixed(2) + '%');
-		} else if (comparefailRate == 0) {
+	    successRate = (ProdQtyTo / PlanQtyTo) * 100;
+        $('#successRate').text(successRate.toFixed(2) + '%');
+        
+        presuccessRate = (ProdQtyYe / PlanQtyYe) * 100;
+	    comparesuccessRate = successRate-presuccessRate
+	    
+	    if (comparefailRate > 0 || comparesuccessRate > 0) {
+			$('#failQtyYe').text('전일대비 ▲ '+ comparefailRate.toFixed(2) + '%');
+			$('#presuccessRate').text('전일대비 ▲ '+ comparesuccessRate.toFixed(2) + '%');
+		} else if (comparefailRate == 0 || comparesuccessRate == 0) {
 			$('#failQtyYe').text('전일대비 - ');
-		} else if (comparefailRate < 0) {
-			$('#failQtyYe').text('전일대비 ▼'+ comparefailRate.toFixed(2) + '%');
+			$('#presuccessRate').text('전일대비 - ');
+		} else if (comparefailRate < 0 || comparesuccessRate < 0) {
+			$('#failQtyYe').text('전일대비 ▼ '+ comparefailRate.toFixed(2) + '%');
+			$('#presuccessRate').text('전일대비 ▼ '+ comparesuccessRate.toFixed(2) + '%');
 		}
+     
     });
 }
 

@@ -8,36 +8,54 @@
     <select id="findAll1" parameterType="WorkContents" resultType="WorkContents">
         SELECT
 		    SUM(A.PROD_QTY) AS PROD_QTY, 
-		    SUM(A.FIRSTTIME_FAIL_QTY) AS FIRSTTIME_FAIL_QTY,
-		    CONVERT(DATE, A.EVENTTIME) AS EVENTTIME
+		    SUM(A.FIRSTTIME_FAIL_QTY) AS FIRSTTIME_FAIL_QTY
 		FROM DSP_WORK_CONTENTS A  
-		WHERE 1=1
+		JOIN DSP_WORKDAILY_REPORT B
+		ON B.DATASEQ=A.WORKDAILY_SEQ
+			AND B.ISUSABLE='Usable'
 		    AND A.ISUSABLE = 'Usable'
-		    AND CONVERT(DATE, A.EVENTTIME) = CONVERT(DATE, GETDATE())
-		GROUP BY CONVERT(DATE, A.EVENTTIME);
+		    AND B.WORK_DATE = CONVERT(DATE, GETDATE(), 112)
+    </select>
+    
+    <select id="findAll4" parameterType="WorkContents" resultType="WorkContents">
+        SELECT
+		    SUM(A.PROD_QTY) AS PROD_QTY, 
+		    SUM(A.FIRSTTIME_FAIL_QTY) AS FIRSTTIME_FAIL_QTY
+		FROM DSP_WORK_CONTENTS A  
+		JOIN DSP_WORKDAILY_REPORT B
+		ON B.DATASEQ=A.WORKDAILY_SEQ
+			AND B.ISUSABLE='Usable'
+		    AND A.ISUSABLE = 'Usable'
+		    AND B.WORK_DATE = CONVERT(DATE, GETDATE()-1, 112)
     </select>
     
     <select id="findAll2" parameterType="RejectContents" resultType="RejectContents">
         SELECT 
         	A.REJECT_ITEMID,
-        	A.FIRSTTIME_REJECT_QTY,
-        	A.REJECT_TYPE,
-        	A.EVENTTIME	
+        	SUM(A.FIRSTTIME_REJECT_QTY) AS FIRSTTIME_REJECT_QTY
         FROM DSP_REJECT_CONTENTS A
-        WHERE 1=1
-       	 	AND A.ISUSABLE = 'Usable'
-       	 	AND DATEPART(YEAR, A.EVENTTIME) = DATEPART(YEAR, GETDATE())
-       	 	AND DATEPART(MONTH, A.EVENTTIME) = #{month}
+        JOIN DSP_WORKDAILY_REPORT B
+        ON B.DATASEQ=A.WORKDAILY_SEQ
+			AND B.FACTORYID ='KEM'
+			AND B.ISUSABLE ='USABLE'
+       		AND A.ISUSABLE = 'Usable'
+       		AND DATEPART(MONTH,B.WORK_DATE) = #{month}
+       	GROUP BY A.REJECT_ITEMID
     </select>
     
     <select id="findAll3" parameterType="RejectContents" resultType="RejectContents">
         SELECT 
         	A.REJECT_ITEMID,
-        	A.FIRSTTIME_REJECT_QTY,
-        	A.REJECT_TYPE
+        	A.REJECT_TYPE,
+        	SUM(A.FIRSTTIME_REJECT_QTY) AS FIRSTTIME_REJECT_QTY
         FROM DSP_REJECT_CONTENTS A
-        WHERE 1=1
-       	 	AND A.ISUSABLE = 'Usable'
+        JOIN DSP_WORKDAILY_REPORT B
+        ON B.DATASEQ=A.WORKDAILY_SEQ
+			AND B.FACTORYID ='KEM'
+			AND B.ISUSABLE ='USABLE'
+       		AND A.ISUSABLE = 'Usable'
+       		AND DATEPART(MONTH,B.WORK_DATE) = DATEPART(MONTH, GETDATE())
+       	GROUP BY A.REJECT_ITEMID, REJECT_TYPE
     </select>
 
 </mapper>

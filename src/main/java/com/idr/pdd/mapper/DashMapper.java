@@ -11,6 +11,7 @@ import com.idr.pdd.dto.RejectContents;
 public interface DashMapper {
 
 	List<WorkContents> findAll1();
+	List<WorkContents> findAll4();
 	List<RejectContents> findAll2(RejectContents param);
 	List<RejectContents> findAll3();
 

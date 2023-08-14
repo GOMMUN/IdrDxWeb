@@ -418,21 +418,57 @@ function chart8(){
 
 }
 
-function workContents() {
+var failRate;
+		
+function workContents1() {
     var url = '/dash/find1';
 
     $.get(url).then(function(res) {
         var result = res;
         var FirstTimeFailQty = 0;
         var ProdQty = 0;
-
+		
         result.forEach(function(r) {
             FirstTimeFailQty = r.firsttimeFailQty;
             ProdQty = r.prodQty;
         });
 
-        var failRate = (FirstTimeFailQty / ProdQty) * 100;
-        $('#failQty').text(failRate.toFixed(0) + '%');
+        failRate = (FirstTimeFailQty / ProdQty) * 100;
+        $('#failQty1').text(failRate.toFixed(2) + '%');
+    });
+}
+
+function workContents2() {
+    var url = '/dash/find4';
+
+    $.get(url).then(function(res) {
+        var result = res;
+        
+
+	    var FirstTimeFailQty = 0;
+	    var ProdQty = 0;
+	
+	    result.forEach(function(r) {
+			if (r != null) {
+	        FirstTimeFailQty = r.firsttimeFailQty;
+	        ProdQty = r.prodQty;
+	        } else {
+				$('#failQty2').text('전일대비 - ');
+			}
+	        
+	    });
+	
+	    var prefailRate = (FirstTimeFailQty / ProdQty) * 100;
+	    var comparefailRate = failRate-prefailRate
+	        
+	    if (comparefailRate > 0) {
+			$('#failQty2').text('전일대비 ▲'+ comparefailRate.toFixed(2) + '%');
+		} else if (comparefailRate == 0) {
+			$('#failQty2').text('전일대비 - ');
+		} else if (comparefailRate < 0) {
+			$('#failQty2').text('전일대비 ▼'+ comparefailRate.toFixed(2) + '%');
+		}
+        
     });
 }
 
@@ -517,23 +553,26 @@ function rejectContents2() {
 }
 
 $(document).ready(function() {
-	workContents();
+	workContents1();
+	workContents2();
 	rejectContents1("8");
 	rejectContents2();
 	
-	var currentMonth = new Date().getMonth() - 4;
+	var Month= (new Date().getMonth()) % 12 + 1;
+	var currentMonth = new Date().getMonth() - 5;
 	
-	$(".addMonth").click(function() {
-        var value = $(this).val(); // 클릭한 버튼의 value 값 추출
-        var data = value; // rejectContents1 함수 호출하면서 month 파라미터 전달
-        rejectContents1(data);
+	$(".addMonth").each(function(index) {
+        var newValue = (currentMonth + index) % 12 + 1;
+        $(this).text(newValue + "월");
+        $(this).val(newValue);
+    });
         
-        $(".addMonth").each(function(index) {
-            var newValue = currentMonth + index;
-            $(this).text(newValue + "월");
-        });
+	$(".addMonth").click(function() {
+        var value = $(this).val(); 
+        var data = value; 
+        rejectContents1(data);
     });
     
-    $(".addMonth[value='" + currentMonth + "']").addClass("active"); // 현재 월 버튼에 active 클래스 추가
-    rejectContents1(currentMonth);
+    $(".addMonth[value='" + Month + "']").addClass("active"); 
+    rejectContents1(Month);
 });

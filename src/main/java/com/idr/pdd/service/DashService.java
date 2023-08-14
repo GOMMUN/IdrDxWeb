@@ -18,6 +18,11 @@ public class DashService {
 		
 		return mapper.findAll1();
 	}
+	
+	public List<WorkContents> findAll4(){
+		
+		return mapper.findAll4();
+	}
 
 	public List<RejectContents> findAll2(String month){
 		

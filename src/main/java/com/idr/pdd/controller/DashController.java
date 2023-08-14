@@ -40,6 +40,14 @@ public class DashController {
     }
 	
 	@ResponseBody
+	@GetMapping("/find4")
+    public List<WorkContents> find4() {
+		
+		List<WorkContents> list = service.findAll4();
+		return list;
+    }
+	
+	@ResponseBody
 	@GetMapping("/find2")
     public List<RejectContents> find2(String month) {
 		

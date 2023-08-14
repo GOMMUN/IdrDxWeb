@@ -10,9 +10,9 @@ import com.idr.pdd.dto.RejectContents;
 @Mapper
 public interface DashMapper {
 
-	List<WorkContents> findAll1();
-	List<WorkContents> findAll4();
-	List<RejectContents> findAll2(RejectContents param);
-	List<RejectContents> findAll3();
+	List<WorkContents> findAllTo();
+	List<WorkContents> findAllYe();
+	List<RejectContents> findAllSpe(RejectContents param);
+	List<RejectContents> findAllFre();
 
 }

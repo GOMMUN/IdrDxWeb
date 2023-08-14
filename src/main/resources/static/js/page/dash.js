@@ -420,8 +420,8 @@ function chart8(){
 
 var failRate;
 		
-function workContents1() {
-    var url = '/dash/find1';
+function workContentsTo() {
+    var url = '/dash/findTo';
 
     $.get(url).then(function(res) {
         var result = res;
@@ -434,12 +434,12 @@ function workContents1() {
         });
 
         failRate = (FirstTimeFailQty / ProdQty) * 100;
-        $('#failQty1').text(failRate.toFixed(2) + '%');
+        $('#failQtyTo').text(failRate.toFixed(2) + '%');
     });
 }
 
-function workContents2() {
-    var url = '/dash/find4';
+function workContentsYe() {
+    var url = '/dash/findYe';
 
     $.get(url).then(function(res) {
         var result = res;
@@ -453,7 +453,7 @@ function workContents2() {
 	        FirstTimeFailQty = r.firsttimeFailQty;
 	        ProdQty = r.prodQty;
 	        } else {
-				$('#failQty2').text('전일대비 - ');
+				$('#failQtyYe').text('전일대비 - ');
 			}
 	        
 	    });
@@ -462,18 +462,18 @@ function workContents2() {
 	    var comparefailRate = failRate-prefailRate
 	        
 	    if (comparefailRate > 0) {
-			$('#failQty2').text('전일대비 ▲'+ comparefailRate.toFixed(2) + '%');
+			$('#failQtyYe').text('전일대비 ▲'+ comparefailRate.toFixed(2) + '%');
 		} else if (comparefailRate == 0) {
-			$('#failQty2').text('전일대비 - ');
+			$('#failQtyYe').text('전일대비 - ');
 		} else if (comparefailRate < 0) {
-			$('#failQty2').text('전일대비 ▼'+ comparefailRate.toFixed(2) + '%');
+			$('#failQtyYe').text('전일대비 ▼'+ comparefailRate.toFixed(2) + '%');
 		}
         
     });
 }
 
-function rejectContents1(data) {
-    var url = '/dash/find2';
+function rejectContentsSpe(data) {
+    var url = '/dash/findSpe';
 
   	var params = {
 		month: data
@@ -502,8 +502,8 @@ function rejectContents1(data) {
 	});
 }
 
-function rejectContents2() {
-    var url = '/dash/find3';
+function rejectContentsFre() {
+    var url = '/dash/findFre';
 
   
 	$.get(url).then(function(res) {
@@ -553,10 +553,10 @@ function rejectContents2() {
 }
 
 $(document).ready(function() {
-	workContents1();
-	workContents2();
-	rejectContents1("8");
-	rejectContents2();
+	workContentsTo();
+	workContentsYe();
+	rejectContentsSpe("8");
+	rejectContentsFre();
 	
 	var Month= (new Date().getMonth()) % 12 + 1;
 	var currentMonth = new Date().getMonth() - 5;
@@ -570,9 +570,9 @@ $(document).ready(function() {
 	$(".addMonth").click(function() {
         var value = $(this).val(); 
         var data = value; 
-        rejectContents1(data);
+        rejectContentsSpe(data);
     });
     
     $(".addMonth[value='" + Month + "']").addClass("active"); 
-    rejectContents1(Month);
+    rejectContentsSpe(Month);
 });

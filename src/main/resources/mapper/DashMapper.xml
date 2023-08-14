@@ -5,7 +5,7 @@
 
 <mapper namespace="com.idr.pdd.mapper.DashMapper">
 
-    <select id="findAll1" parameterType="WorkContents" resultType="WorkContents">
+    <select id="findAllTo" parameterType="WorkContents" resultType="WorkContents">
         SELECT
 		    SUM(A.PROD_QTY) AS PROD_QTY, 
 		    SUM(A.FIRSTTIME_FAIL_QTY) AS FIRSTTIME_FAIL_QTY
@@ -17,7 +17,7 @@
 		    AND B.WORK_DATE = CONVERT(DATE, GETDATE(), 112)
     </select>
     
-    <select id="findAll4" parameterType="WorkContents" resultType="WorkContents">
+    <select id="findAllYe" parameterType="WorkContents" resultType="WorkContents">
         SELECT
 		    SUM(A.PROD_QTY) AS PROD_QTY, 
 		    SUM(A.FIRSTTIME_FAIL_QTY) AS FIRSTTIME_FAIL_QTY
@@ -29,7 +29,7 @@
 		    AND B.WORK_DATE = CONVERT(DATE, GETDATE()-1, 112)
     </select>
     
-    <select id="findAll2" parameterType="RejectContents" resultType="RejectContents">
+    <select id="findAllSpe" parameterType="RejectContents" resultType="RejectContents">
         SELECT 
         	A.REJECT_ITEMID,
         	SUM(A.FIRSTTIME_REJECT_QTY) AS FIRSTTIME_REJECT_QTY
@@ -43,7 +43,7 @@
        	GROUP BY A.REJECT_ITEMID
     </select>
     
-    <select id="findAll3" parameterType="RejectContents" resultType="RejectContents">
+    <select id="findAllFre" parameterType="RejectContents" resultType="RejectContents">
         SELECT 
         	A.REJECT_ITEMID,
         	A.REJECT_TYPE,
@@ -56,6 +56,7 @@
        		AND A.ISUSABLE = 'Usable'
        		AND DATEPART(MONTH,B.WORK_DATE) = DATEPART(MONTH, GETDATE())
        	GROUP BY A.REJECT_ITEMID, REJECT_TYPE
+       	ORDER BY A.REJECT_ITEMID ASC
     </select>
 
 </mapper>

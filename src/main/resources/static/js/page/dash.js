@@ -304,7 +304,7 @@ function chart5(){
 
 }
 
-function chart6(){
+function chart6(res){
 Highcharts.chart('chart6', {
     chart: {
         type: 'column'
@@ -556,7 +556,6 @@ function rejectContents(data) {
 }
 
 function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
-	alert(tagId);
 
 	if(tagId == "chart1Type"){
 		
@@ -565,6 +564,11 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	}else if(tagId == "chart5Type"){
 		
 	}else if(tagId == "chart6Type"){
+		var url = '/dash/findChart6'+data;
+		
+		$.get(url).then(function(res) {
+			chart6(res);
+		});
 		
 	}else{
 		

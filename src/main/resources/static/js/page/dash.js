@@ -555,6 +555,10 @@ function rejectContents(data) {
 	});
 }
 
+function selectType(data,tagId) {		//일 주 월 타입 선택
+	alert(tagId);
+}
+
 $(document).ready(function() {
 	workContents();
 	rejectContents("8");
@@ -577,4 +581,12 @@ $(document).ready(function() {
     
     $(".addMonth[value='" + Month + "']").addClass("active"); 
     rejectContents(Month);
+    
+    $(".addType").click(function() {	//일 주 월 타입 선택
+        var data = $(this).val(); 
+        var tagId = $(this).parent().attr('id');
+        selectType(data,tagId);
+    });
+    
 });
+

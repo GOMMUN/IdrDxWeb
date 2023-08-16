@@ -555,8 +555,20 @@ function rejectContents(data) {
 	});
 }
 
-function selectType(data,tagId) {		//일 주 월 타입 선택
+function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	alert(tagId);
+
+	if(tagId == "chart1Type"){
+		
+	}else if(tagId == "chart2Type"){
+		
+	}else if(tagId == "chart5Type"){
+		
+	}else if(tagId == "chart6Type"){
+		
+	}else{
+		
+	}
 }
 
 $(document).ready(function() {

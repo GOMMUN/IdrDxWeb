@@ -8,6 +8,7 @@ public class FairProd {
 	private String lineid;
 	private String prodQty;
 	private String workDate;
+	private String dt;
 	
 
 }

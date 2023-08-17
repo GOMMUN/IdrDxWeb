@@ -15,7 +15,7 @@ public interface DashMapper {
 
 	List<Dash> findAllPQCD();
 	List<RejectContents> findAllR(RejectContents param);
-	List<FairProd> chart1(String param);
+	List<FairProd> chart1(String factory, String month);
 	List<String> rank(String factory);
 	List<Dash> findAllDay(Dash param);
 

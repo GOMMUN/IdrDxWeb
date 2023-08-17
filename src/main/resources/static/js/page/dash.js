@@ -4,7 +4,7 @@
 var chart1data = null;
 var chart2data = null;
 $(function(){
-	chart1();
+	//chart1();
 	chart2();
 	chart3();
 	chart4();
@@ -19,7 +19,7 @@ $(function(){
 	updateDayWeekMonthButton()
 });
 
-function setchart1(data) {
+function setchart1(chart1data) {
 
 	Highcharts.chart('chart1', {
 		chart: {
@@ -30,7 +30,7 @@ function setchart1(data) {
 			align: 'left'
 		},
 		xAxis: {
-			categories: ['5일전', '4일전', '3일전', '2일전', '하루전', '오늘'],
+			categories: [chart1data[0][0].dt, chart1data[0][1].dt, chart1data[0][2].dt, chart1data[0][3].dt, chart1data[0][4].dt, chart1data[0][5].dt],
 			crosshair: true,
 			accessibility: {
 				description: 'Month'
@@ -611,7 +611,16 @@ function updateDayWeekMonthButton() {
 function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	
 	if(tagId == "chart1Type"){
-		
+			var url = '/dash/chart1';
+			var params = {
+				factory: "KEM",
+				month: data
+			};
+			$.get(url+ '?' + $.param(params)).then(function(res) {
+				chart1data = res;
+				setchart1(chart1data);
+			})
+				
 	}else if(tagId == "chart2Type"){
 		
 	}else if(tagId == "chart5Type"){
@@ -641,16 +650,16 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	}
 }
 
-function chart1() {
-	var url = '/dash/chart1';
-	var params = {
-		factory: "KEM"
-	};
-	$.get(url+ '?' + $.param(params)).then(function(res) {
-		chart1data = res;
-		setchart1(chart1data);
-	})
-}
+//function chart1() {
+//	var url = '/dash/chart1';
+//	var params = {
+//		factory: "KEM"
+//	};
+//	$.get(url+ '?' + $.param(params)).then(function(res) {
+//		chart1data = res;
+//		setchart1(chart1data);
+//	})
+//}
 
 function chart2() {
 	var url = '/dash/chart2';

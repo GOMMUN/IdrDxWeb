@@ -52,16 +52,16 @@ public class DashController {
 	
 	@ResponseBody
 	@GetMapping("/chart1")
-    public List<List<FairProd>> chart1(String factory) {
+    public List<List<FairProd>> chart1(String factory, String month) {
 		
-		return service.chart1(factory);
+		return service.chart1(factory, month);
     }
 
 	@ResponseBody
 	@GetMapping("/chart2")
-    public List<List<FairProd>> chart2(String factory) {
+    public List<List<FairProd>> chart2(String factory, String month) {
 		
-		return service.chart1(factory);
+		return service.chart1(factory, month);
     }
 	
 	@ResponseBody

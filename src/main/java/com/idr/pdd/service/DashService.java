@@ -31,7 +31,7 @@ public class DashService {
 		return mapper.findAllR(param);
 	}
 
-	public List<List<FairProd>> chart1(String factory) {
+	public List<List<FairProd>> chart1(String factory, String month) {
 
 		List<String> rank = mapper.rank(factory);
 
@@ -39,20 +39,20 @@ public class DashService {
 		List<List<FairProd>> finalresult = new ArrayList<>();
 
 		if (factory.equals("LHO")) {
-			finalresult.add(mapper.chart1(rank.get(0)));		
+			finalresult.add(mapper.chart1(rank.get(0), month));		
 		} else {
 			if (rank.size() > 4) {
 				lineList.add(rank.get(0));
 				lineList.add(rank.get(1));
 				lineList.add(rank.get(rank.size() - 2));
 				lineList.add(rank.get(rank.size() - 1));
-				finalresult.add(mapper.chart1(lineList.get(0)));
-				finalresult.add(mapper.chart1(lineList.get(1)));
-				finalresult.add(mapper.chart1(lineList.get(2)));
-				finalresult.add(mapper.chart1(lineList.get(3)));
+				finalresult.add(mapper.chart1(lineList.get(0), month));
+				finalresult.add(mapper.chart1(lineList.get(1), month));
+				finalresult.add(mapper.chart1(lineList.get(2), month));
+				finalresult.add(mapper.chart1(lineList.get(3), month));
 			} else {
 				for (String line : rank) {
-					finalresult.add(mapper.chart1(line));
+					finalresult.add(mapper.chart1(line, month));
 				}
 			}
 		}

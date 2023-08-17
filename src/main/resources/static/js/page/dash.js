@@ -1,6 +1,8 @@
 /**
  * 
  */
+var chart1data = null;
+
 $(function(){
 	chart1();
 	chart2();
@@ -12,57 +14,66 @@ $(function(){
 	chart8();
 });
 
-function chart1(){
+function setchart1(data) {
+
 	Highcharts.chart('chart1', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: '대표기업 월별 공정별 생산실적',
-        align: 'left'
-    },
-    xAxis: {
-        categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
-        crosshair: true,
-        accessibility: {
-            description: 'Month'
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: ''
-        }
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    series: [
-        {
-            name: '공정A',
-            data: [260, 340, 410, 240, 340, 220],
-            color: '#0D70C6'
-        },
-        {
-            name: '공정B',
-            data: [250, 180, 280, 230, 180, 90],
-            color: '#009CD8'
-        },
-        {
-            name: '공정C',
-            data: [200, 310, 220, 190, 300, 205],
-            color: '#09D0D9'
-        },
-        {
-            name: '공정D',
-            data: [190, 300, 230, 190, 290, 105],
-            color: '#0DCF9C'
-        }
-    ]
-});
+		chart: {
+			type: 'column'
+		},
+		title: {
+			text: '대표기업 월별 공정별 생산실적',
+			align: 'left'
+		},
+		xAxis: {
+			categories: ['5일전', '4일전', '3일전', '2일전', '하루전', '오늘'],
+			crosshair: true,
+			accessibility: {
+				description: 'Month'
+			}
+		},
+		yAxis: {
+			min: 0,
+			title: {
+				text: ''
+			}
+		},
+		plotOptions: {
+			column: {
+				pointPadding: 0.2,
+				borderWidth: 0
+			}
+		},
+		series: [
+			{
+				name: '공정A',
+				data: [Number(chart1data[0][0].prodQty), Number(chart1data[0][1].prodQty), 
+				Number(chart1data[0][2].prodQty), Number(chart1data[0][3].prodQty),
+				Number(chart1data[0][4].prodQty), Number(chart1data[0][5].prodQty)],
+				color: '#0D70C6'
+			},
+			{
+				name: '공정B',
+				data: [Number(chart1data[1][0].prodQty), Number(chart1data[1][1].prodQty), 
+				Number(chart1data[1][2].prodQty), Number(chart1data[1][3].prodQty),
+				Number(chart1data[1][4].prodQty), Number(chart1data[1][5].prodQty)],
+				color: '#009CD8'
+			},
+			{
+				name: '공정C',
+				data: [Number(chart1data[2][0].prodQty), Number(chart1data[2][1].prodQty), 
+				Number(chart1data[2][2].prodQty), Number(chart1data[2][3].prodQty),
+				Number(chart1data[2][4].prodQty), Number(chart1data[2][5].prodQty)],
+				color: '#09D0D9'
+			},
+			{
+				name: '공정D',
+				data: [Number(chart1data[3][0].prodQty), Number(chart1data[3][1].prodQty), 
+				Number(chart1data[3][2].prodQty), Number(chart1data[3][3].prodQty),
+				Number(chart1data[3][4].prodQty), Number(chart1data[3][5].prodQty)],
+				color: '#0DCF9C'
+			}
+		]
+	});
 
 }
 
@@ -573,6 +584,15 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	}else{
 		
 	}
+}
+
+function chart1() {
+	var url = '/dash/chart1';
+	var data = null;
+	$.get(url).then(function(res) {
+		chart1data = res;
+		setchart1(chart1data);
+	})
 }
 
 $(document).ready(function() {

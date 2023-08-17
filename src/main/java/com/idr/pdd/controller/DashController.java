@@ -1,6 +1,7 @@
 package com.idr.pdd.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.idr.pdd.dto.WorkContents;
+import com.idr.pdd.dto.FairProd;
 import com.idr.pdd.dto.RejectContents;
 import com.idr.pdd.service.DashService;
 
@@ -45,6 +47,13 @@ public class DashController {
 		
 		List<RejectContents> list = service.findAllR(month);
 		return list;
+    }
+	
+	@ResponseBody
+	@GetMapping("/chart1")
+    public List<List<FairProd>> chart1() {
+		
+		return service.chart1();
     }
 
 }

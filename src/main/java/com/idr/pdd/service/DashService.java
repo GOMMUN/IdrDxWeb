@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.idr.pdd.dto.WorkContents;
 import com.idr.pdd.dto.FairProd;
 import com.idr.pdd.dto.RejectContents;
+import com.idr.pdd.dto.Dash;
 import com.idr.pdd.mapper.DashMapper;
 
 @Service
@@ -17,9 +18,9 @@ public class DashService {
 	@Autowired
 	DashMapper mapper;
 
-	public List<WorkContents> findAllW() {
-
-		return mapper.findAllW();
+	public List<Dash> findAllPQCD(){
+		
+		return mapper.findAllPQCD();
 	}
 
 	public List<RejectContents> findAllR(String month) {
@@ -57,6 +58,14 @@ public class DashService {
 		}
 
 		return finalresult;
+	}
+	
+	public List<Dash> findAllDay(String month){
+		
+		Dash param = new Dash();
+		param.setMonth(month);
+		
+		return mapper.findAllDay(param);
 	}
 
 }

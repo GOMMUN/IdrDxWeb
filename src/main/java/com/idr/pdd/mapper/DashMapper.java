@@ -8,13 +8,15 @@ import org.apache.ibatis.annotations.Mapper;
 import com.idr.pdd.dto.WorkContents;
 import com.idr.pdd.dto.FairProd;
 import com.idr.pdd.dto.RejectContents;
+import com.idr.pdd.dto.Dash;
 
 @Mapper
 public interface DashMapper {
 
-	List<WorkContents> findAllW();
+	List<Dash> findAllPQCD();
 	List<RejectContents> findAllR(RejectContents param);
 	List<FairProd> chart1(String param);
 	List<String> rank(String factory);
+	List<Dash> findAllDay(Dash param);
 
 }

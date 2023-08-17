@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.idr.pdd.dto.WorkContents;
 import com.idr.pdd.dto.FairProd;
 import com.idr.pdd.dto.RejectContents;
+import com.idr.pdd.dto.Dash;
 import com.idr.pdd.service.DashService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +35,10 @@ public class DashController {
 	private DashService service;
 
 	@ResponseBody
-	@GetMapping("/findW")
-    public List<WorkContents> findW() {
+	@GetMapping("/findPQCD")
+	public List<Dash> findPQCD() {
 		
-		List<WorkContents> list = service.findAllW();
+		List<Dash> list = service.findAllPQCD();
 		return list;
     }
 	
@@ -61,5 +62,13 @@ public class DashController {
     public List<List<FairProd>> chart2(String factory) {
 		
 		return service.chart1(factory);
+    }
+	
+	@ResponseBody
+	@GetMapping("/findDay")
+    public List<Dash> findDay(String month) {
+		
+		List<Dash> list = service.findAllDay(month);
+		return list;
     }
 }

@@ -12,6 +12,11 @@ $(function(){
 	chart6();
 	chart7();
 	chart8();
+	
+	PQCDrate()
+	rejectContents("8");
+	updateMonthButton();
+	updateDayWeekMonthButton()
 });
 
 function setchart1(data) {
@@ -426,12 +431,13 @@ function chart8(){
 
 }
 	
-function workContents() {
-    var url = '/dash/findW';
+function PQCDrate() {
+    var url = '/dash/findPQCD';
 
     $.get(url).then(function(res) {
         var result = res;
-        var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0, ManhourTo = 0, ManhourYe = 0, PlanQtyTo = 0, PlanQtyYe = 0;
+        var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0,
+        	ManhourTo = 0, ManhourYe = 0, PlanQtyTo = 0, PlanQtyYe = 0, WorkTimeTo = 0, WorkTimeYe = 0, NotoperateTimeTo = 0, NotoperateTimeYe = 0;
         
         var today = new Date();
 
@@ -447,49 +453,57 @@ function workContents() {
 	            ProdQtyTo = r.prodQty;
 	            ManhourTo = r.manhour;
 	            PlanQtyTo = r.planQty;
+	            WorkTimeTo = r.worktime;
+	            NotoperateTimeTo = r.notoperatetime;
             } else {
 				FirstTimeFailQtyYe = r.firsttimeFailQty;
 	            ProdQtyYe = r.prodQty;
 	            ManhourYe = r.manhour;
 	            PlanQtyYe = r.planQty;
+	            WorkTimeYe = r.worktime;
+	            NotoperateTimeYe = r.notoperatetime;
 			}
         });
         
-        Uph = ProdQtyTo / ManhourTo;
+        Uph = ProdQtyTo / ManhourTo; // UPH
         $('#Uph').text(Uph.toFixed(0));
         
         preUph = ProdQtyYe / ManhourYe;
 	    compareUph = Uph-preUph
-	    
-	    if (compareUph > 0) {
-			$('#preUph').text('전일대비 ▲ '+ compareUph.toFixed(0));
-		} else if (compareUph == 0) {
-			$('#preUph').text('전일대비 - ');
-		} else if (compareUph < 0) {
-			$('#preUph').text('전일대비 ▼ '+ compareUph.toFixed(0));
-		}
 
-        failRate = (FirstTimeFailQtyTo / ProdQtyTo) * 100;
-        $('#failQtyTo').text(failRate.toFixed(2) + '%');
+        failRate = (FirstTimeFailQtyTo / ProdQtyTo) * 100; //불량률
+        $('#failRate').text(failRate.toFixed(2) + '%');
         
-        prefailRate = (FirstTimeFailQtyYe / ProdQtyYe) * 100;
-	    comparefailRate = failRate-prefailRate
+        preFailRate = (FirstTimeFailQtyYe / ProdQtyYe) * 100;
+	    compareFailRate = failRate-preFailRate
+	    
+	    operateRate = (WorkTimeTo / (WorkTimeTo + NotoperateTimeTo)) * 100; //가동률
+        $('#operateRate').text(operateRate.toFixed(2) + '%');
+        
+        preOperateRate = (WorkTimeYe / (WorkTimeYe + NotoperateTimeYe)) * 100;
+	    compareOperateRate = operateRate-preOperateRate
 	        
-	    successRate = (ProdQtyTo / PlanQtyTo) * 100;
+	    successRate = (ProdQtyTo / PlanQtyTo) * 100; //달성율
         $('#successRate').text(successRate.toFixed(2) + '%');
         
-        presuccessRate = (ProdQtyYe / PlanQtyYe) * 100;
-	    comparesuccessRate = successRate-presuccessRate
+        preSuccessRate = (ProdQtyYe / PlanQtyYe) * 100;
+	    compareSuccessRate = successRate-preSuccessRate
 	    
-	    if (comparefailRate > 0 || comparesuccessRate > 0) {
-			$('#failQtyYe').text('전일대비 ▲ '+ comparefailRate.toFixed(2) + '%');
-			$('#presuccessRate').text('전일대비 ▲ '+ comparesuccessRate.toFixed(2) + '%');
-		} else if (comparefailRate == 0 || comparesuccessRate == 0) {
-			$('#failQtyYe').text('전일대비 - ');
-			$('#presuccessRate').text('전일대비 - ');
-		} else if (comparefailRate < 0 || comparesuccessRate < 0) {
-			$('#failQtyYe').text('전일대비 ▼ '+ comparefailRate.toFixed(2) + '%');
-			$('#presuccessRate').text('전일대비 ▼ '+ comparesuccessRate.toFixed(2) + '%');
+	    if (compareUph > 0 || compareFailRate > 0 || compareOperateRate > 0 || compareSuccessRate > 0) {
+			$('#preUph').text('전일대비 ▲ '+ compareUph.toFixed(0));
+			$('#preFailRate').text('전일대비 ▲ '+ compareFailRate.toFixed(2) + '%');
+			$('#preOperateRate').text('전일대비 ▲ '+ compareOperateRate.toFixed(2) + '%');
+			$('#preSuccessRate').text('전일대비 ▲ '+ compareSuccessRate.toFixed(2) + '%');
+		} else if (compareUph == 0 || compareFailRate == 0 || compareOperateRate == 0  || compareSuccessRate == 0) {
+			$('#preUph').text('전일대비 - ');
+			$('#preFailRate').text('전일대비 - ');
+			$('#preOperateRate').text('전일대비 - ');
+			$('#preSuccessRate').text('전일대비 - ');
+		} else if (compareUph < 0 || compareFailRate < 0 || compareOperateRate < 0  || compareSuccessRate < 0) {
+			$('#preUph').text('전일대비 ▼ '+ compareUph.toFixed(0));
+			$('#preFailRate').text('전일대비 ▼ '+ compareFailRate.toFixed(2) + '%');
+			$('#preOperateRate').text('전일대비 ▼ '+ compareOperateRate.toFixed(2) + '%');
+			$('#preSuccessRate').text('전일대비 ▼ '+ compareSuccessRate.toFixed(2) + '%');
 		}
      
     });
@@ -563,14 +577,58 @@ function rejectContents(data) {
 	});
 }
 
-function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
+function updateMonthButton() {
+	
+	var Month= (new Date().getMonth()) % 12 + 1;
+	var currentMonth = new Date().getMonth() - 5;
+	
+	$(".addMonth").each(function(index) {
+        var newValue = (currentMonth + index) % 12 + 1;
+        $(this).text(newValue + "월");
+        $(this).val(newValue);
+    });
+        
+	$(".addMonth").click(function() {
+        var value = $(this).val(); 
+        var data = value; 
+        rejectContents(data);
+    });
+    
+    $(".addMonth[value='" + Month + "']").addClass("active"); 
+    rejectContents(Month);
+}
 
+function updateDayWeekMonthButton() {
+	    
+    $(".addType").click(function() {	//일 주 월 타입 선택
+        var data = $(this).val(); 
+        var tagId = $(this).parent().attr('id');
+        selectType(data,tagId);
+    });
+    
+}
+
+function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
+	
 	if(tagId == "chart1Type"){
 		
 	}else if(tagId == "chart2Type"){
 		
 	}else if(tagId == "chart5Type"){
+		var url = '/dash/findDay';
 		
+		var params = {
+			month: data
+		};
+		
+		$.get(url + '?' + $.param(params)).then(function(res) {
+			var result = res;
+			var LineId = 0, WorkTime = 0, NotoperateTime = 0;
+			
+			result.foreach(function(r) { 
+				
+			}); 
+		});
 	}else if(tagId == "chart6Type"){
 		var url = '/dash/findChart6'+data;
 		
@@ -604,35 +662,4 @@ function chart2() {
 		setchart2(chart2data);
 	})
 }
-
-$(document).ready(function() {
-	workContents();
-	rejectContents("8");
-	//rejectContentsFre();
-	
-	var Month= (new Date().getMonth()) % 12 + 1;
-	var currentMonth = new Date().getMonth() - 5;
-	
-	$(".addMonth").each(function(index) {
-        var newValue = (currentMonth + index) % 12 + 1;
-        $(this).text(newValue + "월");
-        $(this).val(newValue);
-    });
-        
-	$(".addMonth").click(function() {
-        var value = $(this).val(); 
-        var data = value; 
-        rejectContents(data);
-    });
-    
-    $(".addMonth[value='" + Month + "']").addClass("active"); 
-    rejectContents(Month);
-    
-    $(".addType").click(function() {	//일 주 월 타입 선택
-        var data = $(this).val(); 
-        var tagId = $(this).parent().attr('id');
-        selectType(data,tagId);
-    });
-    
-});
 

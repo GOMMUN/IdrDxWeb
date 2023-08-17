@@ -15,6 +15,6 @@ public interface DashMapper {
 	List<WorkContents> findAllW();
 	List<RejectContents> findAllR(RejectContents param);
 	List<FairProd> chart1(String param);
-	List<String> rank();
+	List<String> rank(String factory);
 
 }

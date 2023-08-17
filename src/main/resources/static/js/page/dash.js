@@ -2,7 +2,7 @@
  * 
  */
 var chart1data = null;
-
+var chart2data = null;
 $(function(){
 	chart1();
 	chart2();
@@ -77,7 +77,7 @@ function setchart1(data) {
 
 }
 
-function chart2(){
+function setchart2(){
 	Highcharts.chart('chart2', {
     chart: {
         type: 'column'
@@ -107,14 +107,11 @@ function chart2(){
     },
     series: [
         {
-            name: '공정A',
-            data: [100, 105, 148, 180, 190, 170],
+            name: chart2data[0][0].lineid,
+				data: [Number(chart2data[0][0].prodQty), Number(chart2data[0][1].prodQty), 
+				Number(chart2data[0][2].prodQty), Number(chart2data[0][3].prodQty),
+				Number(chart2data[0][4].prodQty), Number(chart2data[0][5].prodQty)],
             color: '#0D70C6'
-        },
-        {
-            name: '공정B',
-            data: [85, 109, 84, 130, 180, 170],
-            color: '#009CD7'
         }
     ]
 });
@@ -588,10 +585,23 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 
 function chart1() {
 	var url = '/dash/chart1';
-	var data = null;
-	$.get(url).then(function(res) {
+	var params = {
+		factory: "KEM"
+	};
+	$.get(url+ '?' + $.param(params)).then(function(res) {
 		chart1data = res;
 		setchart1(chart1data);
+	})
+}
+
+function chart2() {
+	var url = '/dash/chart2';
+	var params = {
+		factory: "LHO"
+	};
+	$.get(url+ '?' + $.param(params)).then(function(res) {
+		chart2data = res;
+		setchart2(chart2data);
 	})
 }
 

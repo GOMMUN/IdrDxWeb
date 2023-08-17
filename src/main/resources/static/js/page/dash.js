@@ -45,28 +45,28 @@ function setchart1(data) {
 		},
 		series: [
 			{
-				name: '공정A',
+				name: chart1data[0][0].lineid,
 				data: [Number(chart1data[0][0].prodQty), Number(chart1data[0][1].prodQty), 
 				Number(chart1data[0][2].prodQty), Number(chart1data[0][3].prodQty),
 				Number(chart1data[0][4].prodQty), Number(chart1data[0][5].prodQty)],
 				color: '#0D70C6'
 			},
 			{
-				name: '공정B',
+				name: chart1data[1][0].lineid,
 				data: [Number(chart1data[1][0].prodQty), Number(chart1data[1][1].prodQty), 
 				Number(chart1data[1][2].prodQty), Number(chart1data[1][3].prodQty),
 				Number(chart1data[1][4].prodQty), Number(chart1data[1][5].prodQty)],
 				color: '#009CD8'
 			},
 			{
-				name: '공정C',
+				name: chart1data[2][0].lineid,
 				data: [Number(chart1data[2][0].prodQty), Number(chart1data[2][1].prodQty), 
 				Number(chart1data[2][2].prodQty), Number(chart1data[2][3].prodQty),
 				Number(chart1data[2][4].prodQty), Number(chart1data[2][5].prodQty)],
 				color: '#09D0D9'
 			},
 			{
-				name: '공정D',
+				name: chart1data[3][0].lineid,
 				data: [Number(chart1data[3][0].prodQty), Number(chart1data[3][1].prodQty), 
 				Number(chart1data[3][2].prodQty), Number(chart1data[3][3].prodQty),
 				Number(chart1data[3][4].prodQty), Number(chart1data[3][5].prodQty)],

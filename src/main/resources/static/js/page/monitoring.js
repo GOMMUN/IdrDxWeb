@@ -7,15 +7,40 @@ let c_line = null;
 let data = s_monitor();
 
 $(function() {
+	/*
 	$("input[name=workDate]").datepicker({
 		format: "yyyy-mm-dd",
 		autoclose: true,
 		language: "ko"
-	}).datepicker("setDate", new Date());
+	}).datepicker("setDate", new Date());*/
 	factroy();
 	line();
+	init();
 	setEventListener();
 });
+
+function getToday(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+}
+
+function init(){
+	data.factoryid='KEM'
+	data.lineid='KEM-P0002'
+	data.workDate=getToday();	
+	var params = {
+			workDate: data.workDate,
+			factoryid: data.factoryid,
+			lineid: data.lineid
+
+		}
+	ajaxRequest(params);
+}
+
 
 
 function setEventListener() {
@@ -61,71 +86,13 @@ function setEventListener() {
 			return;
 		}
 
-		let findproducturl = '/monitoring/findproduct';
-
 		var params = {
 			workDate: data.workDate,
 			factoryid: data.factoryid,
 			lineid: data.lineid
 
 		}
-
-		$.get(findproducturl + '?' + $.param(params)).then(function(res) {
-			let result = res;
-			if (result.length > 0) {
-				$("#dayplan").text(result[0].planQty);
-				$("#dayperformance").text(result[0].performancepercent + '%');
-				$("#daypl").text(result[0].prodQty);
-				$("#dayper").text(result[0].planQty);
-
-
-				$("#nightplan").text(result[1].planQty);
-				$("#nightperformance").text(result[1].performancepercent + '%');
-				$("#nightpl").text(result[1].prodQty);
-				$("#nightper").text(result[1].planQty);
-			} else {
-				$("#dayplan").text("데이터가없습니다");
-				$("#dayperformance").text(0);
-				$("#daypl").text(0);
-				$("#dayper").text(0);
-
-
-				$("#nightplan").text("데이터가없습니다");
-				$("#nightperformance").text(0);
-				$("#nightpl").text(0);
-				$("#nightper").text(0);
-			}
-
-
-		})
-
-		let findstorageurl = '/monitoring/findstorage';
-
-		$.get(findstorageurl + '?' + $.param(params)).then(function(res) {
-			let result = res;
-
-			$("#mqty").text(result.mtotalqty);
-			$("#pqty").text(result.ptotalqty);
-
-		})
-
-		let findrejecturl = '/monitoring/findreject';
-
-		$.get(findrejecturl + '?' + $.param(params)).then(function(res) {
-			let result = res;
-
-			$("#failper").text(result.failpercent + '%');
-			$("#failqty").text(result.totalfailQty);
-			$("#prodqty").text(result.totalprodQty);
-			$("#ri01").text(result.ri01);
-			$("#ri02").text(result.ri02);
-			$("#ri03").text(result.ri03);
-			$("#ri04").text(result.ri04);
-
-		})
-
-
-
+		
 		ajaxRequest(params);
 	});
 
@@ -191,6 +158,63 @@ function s_monitor() {
 }
 
 function ajaxRequest(params) {
+	
+	let findproducturl = '/monitoring/findproduct';
+	
+	$.get(findproducturl + '?' + $.param(params)).then(function(res) {
+			let result = res;
+			if (result.length > 0) {
+				$("#dayplan").text(result[0].planQty);
+				$("#dayperformance").text(result[0].performancepercent + '%');
+				$("#daypl").text(result[0].prodQty);
+				$("#dayper").text(result[0].planQty);
+
+
+				$("#nightplan").text(result[1].planQty);
+				$("#nightperformance").text(result[1].performancepercent + '%');
+				$("#nightpl").text(result[1].prodQty);
+				$("#nightper").text(result[1].planQty);
+			} else {
+				$("#dayplan").text("데이터가없습니다");
+				$("#dayperformance").text(0);
+				$("#daypl").text(0);
+				$("#dayper").text(0);
+
+
+				$("#nightplan").text("데이터가없습니다");
+				$("#nightperformance").text(0);
+				$("#nightpl").text(0);
+				$("#nightper").text(0);
+			}
+
+
+		})
+
+		let findstorageurl = '/monitoring/findstorage';
+
+		$.get(findstorageurl + '?' + $.param(params)).then(function(res) {
+			let result = res;
+
+			$("#mqty").text(result.mtotalqty);
+			$("#pqty").text(result.ptotalqty);
+
+		})
+
+		let findrejecturl = '/monitoring/findreject';
+
+		$.get(findrejecturl + '?' + $.param(params)).then(function(res) {
+			let result = res;
+
+			$("#failper").text(result.failpercent + '%');
+			$("#failqty").text(result.totalfailQty);
+			$("#prodqty").text(result.totalprodQty);
+			$("#ri01").text(result.ri01);
+			$("#ri02").text(result.ri02);
+			$("#ri03").text(result.ri03);
+			$("#ri04").text(result.ri04);
+
+		})
+
 	
 	let findnotoperateurl = '/monitoring/findnotoperate';
 

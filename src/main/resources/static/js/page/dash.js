@@ -87,7 +87,7 @@ function setchart2(){
         align: 'left'
     },
     xAxis: {
-        categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
+        categories: ['5일전', '4일전', '3일전', '2일전', '하루전', '오늘'],
         crosshair: true,
         accessibility: {
             description: 'Month'

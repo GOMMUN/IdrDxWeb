@@ -87,8 +87,14 @@ public class MonitoringService {
 			
 		}catch(Exception e)
 		{
-			e.printStackTrace();
-			return null;
+			Monitoring mt=new Monitoring();
+			mt.setTotalfailQty(0);
+			mt.setTotalprodQty(0);
+			mt.setRi01("0");
+			mt.setRi02("0");
+			mt.setRi03("0");
+			mt.setRi04("0");
+			return mt;
 		}
 		
 	}
@@ -101,7 +107,7 @@ public class MonitoringService {
 			
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			
 			return null;
 		}
 		

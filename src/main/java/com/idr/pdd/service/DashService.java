@@ -63,30 +63,5 @@ public class DashService {
 
 		return finalresult;
 	}
-	
-	public List<List<FairProd>> chart5(String factory, String month) {
-
-		List<String> rank = mapper.rank(factory);
-
-		List<String> lineList = new ArrayList<>();
-		List<List<FairProd>> finalresult = new ArrayList<>();
-
-		if (rank.size() > 4) {
-			lineList.add(rank.get(0));
-			lineList.add(rank.get(1));
-			lineList.add(rank.get(rank.size() - 2));
-			lineList.add(rank.get(rank.size() - 1));
-			finalresult.add(mapper.chart5(lineList.get(0), month));
-			finalresult.add(mapper.chart5(lineList.get(1), month));
-			finalresult.add(mapper.chart5(lineList.get(2), month));
-			finalresult.add(mapper.chart5(lineList.get(3), month));
-		} else {
-			for (String line : rank) {
-				finalresult.add(mapper.chart5(line, month));
-			}
-		}
-
-	return finalresult;
-	}
 
 }

@@ -467,20 +467,20 @@ function PQCDrate() {
 		var formattedDate = year + month + day;
 		
         result.forEach(function(r) {
-			if (r.workdate == formattedDate) {
+			if (r.workDate == formattedDate) {
 	            FirstTimeFailQtyTo = r.firsttimeFailQty;
 	            ProdQtyTo = r.prodQty;
 	            ManhourTo = r.manhour;
 	            PlanQtyTo = r.planQty;
-	            WorkTimeTo = r.worktime;
-	            NotoperateTimeTo = r.notoperatetime;
+	            WorkTimeTo = r.workTotal;
+	            NotoperateTimeTo = r.notoperateTotal;
             } else {
 				FirstTimeFailQtyYe = r.firsttimeFailQty;
 	            ProdQtyYe = r.prodQty;
 	            ManhourYe = r.manhour;
 	            PlanQtyYe = r.planQty;
-	            WorkTimeYe = r.worktime;
-	            NotoperateTimeYe = r.notoperatetime;
+	            WorkTimeYe = r.workTotal;
+	            NotoperateTimeYe = r.notoperateTotal;
 			}
         });
         

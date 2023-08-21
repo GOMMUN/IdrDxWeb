@@ -68,6 +68,6 @@ public class DashController {
 	@GetMapping("/chart5")
     public List<List<FairProd>> chart5(String factory, String month) {
 		
-		return service.chart5(factory, month);
+		return service.chart1(factory, month);
     }
 }

@@ -15,6 +15,7 @@ $(function(){
 	rejectContents("8");
 	updateMonthButton();
 	updateDayWeekMonthButton()
+	factroy();
 });
 
 function setchart1(chart1data) {
@@ -633,8 +634,11 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 				
 	}else if(tagId == "chart2Type"){
 		var url = '/dash/chart2';
+		
+		factory= $("select[name=factoryid]").val();
+		
 		var params = {
-			factory: "LHO",
+			factory: factory,
 			month: data
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
@@ -667,4 +671,30 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	}else{
 		
 	}
+}
+
+function factroy() {
+	let url = '/code/factory';
+
+	c_factory = null;
+
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			c_factory = data;
+
+			let $dropdown = $("#factoryCodes");
+			$dropdown.empty();
+
+			if (c_factory) {
+				$dropdown.append($("<option/>").val("").text("공장 선택"));
+				$.each(data, function() {
+					$dropdown.append($("<option/>").val(this.code).text(this.value));
+				});
+			} else {
+				$dropdown.append($("<option/>").val("").text("공장 선택"));
+			}
+		}
+	});
 }

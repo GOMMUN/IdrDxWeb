@@ -40,6 +40,10 @@ public class DashService {
 
 		if (factory.equals("LHO")) {
 			finalresult.add(mapper.chart1(rank.get(0), month));		
+		} else if (factory.equals("SWH")) {
+			finalresult.add(mapper.chart1(rank.get(0), month));		
+		} else if (factory.equals("SYM")) {
+			finalresult.add(mapper.chart1(rank.get(0), month));		
 		} else {
 			if (rank.size() > 4) {
 				lineList.add(rank.get(0));

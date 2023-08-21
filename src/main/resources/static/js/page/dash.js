@@ -4,8 +4,6 @@
 var chart1data = null;
 var chart2data = null;
 $(function(){
-	//chart1();
-	chart2();
 	chart3();
 	chart4();
 	chart5();
@@ -92,7 +90,7 @@ function setchart2(){
         align: 'left'
     },
     xAxis: {
-        categories: ['5일전', '4일전', '3일전', '2일전', '하루전', '오늘'],
+        categories: [chart2data[0][0].dt, chart2data[0][1].dt, chart2data[0][2].dt, chart2data[0][3].dt, chart2data[0][4].dt, chart2data[0][5].dt],
         crosshair: true,
         accessibility: {
             description: 'Month'
@@ -598,30 +596,51 @@ function updateMonthButton() {
     rejectContents(Month);
 }
 
-function updateDayWeekMonthButton() {
-	    
-    $(".addType").click(function() {	//일 주 월 타입 선택
-        var data = $(this).val(); 
-        var tagId = $(this).parent().attr('id');
-        selectType(data,tagId);
-    });
-    
+function updateDayWeekMonthButton() {	    
+	var defaultData = "day";
+	
+	for (var chartNumber = 1; chartNumber <= 6; chartNumber++) {
+        var chartId = "chart" + chartNumber + "Type";
+        
+        // Set default active button and call selectType
+        $("#addType[value='" + defaultData + "']").addClass("active");
+        selectType(defaultData, chartId);
+        
+	    $(".addType").click(function() {	//일 주 월 타입 선택
+	        var data = $(this).val(); 
+	        var tagId = $(this).parent().attr('id');
+	        
+	        $(".addType").removeClass("active");
+            $(this).addClass("active");
+            
+	        selectType(data,tagId);
+	    });
+	}
 }
 
 function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	
 	if(tagId == "chart1Type"){
-			var url = '/dash/chart1';
-			var params = {
-				factory: "KEM",
-				month: data
-			};
-			$.get(url+ '?' + $.param(params)).then(function(res) {
-				chart1data = res;
-				setchart1(chart1data);
-			})
+		var url = '/dash/chart1';
+		var params = {
+			factory: "KEM",
+			month: data
+		};
+		$.get(url+ '?' + $.param(params)).then(function(res) {
+			chart1data = res;
+			setchart1(chart1data);
+		})
 				
 	}else if(tagId == "chart2Type"){
+		var url = '/dash/chart2';
+		var params = {
+			factory: "LHO",
+			month: data
+		};
+		$.get(url+ '?' + $.param(params)).then(function(res) {
+			chart2data = res;
+			setchart2(chart2data);
+		})
 		
 	}else if(tagId == "chart5Type"){
 		var url = '/dash/findDay';
@@ -649,26 +668,3 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 	}
 }
-
-//function chart1() {
-//	var url = '/dash/chart1';
-//	var params = {
-//		factory: "KEM"
-//	};
-//	$.get(url+ '?' + $.param(params)).then(function(res) {
-//		chart1data = res;
-//		setchart1(chart1data);
-//	})
-//}
-
-function chart2() {
-	var url = '/dash/chart2';
-	var params = {
-		factory: "LHO"
-	};
-	$.get(url+ '?' + $.param(params)).then(function(res) {
-		chart2data = res;
-		setchart2(chart2data);
-	})
-}
-

@@ -41,23 +41,23 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/simullator/workerPerformance")
 public class WorkerPerformanceController {
 	private int totalRowCount = 0; // 전체 행 개수
-    private int successRowCount = 0; // 성공한 데이터 개수
-    private int failRowCount = 0; // 실패한 데이터 개수
-	
+	private int successRowCount = 0; // 성공한 데이터 개수
+	private int failRowCount = 0; // 실패한 데이터 개수
+
 	@Autowired
 	private WorkerPerformanceService service;
-	
+
 	@GetMapping("")
-    public String init() {
-        return "page/workerPerformance";
-    }
+	public String init() {
+		return "page/workerPerformance";
+	}
 
 	@ResponseBody
 	@GetMapping("/find")
-    public Map<String, Object> find(String search, int offset, int limit) {
+	public Map<String, Object> find(String search, int offset, int limit) {
 		return service.find(search, offset, limit);
-    }
-	
+	}
+
 	@Transactional
 	@PostMapping(value = "/excelUpload")
 	public void excelUpload(HttpServletRequest request, HttpServletResponse response, 
@@ -94,27 +94,30 @@ public class WorkerPerformanceController {
 					String key = sheet.getRow(0).getCell(columnIndex).toString().replaceAll(" ", "").toUpperCase();
 					
 					if( cell != null ) {
-						if("작업자ID".equals(key)) {
+						if("작업자코드".equals(key)) {
 							domain.setWorkerid(cell.toString());
 						}else if("작업자명".equals(key)) {
 							domain.setWorkername(cell.toString());
-						}else if("주문ID".equals(key)) {
+						}else if("생산계획코드".equals(key)) {
 							domain.setOrderid((int)Double.parseDouble(cell.toString()));
-						}else if("주문이름".equals(key)) {
+						}else if("생산계획명".equals(key)) {
 							domain.setOrdername(cell.toString());					
-						}else if("ITEMID".equals(key)) {
+						}else if("자재코드".equals(key)) {
 							domain.setItemid((int)Double.parseDouble(cell.toString()));
-						}else if("ITEM이름".equals(key)) {
+						}else if("자재명".equals(key)) {
 							domain.setItemname(cell.toString());
-						}else if("공정ID".equals(key)) {
+						}else if("공정코드".equals(key)) {
 							domain.setProcessid((int)Double.parseDouble(cell.toString()));
-						}else if("공정이름".equals(key)) {
+						}else if("공정명".equals(key)) {
 							domain.setProcessname(cell.toString());
 						}else if("공정시간".equals(key)) {
 							domain.setProcesstime(cell.toString());
-						}else if("장비ID".equals(key)) {
+						}else if("설비코드".equals(key)) {
 							domain.setEquipid((int)Double.parseDouble(cell.toString()));
-						}else if("시작시간".equals(key)) {
+						}else if("설비명".equals(key)) {
+							domain.setEquipname(cell.toString());
+						}
+						else if("시작시간".equals(key)) {
 							domain.setStarttime(cell.toString());
 						}else if("종료시간".equals(key)) {
 							domain.setEndtime(cell.toString());
@@ -144,16 +147,16 @@ public class WorkerPerformanceController {
 			successRowCount = 0;
 		}
 	};
-	
+
 	@ResponseBody
 	@PostMapping(value = "/excelUploadPercent")
 	public String excelUploadPercent() {
 		double resultPerc = 0.0;
-		resultPerc = ((double)successRowCount / (double)totalRowCount)*100;
-		
-		if(Double.isNaN(resultPerc)) {
+		resultPerc = ((double) successRowCount / (double) totalRowCount) * 100;
+
+		if (Double.isNaN(resultPerc)) {
 			return "0";
-		}else {
+		} else {
 			return String.format("%.0f", resultPerc);
 		}
 	}

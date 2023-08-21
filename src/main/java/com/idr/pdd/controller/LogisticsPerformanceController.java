@@ -93,9 +93,9 @@ public class LogisticsPerformanceController {
 					String key = sheet.getRow(0).getCell(columnIndex).toString().replaceAll(" ", "").toUpperCase();
 					
 					if( cell != null ) {
-						if("물류ID".equals(key)) {
+						if("물류코드".equals(key)) {
 							domain.setLogisticsid((int)Double.parseDouble(cell.toString()));
-						}else if("물류이름".equals(key)) {
+						}else if("물류명".equals(key)) {
 							domain.setLogisticsname(cell.toString());
 						}else if("동작시간".equals(key)) {
 							domain.setOperatingtime(cell.toString());
@@ -103,9 +103,9 @@ public class LogisticsPerformanceController {
 							domain.setStarttime(cell.toString());
 						}else if("종료시간".equals(key)) {
 							domain.setEndtime(cell.toString());
-						}else if("시작장비".equals(key)) {
+						}else if("시작설비".equals(key)) {
 							domain.setStartingequipment(cell.toString());
-						}else if("도착장비".equals(key)) {
+						}else if("도착설비".equals(key)) {
 							domain.setEndequipment(cell.toString());
 						}else if("로딩시간".equals(key)) {
 							domain.setLoadingtime(cell.toString());

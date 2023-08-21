@@ -20,8 +20,6 @@
 			IMPORTANCE, 
 			START_TIME, 
 			DELIVERY, 
-			GROUP_ID, 
-			ORDER_WITHIN_GROUP, 
 			CREATOR, 
 			CREATETIME, 
 			EVENT, 
@@ -43,8 +41,6 @@
 			OR IMPORTANCE LIKE CONCAT('%', #{search}, '%') 
 			OR START_TIME LIKE CONCAT('%', #{search}, '%') 
 			OR DELIVERY LIKE CONCAT('%', #{search}, '%') 
-			OR GROUP_ID LIKE CONCAT('%', #{search}, '%') 
-			OR ORDER_WITHIN_GROUP LIKE CONCAT('%', #{search}, '%') 
 		)
         </if>
 		ORDER BY ROWNUM ASC
@@ -69,8 +65,6 @@
 			OR IMPORTANCE LIKE CONCAT('%', #{search}, '%') 
 			OR START_TIME LIKE CONCAT('%', #{search}, '%') 
 			OR DELIVERY LIKE CONCAT('%', #{search}, '%') 
-			OR GROUP_ID LIKE CONCAT('%', #{search}, '%') 
-			OR ORDER_WITHIN_GROUP LIKE CONCAT('%', #{search}, '%') 
 		)
         </if>
     </select>
@@ -86,9 +80,9 @@
 			TOTAL_PRODUCTION_LOT, 
 			IMPORTANCE, 
 			START_TIME, 
-			DELIVERY, 
-			GROUP_ID, 
-			ORDER_WITHIN_GROUP
+			DELIVERY,
+			STATE 
+
         ) VALUES(
         	#{orderid}, 
         	#{ordername}, 
@@ -100,8 +94,7 @@
         	#{importance}, 
         	#{starttime},
         	#{delivery},
-        	#{groupid},
-        	#{orderwithingroup}
+        	#{state}
         )
     </insert>
 

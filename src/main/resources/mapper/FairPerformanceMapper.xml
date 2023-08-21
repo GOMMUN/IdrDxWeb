@@ -28,7 +28,9 @@
 			EVENT, 
 			EVENTUSER, 
 			EVENTTIME, 
-			ISUSABLE 
+			ISUSABLE ,
+			FACTORYID,
+			FACTORYNAME
 		FROM SIMULLATOR_FAIR_PERFORMANCE
 		WHERE 1=1 
 		AND ISUSABLE = 'Usabled'
@@ -93,7 +95,9 @@
         	START_TIME, 
         	END_TIME, 
         	PROCESS_TYPE, 
-        	SPLIT_TYPE
+        	SPLIT_TYPE,
+        	FACTORYID,
+			FACTORYNAME
         ) VALUES(
         	#{equipmentId}, 
         	#{equipmentName}, 
@@ -108,7 +112,9 @@
         	#{startTime}, 
         	#{endTime}, 
         	#{processType}, 
-        	#{splitType}
+        	#{splitType},
+        	#{factoryid}, 
+        	#{factoryname}
         )
     </insert>
 

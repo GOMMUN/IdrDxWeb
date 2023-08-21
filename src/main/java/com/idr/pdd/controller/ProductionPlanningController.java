@@ -43,90 +43,88 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/simullator/productionplanning")
 public class ProductionPlanningController {
 	private int totalRowCount = 0; // 전체 행 개수
-    private int successRowCount = 0; // 성공한 데이터 개수
-    private int failRowCount = 0; // 실패한 데이터 개수
-	
+	private int successRowCount = 0; // 성공한 데이터 개수
+	private int failRowCount = 0; // 실패한 데이터 개수
+
 	@Autowired
 	private ProductionPlanningService service;
-	
+
 	@GetMapping("")
-    public String init() {
-        return "page/productionPlanning";
-    }
+	public String init() {
+		return "page/productionPlanning";
+	}
 
 	@ResponseBody
 	@GetMapping("/find")
-    public Map<String, Object> find(String search, int offset, int limit) {
+	public Map<String, Object> find(String search, int offset, int limit) {
 		return service.find(search, offset, limit);
-    }
-	
+	}
+
 	@Transactional
 	@PostMapping(value = "/excelUpload")
-	public void excelUpload(HttpServletRequest request, HttpServletResponse response, 
+	public void excelUpload(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "excelFile", required = true) MultipartFile file) {
 		System.out.println(file);
-		
+
 		try {
 			String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-			
+
 			if (!extension.equals("xlsx") && !extension.equals("xls")) {
-		      throw new IOException("엑셀파일만 업로드 해주세요.");
-		    }
-			 
+				throw new IOException("엑셀파일만 업로드 해주세요.");
+			}
+
 			Workbook workbook = ExcelFileType.getWorkbook(file);
-			
+
 			Sheet sheet = workbook.getSheetAt(0);
-			
+
 			int rowIndex = 0;
-			
+
 			List<ProductionPlanning> list = new ArrayList<>();
-			
+
 			totalRowCount = sheet.getLastRowNum();
-			
+
 			for (rowIndex = 1; rowIndex < totalRowCount + 1; rowIndex++) {
-				
+
 				ProductionPlanning domain = new ProductionPlanning();
-				
+
 				int columnIndex = 0;
 				Row row = sheet.getRow(rowIndex);
-				
+
 				for (columnIndex = 0; columnIndex < row.getLastCellNum(); columnIndex++) {
-					
+
 					Cell cell = row.getCell(columnIndex);
 					String key = sheet.getRow(0).getCell(columnIndex).toString().replaceAll(" ", "").toUpperCase();
-					
-					if( cell != null ) {
-						if("주문ID".equals(key)) {
-							domain.setOrderid((int)Double.parseDouble(cell.toString()));
-						}else if("주문명".equals(key)) {
+
+					if (cell != null) {
+						if ("생산계획코드".equals(key)) {
+							domain.setOrderid((int) Double.parseDouble(cell.toString()));
+						} else if ("주문명".equals(key)) {
 							domain.setOrdername(cell.toString());
-						}else if("ITEMID".equals(key)) {
-							domain.setItemid((int)Double.parseDouble(cell.toString()));
-						}else if("ITEM이름".equals(key)) {
-							domain.setItemname(cell.toString());				
-						}else if("LOTID".equals(key)) {
-							domain.setLotid((int)Double.parseDouble(cell.toString()));
-						}else if("LOT이름".equals(key)) {
+						} else if ("자재코드".equals(key)) {
+							domain.setItemid((int) Double.parseDouble(cell.toString()));
+						} else if ("자재명".equals(key)) {
+							domain.setItemname(cell.toString());
+						} else if ("LOT코드".equals(key)) {
+							domain.setLotid((int) Double.parseDouble(cell.toString()));
+						} else if ("LOT명".equals(key)) {
 							domain.setLotname(cell.toString());
-						}else if("총생산LOT수".equals(key)) {
-							domain.setTotalproductionlot((int)Double.parseDouble(cell.toString()));
-						}else if("중요도".equals(key)) {
+						} else if ("총생산LOT수".equals(key)) {
+							domain.setTotalproductionlot((int) Double.parseDouble(cell.toString()));
+						} else if ("상태".equals(key)) {
+							domain.setState(cell.toString());
+						} else if ("중요도".equals(key)) {
 							domain.setImportance(cell.toString());
-						}else if("시작시간".equals(key)) {
+						} else if ("시작시간".equals(key)) {
 							domain.setStarttime(cell.toString());
-						}else if("납기".equals(key)) {
+						} else if ("납기".equals(key)) {
 							domain.setDelivery(cell.toString());
-						}else if("GROUPID".equals(key)) {
-							domain.setGroupid((int)Double.parseDouble(cell.toString()));
-						}else if("GROUP내순서".equals(key)) {
-							domain.setOrderwithingroup((int)Double.parseDouble(cell.toString()));
 						}
 					}
 				}
 				list.add(domain);
-				
+
 			}
-			if(list.size() > 0) {
+			if (list.size() > 0) {
 				for (ProductionPlanning param : list) {
 					service.create(param);
 					successRowCount += 1;
@@ -135,7 +133,7 @@ public class ProductionPlanningController {
 
 			totalRowCount = 0;
 			successRowCount = 0;
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -144,16 +142,16 @@ public class ProductionPlanningController {
 			successRowCount = 0;
 		}
 	};
-	
+
 	@ResponseBody
 	@PostMapping(value = "/excelUploadPercent")
 	public String excelUploadPercent() {
 		double resultPerc = 0.0;
-		resultPerc = ((double)successRowCount / (double)totalRowCount)*100;
-		
-		if(Double.isNaN(resultPerc)) {
+		resultPerc = ((double) successRowCount / (double) totalRowCount) * 100;
+
+		if (Double.isNaN(resultPerc)) {
 			return "0";
-		}else {
+		} else {
 			return String.format("%.0f", resultPerc);
 		}
 	}

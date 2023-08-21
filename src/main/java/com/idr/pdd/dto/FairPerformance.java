@@ -27,4 +27,6 @@ public class FairPerformance {
 	private String eventuser;
 	private String eventtime;
 	private String isusable;
+	private String factoryid;
+	private String factoryname;
 }

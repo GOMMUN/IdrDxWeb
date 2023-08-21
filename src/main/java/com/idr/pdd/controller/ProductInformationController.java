@@ -43,119 +43,116 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/simullator/productInformation")
 public class ProductInformationController {
 	private int totalRowCount = 0; // 전체 행 개수
-    private int successRowCount = 0; // 성공한 데이터 개수
-    private int failRowCount = 0; // 실패한 데이터 개수
-	
+	private int successRowCount = 0; // 성공한 데이터 개수
+	private int failRowCount = 0; // 실패한 데이터 개수
+
 	@Autowired
 	private ProductInformationService service;
-	
+
 	@GetMapping("")
-    public String init() {
-        return "page/productInformation";
-    }
+	public String init() {
+		return "page/productInformation";
+	}
 
 	@ResponseBody
 	@GetMapping("/find")
-    public Map<String, Object> find(String search, int offset, int limit) {
+	public Map<String, Object> find(String search, int offset, int limit) {
 		return service.find(search, offset, limit);
-    }
-	
+	}
+
 	@Transactional
 	@PostMapping(value = "/excelUpload")
-	public void excelUpload(HttpServletRequest request, HttpServletResponse response, 
+	public void excelUpload(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "excelFile", required = true) MultipartFile file) {
 		System.out.println(file);
-		
+
 		try {
 			String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-			
+
 			if (!extension.equals("xlsx") && !extension.equals("xls")) {
-		      throw new IOException("엑셀파일만 업로드 해주세요.");
-		    }
-			 
+				throw new IOException("엑셀파일만 업로드 해주세요.");
+			}
+
 			Workbook workbook = ExcelFileType.getWorkbook(file);
-			
+
 			Sheet sheet = workbook.getSheetAt(0);
-			
+
 			int rowIndex = 0;
-			
+
 			List<ProductInformation> list = new ArrayList<>();
-			
+
 			totalRowCount = sheet.getLastRowNum();
-			
+
 			for (rowIndex = 1; rowIndex < totalRowCount + 1; rowIndex++) {
-				
+
 				ProductInformation domain = new ProductInformation();
-				
+
 				int columnIndex = 0;
 				Row row = sheet.getRow(rowIndex);
-				
+
 				for (columnIndex = 0; columnIndex < row.getLastCellNum(); columnIndex++) {
-					
+
 					Cell cell = row.getCell(columnIndex);
 					String key = sheet.getRow(0).getCell(columnIndex).toString().replaceAll(" ", "").toUpperCase();
-					
-					if( cell != null ) {
-						if("ITEMID".equals(key)) {
-							domain.setItemid((int)Double.parseDouble(cell.toString()));
-						}else if("ITEM이름".equals(key)) {
+
+					if (cell != null) {
+						if ("자재코드".equals(key)) {
+							domain.setItemid((int) Double.parseDouble(cell.toString()));
+						} else if ("자재명".equals(key)) {
 							domain.setItemname(cell.toString());
-						}else if("FLOWID".equals(key)) {
-							domain.setFlowid((int)Double.parseDouble(cell.toString()));
-						}else if("FLOW이름".equals(key)) {
-							domain.setFlowname(cell.toString()); 		
-						}else if("공정순서".equals(key)) {
+						} else if ("FLOW코드".equals(key)) {
+							domain.setFlowid((int) Double.parseDouble(cell.toString()));
+						} else if ("FLOW명".equals(key)) {
+							domain.setFlowname(cell.toString());
+						} else if ("공정순서".equals(key)) {
 							domain.setProcessorder(cell.toString());
-						}else if("공정ID".equals(key)) {
-							domain.setProcessid((int)Double.parseDouble(cell.toString()));
-						}else if("공정이름".equals(key)) {
+						} else if ("공정코드".equals(key)) {
+							domain.setProcessid((int) Double.parseDouble(cell.toString()));
+						} else if ("공정명".equals(key)) {
 							domain.setProcessname(cell.toString());
-						}else if("공정종류".equals(key)) {
+						} else if ("공정종류".equals(key)) {
 							domain.setProcesstype(cell.toString());
-						}else if("연결FLOW".equals(key)) {
+						} else if ("연결FLOW".equals(key)) {
 							domain.setConnectflow(cell.toString());
-						}else if("투입LOTID".equals(key)) {
-							domain.setInputlotid((int)Double.parseDouble(cell.toString()));
-						}else if("투입LOTNAME".equals(key)) {
-							domain.setInputlotname(cell.toString()); 
-						}else if("투입LOT크기".equals(key)) {
-							domain.setInputlotsize((int)Double.parseDouble(cell.toString()));
-						}else if("투입LOT단위".equals(key)) {
+						} else if ("투입LOT코드".equals(key)) {
+							domain.setInputlotid((int) Double.parseDouble(cell.toString()));
+						} else if ("투입LOT명".equals(key)) {
+							domain.setInputlotname(cell.toString());
+						} else if ("투입LOT크기".equals(key)) {
+							domain.setInputlotsize((int) Double.parseDouble(cell.toString()));
+						} else if ("투입LOT단위".equals(key)) {
 							domain.setInputlotunit(cell.toString());
-						}else if("투입LOT수량".equals(key)) {
-							domain.setInputlotnum((int)Double.parseDouble(cell.toString()));
-						}else if("생성LOTID".equals(key)) {
-							domain.setCreatelotid((int)Double.parseDouble(cell.toString())); 
-						}else if("생성LOT이름".equals(key)) {
+						} else if ("투입LOT수량".equals(key)) {
+							domain.setInputlotnum((int) Double.parseDouble(cell.toString()));
+						} else if ("생성LOT코드".equals(key)) {
+							domain.setCreatelotid((int) Double.parseDouble(cell.toString()));
+						} else if ("생성LOT명".equals(key)) {
 							domain.setCreatelotname(cell.toString());
-						}else if("생성LOT크기".equals(key)) {
-							domain.setCreatelotsize((int)Double.parseDouble(cell.toString())); 
-						}else if("생성LOT단위".equals(key)) {
+						} else if ("생성LOT크기".equals(key)) {
+							domain.setCreatelotsize((int) Double.parseDouble(cell.toString()));
+						} else if ("생성LOT단위".equals(key)) {
 							domain.setCreatelotunit(cell.toString());
-						}else if("생성LOT수량".equals(key)) {
-							domain.setCreatelotnum((int)Double.parseDouble(cell.toString()));
-						}else if("공정전작업분".equals(key)) {
-							domain.setPreprocessworkm((int)Double.parseDouble(cell.toString()));
-						}else if("공정전작업초".equals(key)) {
-							domain.setPreprocessworks((int)Double.parseDouble(cell.toString()));
-						}else if("공정시간분".equals(key)) {
-							domain.setProcesstimem((int)Double.parseDouble(cell.toString()));
-						}else if("공정시간초".equals(key)) {
-							domain.setProcesstimes((int)Double.parseDouble(cell.toString()));
-						}else if("공정후작업분".equals(key)) {
-							domain.setPostprocessworkm((int)Double.parseDouble(cell.toString()));
-						}else if("공정후작업초".equals(key)) {
-							domain.setPostprocessworks((int)Double.parseDouble(cell.toString()));
-						}else if("장비이름".equals(key)) {
-							domain.setEquipmentname(cell.toString());
-						}
-						
+						} else if ("생성LOT수량".equals(key)) {
+							domain.setCreatelotnum((int) Double.parseDouble(cell.toString()));
+						} else if ("공정전작업".equals(key)) {
+							domain.setPreprocessworkm((int) Double.parseDouble(cell.toString()));
+						} /*
+							 * else if("공정시간분".equals(key)) {
+							 * domain.setProcesstimem((int)Double.parseDouble(cell.toString())); }else
+							 * if("공정시간초".equals(key)) {
+							 * domain.setProcesstimes((int)Double.parseDouble(cell.toString())); }else
+							 * if("공정후작업분".equals(key)) {
+							 * domain.setPostprocessworkm((int)Double.parseDouble(cell.toString())); }else
+							 * if("공정후작업초".equals(key)) {
+							 * domain.setPostprocessworks((int)Double.parseDouble(cell.toString())); }else
+							 * if("장비이름".equals(key)) { domain.setEquipmentname(cell.toString()); }
+							 */
 					}
 				}
 				list.add(domain);
-				
+
 			}
-			if(list.size() > 0) {
+			if (list.size() > 0) {
 				for (ProductInformation param : list) {
 					service.create(param);
 					successRowCount += 1;
@@ -164,8 +161,10 @@ public class ProductInformationController {
 
 			totalRowCount = 0;
 			successRowCount = 0;
-			
-		} catch (Exception e) {
+
+		} catch (
+
+		Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			failRowCount += 1;
@@ -173,16 +172,16 @@ public class ProductInformationController {
 			successRowCount = 0;
 		}
 	};
-	
+
 	@ResponseBody
 	@PostMapping(value = "/excelUploadPercent")
 	public String excelUploadPercent() {
 		double resultPerc = 0.0;
-		resultPerc = ((double)successRowCount / (double)totalRowCount)*100;
-		
-		if(Double.isNaN(resultPerc)) {
+		resultPerc = ((double) successRowCount / (double) totalRowCount) * 100;
+
+		if (Double.isNaN(resultPerc)) {
 			return "0";
-		}else {
+		} else {
 			return String.format("%.0f", resultPerc);
 		}
 	}

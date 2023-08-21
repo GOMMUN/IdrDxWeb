@@ -26,5 +26,6 @@ public class WorkerPerformance {
 	private String eventuser;
 	private String eventtime;
 	private String isusable;
+	private String equipname;
 
 }

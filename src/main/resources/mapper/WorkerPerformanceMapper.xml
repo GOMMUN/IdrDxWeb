@@ -27,7 +27,8 @@
 			EVENT, 
 			EVENTUSER, 
 			EVENTTIME, 
-			ISUSABLE 
+			ISUSABLE ,
+			EQUIPNAME
 		FROM SIMULLATOR_WORKER_PERFORMANCE
 		WHERE 1=1 
 		AND ISUSABLE = 'Usabled'
@@ -89,7 +90,8 @@
         	EQUIPID,
         	STARTTIME,
         	ENDTIME,
-        	DIVISIONTYPE
+        	DIVISIONTYPE,
+        	EQUIPNAME
         ) VALUES(
         	#{workerid}, 
         	#{workername}, 
@@ -103,7 +105,8 @@
         	#{equipid},
         	#{starttime},
         	#{endtime},
-        	#{divisiontype}
+        	#{divisiontype},
+        	#{equipname}
         	
         )
     </insert>

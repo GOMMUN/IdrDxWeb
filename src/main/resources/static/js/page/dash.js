@@ -285,6 +285,14 @@ function setchart5(chart5data) {
         verticalAlign: 'bottom',
         align: 'center'
     },
+    
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+        }
+    },
 
     xAxis: {
         categories: [chart5data[0][0].dt, chart5data[0][1].dt, chart5data[0][2].dt, chart5data[0][3].dt, chart5data[0][4].dt, chart5data[0][5].dt],
@@ -302,39 +310,39 @@ function setchart5(chart5data) {
 
     series: [{
         name: chart5data[0][0].lineid,
-        data: [Number((chart5data[0][0].workTotal/(chart5data[0][0].workTotal+chart5data[0][0].notoperateTotal))*100),
-        		Number((chart5data[0][1].workTotal/(chart5data[0][1].workTotal+chart5data[0][1].notoperateTotal))*100), 
-				Number((chart5data[0][2].workTotal/(chart5data[0][2].workTotal+chart5data[0][2].notoperateTotal))*100),
-				Number((chart5data[0][3].workTotal/(chart5data[0][3].workTotal+chart5data[0][3].notoperateTotal))*100),
-				Number((chart5data[0][4].workTotal/(chart5data[0][4].workTotal+chart5data[0][4].notoperateTotal))*100), 
-				Number((chart5data[0][5].workTotal/(chart5data[0][5].workTotal+chart5data[0][5].notoperateTotal))*100)],
+        data: [ Number((chart5data[0][0].workTotal/((chart5data[0][0].workTotal+chart5data[0][0].notoperateTotal) == 0? 1 : (chart5data[0][0].workTotal+chart5data[0][0].notoperateTotal) ))*100),
+        		Number((chart5data[0][1].workTotal/((chart5data[0][1].workTotal+chart5data[0][1].notoperateTotal) == 0? 1 : (chart5data[0][1].workTotal+chart5data[0][1].notoperateTotal) ))*100),
+				Number((chart5data[0][2].workTotal/((chart5data[0][2].workTotal+chart5data[0][2].notoperateTotal) == 0? 1 : (chart5data[0][2].workTotal+chart5data[0][2].notoperateTotal) ))*100),
+				Number((chart5data[0][3].workTotal/((chart5data[0][3].workTotal+chart5data[0][3].notoperateTotal) == 0? 1 : (chart5data[0][3].workTotal+chart5data[0][3].notoperateTotal) ))*100),
+				Number((chart5data[0][4].workTotal/((chart5data[0][4].workTotal+chart5data[0][4].notoperateTotal) == 0? 1 : (chart5data[0][4].workTotal+chart5data[0][4].notoperateTotal) ))*100),
+				Number((chart5data[0][5].workTotal/((chart5data[0][5].workTotal+chart5data[0][5].notoperateTotal) == 0? 1 : (chart5data[0][5].workTotal+chart5data[0][5].notoperateTotal) ))*100)],
         color:'#94F5F9'
     }, {
         name: chart5data[1][0].lineid,
-        data: [Number((chart5data[1][0].workTotal/(chart5data[1][0].workTotal+chart5data[1][0].notoperateTotal))*100),
-        		Number((chart5data[1][1].workTotal/(chart5data[1][1].workTotal+chart5data[1][1].notoperateTotal))*100), 
-				Number((chart5data[1][2].workTotal/(chart5data[1][2].workTotal+chart5data[1][2].notoperateTotal))*100),
-				Number((chart5data[1][3].workTotal/(chart5data[1][3].workTotal+chart5data[1][3].notoperateTotal))*100),
-				Number((chart5data[1][4].workTotal/(chart5data[1][4].workTotal+chart5data[1][4].notoperateTotal))*100), 
-				Number((chart5data[1][5].workTotal/(chart5data[1][5].workTotal+chart5data[1][5].notoperateTotal))*100)],
+        data: [ Number((chart5data[1][0].workTotal/((chart5data[1][0].workTotal+chart5data[1][0].notoperateTotal) == 0? 1 : (chart5data[1][0].workTotal+chart5data[1][0].notoperateTotal) ))*100), 
+        		Number((chart5data[1][1].workTotal/((chart5data[1][1].workTotal+chart5data[1][1].notoperateTotal) == 0? 1 : (chart5data[1][1].workTotal+chart5data[1][1].notoperateTotal) ))*100), 
+				Number((chart5data[1][2].workTotal/((chart5data[1][2].workTotal+chart5data[1][2].notoperateTotal) == 0? 1 : (chart5data[1][2].workTotal+chart5data[1][2].notoperateTotal) ))*100), 
+				Number((chart5data[1][3].workTotal/((chart5data[1][3].workTotal+chart5data[1][3].notoperateTotal) == 0? 1 : (chart5data[1][3].workTotal+chart5data[1][3].notoperateTotal) ))*100), 
+				Number((chart5data[1][4].workTotal/((chart5data[1][4].workTotal+chart5data[1][4].notoperateTotal) == 0? 1 : (chart5data[1][4].workTotal+chart5data[1][4].notoperateTotal) ))*100), 
+				Number((chart5data[1][5].workTotal/((chart5data[1][5].workTotal+chart5data[1][5].notoperateTotal) == 0? 1 : (chart5data[1][5].workTotal+chart5data[1][5].notoperateTotal) ))*100)],
         color:'#7D9632'
     }, {
         name: chart5data[2][0].lineid,
-        data: [Number((chart5data[2][0].workTotal/(chart5data[2][0].workTotal+chart5data[2][0].notoperateTotal))*100),
-        		Number((chart5data[2][1].workTotal/(chart5data[2][1].workTotal+chart5data[2][1].notoperateTotal))*100), 
-				Number((chart5data[2][2].workTotal/(chart5data[2][2].workTotal+chart5data[2][2].notoperateTotal))*100),
-				Number((chart5data[2][3].workTotal/(chart5data[2][3].workTotal+chart5data[2][3].notoperateTotal))*100),
-				Number((chart5data[2][4].workTotal/(chart5data[2][4].workTotal+chart5data[2][4].notoperateTotal))*100), 
-				Number((chart5data[2][5].workTotal/(chart5data[2][5].workTotal+chart5data[2][5].notoperateTotal))*100)],
+        data: [ Number((chart5data[2][0].workTotal/((chart5data[2][0].workTotal+chart5data[2][0].notoperateTotal) == 0? 1 : (chart5data[2][0].workTotal+chart5data[2][0].notoperateTotal) ))*100), 
+        		Number((chart5data[2][1].workTotal/((chart5data[2][1].workTotal+chart5data[2][1].notoperateTotal) == 0? 1 : (chart5data[2][1].workTotal+chart5data[2][1].notoperateTotal) ))*100), 
+				Number((chart5data[2][2].workTotal/((chart5data[2][2].workTotal+chart5data[2][2].notoperateTotal) == 0? 1 : (chart5data[2][2].workTotal+chart5data[2][2].notoperateTotal) ))*100), 
+				Number((chart5data[2][3].workTotal/((chart5data[2][3].workTotal+chart5data[2][3].notoperateTotal) == 0? 1 : (chart5data[2][3].workTotal+chart5data[2][3].notoperateTotal) ))*100), 
+				Number((chart5data[2][4].workTotal/((chart5data[2][4].workTotal+chart5data[2][4].notoperateTotal) == 0? 1 : (chart5data[2][4].workTotal+chart5data[2][4].notoperateTotal) ))*100), 
+				Number((chart5data[2][5].workTotal/((chart5data[2][5].workTotal+chart5data[2][5].notoperateTotal) == 0? 1 : (chart5data[2][5].workTotal+chart5data[2][5].notoperateTotal) ))*100)],
         color:'#0A9B73'
     }, {
         name: chart5data[3][0].lineid,
-        data: [Number((chart5data[3][0].workTotal/(chart5data[3][0].workTotal+chart5data[3][0].notoperateTotal))*100),
-        		Number((chart5data[3][1].workTotal/(chart5data[3][1].workTotal+chart5data[3][1].notoperateTotal))*100), 
-				Number((chart5data[3][2].workTotal/(chart5data[3][2].workTotal+chart5data[3][2].notoperateTotal))*100),
-				Number((chart5data[3][3].workTotal/(chart5data[3][3].workTotal+chart5data[3][3].notoperateTotal))*100),
-				Number((chart5data[3][4].workTotal/(chart5data[3][4].workTotal+chart5data[3][4].notoperateTotal))*100), 
-				Number((chart5data[3][5].workTotal/(chart5data[3][5].workTotal+chart5data[3][5].notoperateTotal))*100)],
+        data: [ Number((chart5data[3][0].workTotal/((chart5data[3][0].workTotal+chart5data[3][0].notoperateTotal) == 0? 1 : (chart5data[3][0].workTotal+chart5data[3][0].notoperateTotal) ))*100), 
+        		Number((chart5data[3][1].workTotal/((chart5data[3][1].workTotal+chart5data[3][1].notoperateTotal) == 0? 1 : (chart5data[3][1].workTotal+chart5data[3][1].notoperateTotal) ))*100), 
+				Number((chart5data[3][2].workTotal/((chart5data[3][2].workTotal+chart5data[3][2].notoperateTotal) == 0? 1 : (chart5data[3][2].workTotal+chart5data[3][2].notoperateTotal) ))*100), 
+				Number((chart5data[3][3].workTotal/((chart5data[3][3].workTotal+chart5data[3][3].notoperateTotal) == 0? 1 : (chart5data[3][3].workTotal+chart5data[3][3].notoperateTotal) ))*100), 
+				Number((chart5data[3][4].workTotal/((chart5data[3][4].workTotal+chart5data[3][4].notoperateTotal) == 0? 1 : (chart5data[3][4].workTotal+chart5data[3][4].notoperateTotal) ))*100), 
+				Number((chart5data[3][5].workTotal/((chart5data[3][5].workTotal+chart5data[3][5].notoperateTotal) == 0? 1 : (chart5data[3][5].workTotal+chart5data[3][5].notoperateTotal) ))*100)],
         color:'#4FCDFF'
     }]
 

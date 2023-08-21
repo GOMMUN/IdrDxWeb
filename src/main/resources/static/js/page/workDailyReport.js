@@ -196,20 +196,32 @@ function setWorkDailyReportEventListener() {
 		$.ajax({
 			url: url,
 			type: 'POST',
-			data: JSON.stringify(data),
+			data: JSON.stringify([data]),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
-			success: function(data){
-				if (data == -1) {
-					alert("중복된 데이터가 있습니다.");
+			success: function(result){
+				let code = result.status;
+				let message = result.message;
+				
+				if(code == 200){
+					if (result == -1) {
+						alert("중복된 데이터가 있습니다.");
+					}
+					else {
+						$('#addWorkDailyReportModal').modal('hide');
+						alert("저장되었습니다.");
+						workDailyReport();
+					}
+					//$gridRemoveBtn.prop('disabled', true);
 				}
-				else {
-					$('#addWorkDailyReportModal').modal('hide');
-					alert("저장되었습니다.");
-					workDailyReport();
+			},
+			error:function(request,status,error){
+				let code = request.responseJSON.status;
+				let message = request.responseJSON.message
+				
+				if(code == 400){
+					alert(message);
 				}
-				//$gridRemoveBtn.prop('disabled', true);
-
 			}
 		});
 	});
@@ -491,12 +503,12 @@ function setWorkerInputEventListener() {
 
 		let flag = true;
 
-		c_person.forEach(function(element) {
-			if (element.personid == data.worker) {
-				alert("동일한 작업자가 이미 등록 되었습니다.");
-				flag = false;
-			}
-		});
+//		c_person.forEach(function(element) {
+//			if (element.personid == data.worker) {
+//				alert("동일한 작업자가 이미 등록 되었습니다.");
+//				flag = false;
+//			}
+//		});
 
 		if (flag) {
 			let url = CORE_URL + '/worker-input/';
@@ -504,14 +516,27 @@ function setWorkerInputEventListener() {
 			$.ajax({
 				url: url,
 				type: 'POST',
-				data: JSON.stringify(data),
+				data: JSON.stringify([data]),
 				dataType: "json",
 				contentType: 'application/json; charset=utf-8',
 				success: function(result){
-					$('#addWorkerIntputModal').modal('hide');
-					alert("저장완료");
-					workerInput(s_workDailyReport);
-				}
+					let code = result.status;
+					let message = result.message
+					
+					if(code == 200){
+						$('#addWorkerIntputModal').modal('hide');
+						alert("저장완료");
+						workerInput(s_workDailyReport);
+					}
+				},
+				error:function(request,status,error){
+					let code = request.responseJSON.status;
+					let message = request.responseJSON.message
+					
+					if(code == 400){
+						alert(message);
+					}
+			    }
 			});
 		}
 	});
@@ -623,13 +648,27 @@ function setWorkerManhourEventListener() {
 		$.ajax({
 			url: url,
 			type: 'POST',
-			data: JSON.stringify(data),
+			data: JSON.stringify([data]),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(result){
-				$('#addWorkerManhourModal').modal('hide');
-				alert("저장 완료");
-				workerManhour(s_workDailyReport);
+				
+				let code = result.status;
+				let message = result.message;
+				
+				if(code == 200){
+					$('#addWorkerManhourModal').modal('hide');
+					alert("저장 완료");
+					workerManhour(s_workDailyReport);
+				}
+			},
+			error:function(request,status,error){
+				let code = request.responseJSON.status;
+				let message = request.responseJSON.message
+				
+				if(code == 400){
+					alert(message);
+				}
 			}
 		});
 
@@ -791,13 +830,26 @@ function setWorkerSupportEventListener() {
 		$.ajax({
 			url: url,
 			type: 'POST',
-			data: JSON.stringify(data),
+			data: JSON.stringify([data]),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(result){
-				$('#addWorkerSupportModal').modal('hide');
-				alert("저장완료");
-				workerSupport(s_workDailyReport);
+				let code = result.status;
+				let message = result.message;
+				
+				if(code == 200){
+					$('#addWorkerSupportModal').modal('hide');
+					alert("저장완료");
+					workerSupport(s_workDailyReport);
+				}
+			},
+			error:function(request,status,error){
+				let code = request.responseJSON.status;
+				let message = request.responseJSON.message
+				
+				if(code == 400){
+					alert(message);
+				}
 			}
 		});
 	});
@@ -988,14 +1040,27 @@ function setWorkContentsEventListener() {
 		$.ajax({
 			url: url,
 			type: 'POST',
-			data: JSON.stringify(data),
+			data: JSON.stringify([data]),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
-				$('#addWorkContentsModal').modal('hide');
-				workContents(s_workDailyReport);
-				sendWorkContentsMsg(data);
-				alert("저장완료");
+				let code = result.status;
+				let message = result.message;
+			
+				if(code == 200){
+					$('#addWorkContentsModal').modal('hide');
+					workContents(s_workDailyReport);
+					sendWorkContentsMsg(data);
+					alert("저장완료");
+				}
+			},
+			error:function(request,status,error){
+				let code = request.responseJSON.status;
+				let message = request.responseJSON.message
+				
+				if(code == 400){
+					alert(message);
+				}
 			}
 		});
 	});
@@ -1146,13 +1211,26 @@ function setNonconFormityEventListener() {
 		$.ajax({
 			url: url,
 			type: 'POST',
-			data: JSON.stringify(data),
+			data: JSON.stringify([data]),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(result){
-				$('#addNonconFormityModal').modal('hide');
-				alert("저장완료");
-				rejectContents(s_workDailyReport);
+				let code = result.status;
+				let message = result.message;
+				
+				if(code == 200){
+					$('#addNonconFormityModal').modal('hide');
+					alert("저장완료");
+					rejectContents(s_workDailyReport);
+				}	
+			},
+			error:function(request,status,error){
+				let code = request.responseJSON.status;
+				let message = request.responseJSON.message
+				
+				if(code == 400){
+					alert(message);
+				}
 			}
 		});
 	});
@@ -1343,15 +1421,27 @@ function setNonOperationEventListener() {
 		$.ajax({
 			url: url,
 			type: 'POST',
-			data: JSON.stringify(data),
+			data: JSON.stringify([data]),
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(result){
-				$('#addNonOperationModal').modal('hide');
-				notoperateContents(s_workDailyReport);
-				sendNotOperateMsg(data);
-				alert("저장완료");
+				let code = result.status;
+				let message = result.message;
 				
+				if(code == 200){
+					$('#addNonOperationModal').modal('hide');
+					notoperateContents(s_workDailyReport);
+					sendNotOperateMsg(data);
+					alert("저장완료");
+				}
+			},
+			error:function(request,status,error){
+				let code = request.responseJSON.status;
+				let message = request.responseJSON.message
+				
+				if(code == 400){
+					alert(message);
+				}
 			}
 		});
 	});

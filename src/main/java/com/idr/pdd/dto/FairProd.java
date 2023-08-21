@@ -9,6 +9,7 @@ public class FairProd {
 	private String prodQty;
 	private String workDate;
 	private String dt;
-	
+	private String workTotal;
+	private String notoperateTotal;
 
 }

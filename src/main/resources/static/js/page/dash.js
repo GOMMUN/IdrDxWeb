@@ -3,10 +3,10 @@
  */
 var chart1data = null;
 var chart2data = null;
+var chart5data = null;
 $(function(){
 	chart3();
 	chart4();
-	chart5();
 	chart6();
 	chart7();
 	chart8();
@@ -266,7 +266,7 @@ Highcharts.chart('chart4', {
 
 }
 
-function chart5(){
+function setchart5(chart5data) {
 	Highcharts.chart('chart5', {
 
     title: {
@@ -281,7 +281,7 @@ function chart5(){
     },
 
     xAxis: {
-        categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
+        categories: [chart5data[0][0].dt, chart5data[0][1].dt, chart5data[0][2].dt, chart5data[0][3].dt, chart5data[0][4].dt, chart5data[0][5].dt],
         crosshair: true,
         accessibility: {
             description: 'Month'
@@ -295,20 +295,40 @@ function chart5(){
     },
 
     series: [{
-        name: '설비A',
-        data: [85, 89, 90, 100, 99, 85],
+        name: chart5data[0][0].lineid,
+        data: [Number((chart5data[0][0].workTotal/(chart5data[0][0].workTotal+chart5data[0][0].notoperateTotal))*100),
+        		Number((chart5data[0][1].workTotal/(chart5data[0][1].workTotal+chart5data[0][1].notoperateTotal))*100), 
+				Number((chart5data[0][2].workTotal/(chart5data[0][2].workTotal+chart5data[0][2].notoperateTotal))*100),
+				Number((chart5data[0][3].workTotal/(chart5data[0][3].workTotal+chart5data[0][3].notoperateTotal))*100),
+				Number((chart5data[0][4].workTotal/(chart5data[0][4].workTotal+chart5data[0][4].notoperateTotal))*100), 
+				Number((chart5data[0][5].workTotal/(chart5data[0][5].workTotal+chart5data[0][5].notoperateTotal))*100)],
         color:'#94F5F9'
     }, {
-        name: '설비B',
-        data: [94, 92, 100, 100, 98, 97],
+        name: chart5data[1][0].lineid,
+        data: [Number((chart5data[1][0].workTotal/(chart5data[1][0].workTotal+chart5data[1][0].notoperateTotal))*100),
+        		Number((chart5data[1][1].workTotal/(chart5data[1][1].workTotal+chart5data[1][1].notoperateTotal))*100), 
+				Number((chart5data[1][2].workTotal/(chart5data[1][2].workTotal+chart5data[1][2].notoperateTotal))*100),
+				Number((chart5data[1][3].workTotal/(chart5data[1][3].workTotal+chart5data[1][3].notoperateTotal))*100),
+				Number((chart5data[1][4].workTotal/(chart5data[1][4].workTotal+chart5data[1][4].notoperateTotal))*100), 
+				Number((chart5data[1][5].workTotal/(chart5data[1][5].workTotal+chart5data[1][5].notoperateTotal))*100)],
         color:'#7D9632'
     }, {
-        name: '설비C',
-        data: [90, 95, 93, 99, 93, 100],
+        name: chart5data[2][0].lineid,
+        data: [Number((chart5data[2][0].workTotal/(chart5data[2][0].workTotal+chart5data[2][0].notoperateTotal))*100),
+        		Number((chart5data[2][1].workTotal/(chart5data[2][1].workTotal+chart5data[2][1].notoperateTotal))*100), 
+				Number((chart5data[2][2].workTotal/(chart5data[2][2].workTotal+chart5data[2][2].notoperateTotal))*100),
+				Number((chart5data[2][3].workTotal/(chart5data[2][3].workTotal+chart5data[2][3].notoperateTotal))*100),
+				Number((chart5data[2][4].workTotal/(chart5data[2][4].workTotal+chart5data[2][4].notoperateTotal))*100), 
+				Number((chart5data[2][5].workTotal/(chart5data[2][5].workTotal+chart5data[2][5].notoperateTotal))*100)],
         color:'#0A9B73'
     }, {
-        name: '설비D',
-        data: [99, 100, 93, 98, 96, 99],
+        name: chart5data[3][0].lineid,
+        data: [Number((chart5data[3][0].workTotal/(chart5data[3][0].workTotal+chart5data[3][0].notoperateTotal))*100),
+        		Number((chart5data[3][1].workTotal/(chart5data[3][1].workTotal+chart5data[3][1].notoperateTotal))*100), 
+				Number((chart5data[3][2].workTotal/(chart5data[3][2].workTotal+chart5data[3][2].notoperateTotal))*100),
+				Number((chart5data[3][3].workTotal/(chart5data[3][3].workTotal+chart5data[3][3].notoperateTotal))*100),
+				Number((chart5data[3][4].workTotal/(chart5data[3][4].workTotal+chart5data[3][4].notoperateTotal))*100), 
+				Number((chart5data[3][5].workTotal/(chart5data[3][5].workTotal+chart5data[3][5].notoperateTotal))*100)],
         color:'#4FCDFF'
     }]
 
@@ -647,20 +667,18 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		})
 		
 	}else if(tagId == "chart5Type"){
-		var url = '/dash/findDay';
+		var url = '/dash/chart5';
 		
 		var params = {
+			factory: "KEM",
 			month: data
 		};
 		
 		$.get(url + '?' + $.param(params)).then(function(res) {
-			var result = res;
-			var LineId = 0, WorkTime = 0, NotoperateTime = 0;
-			
-			result.foreach(function(r) { 
-				
-			}); 
-		});
+			chart5data = res;
+			setchart5(chart5data);
+		})
+		
 	}else if(tagId == "chart6Type"){
 		var url = '/dash/findChart6'+data;
 		

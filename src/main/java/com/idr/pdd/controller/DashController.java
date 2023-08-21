@@ -65,10 +65,9 @@ public class DashController {
     }
 	
 	@ResponseBody
-	@GetMapping("/findDay")
-    public List<Dash> findDay(String month) {
+	@GetMapping("/chart5")
+    public List<List<FairProd>> chart5(String factory, String month) {
 		
-		List<Dash> list = service.findAllDay(month);
-		return list;
+		return service.chart5(factory, month);
     }
 }

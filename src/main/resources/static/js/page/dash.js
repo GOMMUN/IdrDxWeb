@@ -13,8 +13,8 @@ $(function(){
 	
 	PQCDrate()
 	rejectContents("8");
-	updateMonthButton();
-	updateDayWeekMonthButton()
+	selectMonthButton();
+	selectDayWeekMonthButton()
 	factroy();
 });
 
@@ -622,7 +622,7 @@ function rejectContents(data) {
 	});
 }
 
-function updateMonthButton() {
+function selectMonthButton() {
 	
 	var Month= (new Date().getMonth()) % 12 + 1;
 	var currentMonth = new Date().getMonth() - 5;
@@ -643,7 +643,7 @@ function updateMonthButton() {
     rejectContents(Month);
 }
 
-function updateDayWeekMonthButton() {	    
+function selectDayWeekMonthButton() {	    
 	var defaultData = "day";
 	
 	for (var chartNumber = 1; chartNumber <= 6; chartNumber++) {
@@ -652,17 +652,16 @@ function updateDayWeekMonthButton() {
         // Set default active button and call selectType
         $("#addType[value='" + defaultData + "']").addClass("active");
         selectType(defaultData, chartId);
-        
-	    $(".addType").click(function() {	//일 주 월 타입 선택
-	        var data = $(this).val(); 
-	        var tagId = $(this).parent().attr('id');
+    }    
+	$(".addType").click(function() {	//일 주 월 타입 선택
+	    var data = $(this).val(); 
+	    var tagId = $(this).parent().attr('id');
 	        
-	        $(".addType").removeClass("active");
-            $(this).addClass("active");
+	    $(".addType").removeClass("active");
+        $(this).addClass("active");
             
-	        selectType(data,tagId);
-	    });
-	}
+	    selectType(data,tagId);
+	});
 }
 
 function selectType(data,tagId) {		//차트별 일 주 월 타입 선택

@@ -63,5 +63,10 @@ public class DashService {
 
 		return finalresult;
 	}
+	
+	public List<FairProd> chart6(String month) {
+
+		return mapper.chart6(month);
+	}
 
 }

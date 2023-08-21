@@ -70,4 +70,12 @@ public class DashController {
 		
 		return service.chart1(factory, month);
     }
+	
+	@ResponseBody
+	@GetMapping("/chart6")
+    public List<FairProd> chart6(String month) {
+		
+		List<FairProd> list = service.chart6(month);
+		return list;
+    }	
 }

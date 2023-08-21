@@ -4,10 +4,10 @@
 var chart1data = null;
 var chart2data = null;
 var chart5data = null;
+var chart6data = null;
 $(function(){
 	chart3();
 	chart4();
-	chart6();
 	chart7();
 	chart8();
 	
@@ -45,6 +45,9 @@ function setchart1(chart1data) {
 			column: {
 				pointPadding: 0.2,
 				borderWidth: 0
+			},
+			series : {
+				minPointLength:3
 			}
 		},
 		series: [
@@ -107,7 +110,10 @@ function setchart2(){
         column: {
             pointPadding: 0.2,
             borderWidth: 0
-        }
+        },
+        series : {
+			minPointLength:3
+		}
     },
     series: [
         {
@@ -292,7 +298,7 @@ function setchart5(chart5data) {
         title: {
             text: ''
         }
-    },
+    },   
 
     series: [{
         name: chart5data[0][0].lineid,
@@ -336,47 +342,59 @@ function setchart5(chart5data) {
 
 }
 
-function chart6(res){
-Highcharts.chart('chart6', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: '대표 기업 월별 계획 대비 실적',
-        align: 'left'
-    },
-    xAxis: {
-        categories: ['2월', '3월', '4월', '5월', '6월', '7월'],
-        crosshair: true,
-        accessibility: {
-            description: 'Countries'
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: ''
-        }
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    series: [
-        {
-            name: '계획',
-            data: [1000, 1000, 1200, 1400, 1500, 1600],
-            color : '#983501'
-        },
-        {
-            name: '실적',
-            data: [800, 700, 1100, 1100, 1500, 1580],
-            color : '#FC6D00'
-        }
-    ]
-});
+function setchart6(chart6data){
+	Highcharts.chart('chart6', {
+	    chart: {
+	        type: 'column'
+	    },
+	    
+	    title: {
+	        text: '대표 기업 월별 계획 대비 실적',
+	        align: 'left'
+	    },
+	    
+	    xAxis: {
+	        categories: [chart6data[0].dt, chart6data[1].dt, chart6data[2].dt, chart6data[3].dt, chart6data[4].dt, chart6data[5].dt],
+	        crosshair: true,
+	        accessibility: {
+	            description: 'Month'
+	        }
+	    },
+	    
+	    yAxis: {
+	        min: 0,
+	        title: {
+	            text: ''
+	        }
+	    },
+	    
+	    plotOptions: {
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
+	        },
+	        series : {
+				minPointLength:3
+			}
+	    },
+	    
+	    series: [
+	        {
+	            name: '계획',
+	            data: [Number(chart6data[0].planQty), Number(chart6data[1].planQty), 
+					Number(chart6data[2].planQty), Number(chart6data[3].planQty),
+					Number(chart6data[4].planQty), Number(chart6data[5].planQty)],
+	            color : '#983501'
+	        },
+	        {
+	            name: '실적',
+	            data: [Number(chart6data[0].prodQty), Number(chart6data[1].prodQty), 
+					Number(chart6data[2].prodQty), Number(chart6data[3].prodQty),
+					Number(chart6data[4].prodQty), Number(chart6data[5].prodQty)],
+	            color : '#FC6D00'
+	        }
+	    ]
+	});
 
 }
 
@@ -680,10 +698,15 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		})
 		
 	}else if(tagId == "chart6Type"){
-		var url = '/dash/findChart6'+data;
+		var url = '/dash/chart6';
 		
-		$.get(url).then(function(res) {
-			chart6(res);
+		var params = {
+			month: data
+		};
+		
+		$.get(url + '?' + $.param(params)).then(function(res) {
+			chart6data = res;
+			setchart6(chart6data);
 		});
 		
 	}else{

@@ -138,6 +138,33 @@
 		) E
 		GROUP BY E.dt, E.LINEID
 	</select>
+	
+	<select id="chart6" parameterType="FairProd" resultType="FairProd">
+		SELECT	D.dt,
+			SUM(D.PLAN_QTY) AS PLAN_QTY,
+			SUM(D.PROD_QTY) AS PROD_QTY
+			FROM(
+				SELECT 
+					CASE
+				   		WHEN 'day' = #{month} THEN A.dt 
+				   		WHEN 'week' = #{month} THEN DATEPART(WEEK, A.dt)
+				   		WHEN 'month' = #{month} THEN DATEPART(MONTH, A.dt)
+				   	END AS dt,
+					ISNULL(SUM(B.PLAN_QTY),0) AS PLAN_QTY,
+					ISNULL(SUM(C.PROD_QTY),0) AS PROD_QTY
+				FROM CheckDayOff A 
+				LEFT JOIN DSP_WORKDAILY_REPORT B 
+				ON B.WORK_DATE = A.dt
+				LEFT JOIN DSP_WORK_CONTENTS C 
+				ON B.DATASEQ = C.WORKDAILY_SEQ
+					AND C.ISUSABLE = 'Usable'
+				WHERE 'day'= #{month} AND A.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY,-5,GETDATE()),112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, GETDATE()),112)
+				OR	  'week' = #{month} AND A.dt BETWEEN DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0))
+				OR	  'month' = #{month} AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) +1, 0))
+				GROUP BY A.dt,B.LINEID, DATEPART(WEEK, A.dt), DATEPART(MONTH, A.dt)
+			) D
+			GROUP BY D.dt;
+	</select>	
 
 
 </mapper>

@@ -1,7 +1,7 @@
 /**
  * 
  */
-var chart1data = null;
+var chart1data = null; 
 var chart2data = null;
 var chart5data = null;
 var chart6data = null;

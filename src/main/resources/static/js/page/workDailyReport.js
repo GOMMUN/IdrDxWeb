@@ -978,7 +978,6 @@ function setWorkContentsEventListener() {
 		data.totime = $("input[name=workcontenttimeTo]").val();
 		data.manhour = $("input[name=workcontentmanhour]").val();
 		data.prodqty = $("input[name=prodQty]").val();
-		data.planqty = $("input[name=planQty]").val();
 		data.goodsumQty = $("input[name=goodsumQty]").val();
 		data.reworkgoodqty = $("input[name=reworkGoodQty]").val();
 		data.reworkfailqty = $("input[name=reworkFailQty]").val();
@@ -1004,16 +1003,8 @@ function setWorkContentsEventListener() {
 			alert("공수를 선택 하세요.");
 			return;
 		}
-		if (data.model == "") {
-			alert("모델/차종을 선택 하세요.");
-			return;
-		}
 		if (data.prodqty == "") {
 			alert("생산수량을 선택 하세요.");
-			return;
-		}
-		if (data.planqty == "") {
-			alert("계획수량을 선택 하세요.");
 			return;
 		}
 		if (data.firstgoodqty == "") {
@@ -1050,7 +1041,7 @@ function setWorkContentsEventListener() {
 				if(code == 200){
 					$('#addWorkContentsModal').modal('hide');
 					workContents(s_workDailyReport);
-					sendWorkContentsMsg(data);
+					//sendWorkContentsMsg(data);
 					alert("저장완료");
 				}
 			},
@@ -1431,7 +1422,7 @@ function setNonOperationEventListener() {
 				if(code == 200){
 					$('#addNonOperationModal').modal('hide');
 					notoperateContents(s_workDailyReport);
-					sendNotOperateMsg(data);
+					//sendNotOperateMsg(data);
 					alert("저장완료");
 				}
 			},

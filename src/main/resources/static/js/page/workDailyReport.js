@@ -975,8 +975,8 @@ function setWorkContentsEventListener() {
 		data.model = s_workDailyReport.modelid;
 		
 		data.workdailySeq = dataseq;
-		data.fromtime = $("input[name=worktimeFrom]").val();
-		data.totime = $("input[name=workcontenttimeTo]").val();
+		data.fromtime = $("input[name=worktimeFrom]").val().replace(":","")+"00";
+		data.totime = $("input[name=workcontenttimeTo]").val().replace(":","")+"00";
 		data.manhour = $("input[name=workcontentmanhour]").val();
 		data.prodqty = $("input[name=prodQty]").val();
 		data.goodsumQty = $("input[name=goodsumQty]").val();
@@ -1373,8 +1373,8 @@ function setNonOperationEventListener() {
 		data.model = s_workDailyReport.modelid;
 		
 		data.workdailySeq = dataseq;
-		data.fromtime = $("input[name=notoperatetimeFrom]").val();
-		data.totime = $("input[name=notoperatetimeTo]").val();
+		data.fromtime = $("input[name=notoperatetimeFrom]").val().replace(":","")+"00";
+		data.totime = $("input[name=notoperatetimeTo]").val().replace(":","")+"00";
 		data.man = $("input[name=nonhands]").val();
 		data.manhour = $("input[name=nonmanhour]").val();
 		data.contentcause = $("select[name=cause]").val();

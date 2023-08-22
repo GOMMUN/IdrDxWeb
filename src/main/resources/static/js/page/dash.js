@@ -856,12 +856,39 @@ function realTime() {
 	$.ajax({
 		url: url,
 		type: 'GET',
+		async: true,
 		success: function(data) {
+//			alert(data);
 			
 			$('#alarm1').text(data[0]);
 			$('#alarm2').text(data[1]);
 			$('#alarm3').text(data[2]);
 			$('#realTime').text("최근 업데이트 : "+data[3]);
+			
+			if(data[0] != '0'){
+				$('.alarm1').css('background-color', 'yellow');
+				$('#alarmbell1').css('color', 'red');
+			}else{
+				$('.alarm1').css('background-color', '#FFF');
+				$('#alarmbell1').css('color', '#FFF');
+			}
+			
+			if(data[1] != '0'){
+				$('.alarm2').css('background-color', 'yellow');
+				$('#alarmbell2').css('color', 'red');
+			}else{
+				$('.alarm2').css('background-color', '#FFF');
+				$('#alarmbell2').css('color', '#FFF');
+			}
+			
+			if(data[2] != '0'){
+				$('.alarm3').css('background-color', 'yellow');
+				$('#alarmbell3').css('color', 'red');
+			}else{
+				$('.alarm3').css('background-color', '#FFF');
+				$('#alarmbell3').css('color', '#FFF');
+			}		
+
 		}
 	});
 		

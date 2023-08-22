@@ -68,5 +68,17 @@ public class DashService {
 
 		return mapper.chart6(month);
 	}
+	
+	public String find1Alarm(){
+		return mapper.find1Alarm();
+	}
+	
+	public String find2Alarm(){
+		return mapper.find2Alarm();
+	}	
+
+	public String find3Alarm(){
+		return mapper.find3Alarm();
+	}	
 
 }

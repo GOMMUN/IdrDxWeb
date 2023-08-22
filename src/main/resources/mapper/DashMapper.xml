@@ -166,5 +166,34 @@
 			GROUP BY D.dt;
 	</select>	
 
+    <select id="find1Alarm" resultType="String">
+		SELECT COUNT(*)
+        FROM DSP_ANOMALYDETECT_NOTICE as A
+        WHERE 1=1
+        	AND NOTICE_REASON = 'UNDER-PRODUCTION'
+        	AND FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
+        	AND FACTORYID = 'KEM'
+        	AND ISUSABLE = 'Usable'
+	</select>
+    
+	<select id="find2Alarm" resultType="String">
+		SELECT COUNT(*)
+        FROM DSP_ANOMALYDETECT_NOTICE as A
+        WHERE 1=1
+        	AND NOTICE_REASON = 'DEFECT-RATE'
+        	AND FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
+        	AND FACTORYID = 'KEM'
+        	AND ISUSABLE = 'Usable'
+    </select>   
+    
+	<select id="find3Alarm" resultType="String">
+		SELECT COUNT(*)
+        FROM DSP_ANOMALYDETECT_NOTICE as A
+        WHERE 1=1
+        	AND NOTICE_REASON = 'NOTOPERATE-PRESS'
+        	AND FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
+        	AND FACTORYID = 'KEM'
+        	AND ISUSABLE = 'Usable'
+    </select>  
 
 </mapper>

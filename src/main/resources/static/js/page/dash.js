@@ -17,6 +17,8 @@ $(function(){
 	selectMonthButton();
 	selectDayWeekMonthButton()
 	factroy();
+	
+	realTime();
 });
 
 function setchart1(chart1data) {
@@ -843,3 +845,25 @@ function factroy() {
 		}
 	});
 }
+
+var repeat = null;
+var delay = 5000;
+repeat = setInterval(realTime, delay); // delay 간격으로 실행.
+
+function realTime() {
+	let url = '/dash/findAlarm';
+	
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			
+			$('#alarm1').text(data[0]);
+			$('#alarm2').text(data[1]);
+			$('#alarm3').text(data[2]);
+			$('#realTime').text("최근 업데이트 : "+data[3]);
+		}
+	});
+		
+}
+

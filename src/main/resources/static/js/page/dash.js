@@ -5,6 +5,7 @@ var chart1data = null;
 var chart2data = null;
 var chart5data = null;
 var chart6data = null;
+
 $(function(){
 	chart3();
 	chart4();
@@ -19,7 +20,33 @@ $(function(){
 });
 
 function setchart1(chart1data) {
+	var dateData = [];
 
+	for (var j = 0; j <= 0; j++) {
+	    dateData[j] = []; 
+	    
+	    for (var i = 0; i <= 5; i++) {
+	        if (chart1data[j][i].dt >= 2000) {
+	            dateData[j][i] = formatDate(chart1data[j][i].dt.toString(), "yyyymmdd", "월 일");
+	        } else if (chart1data[j][i].dt < 2000 && chart1data[j][i].dt >= 20) {
+	            dateData[j][i] = ((chart1data[j][i].dt-(chart1data[j][i].dt%100))/100) + '월' + (chart1data[j][i].dt%100).toString() + '주';
+	        } else if (chart1data[j][i].dt < 20) {
+	            dateData[j][i] = chart1data[j][i].dt.toString() + '월';
+	        }
+	    }
+	}
+
+	function formatDate(dateString, inputFormat, outputFormat) {
+	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
+	    const month = parseInt(dateString.slice(4, 6));
+	    const day = parseInt(dateString.slice(6, 8));
+	
+	    const monthString = `${month}${outputFormat[0]}`;
+	    const dayString = `${day}${outputFormat[2]}`;
+	
+	    return `${monthString} ${dayString}`;
+	}
+	
 	Highcharts.chart('chart1', {
 		chart: {
 			type: 'column'
@@ -29,7 +56,7 @@ function setchart1(chart1data) {
 			align: 'left'
 		},
 		xAxis: {
-			categories: [chart1data[0][0].dt, chart1data[0][1].dt, chart1data[0][2].dt, chart1data[0][3].dt, chart1data[0][4].dt, chart1data[0][5].dt],
+			categories: [dateData[0][0], dateData[0][1], dateData[0][2], dateData[0][3], dateData[0][4], dateData[0][5]],
 			crosshair: true,
 			accessibility: {
 				description: 'Month'
@@ -81,10 +108,36 @@ function setchart1(chart1data) {
 			}
 		]
 	});
-
 }
 
 function setchart2(){
+	var dateData = [];
+
+	for (var j = 0; j <= 0; j++) {
+	    dateData[j] = []; 
+	    
+	    for (var i = 0; i <= 5; i++) {
+	        if (chart2data[j][i].dt >= 2000) {
+	            dateData[j][i] = formatDate(chart2data[j][i].dt.toString(), "yyyymmdd", "월 일");
+	        } else if (chart2data[j][i].dt < 2000 && chart2data[j][i].dt >= 20) {
+	            dateData[j][i] = ((chart2data[j][i].dt-(chart2data[j][i].dt%100))/100) + '월' + (chart2data[j][i].dt%100).toString() + '주';
+	        } else if (chart2data[j][i].dt < 20) {
+	            dateData[j][i] = chart2data[j][i].dt.toString() + '월';
+	        }
+	    }
+	}
+
+	function formatDate(dateString, inputFormat, outputFormat) {
+	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
+	    const month = parseInt(dateString.slice(4, 6));
+	    const day = parseInt(dateString.slice(6, 8));
+	
+	    const monthString = `${month}${outputFormat[0]}`;
+	    const dayString = `${day}${outputFormat[2]}`;
+	
+	    return `${monthString} ${dayString}`;
+	}
+	
 	Highcharts.chart('chart2', {
     chart: {
         type: 'column'
@@ -94,7 +147,7 @@ function setchart2(){
         align: 'left'
     },
     xAxis: {
-        categories: [chart2data[0][0].dt, chart2data[0][1].dt, chart2data[0][2].dt, chart2data[0][3].dt, chart2data[0][4].dt, chart2data[0][5].dt],
+        categories: [dateData[0][0], dateData[0][1], dateData[0][2], dateData[0][3], dateData[0][4], dateData[0][5]],
         crosshair: true,
         accessibility: {
             description: 'Month'
@@ -273,6 +326,46 @@ Highcharts.chart('chart4', {
 }
 
 function setchart5(chart5data) {
+	var dateData = [];
+
+	for (var j = 0; j <= 0; j++) {
+	    dateData[j] = []; 
+	    
+	    for (var i = 0; i <= 5; i++) {
+	        if (chart5data[j][i].dt >= 2000) {
+	            dateData[j][i] = formatDate(chart5data[j][i].dt.toString(), "yyyymmdd", "월 일");
+	        } else if (chart5data[j][i].dt < 2000 && chart5data[j][i].dt >= 20) {
+	            dateData[j][i] = ((chart5data[j][i].dt-(chart5data[j][i].dt%100))/100) + '월' + (chart5data[j][i].dt%100).toString() + '주';
+	        } else if (chart5data[j][i].dt < 20) {
+	            dateData[j][i] = chart5data[j][i].dt.toString() + '월';
+	        }
+	    }
+	}
+
+	function formatDate(dateString, inputFormat, outputFormat) {
+	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
+	    const month = parseInt(dateString.slice(4, 6));
+	    const day = parseInt(dateString.slice(6, 8));
+	
+	    const monthString = `${month}${outputFormat[0]}`;
+	    const dayString = `${day}${outputFormat[2]}`;
+	
+	    return `${monthString} ${dayString}`;
+	}
+	
+	var seriesData = [];
+
+	for (var j = 0; j <= 3; j++) {
+	    seriesData[j] = []; // 새로운 2차원 배열 생성
+	    
+	    for (var i = 0; i <= 5; i++) {
+	        var percentage = 0;
+	        percentage = Number((chart5data[j][i].workTotal / ((chart5data[j][i].workTotal + chart5data[j][i].notoperateTotal) == 0 ? 1 : (chart5data[j][i].workTotal + chart5data[j][i].notoperateTotal))) * 100);
+	        
+	        seriesData[j][i] = percentage; // 2차원 배열에 작업 완료 비율 추가
+	    }
+	}
+	
 	Highcharts.chart('chart5', {
 
     title: {
@@ -295,7 +388,7 @@ function setchart5(chart5data) {
     },
 
     xAxis: {
-        categories: [chart5data[0][0].dt, chart5data[0][1].dt, chart5data[0][2].dt, chart5data[0][3].dt, chart5data[0][4].dt, chart5data[0][5].dt],
+        categories: [dateData[0][0], dateData[0][1], dateData[0][2], dateData[0][3], dateData[0][4], dateData[0][5]],
         crosshair: true,
         accessibility: {
             description: 'Month'
@@ -310,39 +403,19 @@ function setchart5(chart5data) {
 
     series: [{
         name: chart5data[0][0].lineid,
-        data: [ Number((chart5data[0][0].workTotal/((chart5data[0][0].workTotal+chart5data[0][0].notoperateTotal) == 0? 1 : (chart5data[0][0].workTotal+chart5data[0][0].notoperateTotal) ))*100),
-        		Number((chart5data[0][1].workTotal/((chart5data[0][1].workTotal+chart5data[0][1].notoperateTotal) == 0? 1 : (chart5data[0][1].workTotal+chart5data[0][1].notoperateTotal) ))*100),
-				Number((chart5data[0][2].workTotal/((chart5data[0][2].workTotal+chart5data[0][2].notoperateTotal) == 0? 1 : (chart5data[0][2].workTotal+chart5data[0][2].notoperateTotal) ))*100),
-				Number((chart5data[0][3].workTotal/((chart5data[0][3].workTotal+chart5data[0][3].notoperateTotal) == 0? 1 : (chart5data[0][3].workTotal+chart5data[0][3].notoperateTotal) ))*100),
-				Number((chart5data[0][4].workTotal/((chart5data[0][4].workTotal+chart5data[0][4].notoperateTotal) == 0? 1 : (chart5data[0][4].workTotal+chart5data[0][4].notoperateTotal) ))*100),
-				Number((chart5data[0][5].workTotal/((chart5data[0][5].workTotal+chart5data[0][5].notoperateTotal) == 0? 1 : (chart5data[0][5].workTotal+chart5data[0][5].notoperateTotal) ))*100)],
+        data: [seriesData[0][0], seriesData[0][1], seriesData[0][2], seriesData[0][3], seriesData[0][4], seriesData[0][5]],
         color:'#94F5F9'
     }, {
         name: chart5data[1][0].lineid,
-        data: [ Number((chart5data[1][0].workTotal/((chart5data[1][0].workTotal+chart5data[1][0].notoperateTotal) == 0? 1 : (chart5data[1][0].workTotal+chart5data[1][0].notoperateTotal) ))*100), 
-        		Number((chart5data[1][1].workTotal/((chart5data[1][1].workTotal+chart5data[1][1].notoperateTotal) == 0? 1 : (chart5data[1][1].workTotal+chart5data[1][1].notoperateTotal) ))*100), 
-				Number((chart5data[1][2].workTotal/((chart5data[1][2].workTotal+chart5data[1][2].notoperateTotal) == 0? 1 : (chart5data[1][2].workTotal+chart5data[1][2].notoperateTotal) ))*100), 
-				Number((chart5data[1][3].workTotal/((chart5data[1][3].workTotal+chart5data[1][3].notoperateTotal) == 0? 1 : (chart5data[1][3].workTotal+chart5data[1][3].notoperateTotal) ))*100), 
-				Number((chart5data[1][4].workTotal/((chart5data[1][4].workTotal+chart5data[1][4].notoperateTotal) == 0? 1 : (chart5data[1][4].workTotal+chart5data[1][4].notoperateTotal) ))*100), 
-				Number((chart5data[1][5].workTotal/((chart5data[1][5].workTotal+chart5data[1][5].notoperateTotal) == 0? 1 : (chart5data[1][5].workTotal+chart5data[1][5].notoperateTotal) ))*100)],
+        data: [seriesData[1][0], seriesData[1][1], seriesData[1][2], seriesData[1][3], seriesData[1][4], seriesData[1][5]],
         color:'#7D9632'
     }, {
         name: chart5data[2][0].lineid,
-        data: [ Number((chart5data[2][0].workTotal/((chart5data[2][0].workTotal+chart5data[2][0].notoperateTotal) == 0? 1 : (chart5data[2][0].workTotal+chart5data[2][0].notoperateTotal) ))*100), 
-        		Number((chart5data[2][1].workTotal/((chart5data[2][1].workTotal+chart5data[2][1].notoperateTotal) == 0? 1 : (chart5data[2][1].workTotal+chart5data[2][1].notoperateTotal) ))*100), 
-				Number((chart5data[2][2].workTotal/((chart5data[2][2].workTotal+chart5data[2][2].notoperateTotal) == 0? 1 : (chart5data[2][2].workTotal+chart5data[2][2].notoperateTotal) ))*100), 
-				Number((chart5data[2][3].workTotal/((chart5data[2][3].workTotal+chart5data[2][3].notoperateTotal) == 0? 1 : (chart5data[2][3].workTotal+chart5data[2][3].notoperateTotal) ))*100), 
-				Number((chart5data[2][4].workTotal/((chart5data[2][4].workTotal+chart5data[2][4].notoperateTotal) == 0? 1 : (chart5data[2][4].workTotal+chart5data[2][4].notoperateTotal) ))*100), 
-				Number((chart5data[2][5].workTotal/((chart5data[2][5].workTotal+chart5data[2][5].notoperateTotal) == 0? 1 : (chart5data[2][5].workTotal+chart5data[2][5].notoperateTotal) ))*100)],
+        data: [seriesData[2][0], seriesData[2][1], seriesData[2][2], seriesData[2][3], seriesData[2][4], seriesData[2][5]],
         color:'#0A9B73'
     }, {
         name: chart5data[3][0].lineid,
-        data: [ Number((chart5data[3][0].workTotal/((chart5data[3][0].workTotal+chart5data[3][0].notoperateTotal) == 0? 1 : (chart5data[3][0].workTotal+chart5data[3][0].notoperateTotal) ))*100), 
-        		Number((chart5data[3][1].workTotal/((chart5data[3][1].workTotal+chart5data[3][1].notoperateTotal) == 0? 1 : (chart5data[3][1].workTotal+chart5data[3][1].notoperateTotal) ))*100), 
-				Number((chart5data[3][2].workTotal/((chart5data[3][2].workTotal+chart5data[3][2].notoperateTotal) == 0? 1 : (chart5data[3][2].workTotal+chart5data[3][2].notoperateTotal) ))*100), 
-				Number((chart5data[3][3].workTotal/((chart5data[3][3].workTotal+chart5data[3][3].notoperateTotal) == 0? 1 : (chart5data[3][3].workTotal+chart5data[3][3].notoperateTotal) ))*100), 
-				Number((chart5data[3][4].workTotal/((chart5data[3][4].workTotal+chart5data[3][4].notoperateTotal) == 0? 1 : (chart5data[3][4].workTotal+chart5data[3][4].notoperateTotal) ))*100), 
-				Number((chart5data[3][5].workTotal/((chart5data[3][5].workTotal+chart5data[3][5].notoperateTotal) == 0? 1 : (chart5data[3][5].workTotal+chart5data[3][5].notoperateTotal) ))*100)],
+        data: [seriesData[3][0], seriesData[3][1], seriesData[3][2], seriesData[3][3], seriesData[3][4], seriesData[3][5]],
         color:'#4FCDFF'
     }]
 
@@ -351,6 +424,30 @@ function setchart5(chart5data) {
 }
 
 function setchart6(chart6data){
+	var dateData = [];
+
+	for (var i = 0; i <= 5; i++) {
+	    if (chart6data[i].dt >= 2000) {
+	            dateData[i] = formatDate(chart6data[i].dt.toString(), "yyyymmdd", "월 일");
+	    } else if (chart6data[i].dt < 2000 && chart6data[i].dt >= 20) {
+	            dateData[i] = ((chart6data[i].dt-(chart6data[i].dt%100))/100) + '월' + (chart6data[i].dt%100).toString() + '주';
+	    } else if (chart6data[i].dt < 20) {
+	            dateData[i] = chart6data[i].dt.toString() + '월';
+	    }
+	}
+
+
+	function formatDate(dateString, inputFormat, outputFormat) {
+	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
+	    const month = parseInt(dateString.slice(4, 6));
+	    const day = parseInt(dateString.slice(6, 8));
+	
+	    const monthString = `${month}${outputFormat[0]}`;
+	    const dayString = `${day}${outputFormat[2]}`;
+	
+	    return `${monthString} ${dayString}`;
+	}
+	
 	Highcharts.chart('chart6', {
 	    chart: {
 	        type: 'column'
@@ -362,7 +459,7 @@ function setchart6(chart6data){
 	    },
 	    
 	    xAxis: {
-	        categories: [chart6data[0].dt, chart6data[1].dt, chart6data[2].dt, chart6data[3].dt, chart6data[4].dt, chart6data[5].dt],
+	        categories: [dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]],
 	        crosshair: true,
 	        accessibility: {
 	            description: 'Month'

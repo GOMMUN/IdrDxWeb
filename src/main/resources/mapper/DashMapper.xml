@@ -101,7 +101,7 @@
 			SELECT 
 				CASE
 			   		WHEN 'day' = #{month} THEN A.dt 
-			   		WHEN 'week' = #{month} THEN DATEPART(WEEK, A.dt)
+			   		WHEN 'week' = #{month} THEN CAST(CONVERT(VARCHAR(2), DATEPART(MONTH, A.dt)) AS INT) * 100 + CAST(CONVERT(VARCHAR(2), DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, convert(varchar(10),A.dt,120)), 0),convert(varchar(10),A.dt,120)) +1) AS INT)
 			   		WHEN 'month' = #{month} THEN DATEPART(MONTH, A.dt)
 			   	END AS dt,
 				(SELECT 
@@ -147,7 +147,7 @@
 				SELECT 
 					CASE
 				   		WHEN 'day' = #{month} THEN A.dt 
-				   		WHEN 'week' = #{month} THEN DATEPART(WEEK, A.dt)
+				   		WHEN 'week' = #{month} THEN CAST(CONVERT(VARCHAR(2), DATEPART(MONTH, A.dt)) AS INT) * 100 + CAST(CONVERT(VARCHAR(2), DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, convert(varchar(10),A.dt,120)), 0),convert(varchar(10),A.dt,120)) +1) AS INT)
 				   		WHEN 'month' = #{month} THEN DATEPART(MONTH, A.dt)
 				   	END AS dt,
 					ISNULL(SUM(B.PLAN_QTY),0) AS PLAN_QTY,

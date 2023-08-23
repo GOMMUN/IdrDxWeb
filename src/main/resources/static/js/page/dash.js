@@ -5,12 +5,12 @@ var chart1data = null;
 var chart2data = null;
 var chart5data = null;
 var chart6data = null;
+var chart8data = null;
 
 $(function(){
 	chart3();
 	chart4();
 	chart7();
-	chart8();
 	
 	PQCDrate()
 	rejectContents("8");
@@ -550,28 +550,76 @@ Highcharts.chart('chart7', {
 
 }
 
-function chart8(){
+function setchart8(chart8data){
+	var dateData = [];
+
+	for (var i = 0; i <= 5; i++) {
+	    if (chart8data[i].dt >= 2000) {
+	            dateData[i] = formatDate(chart8data[i].dt.toString(), "yyyymmdd", "월 일");
+	    } else if (chart8data[i].dt < 2000 && chart8data[i].dt >= 20) {
+	            dateData[i] = ((chart8data[i].dt-(chart8data[i].dt%100))/100) + '월' + (chart8data[i].dt%100).toString() + '주';
+	    } else if (chart8data[i].dt < 20) {
+	            dateData[i] = chart8data[i].dt.toString() + '월';
+	    }
+	}
+
+
+	function formatDate(dateString, inputFormat, outputFormat) {
+	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
+	    const month = parseInt(dateString.slice(4, 6));
+	    const day = parseInt(dateString.slice(6, 8));
+	
+	    const monthString = `${month}${outputFormat[0]}`;
+	    const dayString = `${day}${outputFormat[2]}`;
+	
+	    return `${monthString} ${dayString}`;
+	}
+	
 	Highcharts.chart('chart8', {
-    chart: {
-        type: 'bar'
-    },
-    title: {
-        text: '스마트 알람 키워드 발생 빈도 수'
-    },
-    xAxis: {
-        categories: ['불량', '이상발생', '설비이상', 'A 라인']
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: ''
-        }
-    },
-    series: [{
-		name:'',
-        data: [15, 10, 7, 4]
-    }]
-});
+	    chart: {
+	        type: 'column'
+	    },
+	    
+	    title: {
+	        text: '스마트 알람 발생 현황(건)',
+	        align: 'left'
+	    },
+	    
+	    xAxis: {
+	        categories: [dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]],
+	        crosshair: true,
+	        accessibility: {
+	            description: 'Month'
+	        }
+	    },
+	    
+	    yAxis: {
+	        min: 0,
+	        title: {
+	            text: ''
+	        }
+	    },
+	    
+	    plotOptions: {
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
+	        },
+	        series : {
+				minPointLength:3
+			}
+	    },
+	    
+	    series: [
+	        {
+	            name: '실적',
+	            data: [Number(chart8data[0].cnt), Number(chart8data[1].cnt), 
+					Number(chart8data[2].cnt), Number(chart8data[3].cnt),
+					Number(chart8data[4].cnt), Number(chart8data[5].cnt)],
+	            color : '#FC6D00'
+	        }
+	    ]
+	});
 
 }
 	
@@ -745,7 +793,7 @@ function selectMonthButton() {
 function selectDayWeekMonthButton() {	    
 	var defaultData = "day";
 	
-	for (var chartNumber = 1; chartNumber <= 6; chartNumber++) {
+	for (var chartNumber = 1; chartNumber <= 8; chartNumber++) {
         var chartId = "chart" + chartNumber + "Type";
         
         // Set default active button and call selectType
@@ -815,6 +863,18 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 			setchart6(chart6data);
 		});
 		
+	}else if(tagId == "chart8Type"){
+		var url = '/dash/chart8';
+
+		var params = {
+			month: data
+		};
+		
+		$.get(url + '?' + $.param(params)).then(function(res) {
+			chart8data = res;
+			setchart8(chart8data);
+		});
+				
 	}else{
 		
 	}

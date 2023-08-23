@@ -77,6 +77,14 @@ public class DashController {
     }	
 	
 	@ResponseBody
+	@GetMapping("/chart8")
+    public List<FairProd> chart8(String month) {
+		
+		List<FairProd> list = service.chart8(month);
+		return list;
+    }		
+	
+	@ResponseBody
 	@GetMapping("/findAlarm")
     public String[] find1Alarm() {
 		

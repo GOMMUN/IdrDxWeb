@@ -158,7 +158,7 @@ function setWorkDailyReportEventListener() {
 		data.model = $("select[name=wdrmodel]").val();
 		data.planqty = $("input[name=planqty]").val();
 		data.notes = $("input[name=notes]").val();
-		data.creator = localStorage.getItem("username");
+		data.register = localStorage.getItem("username");
 		data.tid = tid();
 
 		//validation check

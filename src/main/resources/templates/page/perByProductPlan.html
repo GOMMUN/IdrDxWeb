@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/perByProductPlan.js}"></script>
+<style>
+	.form-control-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+
+	.form-select-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+</style>
+
+<body>
+	<div class="card-header py-3">
+		<h6 class="m-0 font-weight-bold text-primary">생산계획별 실적</h6>
+	</div>
+	<form class="user">
+		<div class="form-group row">
+			<div class="col-sm-5"></div>
+			<div class="col-sm-2">
+				<input type="text" name="workDate" class="form-control-custom form-control-user" id="" value="코렌스이엠" readonly>
+			</div>
+			<div class="col-sm-2 mb-3 mb-sm-0">
+				<input type="date" name="start" class="form-control-custom form-control-user" id="startid" placeholder="날짜">
+			</div>
+			<div class="col-sm-2 mb-3 mb-sm-0">
+				<input type="date" name="end" class="form-control-custom form-control-user" id="endid" placeholder="날짜">
+			</div>
+		</div>
+	</form>
+	<div class="container-fluid mt-4">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card shadow mb-4">
+
+					<div class="card-body">
+						<table id="table" data-toggle="table" data-toolbar="#toolbarLogisticsInfo"
+							data-height="810" data-multiple-select-row="true" data-click-to-select="true"
+							data-show-refresh="true" data-filter-control="true" data-search="true" data-url="/perbyproductplan/search"
+							data-show-columns="true" data-show-columns-toggle-all="true" data-pagination="true">
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
+									<th data-field="생산계획명" data-sortable="true" data-align="center">생산계획명</th>
+									<th data-field="자재코드" data-sortable="true" data-align="center">자재코드</th>
+									<th data-field="자재명" data-sortable="true" data-align="center">자재명</th>
+									<th data-field="총공정수" data-sortable="true" data-align="center">총 공정수</th>
+									<th data-field="공정수행횟수" data-sortable="true" data-align="center">공정 수행 횟수</th>
+									<th data-field="불량횟수" data-sortable="true" data-align="center">불량횟수</th>
+									<th data-field="남은횟수" data-sortable="true" data-align="center">남은횟수</th>
+									<th data-field="시작시간" data-sortable="true" data-align="center">시작시간</th>
+									<th data-field="종료시간" data-sortable="true" data-align="center">종료시간</th>
+									<th data-field="소요시간" data-sortable="true" data-align="center">소요시간</th>
+									<th data-field="납기" data-sortable="true" data-align="center">납기</th>
+									<th data-field="납기준수율" data-sortable="true" data-align="center">납기준수율</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

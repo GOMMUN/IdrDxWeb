@@ -13,6 +13,7 @@ import com.idr.pdd.dto.Inventory;
 import com.idr.pdd.dto.WorkDailyReport;
 import com.idr.pdd.service.InventoryService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,18 +21,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/inventory")
 public class InventoryController {
 	
+	private static String plant = null;
+	
 	@Autowired
 	private InventoryService service;
 	
 	@GetMapping("")
-    public String init() {
+    public String init(HttpServletRequest request) {
+		plant = request.getAttribute("plant").toString();
         return "page/inventory";
     }
 	
 	@ResponseBody
 	@GetMapping("/find")
     public List<Inventory> find(String start, String end) {
-		List<Inventory> list = service.findAll();
+		List<Inventory> list = service.findAll(plant);
 		return list;
     }
 	

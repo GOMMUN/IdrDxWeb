@@ -38,8 +38,6 @@
 				,ENDTIME
 				,CREATOR
 				,CREATETIME
-				,EVENTUSER
-				,EVENTTIME				
 				,ISUSABLE	
         )
         VALUES (
@@ -50,10 +48,8 @@
 				,#{shifttype}
 				,CONCAT(REPLACE(#{starttime},':',''),'00')
 			  	,CONCAT(REPLACE(#{endtime},':',''),'00')
-				,'idrAdmin'
+				,#{creator}
 				,GETDATE()
-				,'idrAdmin'
-				,GETDATE()				
 				,#{isusable}		
         )
     </insert>
@@ -67,21 +63,28 @@
 				,SHIFTTYPE		= #{shifttype}
 				,STARTTIME		= CONCAT(REPLACE(#{starttime},':',''),'00')
 				,ENDTIME		= CONCAT(REPLACE(#{endtime},':',''),'00')
-				,EVENTUSER		= 'idrAdmin'
+				,EVENTUSER		= #{eventuser}
 				,EVENTTIME		= GETDATE()
 				,ISUSABLE		= #{isusable}
 		WHERE DATASEQ	= 	#{dataseq}
     </update>  
 
-    <update id="remove" parameterType="list">
-		UPDATE DSP_SHIFT 
-		SET ISUSABLE= 'N'
-			,EVENTUSER = 'idrAdmin'
-			,EVENTTIME = GETDATE()		
+<!--     <update id="remove" parameterType="list"> -->
+<!-- 		UPDATE DSP_SHIFT  -->
+<!-- 		SET ISUSABLE= 'N' -->
+<!-- 			,EVENTUSER = 'idrAdmin' -->
+<!-- 			,EVENTTIME = GETDATE()		 -->
+<!-- 		WHERE 1=1 AND DATASEQ IN -->
+<!-- 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")"> -->
+<!-- 	        #{data} -->
+<!-- 	     </foreach> -->
+<!--     </update> -->
+
+	<delete id="remove" parameterType="list">
+		DELETE FROM DSP_SHIFT
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
-
+	</delete>
 </mapper>

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.idr.pdd.mapper.InventoryMapper">
 
-    <select id="findAll" resultType="Inventory">
+    <select id="findAll" parameterType="String" resultType="Inventory">
         SELECT
 			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM
 			, A.DATASEQ
@@ -17,15 +17,16 @@
 			, (SELECT MATERIALNAME FROM DSP_MATERIAL WHERE FACTORYID IN (A.FACTORYID) AND MATERIALID IN (A.MATERIALID)) AS MATERIALNAME
 			, A.QTY
 			, A.CREATOR
-			, A.CREATETIME
+			, CONVERT(VARCHAR, A.CREATETIME, 120) AS CREATETIME
 			, A.EVENT
 			, A.EVENTUSER
-			, A.EVENTTIME
+			, CONVERT(VARCHAR, A.EVENTTIME, 120) AS EVENTTIME
 			, A.ISUSABLE
 			, A.INVENTORYDATE 
 		FROM DSP_INVENTORY A
 		WHERE 1=1
 		AND ISUSABLE IS NOT NULL
+		AND A.FACTORYID = #{plant}
 		ORDER BY CREATETIME DESC
     </select>
     
@@ -44,8 +45,6 @@
                , QTY
                , CREATOR
                , CREATETIME
-               , EVENTUSER
-               , EVENTTIME
                , INVENTORYDATE
         )
         VALUES (
@@ -54,8 +53,6 @@
                , #{materialid}
                , #{qty}
                , #{creator}
-               , getdate()
-               , #{eventuser}
                , getdate()
                , #{inventorydate}
         )

@@ -4,9 +4,14 @@
 let s_mvinfo = null;
 
 $(function(){
-	
+	initSetting();
 	setEventListener();
 });
+
+function initSetting() {
+	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
+}
 
  function setEventListener (){
 	 
@@ -53,6 +58,7 @@ $(function(){
 		data.modelnm = $("input[name=modelnm]").val();
 		data.modeldesc = $("input[name=modeldesc]").val();
 		data.useyn = $("select[name=useyn]").val();
+		data.fstreguserid = localStorage.getItem("username");
 
 		//validation check
 		 if (data.modelid == "") {
@@ -104,6 +110,7 @@ $(function(){
 		data.modelnm = $("input[name=modelnm]").val();
 		data.modeldesc = $("input[name=modeldesc]").val();
 		data.useyn = $("select[name=useyn]").val();
+		data.fnledituserid = localStorage.getItem("username");
 
 		//validation check
 		 if (data.modelid == "") {
@@ -150,7 +157,7 @@ $(function(){
 		
 	$gridRemoveBtn.click(function() {	
 		
-		if(!confirm('해당 데이터를 사용하지 않겠습니까?')){
+		if(!confirm('선택한 데이터를 삭제하시겠습니까?')){
             return false;
         }
 
@@ -169,8 +176,10 @@ $(function(){
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
-				alert("비사용으로 변경되였습니다.");
-				location.reload();
+				alert("삭제 되었습니다.");
+				
+				$table = $("#mvinfo");
+				$table.bootstrapTable('refresh');
 			}
 		});
 	});		

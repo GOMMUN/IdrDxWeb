@@ -35,8 +35,6 @@
         		,USE_YN 
         		,FST_REG_USER_ID 
         		,FST_REG_DT
-        		,FNL_EDIT_USER_ID
-        		,FNL_EDIT_DT			
 			) 
 			VALUES(
 				 'dx'
@@ -45,10 +43,8 @@
 				,#{modelnm}			
 				,#{modeldesc}
 				,#{useyn}
-				,'idrAdmin'
+				,#{fstreguserid}
 				,getdate()
-				,'idrAdmin'
-				,getdate()		
 			)
 	</insert>
 	
@@ -59,20 +55,27 @@
 				,MODEL_NM			= #{modelnm}			
 				,MODEL_DESC   		= #{modeldesc}
 				,USE_YN				= #{useyn}
-				,FNL_EDIT_USER_ID   = 'idrAdmin'
+				,FNL_EDIT_USER_ID   = #{fnledituserid}
 				,FNL_EDIT_DT  		= getdate()
 			WHERE DATASEQ			= #{dataseq}
 	</update>
 	
-    <update id="remove" parameterType="list">
-    	UPDATE CM0501
-		SET USE_YN				= 'N',
-			FNL_EDIT_USER_ID 	= 'idrAdmin',
-			FNL_EDIT_DT  		= getdate()
+<!--     <update id="remove" parameterType="list"> -->
+<!--     	UPDATE CM0501 -->
+<!-- 		SET USE_YN				= 'N', -->
+<!-- 			FNL_EDIT_USER_ID 	= 'idrAdmin', -->
+<!-- 			FNL_EDIT_DT  		= getdate() -->
+<!-- 		WHERE 1=1 AND DATASEQ IN -->
+<!-- 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")"> -->
+<!-- 	        #{data} -->
+<!-- 	     </foreach> -->
+<!--     </update> -->
+
+	<delete id="remove" parameterType="list">
+		DELETE FROM CM0501
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
-
+	</delete>
 </mapper>

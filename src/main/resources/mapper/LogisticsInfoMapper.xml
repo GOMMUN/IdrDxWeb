@@ -44,8 +44,6 @@
         		,LOTSIZE
         		,CREATOR
         		,CREATETIME
-        		,EVENTUSER
-        		,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
@@ -58,10 +56,8 @@
 				,#{loadingtime}
 				,#{unloadingtime}
 				,#{lotsize}
-				,'idrAdmin'
+				,#{creator}
 				,getdate()
-				,'idrAdmin'
-				,getdate()	
 				,#{isusable}			
 			)
 	</insert>
@@ -78,21 +74,28 @@
 				,LOADINGTIME    = #{loadingtime}	
 				,UNLOADINGTIME  = #{unloadingtime}
 				,LOTSIZE   		= #{lotsize}
+				,EVENTUSER		= #{eventuser}
 				,EVENTTIME 		= GETDATE()
 				,ISUSABLE   	= #{isusable}
 			WHERE DATASEQ		= #{dataseq}
 	</update>
 
-    <update id="remove" parameterType="list">
-    	UPDATE DSP_LOGISTICS
-		SET ISUSABLE	= 'N',
-			EVENTUSER 	= 'idrAdmin',
-			EVENTTIME 	= GETDATE()
+<!--     <update id="remove" parameterType="list"> -->
+<!--     	UPDATE DSP_LOGISTICS -->
+<!-- 		SET ISUSABLE	= 'N', -->
+<!-- 			EVENTUSER 	= 'idrAdmin', -->
+<!-- 			EVENTTIME 	= GETDATE() -->
+<!-- 		WHERE 1=1 AND DATASEQ IN -->
+<!-- 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")"> -->
+<!-- 	        #{data} -->
+<!-- 	     </foreach> -->
+<!--     </update> -->
+
+	<delete id="remove" parameterType="list">
+    	DELETE DSP_LOGISTICS
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
-
-
+    </delete>
 </mapper>

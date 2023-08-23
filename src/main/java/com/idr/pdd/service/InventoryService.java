@@ -16,8 +16,8 @@ public class InventoryService {
 	@Autowired
 	InventoryMapper mapper;
 	
-	public List<Inventory> findAll(){
-		return mapper.findAll();
+	public List<Inventory> findAll(String plant){
+		return mapper.findAll(plant);
 	}
 	
 	public int save(Inventory param) {

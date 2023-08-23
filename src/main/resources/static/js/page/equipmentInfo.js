@@ -10,6 +10,9 @@ $(function(){
 });
 
 function initSetting() {
+	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
+	
 	factroy();		// 코드 조회
 }
 
@@ -73,6 +76,7 @@ function initSetting() {
 		data.errorrate = $("input[name=errorrate]").val();
 		data.buffer = $("input[name=buffer]").val();
 		data.isusable = $("select[name=isusable]").val();
+		data.creator = localStorage.getItem("username");
 	
 		//validation check
 		if (data.factoryid == "") {
@@ -137,6 +141,7 @@ function initSetting() {
 		data.errorrate = $("input[name=errorrate]").val();
 		data.buffer = $("input[name=buffer]").val();
 		data.isusable = $("select[name=isusable]").val();
+		data.eventuser = localStorage.getItem("username");
 
 		//validation check
 		if (data.factoryid == "") {
@@ -195,6 +200,10 @@ function initSetting() {
 	});
 	
 	$gridRemoveBtn.click(function() {
+		
+		if(!confirm('선택한 데이터를 삭제하시겠습니까?')){
+            return false;
+        }
 
 		let selections = [];
 
@@ -216,7 +225,7 @@ function initSetting() {
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
-				alert("비사용으로 변경되였습니다.");
+				alert("삭제 되었습니다.");
 			}
 		});
 	});

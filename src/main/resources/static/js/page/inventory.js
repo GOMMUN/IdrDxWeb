@@ -15,6 +15,9 @@ $(function() {
 
 function initSetting() {
 	
+	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
+	
 	$("input[name=inventorydate]").datepicker({
 		format: "yyyy-mm-dd",
 		autoclose: true,
@@ -110,9 +113,6 @@ function setInventoryEventListener() {
 
 	$modalCreateBtn.click(function() {
 		
-		
-		
-
 		let data = {};
 		
 		data.factoryid = $("select[name=factoryid]").val();
@@ -120,6 +120,7 @@ function setInventoryEventListener() {
 		data.materialid = $("select[name=materialid]").val();
 		data.qty = $("input[name=qty]").val();
 		data.inventorydate = $("input[name=inventorydate]").val();
+		data.creator = localStorage.getItem("username");
 	
 		//validation check
 		if (data.factoryid == "") {
@@ -171,6 +172,7 @@ function setInventoryEventListener() {
 		data.materialid = $("select[name=materialid]").val();
 		data.qty = $("input[name=qty]").val();
 		data.inventorydate = $("input[name=inventorydate]").val();
+		data.eventuser = localStorage.getItem("username");
 
 		//validation check
 		if (data.factoryid == "") {

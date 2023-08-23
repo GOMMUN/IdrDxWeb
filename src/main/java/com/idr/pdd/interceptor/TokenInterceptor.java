@@ -88,6 +88,9 @@ public class TokenInterceptor implements HandlerInterceptor{
 			}else {
         		throw new RuntimeException();
 			}
+        	
+//        	request.setAttribute("plant", "KEM");
+//			request.setAttribute("username", "test2");
 	
 		} catch (Exception e) {
 			// TODO: handle exception

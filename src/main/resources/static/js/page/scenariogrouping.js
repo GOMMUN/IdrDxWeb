@@ -234,7 +234,7 @@ function setEventListener (){
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtnL.prop('disabled', true);
-				alert("비사용으로 변경되였습니다.");
+				//alert("비사용으로 변경되였습니다.");
 			}
 		});
 	});
@@ -363,7 +363,7 @@ function setEventListener (){
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtnG.prop('disabled', true);
-				alert("비사용으로 변경되였습니다.");
+				//alert("비사용으로 변경되였습니다.");
 			}
 		});
 	});	

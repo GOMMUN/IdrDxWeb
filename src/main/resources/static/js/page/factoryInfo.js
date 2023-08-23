@@ -4,9 +4,14 @@
 let s_factoryInfo = null;
 
 $(function(){
-	
+	initSetting();
 	setEventListener();
 });
+
+function initSetting() {
+	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
+}
 
  function setEventListener (){
 	 
@@ -54,6 +59,7 @@ $(function(){
 		data.description = $("input[name=description]").val();
 		data.factorytype = $("input[name=factorytype]").val();
 		data.isusable = $("select[name=isusable]").val();
+		data.creator = localStorage.getItem("username");
 
 		//validation check
 		if (data.factoryid == "") {
@@ -102,6 +108,7 @@ $(function(){
 		data.description = $("input[name=description]").val();
 		data.factorytype = $("input[name=factorytype]").val();
 		data.isusable = $("select[name=isusable]").val();
+		data.eventuser = localStorage.getItem("username");
 
 		//validation check
 		if (data.factoryid == "") {
@@ -144,7 +151,7 @@ $(function(){
 	
 	$gridRemoveBtn.click(function() {	
 		
-		if(!confirm('해당 데이터를 사용하지 않겠습니까?')){
+		if(!confirm('선택한 데이터를 삭제하시겠습니까?')){
             return false;
         }
 
@@ -168,7 +175,7 @@ $(function(){
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
-				alert("비사용으로 변경되였습니다.");
+				alert("삭제 되었습니다.");
 			}
 		});
 	});			

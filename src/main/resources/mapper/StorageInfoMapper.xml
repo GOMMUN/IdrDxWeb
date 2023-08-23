@@ -38,8 +38,6 @@
         		,BUFFER 
         		,CREATOR
         		,CREATETIME
-        		,EVENTUSER
-        		,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
@@ -49,10 +47,8 @@
 				,#{failurerate}			
 				,#{recoverytime}
 				,#{buffer}
-				,'idrAdmin'
+				,#{creator}
 				,getdate()
-				,'idrAdmin'
-				,getdate()	
 				,#{isusable}			
 			)
 	</insert>
@@ -66,21 +62,28 @@
 				,FAILURERATE	= #{failurerate}			
 				,RECOVERYTIME   = #{recoverytime}
 				,BUFFER   		= #{buffer}	
+				,EVENTUSER		= #{eventuser}
 				,EVENTTIME 		= GETDATE()
 				,ISUSABLE   	= #{isusable}
 			WHERE DATASEQ		= #{dataseq}
 	</update>
 
-    <update id="remove" parameterType="list">
-    	UPDATE DSP_STORAGE
-		SET ISUSABLE	= 'N',
-			EVENTUSER 	= 'idrAdmin',
-			EVENTTIME 	= GETDATE()
+<!--     <update id="remove" parameterType="list"> -->
+<!--     	UPDATE DSP_STORAGE -->
+<!-- 		SET ISUSABLE	= 'N', -->
+<!-- 			EVENTUSER 	= 'idrAdmin', -->
+<!-- 			EVENTTIME 	= GETDATE() -->
+<!-- 		WHERE 1=1 AND DATASEQ IN -->
+<!-- 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")"> -->
+<!-- 	        #{data} -->
+<!-- 	     </foreach> -->
+<!--     </update> -->
+
+	<delete id="remove" parameterType="list">
+		DELETE DSP_STORAGE
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
-
-
+	</delete>
 </mapper>

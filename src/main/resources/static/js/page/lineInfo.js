@@ -170,7 +170,7 @@ function initSetting() {
 				$table.bootstrapTable('refresh');
 				
 				$gridRemoveBtn.prop('disabled', true);
-				alert("비사용으로 변경되였습니다.");
+				//alert("비사용으로 변경되였습니다.");
 			}
 		});
 	});

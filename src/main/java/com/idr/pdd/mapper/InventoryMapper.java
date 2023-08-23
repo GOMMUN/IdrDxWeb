@@ -7,7 +7,7 @@ import com.idr.pdd.dto.Inventory;
 @Mapper
 public interface InventoryMapper {
 
-	List<Inventory> findAll();
+	List<Inventory> findAll(String plant);
 	Inventory find();
 	
 	int create(Inventory param);

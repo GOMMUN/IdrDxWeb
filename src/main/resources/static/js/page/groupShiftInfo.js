@@ -9,6 +9,9 @@ $(function(){
 });
 
 function initSetting() {
+	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
+	
 	factroy();		// 공장코드 조회
 }
 
@@ -65,7 +68,8 @@ function initSetting() {
 		data.starttime = $("input[name=starttime]").val();
 		data.endtime = $("input[name=endtime]").val();
 		data.isusable = $("select[name=isusable]").val();
-
+		data.creator = localStorage.getItem("username");
+		
 		//validation check
 		 if (data.factoryid == "") {
 			alert("공장을 선택하세요.");
@@ -115,6 +119,7 @@ function initSetting() {
 		data.starttime = $("input[name=starttime]").val();
 		data.endtime = $("input[name=endtime]").val();
 		data.isusable = $("select[name=isusable]").val();
+		data.eventuser = localStorage.getItem("username");
 
 		//validation check
 		 if (data.factoryid == "") {
@@ -157,7 +162,7 @@ function initSetting() {
 	
 	$gridRemoveBtn.click(function() {	
 		
-		if(!confirm('해당 데이터를 사용하지 않겠습니까?')){
+		if(!confirm('선택한 데이터를 삭제하시겠습니까?')){
             return false;
         }
 
@@ -176,8 +181,11 @@ function initSetting() {
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(data) {
-				alert("비사용으로 변경되였습니다.");
-				location.reload();
+				
+				$table = $("#shiftinfo");
+				$table.bootstrapTable('refresh');
+				
+				alert("삭제 되었습니다.");
 			}
 		});
 	});

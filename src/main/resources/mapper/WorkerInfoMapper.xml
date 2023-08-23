@@ -38,8 +38,6 @@
 				,PERSONNAME
 				,CREATOR
 				,CREATETIME
-				,EVENTUSER
-				,EVENTTIME
 				,ISUSABLE
         )
         VALUES (
@@ -47,10 +45,8 @@
 				,#{personid}
 				,#{factoryid}
 				,#{personname}				
-				,'idrAdmin'
+				,#{creator}
 				,GETDATE()
-				,'idrAdmin'
-				,GETDATE()	
 				,#{isusable}
         )
     </insert>	
@@ -61,21 +57,28 @@
            		 PERSONID		= #{personid}
            		,FACTORYID		= #{factoryid}
 				,PERSONNAME		= #{personname}
-				,EVENTUSER		= 'idrAdmin'
+				,EVENTUSER		= #{eventuser}
 				,EVENTTIME		= GETDATE()
 				,ISUSABLE		= #{isusable}
 		WHERE DATASEQ	= 	#{dataseq}
 	</update> 
 
-    <update id="remove" parameterType="list">
-		UPDATE DSP_PERSON 
-		SET ISUSABLE= 'N'
-			,EVENTUSER = 'idrAdmin'
-			,EVENTTIME = GETDATE()
+<!--     <update id="remove" parameterType="list"> -->
+<!-- 		UPDATE DSP_PERSON  -->
+<!-- 		SET ISUSABLE= 'N' -->
+<!-- 			,EVENTUSER = 'idrAdmin' -->
+<!-- 			,EVENTTIME = GETDATE() -->
+<!-- 		WHERE 1=1 AND DATASEQ IN -->
+<!-- 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")"> -->
+<!-- 	        #{data} -->
+<!-- 	     </foreach> -->
+<!--     </update> -->
+
+	<delete id="remove" parameterType="list">
+		DELETE FROM DSP_PERSON
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
-
+	</delete>
 </mapper>

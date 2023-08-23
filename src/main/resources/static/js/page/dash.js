@@ -847,10 +847,11 @@ function factroy() {
 }
 
 var repeat = null;
-var delay = 5000;
+var delay = 15000;
 repeat = setInterval(realTime, delay); // delay 간격으로 실행.
 
 function realTime() {
+	
 	let url = '/dash/findAlarm';
 	
 	$.ajax({

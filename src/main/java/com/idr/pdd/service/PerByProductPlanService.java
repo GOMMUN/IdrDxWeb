@@ -25,12 +25,12 @@ public class PerByProductPlanService {
 		
 
 		for(PerByProductPlan p:list) {
-			int days = Integer.parseInt(p.get소요시간()) / (24 * 60 * 60);
-	        int hours = (Integer.parseInt(p.get소요시간()) % (24 * 60 * 60)) / 3600;
-	        int minutes = (Integer.parseInt(p.get소요시간()) % 3600) / 60;
-	        int seconds = Integer.parseInt(p.get소요시간()) % 60;
+			int days = Integer.parseInt(p.getTakenTime()) / (24 * 60 * 60);
+	        int hours = (Integer.parseInt(p.getTakenTime()) % (24 * 60 * 60)) / 3600;
+	        int minutes = (Integer.parseInt(p.getTakenTime()) % 3600) / 60;
+	        int seconds = Integer.parseInt(p.getTakenTime()) % 60;
 	        String result=String.valueOf(days+"일"+hours+"시간"+minutes+"분"+seconds+"초");
-	        p.set소요시간(result);
+	        p.setTakenTime(result);
 		}
 
 		

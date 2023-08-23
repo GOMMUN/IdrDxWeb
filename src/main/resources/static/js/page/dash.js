@@ -892,6 +892,42 @@ function realTime() {
 
 		}
 	});
+	
+	var url2 = '/dash/findDailyAlarm';
+
+    $.get(url2).then(function(res) {
+        var result = res;
+        var SumYe = 0, SumYe = 0;
+        
+        var today = new Date();
+        
+        var year = today.getFullYear();
+		var month = (today.getMonth() + 1).toString().padStart(2, '0');
+		var day = today.getDate().toString().padStart(2, '0');
+
+		var formattedDate = year + '-' + month + '-' + day;
+		
+        result.forEach(function(r) {
+			if (r.date == formattedDate) {
+	            SumTo = r.sum;
+            } else {
+				SumYe = r.sum;
+			}
+        });
+        
+        // 오늘
+        $('#todayAlarm').text(SumTo + '건');
+        SumTotal = SumTo - SumYe;
+
+	    if (SumTotal> 0) {
+			$('#yesterdayAlarm').text('전일대비 ▲ '+ SumTotal + '건');
+		} else if (SumTotal == 0) {
+			$('#yesterdayAlarm').text('전일대비 - ');
+		} else if (SumTotal< 0) {
+			$('#yesterdayAlarm').text('전일대비 ▼ '+ SumTotal + '건');
+		}
+     
+    });
 		
 }
 

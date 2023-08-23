@@ -196,4 +196,24 @@
         	AND ISUSABLE = 'Usable'
     </select>  
 
+	<select id="findAllDailyAlarm" parameterType="Dash" resultType="Dash">
+		SELECT 
+			B.DATE AS DATE,
+			SUM(B.COUNT) AS SUM
+		FROM (
+			SELECT FORMAT(A.NOTICE_DATETIME,'yyyy-MM-dd') AS DATE,
+				COUNT(*) as COUNT
+	        FROM DSP_ANOMALYDETECT_NOTICE as A
+	        WHERE 1=1
+	        	AND FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') IN (
+	        												FORMAT(GETDATE(),'yyyy-MM-dd'),
+	        												FORMAT(GETDATE() -1,'yyyy-MM-dd')
+	        	)
+	        	AND FACTORYID = 'KEM'
+	        	AND ISUSABLE = 'Usable'
+	        GROUP BY FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') 	
+	    ) B
+	    GROUP BY B.DATE
+    </select>
+    
 </mapper>

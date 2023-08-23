@@ -20,4 +20,6 @@ public class Dash {
 	private String rejectType;
 	private int firsttimerejectQtySum;
 	
+	private String date;
+	private String sum;
 }

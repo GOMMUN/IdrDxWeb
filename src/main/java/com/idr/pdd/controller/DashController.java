@@ -100,4 +100,11 @@ public class DashController {
     }
 	
 
+	@ResponseBody
+	@GetMapping("/findDailyAlarm")
+	public List<Dash> findDailyAlarm() {
+		
+		List<Dash> list = service.findAllDailyAlarm();
+		return list;
+    }
 }

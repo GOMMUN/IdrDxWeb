@@ -81,4 +81,8 @@ public class DashService {
 		return mapper.find3Alarm();
 	}	
 
+	public List<Dash> findAllDailyAlarm(){
+		
+		return mapper.findAllDailyAlarm();
+	}
 }

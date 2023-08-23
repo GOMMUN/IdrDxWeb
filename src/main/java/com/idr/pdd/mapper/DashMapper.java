@@ -22,4 +22,5 @@ public interface DashMapper {
 	String find1Alarm();
 	String find2Alarm();
 	String find3Alarm();
+	List<Dash> findAllDailyAlarm();
 }

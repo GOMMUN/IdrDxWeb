@@ -14,7 +14,7 @@ import com.idr.pdd.dto.Dash;
 public interface DashMapper {
 
 	List<Dash> findAllPQCD();
-	List<RejectContents> findAllR(RejectContents param);
+	List<Dash> findAllR(String factory, String month);
 	List<FairProd> chart1(String factory, String month);
 	List<FairProd> chart6(String month);
 	List<FairProd> chart8(String month);

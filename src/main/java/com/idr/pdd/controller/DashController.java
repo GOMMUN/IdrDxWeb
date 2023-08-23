@@ -41,9 +41,9 @@ public class DashController {
 	
 	@ResponseBody
 	@GetMapping("/findR")
-    public List<RejectContents> findR(String month) {
+    public List<Dash> findR(String factory, String month) {
 		
-		List<RejectContents> list = service.findAllR(month);
+		List<Dash> list = service.findAllR(factory, month);
 		return list;
     }
 	

@@ -23,12 +23,9 @@ public class DashService {
 		return mapper.findAllPQCD();
 	}
 
-	public List<RejectContents> findAllR(String month) {
+	public List<Dash> findAllR(String factory, String month) {
 
-		RejectContents param = new RejectContents();
-		param.setMonth(month);
-
-		return mapper.findAllR(param);
+		return mapper.findAllR(factory, month);
 	}
 
 	public List<List<FairProd>> chart1(String factory, String month) {

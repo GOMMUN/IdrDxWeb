@@ -705,6 +705,7 @@ function rejectContents(data) {
     var url = '/dash/findR';
 
   	var params = {
+		factory: "KEM",
 		month: data
 	};
 	
@@ -715,50 +716,50 @@ function rejectContents(data) {
 
 
         result.forEach(function(r) { 
-            if (r.rejectItemid == 'RI01'){
+            if (r.rejectItemId == 'RI01'){
 				
-				data1 += r.firsttimeRejectQty;
+				data1 += r.firsttimerejectQtySum;
 				
 				if (r.rejectType == 'A') {
-					cnt1 += r.firsttimeRejectQty;
+					cnt1 += r.firsttimerejectQtySum;
 				} else if (r.rejectType == 'B') {
-					cnt2 += r.firsttimeRejectQty;
+					cnt2 += r.firsttimerejectQtySum;
 				} else if (r.rejectType == 'C') {
-					cnt3 += r.firsttimeRejectQty;
+					cnt3 += r.firsttimerejectQtySum;
 				} else if (r.rejectType == 'D') {
-					cnt4 += r.firsttimeRejectQty;
+					cnt4 += r.firsttimerejectQtySum;
 				}
                 
-            } else if (r.rejectItemid == 'RI02'){
+            } else if (r.rejectItemId == 'RI02'){
 				
-				data2 += r.firsttimeRejectQty;
+				data2 += r.firsttimerejectQtySum;
 				
                 if (r.rejectType == 'A') {
-					cnt5 += r.firsttimeRejectQty;
+					cnt5 += r.firsttimerejectQtySum;
 				} else if (r.rejectType == 'B') {
-					cnt6 += r.firsttimeRejectQty;
+					cnt6 += r.firsttimerejectQtySum;
 				} else if (r.rejectType == 'C') {
-					cnt7 += r.firsttimeRejectQty;
+					cnt7 += r.firsttimerejectQtySum;
 				} 
-            } else if (r.rejectItemid == 'RI03'){
+            } else if (r.rejectItemId == 'RI03'){
 				
-				data3 += r.firsttimeRejectQty;
+				data3 += r.firsttimerejectQtySum;
 				
                 if (r.rejectType == 'A') {
-					cnt8 += r.firsttimeRejectQty;
+					cnt8 += r.firsttimerejectQtySum;
 				} else if (r.rejectType == 'B') {
-					cnt9 += r.firsttimeRejectQty;
+					cnt9 += r.firsttimerejectQtySum;
 				} else if (r.rejectType == 'C') {
-					cnt10 += r.firsttimeRejectQty;
+					cnt10 += r.firsttimerejectQtySum;
 				}
-            } else if (r.rejectItemid == 'RI04'){
+            } else if (r.rejectItemId == 'RI04'){
 				
-				data4 += r.firsttimeRejectQty;
+				data4 += r.firsttimerejectQtySum;
 				
                 if (r.rejectType == 'A') {
-					cnt11 += r.firsttimeRejectQty;
+					cnt11 += r.firsttimerejectQtySum;
 				} else if (r.rejectType == 'B') {
-					cnt12 += r.firsttimeRejectQty;
+					cnt12 += r.firsttimerejectQtySum;
 				}
             }
         });

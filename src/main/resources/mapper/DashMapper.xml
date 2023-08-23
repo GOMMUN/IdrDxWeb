@@ -165,6 +165,31 @@
 			) D
 			GROUP BY D.dt;
 	</select>	
+	
+	<select id="chart8" parameterType="FairProd" resultType="FairProd">
+		SELECT   
+	            D.dt,
+	            SUM(D.CNT) AS CNT
+	        FROM(
+	            SELECT 
+	               CASE
+	                   WHEN 'day' = #{month} THEN A.dt
+	                   WHEN 'week' = #{month} THEN CAST(CONVERT(VARCHAR(2), DATEPART(MONTH, A.dt)) AS INT) * 100 + CAST(CONVERT(VARCHAR(2), DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, convert(varchar(10),A.dt,120)), 0),convert(varchar(10),A.dt,120)) +1) AS INT)
+	                   WHEN 'month' = #{month} THEN DATEPART(MONTH, A.dt)
+	               END AS dt,
+	               COUNT(*) AS CNT  
+	            FROM CheckDayOff A 
+	            LEFT JOIN DSP_ANOMALYDETECT_NOTICE B 
+	            ON FORMAT(B.NOTICE_DATETIME,'yyyyMMdd') = A.dt
+	               AND B.ISUSABLE = 'Usable'
+	               AND FACTORYID = 'KEM'
+	            WHERE ('day'= #{month} AND A.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY,-5,GETDATE()),112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, GETDATE()),112))
+	            OR    ('week' = #{month} AND A.dt BETWEEN DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0)))
+	            OR    ('month' = #{month} AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) +1, 0)))
+	            GROUP BY A.dt
+	        ) D
+	        GROUP BY D.dt;
+	</select>		
 
     <select id="find1Alarm" resultType="String">
 		SELECT COUNT(*)
@@ -196,4 +221,24 @@
         	AND ISUSABLE = 'Usable'
     </select>  
 
+	<select id="findAllDailyAlarm" parameterType="Dash" resultType="Dash">
+		SELECT 
+			B.DATE AS DATE,
+			SUM(B.COUNT) AS SUM
+		FROM (
+			SELECT FORMAT(A.NOTICE_DATETIME,'yyyy-MM-dd') AS DATE,
+				COUNT(*) as COUNT
+	        FROM DSP_ANOMALYDETECT_NOTICE as A
+	        WHERE 1=1
+	        	AND FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') IN (
+	        												FORMAT(GETDATE(),'yyyy-MM-dd'),
+	        												FORMAT(GETDATE() -1,'yyyy-MM-dd')
+	        	)
+	        	AND FACTORYID = 'KEM'
+	        	AND ISUSABLE = 'Usable'
+	        GROUP BY FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') 	
+	    ) B
+	    GROUP BY B.DATE
+    </select>
+    
 </mapper>

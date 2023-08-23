@@ -31,6 +31,7 @@ $(function() {
 function initSetting() {
 
 	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
 
 	$("input[name=workDate]").datepicker({
 		format: "yyyy-mm-dd",
@@ -157,7 +158,7 @@ function setWorkDailyReportEventListener() {
 		data.model = $("select[name=wdrmodel]").val();
 		data.planqty = $("input[name=planqty]").val();
 		data.notes = $("input[name=notes]").val();
-//		data.creator =
+		data.register = localStorage.getItem("username");
 		data.tid = tid();
 
 		//validation check

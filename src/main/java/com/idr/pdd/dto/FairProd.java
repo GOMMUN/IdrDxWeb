@@ -12,5 +12,6 @@ public class FairProd {
 	private String dt;
 	private String workTotal;
 	private String notoperateTotal;
+	private String cnt;
 
 }

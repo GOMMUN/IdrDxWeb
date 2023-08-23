@@ -68,6 +68,11 @@ public class DashService {
 
 		return mapper.chart6(month);
 	}
+
+	public List<FairProd> chart8(String month) {
+
+		return mapper.chart8(month);
+	}
 	
 	public String find1Alarm(){
 		return mapper.find1Alarm();
@@ -81,4 +86,8 @@ public class DashService {
 		return mapper.find3Alarm();
 	}	
 
+	public List<Dash> findAllDailyAlarm(){
+		
+		return mapper.findAllDailyAlarm();
+	}
 }

@@ -1,7 +1,8 @@
 /**
  * 
  */
-const CORE_URL = "http://localhost:8171";
+//const CORE_URL = "http://localhost:8171";
+const CORE_URL = "https://idrenvision.iptime.org:8171";
 
 let c_factory = null;
 let c_block = null;
@@ -1030,7 +1031,7 @@ function setWorkContentsEventListener() {
 		//		let url = 'http://idrenvision.iptime.org:8271/work-contents';
 
 		$.ajax({
-			url: url,
+			url: url.replace("https","http"),
 			type: 'POST',
 			data: JSON.stringify([data]),
 			dataType: "json",

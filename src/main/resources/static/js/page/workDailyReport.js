@@ -1031,7 +1031,7 @@ function setWorkContentsEventListener() {
 		//		let url = 'http://idrenvision.iptime.org:8271/work-contents';
 
 		$.ajax({
-			url: url.replace("https","http"),
+			url: url,
 			type: 'POST',
 			data: JSON.stringify([data]),
 			dataType: "json",

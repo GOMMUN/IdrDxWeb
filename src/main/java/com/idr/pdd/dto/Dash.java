@@ -16,4 +16,8 @@ public class Dash {
 	private String dt;
 	private String workTotal;
 	private String notoperateTotal;
+	private String rejectItemId;
+	private String rejectType;
+	private int firsttimerejectQtySum;
+	
 }

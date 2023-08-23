@@ -870,7 +870,7 @@ function realTime() {
 				$('#alarmbell1').css('color', 'red');
 			}else{
 				$('.alarm1').css('background-color', '#FFF');
-				$('#alarmbell1').css('color', '#FFF');
+				$('#alarmbell1').css('color', 'gray');
 			}
 			
 			if(data[1] != '0'){
@@ -878,7 +878,7 @@ function realTime() {
 				$('#alarmbell2').css('color', 'red');
 			}else{
 				$('.alarm2').css('background-color', '#FFF');
-				$('#alarmbell2').css('color', '#FFF');
+				$('#alarmbell2').css('color', 'gray');
 			}
 			
 			if(data[2] != '0'){
@@ -886,7 +886,7 @@ function realTime() {
 				$('#alarmbell3').css('color', 'red');
 			}else{
 				$('.alarm3').css('background-color', '#FFF');
-				$('#alarmbell3').css('color', '#FFF');
+				$('#alarmbell3').css('color', 'gray');
 			}		
 
 		}

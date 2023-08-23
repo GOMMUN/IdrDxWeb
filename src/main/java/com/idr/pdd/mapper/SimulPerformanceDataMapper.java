@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.idr.pdd.dto.Code;
 import com.idr.pdd.dto.Factory;
+import com.idr.pdd.dto.LeadTime;
 import com.idr.pdd.dto.Location;
 import com.idr.pdd.dto.LogisticsInfo;
 import com.idr.pdd.dto.ModelNM;
@@ -26,5 +27,7 @@ public interface SimulPerformanceDataMapper {
 	//Map<String, Integer> sundaycount(String start, String end);
 
 	List<performanceByProcess > performanceByProcess(String start, String end);
+	
+	List<LeadTime> leadtime(String start,String end);
 	
 }

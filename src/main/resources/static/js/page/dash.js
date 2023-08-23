@@ -54,7 +54,7 @@ function setchart1(chart1data) {
 			type: 'column'
 		},
 		title: {
-			text: '대표기업 월별 공정별 생산실적',
+			text: '대표기업 공정별 생산실적',
 			align: 'left'
 		},
 		xAxis: {
@@ -145,7 +145,7 @@ function setchart2(){
         type: 'column'
     },
     title: {
-        text: '협력사 A 월별 공정별 생산실적',
+        text: '협력사 공정별 생산실적',
         align: 'left'
     },
     xAxis: {
@@ -371,7 +371,7 @@ function setchart5(chart5data) {
 	Highcharts.chart('chart5', {
 
     title: {
-        text: '대표기업 월별 설비 가동율 현황',
+        text: '대표기업 설비 가동율 현황',
         align: 'left'
     },
 
@@ -456,7 +456,7 @@ function setchart6(chart6data){
 	    },
 	    
 	    title: {
-	        text: '대표 기업 월별 계획 대비 실적',
+	        text: '대표 기업 계획 대비 실적',
 	        align: 'left'
 	    },
 	    

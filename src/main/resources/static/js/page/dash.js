@@ -704,7 +704,7 @@ function PQCDrate() {
 	    compareOperateRate = operateRate-preOperateRate
 	        
 	    successRate = (ProdQtyTo / PlanQtyTo) * 100; //달성율
-        $('#successRate').text(isNaN(successRate) ? '-' : parseFloat(successRate.toFixed(2)) + '%');
+        $('#successRate').text(isNaN(successRate) ? '-' : parseFloat(successRate.toFixed(2)) + '%'); 
         
         preSuccessRate = (ProdQtyYe / PlanQtyYe) * 100;
 	    compareSuccessRate = successRate-preSuccessRate

@@ -23,18 +23,18 @@ public class LeadTimeService {
 		// Map<String,Integer> count=mapper.sundaycount(start,end);
 
 		List<LeadTime> list = mapper.leadtime(start, end);
-
+		/*
 		for (LeadTime p : list) {
 
 			int days = Integer.parseInt(p.getLeadTime()) / (24 * 60 * 60);
 			int hours = (Integer.parseInt(p.getLeadTime()) % (24 * 60 * 60)) / 3600;
 			int minutes = (Integer.parseInt(p.getLeadTime()) % 3600) / 60;
 			int seconds = Integer.parseInt(p.getLeadTime()) % 60;
-			String result = String.valueOf(days + "일" + hours + "시간" + minutes + "분" + seconds + "초");
+			String result = String.valueOf(days + "DAY" + " "+hours + ":" + minutes + ":" + seconds );
 			p.setLeadTime(result);
 
 		}
-
+*/
 		return list;
 	}
 

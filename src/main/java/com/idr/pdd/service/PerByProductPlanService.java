@@ -23,7 +23,7 @@ public class PerByProductPlanService {
 		
 		List<PerByProductPlan> list=mapper.productplanfind(start, end);
 		
-
+/*
 		for(PerByProductPlan p:list) {
 			int days = Integer.parseInt(p.getTakenTime()) / (24 * 60 * 60);
 	        int hours = (Integer.parseInt(p.getTakenTime()) % (24 * 60 * 60)) / 3600;
@@ -32,7 +32,7 @@ public class PerByProductPlanService {
 	        String result=String.valueOf(days+"일"+hours+"시간"+minutes+"분"+seconds+"초");
 	        p.setTakenTime(result);
 		}
-
+*/
 		
 		return list;
 	}

@@ -55,7 +55,7 @@ function setchart1(chart1data) {
 			type: 'column'
 		},
 		title: {
-			text: '대표기업 공정별 생산실적',
+			text: '코렌스이엠 공정별 생산실적',
 			align: 'left'
 		},
 		xAxis: {
@@ -149,7 +149,7 @@ function setchart2(){
         type: 'column'
     },
     title: {
-        text: '협력사 공정별 생산실적',
+        text: '리하온 공정별 생산실적',
         align: 'left'
     },
     xAxis: {
@@ -375,7 +375,7 @@ function setchart5(chart5data) {
 	    
 	    for (var i = 0; i <= 5; i++) {
 	        var percentage = 0;
-	        percentage = Number((chart5data[j][i].workTotal / ((chart5data[j][i].workTotal + chart5data[j][i].notoperateTotal) == 0 ? 1 : (chart5data[j][i].workTotal + chart5data[j][i].notoperateTotal))) * 100);
+	        percentage = Number((parseInt(chart5data[j][i].workTotal) / ((parseInt(chart5data[j][i].workTotal) + parseInt(chart5data[j][i].notoperateTotal)) == 0 ? 1 : (parseInt(chart5data[j][i].workTotal) + parseInt(chart5data[j][i].notoperateTotal)))) * 100);
 	        
 	        seriesData[j][i] = percentage; // 2차원 배열에 작업 완료 비율 추가
 	    }
@@ -384,7 +384,7 @@ function setchart5(chart5data) {
 	Highcharts.chart('chart5', {
 
     title: {
-        text: '대표기업 설비 가동율 현황',
+        text: '코렌스이엠 설비 가동율 현황',
         align: 'left'
     },
 
@@ -473,7 +473,7 @@ function setchart6(chart6data){
 	    },
 	    
 	    title: {
-	        text: '대표 기업 계획 대비 실적',
+	        text: '코렌스이엠 계획 대비 실적',
 	        align: 'left'
 	    },
 	    
@@ -686,7 +686,7 @@ function PQCDrate() {
         });
         
         Uph = ProdQtyTo / ManhourTo; // UPH
-        $('#Uph').text(Uph.toFixed(0));
+        $('#Uph').text(isNaN(Uph) ? '-' : parseFloat(Uph.toFixed(2)) + '%');
         
         preUph = ProdQtyYe / ManhourYe;
 	    compareUph = Uph-preUph
@@ -709,21 +709,33 @@ function PQCDrate() {
         preSuccessRate = (ProdQtyYe / PlanQtyYe) * 100;
 	    compareSuccessRate = successRate-preSuccessRate
 	    
-	    if (compareUph > 0 || compareFailRate > 0 || compareOperateRate > 0 || compareSuccessRate > 0) {
-			$('#preUph').text('전일대비 ▲ '+ compareUph.toFixed(0));
-			$('#preFailRate').text('전일대비 ▲ '+ compareFailRate.toFixed(2) + '%');
-			$('#preOperateRate').text('전일대비 ▲ '+ compareOperateRate.toFixed(2) + '%');
-			$('#preSuccessRate').text('전일대비 ▲ '+ compareSuccessRate.toFixed(2) + '%');
-		} else if (compareUph == 0 || compareFailRate == 0 || compareOperateRate == 0  || compareSuccessRate == 0) {
+	    if (compareUph > 0){
+			$('#preUph').text('전일대비 ▲ '+ (isNaN(compareUph) ? '-' : parseFloat(compareUph.toFixed(0))));
+		} else if (compareUph == 0){
 			$('#preUph').text('전일대비 - ');
+		} else if (compareUph < 0){
+			$('#preUph').text('전일대비 ▼ '+ (isNaN(compareUph) ? '-' : parseFloat(compareUph.toFixed(0))));
+		}
+		if (compareFailRate > 0){
+			$('#preFailRate').text('전일대비 ▲ '+ (isNaN(compareFailRate) ? '-' : parseFloat(compareFailRate.toFixed(2))) + '%');
+		} else if (compareFailRate == 0){
 			$('#preFailRate').text('전일대비 - ');
+		} else if (compareFailRate < 0){
+			$('#preFailRate').text('전일대비 ▼ '+ (isNaN(compareFailRate) ? '-' : parseFloat(compareFailRate.toFixed(2))) + '%');
+		}
+		if (compareOperateRate > 0){
+			$('#preOperateRate').text('전일대비 ▲ '+ (isNaN(compareOperateRate) ? '-' : parseFloat(compareOperateRate.toFixed(2))) + '%');
+		} else if (compareOperateRate == 0) {	
 			$('#preOperateRate').text('전일대비 - ');
+		} else if (compareOperateRate < 0){
+			$('#preOperateRate').text('전일대비 ▼ '+ (isNaN(compareOperateRate) ? '-' : parseFloat(compareOperateRate.toFixed(2))) + '%');
+		}
+		if (compareSuccessRate > 0) {
+			$('#preSuccessRate').text('전일대비 ▲ '+ (isNaN(compareSuccessRate) ? '-' : parseFloat(compareSuccessRate.toFixed(2))) + '%');
+		} else if (compareSuccessRate == 0) {
 			$('#preSuccessRate').text('전일대비 - ');
-		} else if (compareUph < 0 || compareFailRate < 0 || compareOperateRate < 0  || compareSuccessRate < 0) {
-			$('#preUph').text('전일대비 ▼ '+ compareUph.toFixed(0));
-			$('#preFailRate').text('전일대비 ▼ '+ compareFailRate.toFixed(2) + '%');
-			$('#preOperateRate').text('전일대비 ▼ '+ compareOperateRate.toFixed(2) + '%');
-			$('#preSuccessRate').text('전일대비 ▼ '+ compareSuccessRate.toFixed(2) + '%');
+		} else if (compareSuccessRate < 0) {
+			$('#preSuccessRate').text('전일대비 ▼ '+ (isNaN(compareSuccessRate) ? '-' : parseFloat(compareSuccessRate.toFixed(2))) + '%');
 		}
      
     });

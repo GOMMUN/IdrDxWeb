@@ -19,6 +19,7 @@ $(function(){
 	factroy();
 	
 	realTime();
+	refreshTime();
 });
 
 function setchart1(chart1data) {
@@ -79,6 +80,9 @@ function setchart1(chart1data) {
 				minPointLength:3
 			}
 		},
+		credits: {
+            enabled: false
+        },
 		series: [
 			{
 				name: chart1data[0][0].lineid,
@@ -170,6 +174,9 @@ function setchart2(){
 			minPointLength:3
 		}
     },
+	credits: {
+        enabled: false
+    },    
     series: [
         {
             name: chart2data[0][0].lineid,
@@ -192,6 +199,9 @@ function chart3(data1, data2, data3, data4){
         text: '불량 발생 비중',
         align: 'left'
     },
+	credits: {
+        enabled: false
+    },    
     series: [{
         minPointSize: 10,
         innerSize: '70%',
@@ -322,6 +332,9 @@ Highcharts.chart('chart4', {
     title: {
         text: '불량 상세 유형별 빈도 수',
         align: 'left'
+    },
+	credits: {
+        enabled: false
     }
 });
 
@@ -402,6 +415,10 @@ function setchart5(chart5data) {
             text: ''
         }
     },   
+    
+	credits: {
+        enabled: false
+    },    
 
     series: [{
         name: chart5data[0][0].lineid,
@@ -485,6 +502,10 @@ function setchart6(chart6data){
 			}
 	    },
 	    
+		credits: {
+	        enabled: false
+	    },	    
+	    
 	    series: [
 	        {
 	            name: '계획',
@@ -537,6 +558,9 @@ Highcharts.chart('chart7', {
                 '<div>{viewTableButton}</div>'
         }
     },
+	credits: {
+        enabled: false
+    },	    
     series: [{
         type: 'wordcloud',
         data,
@@ -610,6 +634,10 @@ function setchart8(chart8data){
 			}
 	    },
 	    
+	    credits: {
+	        enabled: false
+	    },	
+	    
 	    series: [
 	        {
 	            name: '실적',
@@ -664,19 +692,19 @@ function PQCDrate() {
 	    compareUph = Uph-preUph
 
         failRate = (FirstTimeFailQtyTo / ProdQtyTo) * 100; //불량률
-        $('#failRate').text(failRate.toFixed(2) + '%');
+        $('#failRate').text(isNaN(failRate) ? '-' : parseFloat(failRate.toFixed(2)) + '%');
         
         preFailRate = (FirstTimeFailQtyYe / ProdQtyYe) * 100;
 	    compareFailRate = failRate-preFailRate
 	    
 	    operateRate = (WorkTimeTo / (WorkTimeTo + NotoperateTimeTo)) * 100; //가동률
-        $('#operateRate').text(operateRate.toFixed(2) + '%');
+        $('#operateRate').text(isNaN(operateRate) ? '-' : parseFloat(operateRate.toFixed(2)) + '%');
         
         preOperateRate = (WorkTimeYe / (WorkTimeYe + NotoperateTimeYe)) * 100;
 	    compareOperateRate = operateRate-preOperateRate
 	        
 	    successRate = (ProdQtyTo / PlanQtyTo) * 100; //달성율
-        $('#successRate').text(successRate.toFixed(2) + '%');
+        $('#successRate').text(isNaN(successRate) ? '-' : parseFloat(successRate.toFixed(2)) + '%');
         
         preSuccessRate = (ProdQtyYe / PlanQtyYe) * 100;
 	    compareSuccessRate = successRate-preSuccessRate
@@ -908,7 +936,7 @@ function factroy() {
 }
 
 var repeat = null;
-var delay = 15000;
+var delay = 5000;
 repeat = setInterval(realTime, delay); // delay 간격으로 실행.
 
 function realTime() {
@@ -925,7 +953,6 @@ function realTime() {
 			$('#alarm1').text(data[0]);
 			$('#alarm2').text(data[1]);
 			$('#alarm3').text(data[2]);
-			$('#realTime').text("최근 업데이트 : "+data[3]);
 			
 			if(data[0] != '0'){
 				$('.alarm1').css('background-color', 'yellow');
@@ -953,7 +980,10 @@ function realTime() {
 
 		}
 	});
-	
+		
+}
+
+function refreshTime(){
 	var url2 = '/dash/findDailyAlarm';
 
     $.get(url2).then(function(res) {
@@ -967,6 +997,13 @@ function realTime() {
 		var day = today.getDate().toString().padStart(2, '0');
 
 		var formattedDate = year + '-' + month + '-' + day;
+		
+		var hours = ('0' + today.getHours()).slice(-2); 
+		var minutes = ('0' + today.getMinutes()).slice(-2);
+		var seconds = ('0' + today.getSeconds()).slice(-2); 
+		var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
+		
+		$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
 		
         result.forEach(function(r) {
 			if (r.date == formattedDate) {
@@ -989,6 +1026,5 @@ function realTime() {
 		}
      
     });
-		
 }
 

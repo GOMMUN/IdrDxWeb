@@ -6,10 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.idr.pdd.dto.WorkContents;
 import com.idr.pdd.dto.FairProd;
-import com.idr.pdd.dto.RejectContents;
-import com.idr.pdd.dto.Dash;
 import com.idr.pdd.mapper.DashMapper;
 
 @Service
@@ -18,12 +15,12 @@ public class DashService {
 	@Autowired
 	DashMapper mapper;
 
-	public List<Dash> findAllPQCD(){
+	public List<FairProd> findAllPQCD(String factory){
 		
-		return mapper.findAllPQCD();
+		return mapper.findAllPQCD(factory);
 	}
 
-	public List<Dash> findAllR(String factory, String month) {
+	public List<FairProd> findAllR(String factory, String month) {
 
 		return mapper.findAllR(factory, month);
 	}
@@ -61,9 +58,9 @@ public class DashService {
 		return finalresult;
 	}
 	
-	public List<FairProd> chart6(String month) {
+	public List<FairProd> chart6(String factory, String month) {
 
-		return mapper.chart6(month);
+		return mapper.chart6(factory,month);
 	}
 
 	public List<FairProd> chart8(String month) {
@@ -83,7 +80,7 @@ public class DashService {
 		return mapper.find3Alarm();
 	}	
 
-	public List<Dash> findAllDailyAlarm(){
+	public List<FairProd> findAllDailyAlarm(){
 		
 		return mapper.findAllDailyAlarm();
 	}

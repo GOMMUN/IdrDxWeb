@@ -13,5 +13,14 @@ public class FairProd {
 	private String workTotal;
 	private String notoperateTotal;
 	private String cnt;
+	private int manhour;
+	private int firsttimeFailQty;
+	private String worktime;
+	private String notoperatetime;
+	private String rejectItemId;
+	private String rejectType;
+	private int firsttimerejectQtySum;
+	private String date;
+	private String sum;
 
 }

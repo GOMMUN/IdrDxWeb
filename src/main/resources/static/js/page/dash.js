@@ -653,8 +653,13 @@ function setchart8(chart8data){
 	
 function PQCDrate() {
     var url = '/dash/findPQCD';
+    
+      	var params = {
+		factory: "KEM"
+//		factory: "LHO"
+	};
 
-    $.get(url).then(function(res) {
+    $.get(url + '?' + $.param(params)).then(function(res) {
         var result = res;
         var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0,
         	ManhourTo = 0, ManhourYe = 0, PlanQtyTo = 0, PlanQtyYe = 0, WorkTimeTo = 0, WorkTimeYe = 0, NotoperateTimeTo = 0, NotoperateTimeYe = 0;
@@ -686,7 +691,7 @@ function PQCDrate() {
         });
         
         Uph = ProdQtyTo / ManhourTo; // UPH
-        $('#Uph').text(isNaN(Uph) ? '-' : parseFloat(Uph.toFixed(2)) + '%');
+        $('#Uph').text(isNaN(Uph) ? '-' : parseFloat(Uph.toFixed(2)));
         
         preUph = ProdQtyYe / ManhourYe;
 	    compareUph = Uph-preUph
@@ -746,6 +751,7 @@ function rejectContents(data) {
 
   	var params = {
 		factory: "KEM",
+//		factory: "LHO",
 		month: data
 	};
 	
@@ -858,6 +864,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart1';
 		var params = {
 			factory: "KEM",
+//			factory: "LHO",
 			month: data
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
@@ -884,6 +891,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 		var params = {
 			factory: "KEM",
+//			factory: "LHO",
 			month: data
 		};
 		
@@ -896,6 +904,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart6';
 		
 		var params = {
+			factory: "KEM",
+//			factory: "LHO",
 			month: data
 		};
 		
@@ -908,6 +918,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart8';
 
 		var params = {
+			factory: "KEM",
+//			factory: "LHO",
 			month: data
 		};
 		

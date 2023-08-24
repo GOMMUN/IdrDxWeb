@@ -46,8 +46,6 @@
 				,LOCATIONTYPE
 				,CREATOR
 				,CREATETIME
-				,EVENTUSER
-				,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
@@ -56,9 +54,7 @@
 				,#{factoryid}
 				,#{locationname}			
 				,'LINE'
-				,'idrAdmin'
-				,GETDATE()
-				,'idrAdmin'
+				,#{creator}
 				,GETDATE()
 				,#{isusable}			
 			)
@@ -71,21 +67,29 @@
 				,LOCATIONID     = #{locationid}
 				,LOCATIONNAME   = #{locationname}
 				,LOCATIONTYPE	='LINE'
+				,EVENTUSER		= #{eventuser}
 				,EVENTTIME 		= GETDATE()
 				,ISUSABLE		= #{isusable}
 			WHERE DATASEQ		= #{dataseq}
 	</update>
 
-    <update id="remove" parameterType="list">
-    	UPDATE DSP_LOCATION
-		SET ISUSABLE	= 'N',
-			EVENTUSER 	= 'idrAdmin',
-			EVENTTIME 	= GETDATE()
+<!--     <update id="remove" parameterType="list"> -->
+<!--     	UPDATE DSP_LOCATION -->
+<!-- 		SET ISUSABLE	= 'N', -->
+<!-- 			EVENTUSER 	= 'idrAdmin', -->
+<!-- 			EVENTTIME 	= GETDATE() -->
+<!-- 		WHERE 1=1 AND DATASEQ IN -->
+<!-- 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")"> -->
+<!-- 	        #{data} -->
+<!-- 	     </foreach> -->
+<!--     </update> -->
+	
+	<delete id="remove" parameterType="list">
+    	DELETE FROM DSP_LOCATION
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
-
+    </delete>
 
 </mapper>

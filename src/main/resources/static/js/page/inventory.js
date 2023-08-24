@@ -24,17 +24,17 @@ function initSetting() {
 		language: "ko"
 	});
 	
-	$("input[name=sInventorydateStart]").datepicker({
-		format: "yyyy-mm-dd",
-		autoclose: true,
-		language: "ko"
-	});
-	
-	$("input[name=sInventorydateEnd]").datepicker({
-		format: "yyyy-mm-dd",
-		autoclose: true,
-		language: "ko"
-	});
+//	$("input[name=sInventorydateStart]").datepicker({
+//		format: "yyyy-mm-dd",
+//		autoclose: true,
+//		language: "ko"
+//	});
+//	
+//	$("input[name=sInventorydateEnd]").datepicker({
+//		format: "yyyy-mm-dd",
+//		autoclose: true,
+//		language: "ko"
+//	});
 
 
 	code();

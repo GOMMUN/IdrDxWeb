@@ -48,8 +48,6 @@
         		,TOLINECNT
         		,CREATOR
         		,CREATETIME
-        		,EVENTUSER
-        		,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
@@ -64,10 +62,8 @@
 				,#{fromlinecnt}
 				,#{tolinecode}
 				,#{tolinecnt}
-				,'idrAdmin'
+				,#{creator}
 				,getdate()
-				,'idrAdmin'
-				,getdate()	
 				,#{isusable}			
 			)
 	</insert>
@@ -86,21 +82,30 @@
 				,FROMLINECNT   	= #{fromlinecnt}
 				,TOLINECODE   	= #{tolinecode}
 				,TOLINECNT   	= #{tolinecnt}
+				,EVENTUSER		= #{eventuser}
 				,EVENTTIME 		= GETDATE()
 				,ISUSABLE   	= #{isusable}
 			WHERE DATASEQ		= #{dataseq}
 	</update>
 
-    <update id="remove" parameterType="list">
-    	UPDATE DSP_LOTINFO
-		SET ISUSABLE	= 'N',
-			EVENTUSER 	= 'idrAdmin',
-			EVENTTIME 	= GETDATE()
+<!--     <update id="remove" parameterType="list"> -->
+<!--     	UPDATE DSP_LOTINFO -->
+<!-- 		SET ISUSABLE	= 'N', -->
+<!-- 			EVENTUSER 	= 'idrAdmin', -->
+<!-- 			EVENTTIME 	= GETDATE() -->
+<!-- 		WHERE 1=1 AND DATASEQ IN -->
+<!-- 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")"> -->
+<!-- 	        #{data} -->
+<!-- 	     </foreach> -->
+<!--     </update> -->
+
+	<delete id="remove" parameterType="list">
+    	DELETE FROM DSP_LOTINFO
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
+    </delete>
 
 
 </mapper>

@@ -86,6 +86,7 @@
 		WHERE B.WORK_DATE =CONVERT(VARCHAR, CONVERT(DATE, #{workDate}),112)
 		AND
 		B.FACTORYID =#{factoryid}
+		AND A.ISUSABLE = 'Usable'
 		AND B.LINEID =#{lineid}
 	</select>
 

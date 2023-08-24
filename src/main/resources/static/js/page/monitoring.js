@@ -4,6 +4,7 @@
 
 let c_factory = null;
 let c_line = null;
+let c_material = null;
 let data = s_monitor();
 
 $(function() {
@@ -16,6 +17,7 @@ $(function() {
 	factroy();
 	line();
 	init();
+	matarial();
 	setEventListener();
 });
 
@@ -65,6 +67,22 @@ function setEventListener() {
 			$dropdown1.append($("<option/>").val("").text("공정 선택"));
 
 		}
+		
+		let $dropdown5 = $("#matarial");
+		$dropdown5.empty();
+
+		if (c_material) {
+			$dropdown5.append($("<option/>").val("").text("자재 선택"));
+			$.each(c_material, function() {
+				if ($factoryCodes.val() == this.mcode) {
+					$dropdown5.append($("<option/>").val(this.code).text(this.value));
+				}
+			});
+		} else {
+			$dropdown5.append($("<option/>").val("").text("자재 선택"));
+
+		}
+
 	});
 
 	$search.click(function() {
@@ -148,6 +166,21 @@ function line(factoryid) {
 
 }
 
+function matarial() {
+	let url = '/code/matarial';
+
+	c_material = null;
+
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			c_material = data;
+
+			
+		}
+	});
+}
 function s_monitor() {
 	let data = {
 		"workDate": "", "factoryid": "", "lineid": ""

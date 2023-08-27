@@ -90,10 +90,10 @@ public class MonitoringService {
 			Monitoring mt=new Monitoring();
 			mt.setTotalfailQty(0);
 			mt.setTotalprodQty(0);
-			mt.setRi01("0");
-			mt.setRi02("0");
-			mt.setRi03("0");
-			mt.setRi04("0");
+			mt.setRi01("-");
+			mt.setRi02("-");
+			mt.setRi03("-");
+			mt.setRi04("-");
 			return mt;
 		}
 		

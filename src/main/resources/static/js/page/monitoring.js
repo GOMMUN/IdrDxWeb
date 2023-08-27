@@ -208,16 +208,16 @@ function ajaxRequest(params) {
 				$("#nightpl").text(result[1].prodQty);
 				$("#nightper").text(result[1].planQty);
 			} else {
-				$("#dayplan").text("데이터가없습니다");
-				$("#dayperformance").text(0);
-				$("#daypl").text(0);
-				$("#dayper").text(0);
+				$("#dayplan").text("-");
+				$("#dayperformance").text("-");
+				$("#daypl").text("-");
+				$("#dayper").text("-");
 
 
-				$("#nightplan").text("데이터가없습니다");
-				$("#nightperformance").text(0);
-				$("#nightpl").text(0);
-				$("#nightper").text(0);
+				$("#nightplan").text("-");
+				$("#nightperformance").text("-");
+				$("#nightpl").text("-");
+				$("#nightper").text("-");
 			}
 
 
@@ -228,8 +228,18 @@ function ajaxRequest(params) {
 		$.get(findstorageurl + '?' + $.param(params)).then(function(res) {
 			let result = res;
 
-			$("#mqty").text(result.mtotalqty);
-			$("#pqty").text(result.ptotalqty);
+			if(result.mtotalqty>0){
+				$("#mqty").text(result.mtotalqty);
+			}else{
+				$("#mqty").text("-");
+			}
+			
+			if(result.ptotalqty>0){
+				$("#pqty").text(result.ptotalqty);
+			}else{
+				$("#pqty").text("-");
+			}
+			
 
 		})
 
@@ -238,6 +248,7 @@ function ajaxRequest(params) {
 		$.get(findrejecturl + '?' + $.param(params)).then(function(res) {
 			let result = res;
 
+			if(result.failpercent>0){
 			$("#failper").text(result.failpercent + '%');
 			$("#failqty").text(result.totalfailQty);
 			$("#prodqty").text(result.totalprodQty);
@@ -245,6 +256,16 @@ function ajaxRequest(params) {
 			$("#ri02").text(result.ri02);
 			$("#ri03").text(result.ri03);
 			$("#ri04").text(result.ri04);
+			}else{
+			$("#failper").text("-");
+			$("#failqty").text("-");
+			$("#prodqty").text("-");
+			$("#ri01").text(result.ri01);
+			$("#ri02").text(result.ri02);
+			$("#ri03").text(result.ri03);
+			$("#ri04").text(result.ri04);
+			}
+			
 
 		})
 

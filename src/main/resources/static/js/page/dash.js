@@ -7,6 +7,8 @@ var chart5data = null;
 var chart6data = null;
 var chart8data = null;
 
+var result = null;
+
 $(function(){
 	chart3();
 	chart4();
@@ -16,19 +18,27 @@ $(function(){
 	rejectContents(new Date().getMonth()+1);
 	selectMonthButton();
 	selectDayWeekMonthButton()
-	factroy();
 	
 	realTime();
 	refreshTime();
+	findName();
+	initSetting();
 });
 
+function initSetting() {
+	
+	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
+	
+	factroy();
+}
 function setchart1(chart1data) {
 	var dateData = [];
 
 	for (var j = 0; j <= 0; j++) {
 	    dateData[j] = []; 
 	    
-	    for (var i = 0; i <= 5; i++) {
+	    for (var i = 0; i <= chart1data[j].length-1; i++) {
 	        if (chart1data[j][i].dt >= 2000) {
 	            dateData[j][i] = formatDate(chart1data[j][i].dt.toString(), "yyyymmdd", "월 일");
 	        } else if (chart1data[j][i].dt < 2000 && chart1data[j][i].dt >= 20) {
@@ -50,16 +60,37 @@ function setchart1(chart1data) {
 	    return `${monthString} ${dayString}`;
 	}
 	
+	var seriesData1 = [];
+	var seriesData2 = [];
+
+	for (var j = 0; j <= chart1data.length-1; j++) {
+	
+		
+	    seriesData1[j] = [];
+	    
+	    for (var i = 0; i <= chart1data[j].length-1; i++) {        
+	        seriesData1[j][i] = Number(chart1data[j][i].prodQty);
+	    }
+	    
+	    var series = {
+	        name: chart1data[j][0].lineid,
+	        data: seriesData1[j]
+	    };
+	    
+	    seriesData2.push(series);
+	
+	}
+	
 	Highcharts.chart('chart1', {
 		chart: {
 			type: 'column'
 		},
 		title: {
-			text: '코렌스이엠 공정별 생산실적',
+			text: localStorage.getItem('factoryname') + ' 공정별 생산실적',
 			align: 'left'
 		},
 		xAxis: {
-			categories: [dateData[0][0], dateData[0][1], dateData[0][2], dateData[0][3], dateData[0][4], dateData[0][5]],
+			categories: dateData[0],
 			crosshair: true,
 			accessibility: {
 				description: 'Month'
@@ -83,35 +114,12 @@ function setchart1(chart1data) {
 		credits: {
             enabled: false
         },
-		series: [
-			{
-				name: chart1data[0][0].lineid,
-				data: [Number(chart1data[0][0].prodQty), Number(chart1data[0][1].prodQty), 
-				Number(chart1data[0][2].prodQty), Number(chart1data[0][3].prodQty),
-				Number(chart1data[0][4].prodQty), Number(chart1data[0][5].prodQty)],
-				color: '#0D70C6'
-			},
-			{
-				name: chart1data[1][0].lineid,
-				data: [Number(chart1data[1][0].prodQty), Number(chart1data[1][1].prodQty), 
-				Number(chart1data[1][2].prodQty), Number(chart1data[1][3].prodQty),
-				Number(chart1data[1][4].prodQty), Number(chart1data[1][5].prodQty)],
-				color: '#009CD8'
-			},
-			{
-				name: chart1data[2][0].lineid,
-				data: [Number(chart1data[2][0].prodQty), Number(chart1data[2][1].prodQty), 
-				Number(chart1data[2][2].prodQty), Number(chart1data[2][3].prodQty),
-				Number(chart1data[2][4].prodQty), Number(chart1data[2][5].prodQty)],
-				color: '#09D0D9'
-			},
-			{
-				name: chart1data[3][0].lineid,
-				data: [Number(chart1data[3][0].prodQty), Number(chart1data[3][1].prodQty), 
-				Number(chart1data[3][2].prodQty), Number(chart1data[3][3].prodQty),
-				Number(chart1data[3][4].prodQty), Number(chart1data[3][5].prodQty)],
-				color: '#0DCF9C'
-			}
+		series: seriesData2,
+		colors: [
+			'#0D70C6',
+			'#009CD8',
+			'#09D0D9',
+			'#0DCF9C'
 		]
 	});
 }
@@ -122,7 +130,7 @@ function setchart2(){
 	for (var j = 0; j <= 0; j++) {
 	    dateData[j] = []; 
 	    
-	    for (var i = 0; i <= 5; i++) {
+	    for (var i = 0; i <= chart2data[j].length-1; i++) {
 	        if (chart2data[j][i].dt >= 2000) {
 	            dateData[j][i] = formatDate(chart2data[j][i].dt.toString(), "yyyymmdd", "월 일");
 	        } else if (chart2data[j][i].dt < 2000 && chart2data[j][i].dt >= 20) {
@@ -144,16 +152,37 @@ function setchart2(){
 	    return `${monthString} ${dayString}`;
 	}
 	
+	var seriesData1 = [];
+	var seriesData2 = [];
+
+	for (var j = 0; j <= chart2data.length-1; j++) {
+	
+		
+	    seriesData1[j] = [];
+	    
+	    for (var i = 0; i <= chart2data[j].length-1; i++) {        
+	        seriesData1[j][i] = Number(chart2data[j][i].prodQty);
+	    }
+	    
+	    var series = {
+	        name: chart2data[j][0].lineid,
+	        data: seriesData1[j]
+	    };
+	    
+	    seriesData2.push(series);
+	
+	}
+	
 	Highcharts.chart('chart2', {
     chart: {
         type: 'column'
     },
     title: {
-        text: '리하온 공정별 생산실적',
+        text: ' 공정별 생산실적',
         align: 'left'
     },
     xAxis: {
-        categories: [dateData[0][0], dateData[0][1], dateData[0][2], dateData[0][3], dateData[0][4], dateData[0][5]],
+        categories: dateData[0],
         crosshair: true,
         accessibility: {
             description: 'Month'
@@ -177,15 +206,10 @@ function setchart2(){
 	credits: {
         enabled: false
     },    
-    series: [
-        {
-            name: chart2data[0][0].lineid,
-				data: [Number(chart2data[0][0].prodQty), Number(chart2data[0][1].prodQty), 
-				Number(chart2data[0][2].prodQty), Number(chart2data[0][3].prodQty),
-				Number(chart2data[0][4].prodQty), Number(chart2data[0][5].prodQty)],
-            color: '#0D70C6'
-        }
-    ]
+    series: seriesData2,
+    colors: [
+		'#0D70C6'
+		]
 });
 
 }
@@ -346,7 +370,7 @@ function setchart5(chart5data) {
 	for (var j = 0; j <= 0; j++) {
 	    dateData[j] = []; 
 	    
-	    for (var i = 0; i <= 5; i++) {
+	    for (var i = 0; i <= chart5data[j].length-1; i++) {
 	        if (chart5data[j][i].dt >= 2000) {
 	            dateData[j][i] = formatDate(chart5data[j][i].dt.toString(), "yyyymmdd", "월 일");
 	        } else if (chart5data[j][i].dt < 2000 && chart5data[j][i].dt >= 20) {
@@ -355,6 +379,7 @@ function setchart5(chart5data) {
 	            dateData[j][i] = chart5data[j][i].dt.toString() + '월';
 	        }
 	    }
+
 	}
 
 	function formatDate(dateString, inputFormat, outputFormat) {
@@ -368,23 +393,34 @@ function setchart5(chart5data) {
 	    return `${monthString} ${dayString}`;
 	}
 	
-	var seriesData = [];
+	var seriesData1 = [];
+	var seriesData2 = [];
 
-	for (var j = 0; j <= 3; j++) {
-	    seriesData[j] = []; // 새로운 2차원 배열 생성
+	for (var j = 0; j <= chart5data.length-1; j++) {
+	
+		
+	    seriesData1[j] = [];
 	    
-	    for (var i = 0; i <= 5; i++) {
+	    for (var i = 0; i <= chart5data[j].length-1; i++) {
 	        var percentage = 0;
 	        percentage = Number((parseInt(chart5data[j][i].workTotal) / ((parseInt(chart5data[j][i].workTotal) + parseInt(chart5data[j][i].notoperateTotal)) == 0 ? 1 : (parseInt(chart5data[j][i].workTotal) + parseInt(chart5data[j][i].notoperateTotal)))) * 100);
 	        
-	        seriesData[j][i] = percentage; // 2차원 배열에 작업 완료 비율 추가
+	        seriesData1[j][i] = percentage;
 	    }
+	    
+	    var series = {
+	        name: chart5data[j][0].lineid,
+	        data: seriesData1[j]
+	    };
+	    
+	    seriesData2.push(series);
+	
 	}
 	
 	Highcharts.chart('chart5', {
 
     title: {
-        text: '코렌스이엠 설비 가동율 현황',
+        text: localStorage.getItem('factoryname') + ' 설비 가동율 현황',
         align: 'left'
     },
 
@@ -403,7 +439,7 @@ function setchart5(chart5data) {
     },
 
     xAxis: {
-        categories: [dateData[0][0], dateData[0][1], dateData[0][2], dateData[0][3], dateData[0][4], dateData[0][5]],
+        categories: dateData[0],
         crosshair: true,
         accessibility: {
             description: 'Month'
@@ -420,23 +456,13 @@ function setchart5(chart5data) {
         enabled: false
     },    
 
-    series: [{
-        name: chart5data[0][0].lineid,
-        data: [seriesData[0][0], seriesData[0][1], seriesData[0][2], seriesData[0][3], seriesData[0][4], seriesData[0][5]],
-        color:'#94F5F9'
-    }, {
-        name: chart5data[1][0].lineid,
-        data: [seriesData[1][0], seriesData[1][1], seriesData[1][2], seriesData[1][3], seriesData[1][4], seriesData[1][5]],
-        color:'#7D9632'
-    }, {
-        name: chart5data[2][0].lineid,
-        data: [seriesData[2][0], seriesData[2][1], seriesData[2][2], seriesData[2][3], seriesData[2][4], seriesData[2][5]],
-        color:'#0A9B73'
-    }, {
-        name: chart5data[3][0].lineid,
-        data: [seriesData[3][0], seriesData[3][1], seriesData[3][2], seriesData[3][3], seriesData[3][4], seriesData[3][5]],
-        color:'#4FCDFF'
-    }]
+    series: seriesData2,
+    colors: [
+            '#94F5F9',
+            '#7D9632',
+            '#0A9B73',
+            '#4FCDFF'
+        ]
 
 });
 
@@ -445,7 +471,7 @@ function setchart5(chart5data) {
 function setchart6(chart6data){
 	var dateData = [];
 
-	for (var i = 0; i <= 5; i++) {
+	for (var i = 0; i <= chart6data.length-1; i++) {
 	    if (chart6data[i].dt >= 2000) {
 	            dateData[i] = formatDate(chart6data[i].dt.toString(), "yyyymmdd", "월 일");
 	    } else if (chart6data[i].dt < 2000 && chart6data[i].dt >= 20) {
@@ -467,18 +493,28 @@ function setchart6(chart6data){
 	    return `${monthString} ${dayString}`;
 	}
 	
+	var plan = [];
+	var prod = [];
+	    
+	for (var i = 0; i <= chart6data.length-1; i++) {
+
+		plan[i] = Number(chart6data[i].planQty);
+		prod[i] = Number(chart6data[i].prodQty);
+
+	}
+
 	Highcharts.chart('chart6', {
 	    chart: {
 	        type: 'column'
 	    },
 	    
 	    title: {
-	        text: '코렌스이엠 계획 대비 실적',
+	        text: localStorage.getItem('factoryname') + ' 계획 대비 실적',
 	        align: 'left'
 	    },
 	    
 	    xAxis: {
-	        categories: [dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]],
+	        categories: dateData,
 	        crosshair: true,
 	        accessibility: {
 	            description: 'Month'
@@ -509,16 +545,12 @@ function setchart6(chart6data){
 	    series: [
 	        {
 	            name: '계획',
-	            data: [Number(chart6data[0].planQty), Number(chart6data[1].planQty), 
-					Number(chart6data[2].planQty), Number(chart6data[3].planQty),
-					Number(chart6data[4].planQty), Number(chart6data[5].planQty)],
+	            data: plan,
 	            color : '#983501'
 	        },
 	        {
 	            name: '실적',
-	            data: [Number(chart6data[0].prodQty), Number(chart6data[1].prodQty), 
-					Number(chart6data[2].prodQty), Number(chart6data[3].prodQty),
-					Number(chart6data[4].prodQty), Number(chart6data[5].prodQty)],
+	            data: prod,
 	            color : '#FC6D00'
 	        }
 	    ]
@@ -655,8 +687,7 @@ function PQCDrate() {
     var url = '/dash/findPQCD';
     
       	var params = {
-		factory: "KEM"
-//		factory: "LHO"
+		factory: localStorage.getItem('plant')
 	};
 
     $.get(url + '?' + $.param(params)).then(function(res) {
@@ -715,32 +746,40 @@ function PQCDrate() {
 	    compareSuccessRate = successRate-preSuccessRate
 	    
 	    if (compareUph > 0){
-			$('#preUph').text('전일대비 ▲ '+ (isNaN(compareUph) ? '-' : parseFloat(compareUph.toFixed(0))));
+			$('#preUph').text('전일대비 ▲ '+ compareUph.toFixed(0));
 		} else if (compareUph == 0){
 			$('#preUph').text('전일대비 - ');
 		} else if (compareUph < 0){
-			$('#preUph').text('전일대비 ▼ '+ (isNaN(compareUph) ? '-' : parseFloat(compareUph.toFixed(0))));
+			$('#preUph').text('전일대비 ▼ '+ compareUph.toFixed(0));
+		} else if (isNaN(compareUph)) {
+			$('#preUph').text('-');
 		}
 		if (compareFailRate > 0){
-			$('#preFailRate').text('전일대비 ▲ '+ (isNaN(compareFailRate) ? '-' : parseFloat(compareFailRate.toFixed(2))) + '%');
+			$('#preFailRate').text('전일대비 ▲ '+ compareFailRate.toFixed(2) + '%');
 		} else if (compareFailRate == 0){
 			$('#preFailRate').text('전일대비 - ');
 		} else if (compareFailRate < 0){
-			$('#preFailRate').text('전일대비 ▼ '+ (isNaN(compareFailRate) ? '-' : parseFloat(compareFailRate.toFixed(2))) + '%');
+			$('#preFailRate').text('전일대비 ▼ '+ compareFailRate.toFixed(2) + '%');
+		} else if (isNaN(compareFailRate)) {
+			$('#preFailRate').text('-');
 		}
 		if (compareOperateRate > 0){
-			$('#preOperateRate').text('전일대비 ▲ '+ (isNaN(compareOperateRate) ? '-' : parseFloat(compareOperateRate.toFixed(2))) + '%');
+			$('#preOperateRate').text('전일대비 ▲ '+ compareOperateRate.toFixed(2) + '%');
 		} else if (compareOperateRate == 0) {	
 			$('#preOperateRate').text('전일대비 - ');
 		} else if (compareOperateRate < 0){
-			$('#preOperateRate').text('전일대비 ▼ '+ (isNaN(compareOperateRate) ? '-' : parseFloat(compareOperateRate.toFixed(2))) + '%');
+			$('#preOperateRate').text('전일대비 ▼ '+ compareOperateRate.toFixed(2) + '%');
+		} else if (isNaN(compareOperateRate)) {
+			$('#preOperateRate').text('-');
 		}
 		if (compareSuccessRate > 0) {
-			$('#preSuccessRate').text('전일대비 ▲ '+ (isNaN(compareSuccessRate) ? '-' : parseFloat(compareSuccessRate.toFixed(2))) + '%');
+			$('#preSuccessRate').text('전일대비 ▲ '+ compareSuccessRate.toFixed(2) + '%');
 		} else if (compareSuccessRate == 0) {
 			$('#preSuccessRate').text('전일대비 - ');
 		} else if (compareSuccessRate < 0) {
-			$('#preSuccessRate').text('전일대비 ▼ '+ (isNaN(compareSuccessRate) ? '-' : parseFloat(compareSuccessRate.toFixed(2))) + '%');
+			$('#preSuccessRate').text('전일대비 ▼ ' + compareSuccessRate.toFixed(2) + '%');
+		} else if (isNaN(compareSuccessRate)) {
+			$('#preSuccessRate').text('-');
 		}
      
     });
@@ -750,8 +789,7 @@ function rejectContents(data) {
     var url = '/dash/findR';
 
   	var params = {
-		factory: "KEM",
-//		factory: "LHO",
+		factory: localStorage.getItem('plant'),
 		month: data
 	};
 	
@@ -843,13 +881,21 @@ function selectDayWeekMonthButton() {
 	for (var chartNumber = 1; chartNumber <= 8; chartNumber++) {
         var chartId = "chart" + chartNumber + "Type";
         
-        // Set default active button and call selectType
         $("#addType[value='" + defaultData + "']").addClass("active");
         selectType(defaultData, chartId);
     }    
 	$(".addType").click(function() {	//일 주 월 타입 선택
 	    var data = $(this).val(); 
 	    var tagId = $(this).parent().attr('id');
+	        
+	    $(".addType").removeClass("active");
+        $(this).addClass("active");
+            
+	    selectType(data,tagId);
+	});
+	$("#factoryCodes").change(function() {
+		var data = "day";
+		var tagId = $(this).parent().attr('id');
 	        
 	    $(".addType").removeClass("active");
         $(this).addClass("active");
@@ -863,8 +909,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	if(tagId == "chart1Type"){
 		var url = '/dash/chart1';
 		var params = {
-			factory: "KEM",
-//			factory: "LHO",
+			factory: localStorage.getItem('plant'),
 			month: data
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
@@ -875,7 +920,11 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	}else if(tagId == "chart2Type"){
 		var url = '/dash/chart2';
 		
-		factory= $("select[name=factoryid]").val();
+		if ($("select[name=factoryid]").val() == ''){
+			factory= 'LHO'
+		} else {
+			factory= $("select[name=factoryid]").val();
+		}
 		
 		var params = {
 			factory: factory,
@@ -890,8 +939,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart5';
 		
 		var params = {
-			factory: "KEM",
-//			factory: "LHO",
+			factory: localStorage.getItem('plant'),
 			month: data
 		};
 		
@@ -904,8 +952,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart6';
 		
 		var params = {
-			factory: "KEM",
-//			factory: "LHO",
+			factory: localStorage.getItem('plant'),
 			month: data
 		};
 		
@@ -918,8 +965,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart8';
 
 		var params = {
-			factory: "KEM",
-//			factory: "LHO",
+			factory: localStorage.getItem('plant'),
 			month: data
 		};
 		
@@ -948,9 +994,10 @@ function factroy() {
 			$dropdown.empty();
 
 			if (c_factory) {
-				$dropdown.append($("<option/>").val("").text("공장 선택"));
 				$.each(data, function() {
-					$dropdown.append($("<option/>").val(this.code).text(this.value));
+					if (this.value !== "코렌스이엠") {
+                        $dropdown.append($("<option/>").val(this.code).text(this.value));
+                    }
 				});
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));
@@ -1012,7 +1059,7 @@ function refreshTime(){
 
     $.get(url2).then(function(res) {
         var result = res;
-        var SumYe = 0, SumYe = 0;
+        var SumTo = 0, SumYe = 0;
         
         var today = new Date();
         
@@ -1052,3 +1099,20 @@ function refreshTime(){
     });
 }
 
+function findName(){
+	var url = '/dash/findName';
+
+	var params = {
+		factory: localStorage.getItem('plant')
+	};
+		
+	$.get(url + '?' + $.param(params)).then(function(res) {
+		result = res;
+		
+		result.forEach(function(r){
+			factoryname = r.factoryname
+		});
+		
+		localStorage.setItem("factoryname", factoryname);
+	});
+}		

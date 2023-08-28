@@ -38,7 +38,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         				"/dvcmodel",							// DVC DATASET 모델링
         				"/datasetdetail",						// 분류 DATASET 상세매핑
         				"/scenario",							// 시나리오별 그룹핑
-        				"/dxcube"								// DX VALUE CHAIN CUBE
+        				"/dxcube",								// DX VALUE CHAIN CUBE
+        				"/dash"									// 대시보드
         			);								
     }
 

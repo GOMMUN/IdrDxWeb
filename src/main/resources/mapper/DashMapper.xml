@@ -4,7 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.idr.pdd.mapper.DashMapper">
-
+	
+	<select id="findAllName" parameterType="FairProd" resultType="FairProd">
+		SELECT A.FACTORYNAME AS FACTORYNAME
+		FROM DSP_FACTORY A
+		WHERE A.FACTORYID = #{factory}
+    </select>
+    
 	<select id="findAllPQCD" parameterType="FairProd" resultType="FairProd">
         SELECT
 		    D.WORK_DATE,
@@ -147,8 +153,8 @@
 			ON B.DATASEQ =D.WORKDAILY_SEQ
 				AND D.ISUSABLE ='Usable'
 			WHERE 'day'= #{month} AND A.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY,-5,GETDATE()),112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, GETDATE()),112)
-			OR	  'week' = #{month} AND A.dt BETWEEN DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0))
-			OR	  'month' = #{month} AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) +1, 0))
+			OR	  'week' = #{month} AND A.dt BETWEEN DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) -5, 0) AND DATEADD(MS, 0, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0))
+			OR	  'month' = #{month} AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, 0, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0))
 			GROUP BY A.dt,B.LINEID, C.WORKTIME_FROM, C.WORKTIME_TO, D.NOTOPERATETIME_FROM, D.NOTOPERATETIME_TO
 		) E
 		GROUP BY E.dt, E.LINEID
@@ -175,8 +181,8 @@
 				ON B.DATASEQ = C.WORKDAILY_SEQ
 					AND C.ISUSABLE = 'Usable'
 				WHERE ('day'= #{month} AND A.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY,-5,GETDATE()),112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, GETDATE()),112))
-				OR	  ('week' = #{month} AND A.dt BETWEEN DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0)))
-				OR	  ('month' = #{month} AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) +1, 0)))
+				OR	  ('week' = #{month} AND A.dt BETWEEN DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) -5, 0) AND DATEADD(MS, 0, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0)))
+				OR	  ('month' = #{month} AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0)))
 				GROUP BY A.dt
 			) D
 			GROUP BY D.dt;

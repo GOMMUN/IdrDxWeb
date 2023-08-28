@@ -22,5 +22,6 @@ public class FairProd {
 	private int firsttimerejectQtySum;
 	private String date;
 	private String sum;
+	private String factoryname;
 
 }

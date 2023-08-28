@@ -27,6 +27,14 @@ public class DashController {
 
 	@Autowired
 	private DashService service;
+	
+	@ResponseBody
+	@GetMapping("/findName")
+	public List<FairProd> findName(String factory) {
+		
+		List<FairProd> list = service.findAllName(factory);
+		return list;
+    }
 
 	@ResponseBody
 	@GetMapping("/findPQCD")

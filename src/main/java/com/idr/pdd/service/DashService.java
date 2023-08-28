@@ -14,6 +14,11 @@ public class DashService {
 
 	@Autowired
 	DashMapper mapper;
+	
+	public List<FairProd> findAllName(String factory){
+		
+		return mapper.findAllName(factory);
+	}
 
 	public List<FairProd> findAllPQCD(String factory){
 		
@@ -33,11 +38,11 @@ public class DashService {
 		List<List<FairProd>> finalresult = new ArrayList<>();
 
 		if (factory.equals("LHO")) {
-			finalresult.add(mapper.chart1(rank.get(0), month));		
+			finalresult.add(mapper.chart1(rank.get(0), month));
 		} else if (factory.equals("SWH")) {
-			finalresult.add(mapper.chart1(rank.get(0), month));		
+			finalresult.add(mapper.chart1(rank.get(0), month));	
 		} else if (factory.equals("SYM")) {
-			finalresult.add(mapper.chart1(rank.get(0), month));		
+			finalresult.add(mapper.chart1(rank.get(0), month));	
 		} else {
 			if (rank.size() > 4) {
 				lineList.add(rank.get(0));
@@ -54,6 +59,7 @@ public class DashService {
 				}
 			}
 		}
+		finalresult.add(mapper.findAllName(factory));
 
 		return finalresult;
 	}

@@ -7,10 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.idr.pdd.dto.FairProd;
 
-
 @Mapper
 public interface DashMapper {
 
+	List<FairProd> findAllName(String factory);
 	List<FairProd> findAllPQCD(String factory);
 	List<FairProd> findAllR(String factory, String month);
 	List<FairProd> chart1(String factory, String month);

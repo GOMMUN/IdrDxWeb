@@ -21,25 +21,26 @@ $(function() {
 	setEventListener();
 });
 
-function getToday(){
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = ("0" + (1 + date.getMonth())).slice(-2);
-    var day = ("0" + date.getDate()).slice(-2);
+function getToday() {
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = ("0" + (1 + date.getMonth())).slice(-2);
+	var day = ("0" + date.getDate()).slice(-2);
 
-    return year + "-" + month + "-" + day;
+	return year + "-" + month + "-" + day;
 }
 
-function init(){
-	data.factoryid='KEM'
-	data.lineid='KEM-P0002'
-	data.workDate=getToday();	
+function init() {
+	data.factoryid = 'KEM'
+	data.lineid = 'KEM-P0002'
+	data.workDate = getToday();
+	$('#workDateid').val(getToday());
 	var params = {
-			workDate: data.workDate,
-			factoryid: data.factoryid,
-			lineid: data.lineid
+		workDate: data.workDate,
+		factoryid: data.factoryid,
+		lineid: data.lineid
 
-		}
+	}
 	ajaxRequest(params);
 }
 
@@ -67,7 +68,7 @@ function setEventListener() {
 			$dropdown1.append($("<option/>").val("").text("공정 선택"));
 
 		}
-		
+
 		let $dropdown5 = $("#matarial");
 		$dropdown5.empty();
 
@@ -110,7 +111,7 @@ function setEventListener() {
 			lineid: data.lineid
 
 		}
-		
+
 		ajaxRequest(params);
 	});
 
@@ -139,6 +140,9 @@ function factroy() {
 				$.each(data, function() {
 					$dropdown.append($("<option/>").val(this.code).text(this.value));
 				});
+				$("#factoryCodes option:eq(1)").prop("selected", true);
+				data.factoryid = $("select[name=factoryid]").val();
+
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));
 			}
@@ -160,6 +164,20 @@ function line(factoryid) {
 		type: 'GET',
 		success: function(data) {
 			c_line = data;
+			if (c_line) {
+				$.each(c_line, function() {
+					if ($factoryCodes.val() == this.mcode) {
+						$dropdown.append($("<option/>").val(this.code).text(this.value));
+					}
+				});
+
+				$("#lineCodes option:eq(0)").prop("selected", true);
+				data.lineid = $("select[name=lineid]").val();
+
+			} else {
+				$dropdown.append($("<option/>").val("").text("공장 선택"));
+			}
+
 		}
 	});
 
@@ -169,6 +187,8 @@ function line(factoryid) {
 function matarial() {
 	let url = '/code/matarial';
 
+	let $dropdown = $("#matarial");
+	$dropdown.empty();
 	c_material = null;
 
 	$.ajax({
@@ -177,7 +197,20 @@ function matarial() {
 		success: function(data) {
 			c_material = data;
 
-			
+			if (c_material) {
+				$dropdown.append($("<option/>").val("").text("자재 선택"));
+				$.each(c_material, function() {
+					if ($factoryCodes.val() == this.mcode) {
+						$dropdown.append($("<option/>").val(this.code).text(this.value));
+					}
+					$("#matarial option:eq(1)").prop("selected", true);
+					data.lineid = $("select[name=matarialid]").val();
+				});
+			} else {
+				$dropdown5.append($("<option/>").val("").text("자재 선택"));
+
+			}
+
 		}
 	});
 }
@@ -191,64 +224,64 @@ function s_monitor() {
 }
 
 function ajaxRequest(params) {
-	
+
 	let findproducturl = '/monitoring/findproduct';
-	
+
 	$.get(findproducturl + '?' + $.param(params)).then(function(res) {
-			let result = res;
-			if (result.length > 0) {
-				$("#dayplan").text(result[0].planQty);
-				$("#dayperformance").text(result[0].performancepercent + '%');
-				$("#daypl").text(result[0].prodQty);
-				$("#dayper").text(result[0].planQty);
+		let result = res;
+		if (result.length > 0) {
+			$("#dayplan").text(result[0].planQty);
+			$("#dayperformance").text(result[0].performancepercent + '%');
+			$("#daypl").text(result[0].prodQty);
+			$("#dayper").text(result[0].planQty);
 
 
-				$("#nightplan").text(result[1].planQty);
-				$("#nightperformance").text(result[1].performancepercent + '%');
-				$("#nightpl").text(result[1].prodQty);
-				$("#nightper").text(result[1].planQty);
-			} else {
-				$("#dayplan").text("-");
-				$("#dayperformance").text("-");
-				$("#daypl").text("-");
-				$("#dayper").text("-");
+			$("#nightplan").text(result[1].planQty);
+			$("#nightperformance").text(result[1].performancepercent + '%');
+			$("#nightpl").text(result[1].prodQty);
+			$("#nightper").text(result[1].planQty);
+		} else {
+			$("#dayplan").text("-");
+			$("#dayperformance").text("-");
+			$("#daypl").text("-");
+			$("#dayper").text("-");
 
 
-				$("#nightplan").text("-");
-				$("#nightperformance").text("-");
-				$("#nightpl").text("-");
-				$("#nightper").text("-");
-			}
+			$("#nightplan").text("-");
+			$("#nightperformance").text("-");
+			$("#nightpl").text("-");
+			$("#nightper").text("-");
+		}
 
 
-		})
+	})
 
-		let findstorageurl = '/monitoring/findstorage';
+	let findstorageurl = '/monitoring/findstorage';
 
-		$.get(findstorageurl + '?' + $.param(params)).then(function(res) {
-			let result = res;
+	$.get(findstorageurl + '?' + $.param(params)).then(function(res) {
+		let result = res;
 
-			if(result.mtotalqty>0){
-				$("#mqty").text(result.mtotalqty);
-			}else{
-				$("#mqty").text("-");
-			}
-			
-			if(result.ptotalqty>0){
-				$("#pqty").text(result.ptotalqty);
-			}else{
-				$("#pqty").text("-");
-			}
-			
+		if (result.mtotalqty > 0) {
+			$("#mqty").text(result.mtotalqty);
+		} else {
+			$("#mqty").text("-");
+		}
 
-		})
+		if (result.ptotalqty > 0) {
+			$("#pqty").text(result.ptotalqty);
+		} else {
+			$("#pqty").text("-");
+		}
 
-		let findrejecturl = '/monitoring/findreject';
 
-		$.get(findrejecturl + '?' + $.param(params)).then(function(res) {
-			let result = res;
+	})
 
-			if(result.failpercent>0){
+	let findrejecturl = '/monitoring/findreject';
+
+	$.get(findrejecturl + '?' + $.param(params)).then(function(res) {
+		let result = res;
+
+		if (result.failpercent > 0) {
 			$("#failper").text(result.failpercent + '%');
 			$("#failqty").text(result.totalfailQty);
 			$("#prodqty").text(result.totalprodQty);
@@ -256,7 +289,7 @@ function ajaxRequest(params) {
 			$("#ri02").text(result.ri02);
 			$("#ri03").text(result.ri03);
 			$("#ri04").text(result.ri04);
-			}else{
+		} else {
 			$("#failper").text("-");
 			$("#failqty").text("-");
 			$("#prodqty").text("-");
@@ -264,30 +297,30 @@ function ajaxRequest(params) {
 			$("#ri02").text(result.ri02);
 			$("#ri03").text(result.ri03);
 			$("#ri04").text(result.ri04);
-			}
-			
+		}
 
-		})
 
-	
+	})
+
+
 	let findnotoperateurl = '/monitoring/findnotoperate';
 
 	$.get(findnotoperateurl + '?' + $.param(params)).then(function(res) {
 		let result = res;
 
-        // 테이블 초기화
-        $table = $('#notoperate');
-        $table.bootstrapTable('removeAll');
+		// 테이블 초기화
+		$table = $('#notoperate');
+		$table.bootstrapTable('removeAll');
 
-        // 받아온 데이터를 테이블에 추가
-        result.forEach(function(r) {
-            $table.bootstrapTable('append', {
-                
-                    lineid: r.lineid,
-                    notoperatetime: r.notoperatetimeFrom +"~"+ r.notoperatetimeTo
-                
-            });
-        });
-        $table.bootstrapTable('hideLoading')
+		// 받아온 데이터를 테이블에 추가
+		result.forEach(function(r) {
+			$table.bootstrapTable('append', {
+
+				lineid: r.lineid,
+				notoperatetime: r.notoperatetimeFrom + "~" + r.notoperatetimeTo
+
+			});
+		});
+		$table.bootstrapTable('hideLoading')
 	})
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class LeadTime {
 
+	private String rownum;
 	private String orderId;
 	private String orderName;
 	private String itemId;

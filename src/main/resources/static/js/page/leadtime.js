@@ -28,6 +28,7 @@ function search() {
 			// 받아온 데이터를 테이블에 추가
 			res.forEach(function(r) {
 				$table.bootstrapTable('append', {
+					rownum:r.rownum,
 					orderId:r.orderId,
 					orderName: r.orderName,
 					itemId:  r.itemId,

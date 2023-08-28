@@ -21,6 +21,7 @@
 	<select id="productplanfind" parameterType="String"
 		resultType="PerByProductPlan">
 		SELECT
+		ROW_NUMBER() OVER (ORDER BY ORDER_NAME, ITEM_ID, ITEM_NAME) AS ROWNUM,
 		ORDER_NAME ,
 		ITEM_ID ,
 		ITEM_NAME ,
@@ -70,12 +71,14 @@
 		#{end})
 		GROUP BY
 		ORDER_NAME,ITEM_NAME,ITEM_ID
+		ORDER BY ROWNUM
 	</select>
 
 	<select id="performanceByProcess" parameterType="String"
 		resultType="performanceByProcess">
 
 		SELECT
+		ROW_NUMBER() OVER (ORDER BY ORDER_NAME, ITEM_ID, ITEM_NAME,PROCESS_NAME) AS ROWNUM,
 		ORDER_NAME,
 		ITEM_ID,
 		ITEM_NAME,
@@ -136,13 +139,15 @@
 		ORDER_NAME,
 		ITEM_ID,
 		ITEM_NAME,
-		PROCESS_NAME;
+		PROCESS_NAME
+		ORDER BY ROWNUM;
 
 	</select>
 
 	<select id="leadtime" parameterType="String"
 		resultType="leadtime">
 		SELECT
+		ROW_NUMBER() OVER (ORDER BY ORDER_ID,ORDER_NAME,ITEM_ID,ITEM_NAME,PROCESS_NAME) AS ROWNUM,
 		ORDER_ID,
 		ORDER_NAME,
 		ITEM_ID,
@@ -174,9 +179,8 @@
 		ORDER_NAME,
 		ITEM_ID,
 		ITEM_NAME,
-		PROCESS_NAME;
-
-
+		PROCESS_NAME
+		ORDER BY ROWNUM;
 	</select>
 
 

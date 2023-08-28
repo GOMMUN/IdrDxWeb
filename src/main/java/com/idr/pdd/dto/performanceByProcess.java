@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class performanceByProcess {
 
+	private String rownum;
 	private String orderName;
 	private String itemId;
 	private String itemName;

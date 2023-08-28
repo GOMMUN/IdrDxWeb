@@ -13,7 +13,7 @@ $(function(){
 	chart7();
 	
 	PQCDrate()
-	rejectContents("8");
+	rejectContents(new Date().getMonth()+1);
 	selectMonthButton();
 	selectDayWeekMonthButton()
 	factroy();

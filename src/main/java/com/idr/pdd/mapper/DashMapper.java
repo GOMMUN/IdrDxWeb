@@ -19,8 +19,11 @@ public interface DashMapper {
 	List<String> rank(String factory);
 
 	String find1Alarm();
+	String find1AlarmConfirm();
 	String find2Alarm();
+	String find2AlarmConfirm();
 	String find3Alarm();
+	String find3AlarmConfirm();
 	List<FairProd> findAllDailyAlarm();
 	
 }

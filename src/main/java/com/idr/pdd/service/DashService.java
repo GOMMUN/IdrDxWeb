@@ -72,13 +72,25 @@ public class DashService {
 		return mapper.find1Alarm();
 	}
 	
+	public String find1AlarmConfirm(){
+		return mapper.find1AlarmConfirm();
+	}
+	
 	public String find2Alarm(){
 		return mapper.find2Alarm();
+	}	
+	
+	public String find2AlarmConfirm(){
+		return mapper.find2AlarmConfirm();
 	}	
 
 	public String find3Alarm(){
 		return mapper.find3Alarm();
 	}	
+	
+	public String find3AlarmConfirm(){
+		return mapper.find3AlarmConfirm();
+	}
 
 	public List<FairProd> findAllDailyAlarm(){
 		

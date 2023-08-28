@@ -978,7 +978,7 @@ function realTime() {
 			$('#alarm2').text(data[1]);
 			$('#alarm3').text(data[2]);
 			
-			if(data[0] != '0'){
+			if(data[0] != '0' && data[0] != data[3]){
 				$('.alarm1').css('background-color', 'yellow');
 				$('#alarmbell1').css('color', 'red');
 			}else{
@@ -986,7 +986,7 @@ function realTime() {
 				$('#alarmbell1').css('color', 'gray');
 			}
 			
-			if(data[1] != '0'){
+			if(data[1] != '0' && data[1] != data[4]){
 				$('.alarm2').css('background-color', 'yellow');
 				$('#alarmbell2').css('color', 'red');
 			}else{
@@ -994,7 +994,7 @@ function realTime() {
 				$('#alarmbell2').css('color', 'gray');
 			}
 			
-			if(data[2] != '0'){
+			if(data[2] != '0' && data[2] != data[5]){
 				$('.alarm3').css('background-color', 'yellow');
 				$('#alarmbell3').css('color', 'red');
 			}else{

@@ -213,8 +213,21 @@
         WHERE 1=1
         	AND NOTICE_REASON = 'UNDER-PRODUCTION'
         	AND FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
-        	AND FACTORYID = 'KEM'
         	AND ISUSABLE = 'Usable'
+	</select>
+	
+	<select id="find1AlarmConfirm" resultType="String">
+       	SELECT COUNT(*)
+        FROM DSP_ANOMALYDETECT_NOTICE A
+        JOIN DSP_ANOMALYDETECT_CONFIRM B
+        	ON A.TID = B.TID
+        	AND A.NOTICE_REASON = B.CONFIRM_REASON
+        WHERE 1=1
+        	AND B.CONFIRM_REASON = 'UNDER-PRODUCTION'
+        	AND FORMAT(A.NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
+        	AND A.FACTORYID = B.FACTORYID
+        	AND A.ISUSABLE = B.ISUSABLE
+        	AND A.ISUSABLE = 'Usable'
 	</select>
     
 	<select id="find2Alarm" resultType="String">
@@ -223,9 +236,22 @@
         WHERE 1=1
         	AND NOTICE_REASON = 'DEFECT-RATE'
         	AND FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
-        	AND FACTORYID = 'KEM'
         	AND ISUSABLE = 'Usable'
     </select>   
+    
+	<select id="find2AlarmConfirm" resultType="String">
+       	SELECT COUNT(*)
+        FROM DSP_ANOMALYDETECT_NOTICE A
+        JOIN DSP_ANOMALYDETECT_CONFIRM B
+        	ON A.TID = B.TID
+        	AND A.NOTICE_REASON = B.CONFIRM_REASON
+        WHERE 1=1
+        	AND B.CONFIRM_REASON = 'DEFECT-RATE'
+        	AND FORMAT(A.NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
+        	AND A.FACTORYID = B.FACTORYID
+        	AND A.ISUSABLE = B.ISUSABLE
+        	AND A.ISUSABLE = 'Usable'
+    </select>     
     
 	<select id="find3Alarm" resultType="String">
 		SELECT COUNT(*)
@@ -233,9 +259,22 @@
         WHERE 1=1
         	AND NOTICE_REASON = 'NOTOPERATE-PRESS'
         	AND FORMAT(NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
-        	AND FACTORYID = 'KEM'
         	AND ISUSABLE = 'Usable'
     </select>  
+    
+	<select id="find3AlarmConfirm" resultType="String">
+       	SELECT COUNT(*)
+        FROM DSP_ANOMALYDETECT_NOTICE A
+        JOIN DSP_ANOMALYDETECT_CONFIRM B
+        	ON A.TID = B.TID
+        	AND A.NOTICE_REASON = B.CONFIRM_REASON
+        WHERE 1=1
+        	AND B.CONFIRM_REASON = 'NOTOPERATE-PRESS'
+        	AND FORMAT(A.NOTICE_DATETIME,'yyyy-MM-dd') = (FORMAT(GETDATE(),'yyyy-MM-dd'))
+        	AND A.FACTORYID = B.FACTORYID
+        	AND A.ISUSABLE = B.ISUSABLE
+        	AND A.ISUSABLE = 'Usable'
+    </select>     
 
 	<select id="findAllDailyAlarm" parameterType="FairProd" resultType="FairProd">
 		SELECT 

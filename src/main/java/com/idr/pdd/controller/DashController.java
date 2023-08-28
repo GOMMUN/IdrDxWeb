@@ -89,17 +89,18 @@ public class DashController {
 		String cnt2 = service.find2Alarm();
 		String cnt3 = service.find3Alarm();
 		
-		String[] list = new String[4];
+		String cnt4 = service.find1AlarmConfirm();
+		String cnt5 = service.find2AlarmConfirm();
+		String cnt6 = service.find3AlarmConfirm();
+		
+		String[] list = new String[6];
 		
 		list[0] = cnt1;
 		list[1] = cnt2;
 		list[2] = cnt3;
-				
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date now = new Date();
-		String strDate = sdf.format(now);
-		
-		list[3] = strDate;
+		list[3] = cnt4;
+		list[4] = cnt5;
+		list[5] = cnt6;				
 		
 		return list;
     }

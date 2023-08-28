@@ -20,9 +20,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         				"/simullator/workerPerformance",		// 작업자실적
         				"/simullator/productionplanning",		// 생산계획
         				"/simullator/productInformation",		// 제풍정보
-        				// 생산계획별실적
-        				// 공정별실적
-        				// LeadTime
+        				"/perbyproductplan",					// 생산계획별실적
+        				"/perbyprocess",						// 공정별실적
+        				"/leadtime",							// LeadTime
         				"/inventory",							// 재고현황
         				"/factoryinfo",							// 회사정보
         				"/supplierinfo",						// 공급업체정보

@@ -45,32 +45,40 @@ public class DashController {
     }
 	
 	@ResponseBody
-	@GetMapping("/findR")
-    public List<FairProd> findR(String factory, String month) {
-		
-		List<FairProd> list = service.findAllR(factory, month);
-		return list;
-    }
-	
-	@ResponseBody
 	@GetMapping("/chart1")
     public List<List<FairProd>> chart1(String factory, String month) {
 		
-		return service.chart1(factory, month);
+		return service.chart125(factory, month);
     }
 
 	@ResponseBody
 	@GetMapping("/chart2")
     public List<List<FairProd>> chart2(String factory, String month) {
 		
-		return service.chart1(factory, month);
+		return service.chart125(factory, month);
+    }
+	
+	@ResponseBody
+	@GetMapping("/chart3")
+    public List<FairProd> chart3(String factory, String month) {
+		
+		List<FairProd> list = service.chart3(factory, month);
+		return list;
+    }
+	
+	@ResponseBody
+	@GetMapping("/chart4")
+    public List<FairProd> chart4(String factory, String month) {
+		
+		List<FairProd> list = service.chart4(factory, month);
+		return list;
     }
 	
 	@ResponseBody
 	@GetMapping("/chart5")
     public List<List<FairProd>> chart5(String factory, String month) {
 		
-		return service.chart1(factory, month);
+		return service.chart125(factory, month);
     }
 	
 	@ResponseBody

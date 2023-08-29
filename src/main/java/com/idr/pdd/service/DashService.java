@@ -25,12 +25,7 @@ public class DashService {
 		return mapper.findAllPQCD(factory);
 	}
 
-	public List<FairProd> findAllR(String factory, String month) {
-
-		return mapper.findAllR(factory, month);
-	}
-
-	public List<List<FairProd>> chart1(String factory, String month) {
+	public List<List<FairProd>> chart125(String factory, String month) {
 
 		List<String> rank = mapper.rank(factory);
 
@@ -38,30 +33,39 @@ public class DashService {
 		List<List<FairProd>> finalresult = new ArrayList<>();
 
 		if (factory.equals("LHO")) {
-			finalresult.add(mapper.chart1(rank.get(0), month));
+			finalresult.add(mapper.chart125(rank.get(0), month));
 		} else if (factory.equals("SWH")) {
-			finalresult.add(mapper.chart1(rank.get(0), month));	
+			finalresult.add(mapper.chart125(rank.get(0), month));	
 		} else if (factory.equals("SYM")) {
-			finalresult.add(mapper.chart1(rank.get(0), month));	
+			finalresult.add(mapper.chart125(rank.get(0), month));	
 		} else {
 			if (rank.size() > 4) {
 				lineList.add(rank.get(0));
 				lineList.add(rank.get(1));
 				lineList.add(rank.get(rank.size() - 2));
 				lineList.add(rank.get(rank.size() - 1));
-				finalresult.add(mapper.chart1(lineList.get(0), month));
-				finalresult.add(mapper.chart1(lineList.get(1), month));
-				finalresult.add(mapper.chart1(lineList.get(2), month));
-				finalresult.add(mapper.chart1(lineList.get(3), month));
+				finalresult.add(mapper.chart125(lineList.get(0), month));
+				finalresult.add(mapper.chart125(lineList.get(1), month));
+				finalresult.add(mapper.chart125(lineList.get(2), month));
+				finalresult.add(mapper.chart125(lineList.get(3), month));
 			} else {
 				for (String line : rank) {
-					finalresult.add(mapper.chart1(line, month));
+					finalresult.add(mapper.chart125(line, month));
 				}
 			}
 		}
-		finalresult.add(mapper.findAllName(factory));
 
 		return finalresult;
+	}
+	
+	public List<FairProd> chart3(String factory, String month) {
+		
+		return mapper.chart3(factory, month);
+	}
+	
+	public List<FairProd> chart4(String factory, String month) {
+		
+		return mapper.chart4(factory, month);
 	}
 	
 	public List<FairProd> chart6(String factory, String month) {

@@ -3,6 +3,8 @@
  */
 var chart1data = null; 
 var chart2data = null;
+var chart3data = null;
+var chart4data = null;
 var chart5data = null;
 var chart6data = null;
 var chart8data = null;
@@ -10,14 +12,10 @@ var chart8data = null;
 var result = null;
 
 $(function(){
-	chart3();
-	chart4();
 	chart7();
 	
 	PQCDrate()
-	rejectContents(new Date().getMonth()+1);
-	selectMonthButton();
-	selectDayWeekMonthButton()
+	selectDayWeekMonthButton();
 	
 	realTime();
 	refreshTime();
@@ -125,96 +123,99 @@ function setchart1(chart1data) {
 }
 
 function setchart2(){
-	var dateData = [];
-
-	for (var j = 0; j <= 0; j++) {
-	    dateData[j] = []; 
-	    
-	    for (var i = 0; i <= chart2data[j].length-1; i++) {
-	        if (chart2data[j][i].dt >= 2000) {
-	            dateData[j][i] = formatDate(chart2data[j][i].dt.toString(), "yyyymmdd", "월 일");
-	        } else if (chart2data[j][i].dt < 2000 && chart2data[j][i].dt >= 20) {
-	            dateData[j][i] = ((chart2data[j][i].dt-(chart2data[j][i].dt%100))/100) + '월' + (chart2data[j][i].dt%100).toString() + '주';
-	        } else if (chart2data[j][i].dt < 20) {
-	            dateData[j][i] = chart2data[j][i].dt.toString() + '월';
-	        }
-	    }
-	}
-
-	function formatDate(dateString, inputFormat, outputFormat) {
-	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
-	    const month = parseInt(dateString.slice(4, 6));
-	    const day = parseInt(dateString.slice(6, 8));
+	if (localStorage.getItem('plant') !== 'KEM') {
+        $("#chart2Container").remove();
+        return;
+    }
+		var dateData = [];
 	
-	    const monthString = `${month}${outputFormat[0]}`;
-	    const dayString = `${day}${outputFormat[2]}`;
-	
-	    return `${monthString} ${dayString}`;
-	}
-	
-	var seriesData1 = [];
-	var seriesData2 = [];
-
-	for (var j = 0; j <= chart2data.length-1; j++) {
-	
-		
-	    seriesData1[j] = [];
-	    
-	    for (var i = 0; i <= chart2data[j].length-1; i++) {        
-	        seriesData1[j][i] = Number(chart2data[j][i].prodQty);
-	    }
-	    
-	    var series = {
-	        name: chart2data[j][0].lineid,
-	        data: seriesData1[j]
-	    };
-	    
-	    seriesData2.push(series);
-	
-	}
-	
-	Highcharts.chart('chart2', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: ' 공정별 생산실적',
-        align: 'left'
-    },
-    xAxis: {
-        categories: dateData[0],
-        crosshair: true,
-        accessibility: {
-            description: 'Month'
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: ''
-        }
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        },
-        series : {
-			minPointLength:3
+		for (var j = 0; j <= 0; j++) {
+		    dateData[j] = []; 
+		    
+		    for (var i = 0; i <= chart2data[j].length-1; i++) {
+		        if (chart2data[j][i].dt >= 2000) {
+		            dateData[j][i] = formatDate(chart2data[j][i].dt.toString(), "yyyymmdd", "월 일");
+		        } else if (chart2data[j][i].dt < 2000 && chart2data[j][i].dt >= 20) {
+		            dateData[j][i] = ((chart2data[j][i].dt-(chart2data[j][i].dt%100))/100) + '월' + (chart2data[j][i].dt%100).toString() + '주';
+		        } else if (chart2data[j][i].dt < 20) {
+		            dateData[j][i] = chart2data[j][i].dt.toString() + '월';
+		        }
+		    }
 		}
-    },
-	credits: {
-        enabled: false
-    },    
-    series: seriesData2,
-    colors: [
-		'#0D70C6'
-		]
-});
-
+	
+		function formatDate(dateString, inputFormat, outputFormat) {
+		    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
+		    const month = parseInt(dateString.slice(4, 6));
+		    const day = parseInt(dateString.slice(6, 8));
+		
+		    const monthString = `${month}${outputFormat[0]}`;
+		    const dayString = `${day}${outputFormat[2]}`;
+		
+		    return `${monthString} ${dayString}`;
+		}
+		
+		var seriesData1 = [];
+		var seriesData2 = [];
+	
+		for (var j = 0; j <= chart2data.length-1; j++) {
+		
+			
+		    seriesData1[j] = [];
+		    
+		    for (var i = 0; i <= chart2data[j].length-1; i++) {        
+		        seriesData1[j][i] = Number(chart2data[j][i].prodQty);
+		    }
+		    
+		    var series = {
+		        name: chart2data[j][0].lineid,
+		        data: seriesData1[j]
+		    };
+		    
+		    seriesData2.push(series);
+		
+		}
+		
+		Highcharts.chart('chart2', {
+	    chart: {
+	        type: 'column'
+	    },
+	    title: {
+	        text: localStorage.getItem('option') + ' 공정별 생산실적',
+	        align: 'left'
+	    },
+	    xAxis: {
+	        categories: dateData[0],
+	        crosshair: true,
+	        accessibility: {
+	            description: 'Month'
+	        }
+	    },
+	    yAxis: {
+	        min: 0,
+	        title: {
+	            text: ''
+	        }
+	    },
+	    plotOptions: {
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
+	        },
+	        series : {
+				minPointLength:3
+			}
+	    },
+		credits: {
+	        enabled: false
+	    },    
+	    series: seriesData2,
+	    colors: [
+			'#0D70C6'
+			]
+	});
 }
 
-function chart3(data1, data2, data3, data4){
+function setchart3(chart3data){
 	Highcharts.chart('chart3', {
     chart: {
         type: 'variablepie'
@@ -234,19 +235,19 @@ function chart3(data1, data2, data3, data4){
         borderRadius: 5,
         data: [{
             name: '외관',
-            y: data1,
+            y: chart3data[0].firsttimerejectQtySum,
             z: 120
         }, {
             name: '기능',
-            y: data2,
+            y: chart3data[1].firsttimerejectQtySum,
             z: 120
         }, {
             name: '조립',
-            y: data3,
+            y: chart3data[2].firsttimerejectQtySum,
             z: 120
         }, {
             name: '재질',
-            y: data4,
+            y: chart3data[3].firsttimerejectQtySum,
             z: 120
         }],
         colors: [
@@ -259,7 +260,7 @@ function chart3(data1, data2, data3, data4){
 });
 }
 
-function chart4(cnt1, cnt2, cnt3, cnt4, cnt5, cnt6, cnt7, cnt8, cnt9, cnt10, cnt11, cnt12){
+function setchart4(chart4data){
 Highcharts.chart('chart4', {
     series: [{
         type: 'treemap',
@@ -304,53 +305,53 @@ Highcharts.chart('chart4', {
         }, {
             name: '도장',
             parent: 'A',
-            value: cnt1
+            value: chart4data[0].firsttimerejectQtySum
         }, {
             name: '긁힘',
             parent: 'A',
-            value: cnt2
+            value: chart4data[1].firsttimerejectQtySum
         }, {
             name: '변형',
             parent: 'A',
-            value: cnt3
+            value: chart4data[2].firsttimerejectQtySum
         }, {
             name: '이색',
             parent: 'A',
-            value: cnt4
+            value: chart4data[3].firsttimerejectQtySum
         }, {
             name: '성능',
             parent: 'B',
-            value: cnt5
+            value: chart4data[4].firsttimerejectQtySum
         }, {
             name: '안전',
             parent: 'B',
-            value: cnt6
+            value: chart4data[5].firsttimerejectQtySum
         }, {
             name: '동작',
             parent: 'B',
-            value: cnt7
+            value: chart4data[6].firsttimerejectQtySum
         }, {
             name: '결합',
             parent: 'C',
-            value: cnt8
+            value: chart4data[7].firsttimerejectQtySum
         }, {
             name: '누락',
             parent: 'C',
-            value: cnt9
+            value: chart4data[8].firsttimerejectQtySum
         }, {
-            name: '결합',
+            name: '오차',
             parent: 'C',
-            value: cnt10
+            value: chart4data[9].firsttimerejectQtySum
         },
         {
             name: '소재',
             parent: 'D',
-            value: cnt11
+            value: chart4data[10].firsttimerejectQtySum
         },
         {
             name: '강도',
             parent: 'D',
-            value: cnt12
+            value: chart4data[11].firsttimerejectQtySum
         }]
     }],
     title: {
@@ -693,7 +694,8 @@ function PQCDrate() {
     $.get(url + '?' + $.param(params)).then(function(res) {
         var result = res;
         var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0,
-        	ManhourTo = 0, ManhourYe = 0, PlanQtyTo = 0, PlanQtyYe = 0, WorkTimeTo = 0, WorkTimeYe = 0, NotoperateTimeTo = 0, NotoperateTimeYe = 0;
+        	ManhourTo = 0, ManhourYe = 0, PlanQtyTo = 0, PlanQtyYe = 0, WorkTimeTo = 0, 
+        	WorkTimeYe = 0, NotoperateTimeTo = 0, NotoperateTimeYe = 0;
         
         var today = new Date();
 
@@ -785,78 +787,31 @@ function PQCDrate() {
     });
 }
 
-function rejectContents(data) {
-    var url = '/dash/findR';
-
-  	var params = {
-		factory: localStorage.getItem('plant'),
-		month: data
-	};
+function selectDayWeekMonthButton() {	    
+	var defaultData = "day";
+	var defaultMonth = new Date().getMonth()+1;
 	
-	$.get(url + '?' + $.param(params)).then(function(res) {
-        var result = res;
-        var data1 = 0, data2 = 0, data3 = 0, data4 = 0;
-        var cnt1= 0, cnt2= 0, cnt3= 0, cnt4= 0, cnt5= 0, cnt6= 0, cnt7= 0, cnt8= 0, cnt9= 0, cnt10= 0, cnt11= 0, cnt12= 0;
-
-
-        result.forEach(function(r) { 
-            if (r.rejectItemId == 'RI01'){
-				
-				data1 += r.firsttimerejectQtySum;
-				
-				if (r.rejectType == 'A') {
-					cnt1 += r.firsttimerejectQtySum;
-				} else if (r.rejectType == 'B') {
-					cnt2 += r.firsttimerejectQtySum;
-				} else if (r.rejectType == 'C') {
-					cnt3 += r.firsttimerejectQtySum;
-				} else if (r.rejectType == 'D') {
-					cnt4 += r.firsttimerejectQtySum;
-				}
-                
-            } else if (r.rejectItemId == 'RI02'){
-				
-				data2 += r.firsttimerejectQtySum;
-				
-                if (r.rejectType == 'A') {
-					cnt5 += r.firsttimerejectQtySum;
-				} else if (r.rejectType == 'B') {
-					cnt6 += r.firsttimerejectQtySum;
-				} else if (r.rejectType == 'C') {
-					cnt7 += r.firsttimerejectQtySum;
-				} 
-            } else if (r.rejectItemId == 'RI03'){
-				
-				data3 += r.firsttimerejectQtySum;
-				
-                if (r.rejectType == 'A') {
-					cnt8 += r.firsttimerejectQtySum;
-				} else if (r.rejectType == 'B') {
-					cnt9 += r.firsttimerejectQtySum;
-				} else if (r.rejectType == 'C') {
-					cnt10 += r.firsttimerejectQtySum;
-				}
-            } else if (r.rejectItemId == 'RI04'){
-				
-				data4 += r.firsttimerejectQtySum;
-				
-                if (r.rejectType == 'A') {
-					cnt11 += r.firsttimerejectQtySum;
-				} else if (r.rejectType == 'B') {
-					cnt12 += r.firsttimerejectQtySum;
-				}
-            }
-        });
-
-        chart3(data1, data2, data3, data4);
+	for (var chartNumber = 1; chartNumber <= 8; chartNumber++) {
+        var chartId = "chart" + chartNumber + "Type";
         
-        chart4(cnt1, cnt2, cnt3, cnt4, cnt5, cnt6, cnt7, cnt8, cnt9, cnt10, cnt11, cnt12);
+        if (chartNumber != 3 && chartNumber != 4){
+			$("#addType[value='" + defaultData + "']").addClass("active");
+        	selectType(defaultData, chartId);
+		} else {
+			$("#addMonth[value='" + defaultMonth + "']").addClass("active");
+        	selectType(defaultMonth, chartId);
+		}
+    }    
+	$(".addType").click(function() {	//일 주 월 타입 선택
+	    var data = $(this).val(); 
+	    var tagId = $(this).parent().attr('id');
+	        
+	    $(".addType").removeClass("active");
+        $(this).addClass("active");
+            
+	    selectType(data,tagId);
 	});
-}
-
-function selectMonthButton() {
 	
-	var Month= (new Date().getMonth()) % 12 + 1;
 	var currentMonth = new Date().getMonth() - 5;
 	
 	$(".addMonth").each(function(index) {
@@ -864,31 +819,12 @@ function selectMonthButton() {
         $(this).text(newValue + "월");
         $(this).val(newValue);
     });
-        
-	$(".addMonth").click(function() {
-        var value = $(this).val(); 
-        var data = value; 
-        rejectContents(data);
-    });
     
-    $(".addMonth[value='" + Month + "']").addClass("active"); 
-    rejectContents(Month);
-}
-
-function selectDayWeekMonthButton() {	    
-	var defaultData = "day";
-	
-	for (var chartNumber = 1; chartNumber <= 8; chartNumber++) {
-        var chartId = "chart" + chartNumber + "Type";
-        
-        $("#addType[value='" + defaultData + "']").addClass("active");
-        selectType(defaultData, chartId);
-    }    
-	$(".addType").click(function() {	//일 주 월 타입 선택
+	$(".addMonth").click(function() {	//월 타입 선택
 	    var data = $(this).val(); 
 	    var tagId = $(this).parent().attr('id');
 	        
-	    $(".addType").removeClass("active");
+	    $(".addMonth").removeClass("active");
         $(this).addClass("active");
             
 	    selectType(data,tagId);
@@ -933,6 +869,29 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart2data = res;
 			setchart2(chart2data);
+		})
+		
+	}else if(tagId == "chart3Type"){
+		var url = '/dash/chart3';
+
+		var params = {
+			factory: localStorage.getItem('plant'),
+			month: data
+		};
+		$.get(url+ '?' + $.param(params)).then(function(res) {
+			chart3data = res;
+			setchart3(chart3data);
+		})
+		
+		var url = '/dash/chart4';
+		
+		var params = {
+			factory: localStorage.getItem('plant'),
+			month: data
+		};
+		$.get(url+ '?' + $.param(params)).then(function(res) {
+			chart4data = res;
+			setchart4(chart4data);
 		})
 		
 	}else if(tagId == "chart5Type"){
@@ -998,7 +957,14 @@ function factroy() {
 					if (this.value !== "코렌스이엠") {
                         $dropdown.append($("<option/>").val(this.code).text(this.value));
                     }
+                    
 				});
+				$dropdown.on('change', function() {
+                    let selectedText = $(this).find('option:selected').text();
+
+                    // 선택된 옵션의 value 값을 localStorage에 저장
+                    localStorage.setItem("option", selectedText);
+                });
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));
 			}

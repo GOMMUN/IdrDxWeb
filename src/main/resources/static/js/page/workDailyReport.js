@@ -16,6 +16,7 @@ let c_reject_type = null;
 let c_person = null;
 //let c_model_item=null;
 let s_workDailyReport = null;
+let f_person = null;
 let dataseq = null;
 let s_workerInput = null;
 let s_workerManHour = null;
@@ -438,6 +439,10 @@ function setWorkerInputEventListener() {
 			alert("작업일보를 선택해주세요.");
 			return;
 		}
+		
+		$selectWorker = $("#selectWorker");
+		$selectWorker.bootstrapTable('uncheckAll');		
+		
 		$("select[name=overtimeyn]").val("");
 		$("input[name=workinputdesc]").val("");
 		$("#addWorkerInputModalCreate").css('display', "block");
@@ -763,6 +768,9 @@ function setWorkerSupportEventListener() {
 			alert("작업일보를 선택해주세요.");
 			return;
 		}
+		
+		$selectWorkerSupport = $("#selectWorkerSupport");
+		$selectWorkerSupport.bootstrapTable('uncheckAll');		
 
 		$("input[name=supportmanhour]").val("");
 		$("input[name=supporttimeFrom]").val("");
@@ -1805,14 +1813,13 @@ window.operateEvents = {
 	"click .workDailyReportModify": function(e, value, row, index) {
 
 		workDailyReportDetail(row);
-		
-		$("input[name=workDate]").val(row.workDate);
-		$("select[name=wdrmodel]").val(row.wdrmodel);
-		$("select[name=lineid]").val(row.lineid);
-		$("select[name=shiftid]").val(row.shiftid);
-		$("select[name=wdrmatarial]").val(row.wdrmatarial);
-		$("input[name=planqty]").val(row.planQty);
-		$("input[name=notes]").val(row.notes);
+//		$("input[name=workDate]").val(row.workDate);
+//		$("select[name=wdrmodel]").val(row.wdrmodel);
+//		$("select[name=lineid]").val(row.lineid);
+//		$("select[name=shiftid]").val(row.shiftid);
+//		$("select[name=wdrmatarial]").val(row.wdrmatarial);
+//		$("input[name=planqty]").val(row.planQty);
+//		$("input[name=notes]").val(row.notes);
 
 		$("#addWorkDailyReportModalCreate").css('display', "none");
 		$("#addWorkDailyReportModalModify").css('display', "block");
@@ -1829,8 +1836,13 @@ window.operateEvents = {
 		$("#addWorkerInputModalModify").css('display', "block");
 
 		$('#addWorkerIntputModal').modal('show');
-
-
+		
+		f_person.forEach(function(ele, index){
+			if(ele.personid == row.personid){
+				$selectWorker = $("#selectWorker");
+				$selectWorker.bootstrapTable('check', index);
+			}
+		});	
 	},
 	"click .workerManHourModify": function(e, value, row, index) {
 		s_workerInput = row;
@@ -1856,8 +1868,13 @@ window.operateEvents = {
 		$("#addWorkerSupportModalModify").css('display', "block");
 
 		$('#addWorkerSupportModal').modal('show');
-
-
+		
+		f_person.forEach(function(ele, index){
+			if(ele.personid == row.personid){
+				$selectWorkerSupport = $("#selectWorkerSupport");
+				$selectWorkerSupport.bootstrapTable('check', index);
+			}
+		});	
 	},
 	"click .workContenttModify": function(e, value, row, index) {
 		s_workContent = row;
@@ -1885,9 +1902,13 @@ window.operateEvents = {
 		s_NonconFormity = row;
 
 		$("select[name=rejectItemId]").val(row.rejectItemid);
-		$("select[name=rejectType]").val(row.rejectType);
 		$("input[name=firsttimeRejectQty]").val(row.firsttimeRejectQty);
 		$("input[name=reworkRejectQty]").val(row.reworkRejectQty);
+		
+		$rejectItemCode = $("#rejectItemCode");
+		$rejectItemCode.trigger("change");
+		
+		$("select[name=rejectType]").val(row.rejectType);
 
 		$("#addNonconFormityModalCreate").css('display', "none");
 		$("#addNonconFormityModalModify").css('display', "block");
@@ -1899,7 +1920,7 @@ window.operateEvents = {
 	},
 	"click .NonOperationModify": function(e, value, row, index) {
 		s_NonOperation = row;
-
+		
 		$("input[name=notoperatetimeFrom]").val(row.notoperatetimeFrom);
 		$("input[name=notoperatetimeTo]").val(row.notoperatetimeTo);
 		$("input[name=nonhands]").val(row.hands);
@@ -1933,8 +1954,10 @@ function workDailyReportDetail(data) {
 	//$("input[name=workDate]").val(data.workDate);
 	s_workDailyReport = data;
 
-	$("input[name=workDate]").datepicker("setDate", new Date(data.workDate.substring(0, 4), data.workDate.substring(4, 6) - 1, data.workDate.substring(6, 8)));
+	//$("input[name=workDate]").datepicker("setDate", new Date(data.workDate.substring(0, 4), data.workDate.substring(4, 6) - 1, data.workDate.substring(6, 8)));
+	$("input[name=workDate]").datepicker("setDate",data.workDate);
 	$("select[name=blockid]").val(data.blockid);
+	$("select[name=wdrmodel]").val(data.modelid);
 	//$("select[name=factoryid]").val(data.factoryid);
 	$("select[name=groupid]").val(data.groupid);
 	$("select[name=lineid]").val(data.lineid);
@@ -1942,6 +1965,9 @@ function workDailyReportDetail(data) {
 	$("input[name=approver]").val(data.approver);
 	$("input[name=reviewer]").val(data.reviewer);
 	$("input[name=notes]").val(data.notes);
+	
+	$("select[name=wdrmatarial]").val(data.materialid);
+	$("input[name=planqty]").val(data.planQty);
 }
 
 function workerInput(data) {
@@ -2075,7 +2101,9 @@ function personfind(data) {
 	$.get(url + '?' + $.param(params)).then(function(res) {
 		$table = $("#selectWorker");
 		$table2 = $("#selectWorkerSupport");
-
+		
+		f_person = res;
+		
 		$table.bootstrapTable('removeAll');
 		$table.bootstrapTable('append', res);
 		$table2.bootstrapTable('removeAll');

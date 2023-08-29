@@ -7,13 +7,13 @@ public class FairPerformance {
 
 	private int rownum;
 	private int dataseq;
-	private int equipmentId;
+	private String equipmentId;
 	private String equipmentName;
-	private int orderId;
+	private String orderId;
 	private String orderName;
-	private int itemId;
+	private String itemId;
 	private String itemName;
-	private int processId;
+	private String processId;
 	private String processName;
 	private String processTime;
 	private String processResult;

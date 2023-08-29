@@ -7,7 +7,9 @@ public class LogisticsPerformance {
 	
 	private int rownum;
 	private int dataseq;
-	private int logisticsid;
+	private String factoryid;
+	private String factoryname;
+	private String logisticsid;
 	private String logisticsname;
 	private String operatingtime;
 	private String starttime;

@@ -8,7 +8,9 @@
     <select id="find" parameterType="Map" resultType="LogisticsPerformance">
         SELECT
 			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-			DATASEQ, 
+			DATASEQ,
+			FACTORYID,
+			FACTORYNAME, 
 			LOGISTICS_ID, 
 			LOGISTICS_NAME, 
 			OPERATING_TIME, 
@@ -68,6 +70,8 @@
     
     <insert id="create" parameterType="LogisticsPerformance" >
         INSERT INTO SIMULLATOR_LOGISTICS_PERFORMANCE (
+        	FACTORYID,
+        	FACTORYNAME,
         	LOGISTICS_ID, 
         	LOGISTICS_NAME, 
         	OPERATING_TIME, 
@@ -79,6 +83,8 @@
         	UNLOADING_TIME, 
         	ACTION_TYPE
         ) VALUES(
+       	    #{factoryid}, 
+        	#{factoryname}, 
         	#{logisticsid}, 
         	#{logisticsname}, 
         	#{operatingtime}, 

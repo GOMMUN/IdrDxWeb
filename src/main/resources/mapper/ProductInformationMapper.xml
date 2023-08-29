@@ -9,6 +9,8 @@
         SELECT
 			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
 			DATASEQ, 
+			FACTORYID,
+			FACTORYNAME,
 			ITEM_ID, 
 			ITEM_NAME, 
 			FLOW_ID, 
@@ -16,9 +18,7 @@
 			PROCESS_ORDER, 
 			PROCESS_ID, 
 			PROCESS_NAME, 
-			PROCESS_TYPE, 
-			PROCESS_TIMEM, 		
-			PROCESS_TIMES, 		
+			PROCESS_TYPE, 			
 			CONNECT_FLOW, 
 			INPUT_LOT_ID, 
 			INPUT_LOT_NAME,
@@ -30,10 +30,7 @@
 			CREATE_LOT_SIZE,
 			CREATE_LOT_UNIT,
 			CREATE_LOT_NUM,
-			PRE_PROCESS_WORKM,
-			PRE_PROCESS_WORKS,
-			POST_PROCESS_WORKM,
-			POST_PROCESS_WORKS,
+			PROCESS_TIME,
 			EQUIPMENTNAME,
 			CREATOR, 
 			CREATETIME, 
@@ -53,9 +50,7 @@
 			OR PROCESS_ORDER LIKE CONCAT('%', #{search}, '%') 
 			OR PROCESS_ID LIKE CONCAT('%', #{search}, '%') 
 			OR PROCESS_NAME LIKE CONCAT('%', #{search}, '%') 
-			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 
-			OR PROCESS_TIMEM LIKE CONCAT('%', #{search}, '%')
-			OR PROCESS_TIMES LIKE CONCAT('%', #{search}, '%') 			
+			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 		
 			OR CONNECT_FLOW LIKE CONCAT('%', #{search}, '%') 
 			OR INPUT_LOT_ID LIKE CONCAT('%', #{search}, '%') 
 			OR INPUT_LOT_NAME LIKE CONCAT('%', #{search}, '%') 		
@@ -93,9 +88,7 @@
 			OR PROCESS_ORDER LIKE CONCAT('%', #{search}, '%') 
 			OR PROCESS_ID LIKE CONCAT('%', #{search}, '%') 
 			OR PROCESS_NAME LIKE CONCAT('%', #{search}, '%') 
-			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 
-			OR PROCESS_TIMEM LIKE CONCAT('%', #{search}, '%')
-			OR PROCESS_TIMES LIKE CONCAT('%', #{search}, '%') 			
+			OR PROCESS_TYPE LIKE CONCAT('%', #{search}, '%') 		
 			OR CONNECT_FLOW LIKE CONCAT('%', #{search}, '%') 
 			OR INPUT_LOT_ID LIKE CONCAT('%', #{search}, '%') 
 			OR INPUT_LOT_NAME LIKE CONCAT('%', #{search}, '%') 		
@@ -118,6 +111,8 @@
     
     <insert id="create" parameterType="ProductInformation" >
         INSERT INTO SIMULLATOR_PRODUCT_INFORMATION (
+       	    FACTORYID,
+			FACTORYNAME,
         	ITEM_ID, 
 			ITEM_NAME, 
 			FLOW_ID, 
@@ -125,9 +120,7 @@
 			PROCESS_ORDER, 
 			PROCESS_ID, 
 			PROCESS_NAME, 
-			PROCESS_TYPE, 
-			PROCESS_TIMEM, 	
-			PROCESS_TIMES, 		
+			PROCESS_TYPE, 	
 			CONNECT_FLOW, 
 			INPUT_LOT_ID, 
 			INPUT_LOT_NAME,
@@ -139,12 +132,11 @@
 			CREATE_LOT_SIZE,
 			CREATE_LOT_UNIT,
 			CREATE_LOT_NUM,
-			PRE_PROCESS_WORKM,
-			PRE_PROCESS_WORKS,
-			POST_PROCESS_WORKM,
-			POST_PROCESS_WORKS,
-			EQUIPMENTNAME
+			EQUIPMENTNAME,
+			PROCESS_TIME
         ) VALUES(
+       	    #{factoryid},
+       	    #{factoryname},
         	#{itemid}, 
         	#{itemname}, 
         	#{flowid}, 
@@ -153,8 +145,6 @@
         	#{processid}, 
         	#{processname}, 
         	#{processtype}, 
-        	#{processtimem},
-        	#{processtimes},
         	#{connectflow},
         	#{inputlotid},
         	#{inputlotname},
@@ -166,11 +156,8 @@
         	#{createlotsize}, 
         	#{createlotunit}, 
         	#{createlotnum}, 
-        	#{preprocessworkm},
-        	#{preprocessworks},
-        	#{postprocessworkm},
-        	#{postprocessworks},
-        	#{equipmentname} 	
+        	#{equipmentname} ,
+        	#{processtime}	
         )
     </insert>
 

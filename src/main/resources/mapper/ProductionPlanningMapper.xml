@@ -8,7 +8,9 @@
     <select id="find" parameterType="Map" resultType="ProductionPlanning">
         SELECT
 			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
-			DATASEQ, 
+			DATASEQ,
+			FACTORYID,
+			FACTORYNAME, 
 			ORDER_ID, 
 			ORDER_NAME, 
 			ITEM_ID, 
@@ -71,6 +73,8 @@
     
     <insert id="create" parameterType="ProductionPlanning" >
         INSERT INTO SIMULLATOR_PRODUCTION_PLANNING (
+        	FACTORYID,
+        	FACTORYNAME,
         	ORDER_ID, 
 			ORDER_NAME, 
 			ITEM_ID, 
@@ -84,6 +88,8 @@
 			STATE 
 
         ) VALUES(
+        	#{factoryid},
+        	#{factoryname},
         	#{orderid}, 
         	#{ordername}, 
         	#{itemid}, 

@@ -95,21 +95,21 @@ public class FairPerformanceController {
 							domain.setFactoryid(cell.toString());
 						} else if ("회사명".equals(key)) {
 							domain.setFactoryname(cell.toString());
-						} else if ("설비코드".equals(key)) {
-							domain.setEquipmentId((int) Double.parseDouble(cell.toString()));
-						} else if ("설비명".equals(key)) {
+						} else if ("장비ID".equals(key)) {
+							domain.setEquipmentId(cell.toString());
+						} else if ("장비이름".equals(key)) {
 							domain.setEquipmentName(cell.toString());
-						} else if ("생산계획코드".equals(key)) {
-							domain.setOrderId((int) Double.parseDouble(cell.toString()));
-						} else if ("생산계획명".equals(key)) {
+						} else if ("주문ID".equals(key)) {
+							domain.setOrderId(cell.toString());
+						} else if ("주문이름".equals(key)) {
 							domain.setOrderName(cell.toString());
-						} else if ("자재코드".equals(key)) {
-							domain.setItemId((int) Double.parseDouble(cell.toString()));
-						} else if ("자재명".equals(key)) {
+						} else if ("ITEMID".equals(key)) {
+							domain.setItemId(cell.toString());
+						} else if ("ITEM이름".equals(key)) {
 							domain.setItemName(cell.toString());
-						} else if ("공정코드".equals(key)) {
-							domain.setProcessId((int) Double.parseDouble(cell.toString()));
-						} else if ("공정명".equals(key)) {
+						} else if ("공정ID".equals(key)) {
+							domain.setProcessId(cell.toString());
+						} else if ("공정이름".equals(key)) {
 							domain.setProcessName(cell.toString());
 						} else if ("공정시간".equals(key)) {
 							domain.setProcessTime(cell.toString());

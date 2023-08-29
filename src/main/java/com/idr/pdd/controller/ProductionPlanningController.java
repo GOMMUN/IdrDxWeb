@@ -96,24 +96,24 @@ public class ProductionPlanningController {
 					String key = sheet.getRow(0).getCell(columnIndex).toString().replaceAll(" ", "").toUpperCase();
 
 					if (cell != null) {
-						if ("생산계획코드".equals(key)) {
-							domain.setOrderid((int) Double.parseDouble(cell.toString()));
+						if ("회사코드".equals(key)) {
+							domain.setFactoryid(cell.toString());
+						} else if ("회사명".equals(key)) {
+							domain.setFactoryname(cell.toString());
+						} else if ("주문ID".equals(key)) {
+							domain.setOrderid(cell.toString());
 						} else if ("주문명".equals(key)) {
 							domain.setOrdername(cell.toString());
-						} else if ("자재코드".equals(key)) {
-							domain.setItemid((int) Double.parseDouble(cell.toString()));
-						} else if ("자재명".equals(key)) {
+						} else if ("ITEMID".equals(key)) {
+							domain.setItemid(cell.toString());
+						} else if ("ITEM이름".equals(key)) {
 							domain.setItemname(cell.toString());
-						} else if ("LOT코드".equals(key)) {
-							domain.setLotid((int) Double.parseDouble(cell.toString()));
-						} else if ("LOT명".equals(key)) {
+						} else if ("LOTID".equals(key)) {
+							domain.setLotid(cell.toString());
+						} else if ("LOT이름".equals(key)) {
 							domain.setLotname(cell.toString());
-						} else if ("총생산LOT수".equals(key)) {
+						} else if ("총생산수".equals(key)) {
 							domain.setTotalproductionlot((int) Double.parseDouble(cell.toString()));
-						} else if ("상태".equals(key)) {
-							domain.setState(cell.toString());
-						} else if ("중요도".equals(key)) {
-							domain.setImportance(cell.toString());
 						} else if ("시작시간".equals(key)) {
 							domain.setStarttime(cell.toString());
 						} else if ("납기".equals(key)) {

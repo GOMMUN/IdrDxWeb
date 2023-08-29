@@ -7,31 +7,27 @@ public class ProductInformation {
 	
 	private int rownum;
 	private int dataseq;
-	private int itemid;
+	private String factoryid;
+	private String factoryname;
+	private String itemid;
 	private String itemname;
-	private int flowid;
+	private String flowid;
 	private String flowname;
 	private String processorder;
-	private int processid;
+	private String processid;
 	private String processname;
 	private String processtype;
-	private	int processtimem;
-	private int processtimes;
 	private String connectflow;
-	private int inputlotid;
+	private String inputlotid;
 	private String inputlotname;
-	private int inputlotsize;
+	private String inputlotsize;
 	private String inputlotunit;
 	private int inputlotnum;
-	private int createlotid;
+	private String createlotid;
 	private String createlotname;
-	private int createlotsize;
+	private String createlotsize;
 	private String createlotunit;
 	private int createlotnum;
-	private int preprocessworkm;
-	private int preprocessworks;
-	private int postprocessworkm;
-	private int postprocessworks;
 	private String equipmentname;
 	private String creator;
 	private String createtime;
@@ -39,5 +35,6 @@ public class ProductInformation {
 	private String eventuser;
 	private String eventtime;
 	private String isusable;
+	private String processtime;
 
 }

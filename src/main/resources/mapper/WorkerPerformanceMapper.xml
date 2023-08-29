@@ -9,6 +9,8 @@
         SELECT
 			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS ROWNUM,
 			DATASEQ, 
+			FACTORYID,
+			FACTORYNAME,
 			WORKERNAME, 
 			WORKERID, 
 			ORDERID, 
@@ -78,6 +80,8 @@
     
     <insert id="create" parameterType="WorkerPerformance" >
         INSERT INTO SIMULLATOR_WORKER_PERFORMANCE (
+        	FACTORYID,
+        	FACTORYNAME,
         	WORKERID, 
         	WORKERNAME, 
         	ORDERID, 
@@ -93,6 +97,8 @@
         	DIVISIONTYPE,
         	EQUIPNAME
         ) VALUES(
+        	#{factoryid}, 
+        	#{factoryname}, 
         	#{workerid}, 
         	#{workername}, 
         	#{orderid}, 

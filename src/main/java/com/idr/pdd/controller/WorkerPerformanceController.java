@@ -60,76 +60,75 @@ public class WorkerPerformanceController {
 
 	@Transactional
 	@PostMapping(value = "/excelUpload")
-	public void excelUpload(HttpServletRequest request, HttpServletResponse response, 
+	public void excelUpload(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "excelFile", required = true) MultipartFile file) {
 		System.out.println(file);
-		
+
 		try {
 			String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-			
+
 			if (!extension.equals("xlsx") && !extension.equals("xls")) {
-		      throw new IOException("엑셀파일만 업로드 해주세요.");
-		    }
-			 
+				throw new IOException("엑셀파일만 업로드 해주세요.");
+			}
+
 			Workbook workbook = ExcelFileType.getWorkbook(file);
-			
+
 			Sheet sheet = workbook.getSheetAt(0);
-			
+
 			int rowIndex = 0;
-			
+
 			List<WorkerPerformance> list = new ArrayList<>();
-			
+
 			totalRowCount = sheet.getLastRowNum();
-			
+
 			for (rowIndex = 1; rowIndex < totalRowCount + 1; rowIndex++) {
-				
+
 				WorkerPerformance domain = new WorkerPerformance();
-				
+
 				int columnIndex = 0;
 				Row row = sheet.getRow(rowIndex);
-				
+
 				for (columnIndex = 0; columnIndex < row.getLastCellNum(); columnIndex++) {
-					
+
 					Cell cell = row.getCell(columnIndex);
 					String key = sheet.getRow(0).getCell(columnIndex).toString().replaceAll(" ", "").toUpperCase();
-					
-					if( cell != null ) {
-						if("작업자코드".equals(key)) {
+
+					if (cell != null) {
+						if ("회사코드".equals(key)) {
+							domain.setFactoryid(cell.toString());
+						} else if ("회사명".equals(key)) {
+							domain.setFactoryname(cell.toString());
+						} else if ("작업자ID".equals(key)) {
 							domain.setWorkerid(cell.toString());
-						}else if("작업자명".equals(key)) {
+						} else if ("작업자명".equals(key)) {
 							domain.setWorkername(cell.toString());
-						}else if("생산계획코드".equals(key)) {
-							domain.setOrderid((int)Double.parseDouble(cell.toString()));
-						}else if("생산계획명".equals(key)) {
-							domain.setOrdername(cell.toString());					
-						}else if("자재코드".equals(key)) {
-							domain.setItemid((int)Double.parseDouble(cell.toString()));
-						}else if("자재명".equals(key)) {
+						} else if ("주문ID".equals(key)) {
+							domain.setOrderid(cell.toString());
+						} else if ("주문이름".equals(key)) {
+							domain.setOrdername(cell.toString());
+						} else if ("ITEMID".equals(key)) {
+							domain.setItemid(cell.toString());
+						} else if ("ITEM이름".equals(key)) {
 							domain.setItemname(cell.toString());
-						}else if("공정코드".equals(key)) {
-							domain.setProcessid((int)Double.parseDouble(cell.toString()));
-						}else if("공정명".equals(key)) {
+						} else if ("공정ID".equals(key)) {
+							domain.setProcessid(cell.toString());
+						} else if ("공정이름".equals(key)) {
 							domain.setProcessname(cell.toString());
-						}else if("공정시간".equals(key)) {
+						} else if ("공정시간".equals(key)) {
 							domain.setProcesstime(cell.toString());
-						}else if("설비코드".equals(key)) {
-							domain.setEquipid((int)Double.parseDouble(cell.toString()));
-						}else if("설비명".equals(key)) {
-							domain.setEquipname(cell.toString());
-						}
-						else if("시작시간".equals(key)) {
+						} else if ("장비ID".equals(key)) {
+							domain.setEquipid(cell.toString());
+						} else if ("시작시간".equals(key)) {
 							domain.setStarttime(cell.toString());
-						}else if("종료시간".equals(key)) {
+						} else if ("종료시간".equals(key)) {
 							domain.setEndtime(cell.toString());
-						}else if("분활종류".equals(key)) {
-							domain.setDivisiontype(cell.toString());
 						}
 					}
 				}
 				list.add(domain);
-				
+
 			}
-			if(list.size() > 0) {
+			if (list.size() > 0) {
 				for (WorkerPerformance param : list) {
 					service.create(param);
 					successRowCount += 1;
@@ -138,7 +137,7 @@ public class WorkerPerformanceController {
 
 			totalRowCount = 0;
 			successRowCount = 0;
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

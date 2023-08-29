@@ -7,16 +7,18 @@ public class WorkerPerformance {
 	
 	private int rownum;
 	private int dataseq;
+	private String factoryid;
+	private String factoryname;
 	private String workerid;
 	private String workername;
-	private int orderid;
+	private String orderid;
 	private String ordername;
-	private int itemid;
+	private String itemid;
 	private String itemname;
-	private int processid;
+	private String processid;
 	private String processname;
 	private String processtime;
-	private int equipid;
+	private String equipid;
 	private String starttime;
 	private String endtime;
 	private String divisiontype;

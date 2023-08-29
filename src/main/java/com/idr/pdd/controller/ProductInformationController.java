@@ -96,59 +96,56 @@ public class ProductInformationController {
 					String key = sheet.getRow(0).getCell(columnIndex).toString().replaceAll(" ", "").toUpperCase();
 
 					if (cell != null) {
-						if ("자재코드".equals(key)) {
-							domain.setItemid((int) Double.parseDouble(cell.toString()));
-						} else if ("자재명".equals(key)) {
+						if ("회사코드".equals(key)) {
+							domain.setFactoryid(cell.toString());
+						} else if ("회사명".equals(key)) {
+							domain.setFactoryname(cell.toString());
+						} else if ("ITEMID".equals(key)) {
+							domain.setItemid(cell.toString());
+						} else if ("ITEM이름".equals(key)) {
 							domain.setItemname(cell.toString());
-						} else if ("FLOW코드".equals(key)) {
-							domain.setFlowid((int) Double.parseDouble(cell.toString()));
-						} else if ("FLOW명".equals(key)) {
+						} else if ("FLOWID".equals(key)) {
+							domain.setFlowid(cell.toString());
+						} else if ("FLOW이름".equals(key)) {
 							domain.setFlowname(cell.toString());
 						} else if ("공정순서".equals(key)) {
 							domain.setProcessorder(cell.toString());
-						} else if ("공정코드".equals(key)) {
-							domain.setProcessid((int) Double.parseDouble(cell.toString()));
-						} else if ("공정명".equals(key)) {
+						} else if ("공정ID".equals(key)) {
+							domain.setProcessid(cell.toString());
+						} else if ("공정이름".equals(key)) {
 							domain.setProcessname(cell.toString());
 						} else if ("공정종류".equals(key)) {
 							domain.setProcesstype(cell.toString());
 						} else if ("연결FLOW".equals(key)) {
 							domain.setConnectflow(cell.toString());
-						} else if ("투입LOT코드".equals(key)) {
-							domain.setInputlotid((int) Double.parseDouble(cell.toString()));
-						} else if ("투입LOT명".equals(key)) {
+						} else if ("투입LOTID".equals(key)) {
+							domain.setInputlotid(cell.toString());
+						} else if ("투입LOTNAME".equals(key)) {
 							domain.setInputlotname(cell.toString());
 						} else if ("투입LOT크기".equals(key)) {
-							domain.setInputlotsize((int) Double.parseDouble(cell.toString()));
+							domain.setInputlotsize(cell.toString());
 						} else if ("투입LOT단위".equals(key)) {
 							domain.setInputlotunit(cell.toString());
 						} else if ("투입LOT수량".equals(key)) {
 							domain.setInputlotnum((int) Double.parseDouble(cell.toString()));
-						} else if ("생성LOT코드".equals(key)) {
-							domain.setCreatelotid((int) Double.parseDouble(cell.toString()));
-						} else if ("생성LOT명".equals(key)) {
+						} else if ("생성LOTID".equals(key)) {
+							domain.setCreatelotid(cell.toString());
+						} else if ("생성LOT이름".equals(key)) {
 							domain.setCreatelotname(cell.toString());
 						} else if ("생성LOT크기".equals(key)) {
-							domain.setCreatelotsize((int) Double.parseDouble(cell.toString()));
+							domain.setCreatelotsize(cell.toString());
 						} else if ("생성LOT단위".equals(key)) {
 							domain.setCreatelotunit(cell.toString());
 						} else if ("생성LOT수량".equals(key)) {
 							domain.setCreatelotnum((int) Double.parseDouble(cell.toString()));
-						} else if ("공정전작업".equals(key)) {
-							domain.setPreprocessworkm((int) Double.parseDouble(cell.toString()));
-						} /*
-							 * else if("공정시간분".equals(key)) {
-							 * domain.setProcesstimem((int)Double.parseDouble(cell.toString())); }else
-							 * if("공정시간초".equals(key)) {
-							 * domain.setProcesstimes((int)Double.parseDouble(cell.toString())); }else
-							 * if("공정후작업분".equals(key)) {
-							 * domain.setPostprocessworkm((int)Double.parseDouble(cell.toString())); }else
-							 * if("공정후작업초".equals(key)) {
-							 * domain.setPostprocessworks((int)Double.parseDouble(cell.toString())); }else
-							 * if("장비이름".equals(key)) { domain.setEquipmentname(cell.toString()); }
-							 */
+						} else if ("공정시간".equals(key)) {
+							domain.setProcesstime(cell.toString());
+						} else if ("장비이름".equals(key)) {
+							domain.setEquipmentname(cell.toString());
+						}
 					}
 				}
+
 				list.add(domain);
 
 			}

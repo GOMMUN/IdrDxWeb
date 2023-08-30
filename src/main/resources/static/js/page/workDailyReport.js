@@ -1,8 +1,8 @@
 /**
  * 
  */
-//const CORE_URL = "http://localhost:8171";
-const CORE_URL = "https://idrenvision.iptime.org:8171";
+const CORE_URL = "https://localhost:8171";
+//const CORE_URL = "https://idrenvision.iptime.org:8171";
 
 let c_factory = null;
 let c_block = null;
@@ -80,6 +80,13 @@ function setWorkDailyReportEventListener() {
 
 		if ($grid.bootstrapTable('getSelections').length == 1) {
 			s_workDailyReport = $element;
+			
+			const originalString = $element.workDate;
+			const charToRemove = "-";
+			const regex = new RegExp(charToRemove, "g");
+			const modifiedString = originalString.replace(regex, "");
+			
+			s_workDailyReport.workDate=modifiedString;
 			dataseq = $element.dataseq;
 		} else {
 			s_workDailyReport = null;

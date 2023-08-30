@@ -23,5 +23,7 @@ public class FairProd {
 	private String date;
 	private String sum;
 	private String factoryname;
+	private String commgrpcdnm;	
+	private String commcdnm;
 
 }

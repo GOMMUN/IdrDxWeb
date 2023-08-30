@@ -216,6 +216,20 @@ function setchart2(){
 }
 
 function setchart3(chart3data){
+	var seriesData = [];
+
+	for (var i = 0; i <= chart3data.length-1; i++) {
+	 
+	    var series = {
+	        name: chart3data[i].commgrpcdnm,
+	        y: chart3data[i].firsttimerejectQtySum,
+	        z: 120
+	    };
+	    
+	    seriesData.push(series);
+	
+	}
+	
 	Highcharts.chart('chart3', {
     chart: {
         type: 'variablepie'
@@ -233,23 +247,7 @@ function setchart3(chart3data){
         zMin: 0,
         name: 'failurerate',
         borderRadius: 5,
-        data: [{
-            name: '외관',
-            y: chart3data[0].firsttimerejectQtySum,
-            z: 120
-        }, {
-            name: '기능',
-            y: chart3data[1].firsttimerejectQtySum,
-            z: 120
-        }, {
-            name: '조립',
-            y: chart3data[2].firsttimerejectQtySum,
-            z: 120
-        }, {
-            name: '재질',
-            y: chart3data[3].firsttimerejectQtySum,
-            z: 120
-        }],
+        data: seriesData,
         colors: [
             '#C00500',
             '#FF85FF',
@@ -261,6 +259,30 @@ function setchart3(chart3data){
 }
 
 function setchart4(chart4data){
+	var seriesData = [];
+
+	for (var i = 0; i <= chart3data.length-1; i++) {
+		
+	    var series1 = {
+			id: chart3data[i].rejectItemId,
+	        name: chart3data[i].commgrpcdnm,
+	        color: chart3data[i].rejectItemId == 'RI01' ? '#C00500' : chart3data[i].rejectItemId == 'RI02' ? '#FF85FF' : chart3data[i].rejectItemId == 'RI03' ? '#993601' : '#F78E00'
+	    };
+	    seriesData.push(series1);
+	}    
+	for (var j = 0; j <= chart4data.length-1; j++) {
+	 
+		var series2 = {
+			name: chart4data[j].commcdnm,
+	        parent: chart4data[j].rejectItemId,
+	        value: chart4data[j].firsttimerejectQtySum
+		};
+		    
+		seriesData.push(series2);
+		
+	}
+	
+
 Highcharts.chart('chart4', {
     series: [{
         type: 'treemap',
@@ -286,73 +308,7 @@ Highcharts.chart('chart4', {
                 }
             }
         }],
-        data: [{
-            id: 'A',
-            name: '외관',
-            color: '#C00500'
-        }, {
-            id: 'B',
-            name: '기능',
-            color: '#FF85FF'
-        }, {
-            id: 'C',
-            name: '조립',
-            color: '#993601'
-        }, {
-            id: 'D',
-            name: '재질',
-            color: '#F78E00'
-        }, {
-            name: '도장',
-            parent: 'A',
-            value: chart4data[0].firsttimerejectQtySum
-        }, {
-            name: '긁힘',
-            parent: 'A',
-            value: chart4data[1].firsttimerejectQtySum
-        }, {
-            name: '변형',
-            parent: 'A',
-            value: chart4data[2].firsttimerejectQtySum
-        }, {
-            name: '이색',
-            parent: 'A',
-            value: chart4data[3].firsttimerejectQtySum
-        }, {
-            name: '성능',
-            parent: 'B',
-            value: chart4data[4].firsttimerejectQtySum
-        }, {
-            name: '안전',
-            parent: 'B',
-            value: chart4data[5].firsttimerejectQtySum
-        }, {
-            name: '동작',
-            parent: 'B',
-            value: chart4data[6].firsttimerejectQtySum
-        }, {
-            name: '결합',
-            parent: 'C',
-            value: chart4data[7].firsttimerejectQtySum
-        }, {
-            name: '누락',
-            parent: 'C',
-            value: chart4data[8].firsttimerejectQtySum
-        }, {
-            name: '오차',
-            parent: 'C',
-            value: chart4data[9].firsttimerejectQtySum
-        },
-        {
-            name: '소재',
-            parent: 'D',
-            value: chart4data[10].firsttimerejectQtySum
-        },
-        {
-            name: '강도',
-            parent: 'D',
-            value: chart4data[11].firsttimerejectQtySum
-        }]
+        data: seriesData
     }],
     title: {
         text: '불량 상세 유형별 빈도 수',
@@ -364,7 +320,7 @@ Highcharts.chart('chart4', {
 });
 
 }
-
+	     
 function setchart5(chart5data) {
 	var dateData = [];
 
@@ -845,7 +801,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 	if(tagId == "chart1Type"){
 		var url = '/dash/chart1';
 		var params = {
-			factory: localStorage.getItem('plant'),
+			plant: localStorage.getItem('plant'),
 			month: data
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
@@ -863,6 +819,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		}
 		
 		var params = {
+			plant: localStorage.getItem('plant'),
 			factory: factory,
 			month: data
 		};
@@ -875,7 +832,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart3';
 
 		var params = {
-			factory: localStorage.getItem('plant'),
+			plant: localStorage.getItem('plant'),
 			month: data
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
@@ -886,7 +843,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart4';
 		
 		var params = {
-			factory: localStorage.getItem('plant'),
+			plant: localStorage.getItem('plant'),
 			month: data
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
@@ -898,7 +855,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart5';
 		
 		var params = {
-			factory: localStorage.getItem('plant'),
+			plant: localStorage.getItem('plant'),
 			month: data
 		};
 		
@@ -911,7 +868,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart6';
 		
 		var params = {
-			factory: localStorage.getItem('plant'),
+			plant: localStorage.getItem('plant'),
 			month: data
 		};
 		
@@ -924,7 +881,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart8';
 
 		var params = {
-			factory: localStorage.getItem('plant'),
+			plant: localStorage.getItem('plant'),
 			month: data
 		};
 		
@@ -1069,7 +1026,7 @@ function findName(){
 	var url = '/dash/findName';
 
 	var params = {
-		factory: localStorage.getItem('plant')
+		plant: localStorage.getItem('plant')
 	};
 		
 	$.get(url + '?' + $.param(params)).then(function(res) {

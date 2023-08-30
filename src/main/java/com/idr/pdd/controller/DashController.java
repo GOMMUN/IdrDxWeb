@@ -30,62 +30,62 @@ public class DashController {
 	
 	@ResponseBody
 	@GetMapping("/findName")
-	public List<FairProd> findName(String factory) {
+	public List<FairProd> findName(String plant) {
 		
-		List<FairProd> list = service.findAllName(factory);
+		List<FairProd> list = service.findAllName(plant);
 		return list;
     }
 
 	@ResponseBody
 	@GetMapping("/findPQCD")
-	public List<FairProd> findPQCD(String factory) {
+	public List<FairProd> findPQCD(String plant) {
 		
-		List<FairProd> list = service.findAllPQCD(factory);
+		List<FairProd> list = service.findAllPQCD(plant);
 		return list;
     }
 	
 	@ResponseBody
 	@GetMapping("/chart1")
-    public List<List<FairProd>> chart1(String factory, String month) {
+    public List<List<FairProd>> chart1(String plant, String month) {
 		
-		return service.chart125(factory, month);
+		return service.chart15(plant, month);
     }
 
 	@ResponseBody
 	@GetMapping("/chart2")
-    public List<List<FairProd>> chart2(String factory, String month) {
+    public List<List<FairProd>> chart2(String plant, String factory, String month) {
 		
-		return service.chart125(factory, month);
+		return service.chart2(plant, factory, month);
     }
 	
 	@ResponseBody
 	@GetMapping("/chart3")
-    public List<FairProd> chart3(String factory, String month) {
+    public List<FairProd> chart3(String plant, String month) {
 		
-		List<FairProd> list = service.chart3(factory, month);
+		List<FairProd> list = service.chart3(plant, month);
 		return list;
     }
 	
 	@ResponseBody
 	@GetMapping("/chart4")
-    public List<FairProd> chart4(String factory, String month) {
+    public List<FairProd> chart4(String plant, String month) {
 		
-		List<FairProd> list = service.chart4(factory, month);
+		List<FairProd> list = service.chart4(plant, month);
 		return list;
     }
 	
 	@ResponseBody
 	@GetMapping("/chart5")
-    public List<List<FairProd>> chart5(String factory, String month) {
+    public List<List<FairProd>> chart5(String plant, String month) {
 		
-		return service.chart125(factory, month);
+		return service.chart15(plant, month);
     }
 	
 	@ResponseBody
 	@GetMapping("/chart6")
-    public List<FairProd> chart6(String factory, String month) {
+    public List<FairProd> chart6(String plant, String month) {
 		
-		List<FairProd> list = service.chart6(factory, month);
+		List<FairProd> list = service.chart6(plant, month);
 		return list;
     }	
 	

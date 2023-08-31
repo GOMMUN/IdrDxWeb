@@ -66,6 +66,7 @@
 		UPDATE DSP_REJECT_CONTENTS
 		SET
          REJECT_ITEMID= #{rejectItemid}
+        ,REJECT_TYPE=#{rejectType}
         , FIRSTTIME_REJECT_QTY= #{firsttimeRejectQty}
         , REWORK_REJECT_QTY= #{reworkRejectQty}
         , EVENTTIME = GETDATE()

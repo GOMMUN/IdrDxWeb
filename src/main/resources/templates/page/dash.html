@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Default Layout Import-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
 <script src="https://code.highcharts.com/modules/treemap.js"></script>
@@ -54,369 +53,276 @@
 	}
 </style>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+
+</head>
 <body>
-	<input id="parameterPlant" type="hidden" th:value="${plant}" />
-	<input id="parameterUsername" type="hidden" th:value="${username}" />
-	<div class="container-fluid mt-3">
-		<div class="row">
-		    <div class="col-lg-6">
-		      <h1>DASH Board</h1>
-		      <h5>KORENS EM> PRODUCT> DX</h5>
-		    </div>
-		    <div class="col-lg-6 text-right ">
-				<div class="row justify-content-end" >
-					<div class="col-lg-4">
-						<div class="card border-left-primary shadow h-100 py-2 alarm1">
-							<div class="card-body ">
-								<div class="row no-gutters align-items-center">
-									<div class="col mr-2">
-										<div class="h4 font-weight-bold text-primary text-uppercase mb-1 text-left">
-											계획 대비 실적 이상</div>
-									</div>
-									<div class="col mr-2">
-										<i class="fas fa-bell fa-2x text-300" id="alarmbell1"></i>
-									</div>
-									<div class="col mr-2">
-										<div class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right" id="alarm1"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4">
-						<div class="card border-left-primary shadow h-100 py-2 alarm2">
-							<div class="card-body">
-								<div class="row no-gutters align-items-center">
-									<div class="col mr-2">
-										<div class="h4 font-weight-bold text-primary text-uppercase mb-1 text-left">
-											품질 이상</div>
-									</div>
-									<div class="col mr-2">
-										<i class="fas fa-bell fa-2x text-300" id="alarmbell2"></i>
-									</div>
-									<div class="col mr-2">
-										<div class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right" id="alarm2"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4">
-						<div class="card border-left-primary shadow h-100 py-2 alarm3">
-							<div class="card-body ">
-								<div class="row no-gutters align-items-center">
-									<div class="col mr-2">
-										<div class="h4 font-weight-bold text-primary text-uppercase mb-1 text-left">
-											설비 이상</div>
-									</div>
-									<div class="col mr-2">
-										<i class="fas fa-bell fa-2x text-300" sytle="color:red" id="alarmbell3"></i>
-									</div>
-									<div class="col mr-2">
-										<div class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right" id="alarm3"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-		    </div>
-		</div>
-		<button type="button" class="btn btn-primary float-right" style="margin: 5px;" id="refresh" onclick="refreshTime()">새로고침</button>
-		<div class="text-right" style="margin: 15px;" id="refreshTime" >
-			<h5>최근 업데이트 : </h5>
-		</div>
-	</div>
-	
-	<div class="container-fluid mt-3">
-		<div class="row">
-			<div class="col-lg-3">
-				<div class="card border-left-primary shadow h-100 py-2">
-					<div class="card-body">
-						<div class="row no-gutters align-items-center">
-							<div class="col mr-2">
-								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">P</span>roduction</div>
-							</div>
-							<div class="col-auto">
-								<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">시간당 생산량 UPH</div>
-								<div id="Uph" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-								<div class="col-auto">
-									<div id="preUph" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3">
-				<div class="card border-left-primary shadow h-100 py-2">
-					<div class="card-body">
-						<div class="row no-gutters align-items-center">
-							<div class="col mr-2">
-								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">Q</span>uality</div>
-							</div>
-							<div class="col-auto">
-								<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">일일 제품 불량률</div>
-								<div id="failRate" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-								<div class="col-auto">
-									<div id="preFailRate" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3">
-				<div class="card border-left-primary shadow h-100 py-2">
-					<div class="card-body">
-						<div class="row no-gutters align-items-center">
-							<div class="col mr-2">
-								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">C</span>ost</div>
-							</div>
-							<div class="col-auto">
-								<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">일일 설비 가동률</div>
-								<div id="operateRate" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-								<div class="col-auto">
-									<div id="preOperateRate" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3">
-				<div class="card border-left-primary shadow h-100 py-2">
-					<div class="card-body">
-						<div class="row no-gutters align-items-center">
-							<div class="col mr-2">
-								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">D</span>elivery</div>
-							</div>
-							<div class="col-auto">
-								<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">일일 생산계획 대비 실적 달성율</div>
-								<div id="successRate" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-								<div class="col-auto">
-									<div id="preSuccessRate" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <input id="parameterPlant" type="hidden" th:value="${plant}" />
+  <input id="parameterUsername" type="hidden" th:value="${username}" />
+  <div class="refresh-wrap">
+    <div class="refresh-btn" onclick="refreshTime()">새로고침</div>
+    <div class="fs-12" id="refreshTime" >최근업데이트 : </div>
+  </div>
+  <div class="dash-wrap">
+    <!-- 상단 정보 -->
+    <div class="grid-item">
+      <div class="flex-wrap-st">
+        <div class="flex-item pr-15 logo-wrap">
+          <img src="../../static/image/logo.png" alt="">
+        </div>
+        <div class="flex-item pr-15">
+          <select name="" id="">
+            <option value="">자재명</option>
+          </select>
+        </div>
+        <!-- <div class="flex-item fw-b fs-18">
+          현황
+        </div>
+        <div class="flex-item">
+          
+        </div> -->
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="flex-wrap-nd">
+        <div class="flex-item">
+          <!-- 이상발생 건수 있을시 active 클래스 추가 -->
+          <div class="noti-box" id="alarmbell1">
+            <span>계획대비 실적이상</span>
+            <span class="bell" id="alarm1"></span>
+          </div>
+        </div>
+        <div class="flex-item">
+          <!-- 이상발생 건수 있을시 active 클래스 추가 -->
+          <div class="noti-box" id="alarmbell2">
+            <span>품질이상</span>
+            <span class="bell" id="alarm2"></span>            
+          </div>
+        </div>
+        <div class="flex-item">
+          <!-- 이상발생 건수 있을시 active 클래스 추가 -->
+          <div class="noti-box" id="alarmbell3">
+            <span>설비이상</span>
+            <span class="bell" id="alarm3"></span>           
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 구분 라인 -->
+    <div class="grid-item">
+      <div class="line"></div>
+    </div>
+    <!-- p-data -->
+    <div class="grid-item">
+      <div class="dash-card">
+        <div class="flex-wrap-sb bg-ft card-hd">
+          <div class="flex-item fc-w fs-18"><span class="fw-b fs-h1">P</span>roduction</div>          
+        </div>
+        <div class="sub-info-tit bg-ft fc-w fs-14">시간당 생산량 UPH</div>
+        <div class="flex-wrap-sb bg-ft card-bd fc-w">
+          <div class="flex-item fs-14">
+            <span>전일대비</span>
+            <!--class 명 변경 증가 plus / 감소 minus -->
+            <span class="plus" id="preUph"></span>
+          </div>
+          <div class="flex-item fw-b fs-h1" id="Uph"></div>
+        </div>
+      </div>
+    </div>
+    <!-- q-data -->
+    <div class="grid-item">
+      <div class="dash-card">
+        <div class="flex-wrap-sb bg-se card-hd">
+          <div class="flex-item fc-w fs-18"><span class="fw-b fs-h1">Q</span>uality</div>          
+        </div>
+        <div class="sub-info-tit bg-se fc-w fs-14">일일 제품 불량률</div>
+        <div class="flex-wrap-sb bg-se card-bd fc-w">
+          <div class="flex-item fs-14">
+            <span>전일대비</span>
+            <!--class 명 변경 증가 plus / 감소 minus -->
+            <span class="minus" id="preFailRate"></span>
+          </div>
+          <div class="flex-item fw-b fs-h1" id="failRate"></div>
+        </div>
+      </div>
+    </div>
+    <!-- c-data -->
+    <div class="grid-item">
+      <div class="dash-card">
+        <div class="flex-wrap-sb bg-th card-hd">
+          <div class="flex-item fc-w fs-18"><span class="fw-b fs-h1">C</span>ost</div>          
+        </div>
+        <div class="sub-info-tit bg-th fc-w fs-14">일일 설비 가동률</div>
+        <div class="flex-wrap-sb bg-th card-bd fc-w">
+          <div class="flex-item fs-14">
+            <span>전일대비</span>
+            <!--class 명 변경 증가 plus / 감소 minus -->
+            <span class="plus" id="preOperateRate"></span>
+          </div>
+          <div class="flex-item fw-b fs-h1" id="operateRate"></div>
+        </div>
+      </div>
+    </div>
+    <!-- d-data -->
+    <div class="grid-item">
+      <div class="dash-card">
+        <div class="flex-wrap-sb bg-fo card-hd">
+          <div class="flex-item fc-w fs-18"><span class="fw-b fs-h1">D</span>elivery</div>          
+        </div>
+        <div class="sub-info-tit bg-fo fc-w fs-14">일일 생산 계획 대비 실적 달성률</div>
+        <div class="flex-wrap-sb bg-fo card-bd fc-w">
+          <div class="flex-item fs-14">
+            <span>전일대비</span>
+            <!--class 명 변경 증가 plus / 감소 minus -->
+            <span class="plus" id="preSuccessRate"></span>
+          </div>
+          <div class="flex-item fw-b fs-h1" id="successRate"></div>
+        </div>
+      </div>
+    </div>
+    <!-- p-그래프 -->
+    <!-- 협력사 일때 class 'partner-view' 추가 -->
+    <div class="grid-item">
+      <div class="dash-card">
+		<div class="range-wrap text-right ">
+			<figure class="highcharts-figure" id="chart1Type">
+                <input type="radio" class="addType" id="select" name="term" value="day" checked><label for="select">일</label>
+                <input type="radio" class="addType" id="select2" name="term" value="week"><label for="select2">주</label>
+                <input type="radio" class="addType" id="select3" name="term" value="month"><label for="select3">월</label>
+				<div id="chart1"></div>
+			</figure>
 
-	<div class="container-fluid mt-3">
-		<div class="row">
-			<div class="col-lg-3">
-				<div class="card shadow mb-4">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="card shadow mb-4">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-12">
-												<figure class="highcharts-figure">
-														<div class="text-right mb-1" id="chart1Type">
-															<button type="button" class="btn btn-primary addType" value="day">일</button>
-															<button type="button" class="btn btn-primary addType" value="week">주</button>
-															<button type="button" class="btn btn-primary addType" value="month">월</button>
-														</div>													
-													<div id="chart1"></div>
-												</figure>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row" id="chart2Container">
-							<div class="col-lg-12">
-								<div class="card shadow mb-4">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-12">
-												<figure class="highcharts-figure">
-														<div class="text-right mb-1" id="chart2Type">
-															<button type="button" class="btn btn-primary addType" value="day">일</button>
-															<button type="button" class="btn btn-primary addType" value="week">주</button>
-															<button type="button" class="btn btn-primary addType" value="month">월</button>
-														</div>
-														<div class="text-right mb-1" id="chart2Type">
-															<select id="factoryCodes" name="factoryid"
-																class="form-select-custom form-control-user" aria-label="공장">
-																<option value="">공장 선택</option>
-															</select>
-														</div>													
-													<div id="chart2"></div>
-												</figure>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+			<figure class="highcharts-figure" id="chart2Type">
+	            <input type="radio" class="addType" id="select0" name="term0" value="day" checked><label for="select0">일</label>
+	            <input type="radio" class="addType" id="select02" name="term0" value="week"><label for="select02">주</label>
+	            <input type="radio" class="addType" id="select03" name="term0" value="month"><label for="select03">월</label>
+				<div class="text-right" style="width: 30%; " id="chart2Type">
+					<select id="factoryCodes" name="factoryid"
+						class="form-select-custom form-control-user" aria-label="공장">
+						<option value="">공장 선택</option>
+					</select>
+				</div>													
+				<div id="chart2"></div>
+			</figure>
+      	</div>
+      </div>
+    </div>
+    <!-- q-그래프 -->
+    <div class="grid-item">
+      <div class="dash-card">
+		  <div class="range-wrap text-right">
+			<figure class="highcharts-figure">
+				<div class="text-right" id="chart3Type">
+	                <input type="radio" class="addMonth" id="month0" name="month" value=""><label for="month0"></label>
+	                <input type="radio" class="addMonth" id="month1" name="month" value=""><label for="month1"></label>
+	                <input type="radio" class="addMonth" id="month2" name="month" value=""><label for="month2"></label>
+				</div>	
+				<div class="text-right" id="chart3Type" style="margin-top: 3px;">
+	                <input type="radio" class="addMonth" id="month3" name="month" value=""><label for="month3"></label>
+	                <input type="radio" class="addMonth" id="month4" name="month" value=""><label for="month4"></label>
+	                <input type="radio" class="addMonth" id="month5" name="month" value="" checked><label for="month5"></label>
 				</div>
+				<div>
+					<div id="chart3"></div>
+				</div>
+				<div style="margin-top: 100px">
+					<div id="chart4"></div>
+				</div>
+			</figure>
+        </div>    
+      </div>
+    </div>
+    <!-- c-그래프 -->
+    <div class="grid-item">
+      <div class="dash-card">
+			<div class="range-wrap text-right ">
+				<figure class="highcharts-figure" id="chart5Type">
+	                <input type="radio" class="addType" id="select7" name="term2" value="day" checked><label for="select7">일</label>
+	                <input type="radio" class="addType" id="select8" name="term2" value="week"><label for="select8">주</label>
+	                <input type="radio" class="addType" id="select9" name="term2" value="month"><label for="select9">월</label>
+					<div id="chart5"></div>
+				</figure>	
 			</div>
-	
-			<div class="col-lg-3">
-				<div class="card shadow mb-4">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="card shadow mb-4">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-12">
-												<figure class="highcharts-figure">
-													<div class="text-right mb-1" id="chart3Type">
-														<button type="button" class="btn btn-primary addMonth" value=""></button>
-														<button type="button" class="btn btn-primary addMonth" value=""></button>
-														<button type="button" class="btn btn-primary addMonth" value=""></button>
-													</div>	
-													<div class="text-right" id="chart3Type">
-														<button type="button" class="btn btn-primary addMonth" value=""></button>
-														<button type="button" class="btn btn-primary addMonth" value=""></button>
-														<button type="button" class="btn btn-primary addMonth" value=""></button>
-													</div>
-													<div>
-														<div id="chart3"></div>
-													</div>
-													<div style="margin-top: 100px">
-														<div id="chart4"></div>
-													</div>
-												</figure>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-	
-			<div class="col-lg-6">
-				<div class="row">
-					<div class="col-lg-6">
-						<div class="card shadow mb-1">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="card shadow">
-											<div class="card-body">
-												<div class="row">
-													<div class="col-lg-12">
-														<figure class="highcharts-figure">
-															<div class="text-right mb-1" id="chart5Type">
-																<button type="button" class="btn btn-primary addType" value="day">일</button>
-																<button type="button" class="btn btn-primary addType" value="week">주</button>
-																<button type="button" class="btn btn-primary addType" value="month">월</button>
-															</div>
-															<div id="chart5"></div>
-														</figure>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				    
-					<div class="col-lg-6">
-						<div class="card shadow mb-1">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="card shadow">
-											<div class="card-body">
-												<div class="row">
-													<div class="col-lg-12">
-														<figure class="highcharts-figure">
-															<div class="text-right mb-1" id="chart6Type">
-																<button type="button" class="btn btn-primary addType" value="day">일</button>
-																<button type="button" class="btn btn-primary addType" value="week">주</button>
-																<button type="button" class="btn btn-primary addType" value="month">월</button>
-															</div>
-															<div id="chart6"></div>
-														</figure>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-		
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="card shadow mb-4">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card border-left-primary shadow h-100 py-2">
-											<div class="card-body">
-												<div class="row no-gutters align-items-center">
-													<div class="col mr-2">
-														<div class="h2 font-weight-bold text-primary text-uppercase mb-1">비정형 데이터</div>
-													</div>
-													<div class="col mr-2">
-														<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">일일 스마트 알람 발생 건</div>
-														<div id="todayAlarm" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-														<div class="col-auto">
-															<div id="yesterdayAlarm" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4">
-										<div class="card shadow">
-											<div class="card-body">
-												<div class="row">
-													<div class="col-lg-12">
-														<figure class="highcharts-figure">
-															<div id="chart7"></div>
-														</figure>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4">
-										<div class="card shadow">
-											<div class="card-body">
-												<div class="row">
-													<div class="col-lg-12">
-														<figure class="highcharts-figure">
-															<div class="text-right mb-1" id="chart8Type">
-																<button type="button" class="btn btn-primary addType" value="day">일</button>
-																<button type="button" class="btn btn-primary addType" value="week">주</button>
-																<button type="button" class="btn btn-primary addType" value="month">월</button>
-															</div>															
-															<div id="chart8"></div>
-														</figure>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+      </div>
+    </div>
+    <!-- d-그래프 -->
+    <div class="grid-item">
+      <div class="dash-card">
+		  <div class="range-wrap text-right">
+			<figure class="highcharts-figure" id="chart6Type">
+				<input type="radio" class="addType" id="select10" name="term3" value="day" checked><label for="select10">일</label>
+                <input type="radio" class="addType" id="select11" name="term3" value="week"><label for="select11">주</label>
+                <input type="radio" class="addType" id="select12" name="term3" value="month"><label for="select12">월</label>
+				<div id="chart6"></div>
+			</figure>
 		</div>
-	</div>
+      </div>
+    </div>
+    <!-- 비정형그래프 -->
+    <div class="grid-item">
+      <div class="grid-se">
+        <div class="dash-card bg-gr">
+          <div class="flex-wrap-sb card-hd  pt-1">
+            <div class="flex-item fc-w fs-18"><span class="fw-b fs-h2">비정형데이터</span></div>          
+          </div>
+          <div class="sub-info-tit fc-w fs-14 pt-4">시간당 생산량 UPH</div>
+          <div class="card-bd fc-w">            
+            <div class="fw-b fs-h1 ta-r pt-1">125건</div>
+            <div class="fs-14 ta-r pt-4">
+              <span>전일대비</span>
+              <!--class 명 변경 증가 plus / 감소 minus -->
+              <span class="plus">15</span>
+            </div>
+          </div>
+        </div>
 
+        <div class="dash-card">          
+          <div class="flex-wrap-sb card-bd">
+            <div class="flex-item">
+				<figure class="highcharts-figure">
+					<div id="chart7"></div>
+				</figure>				
+<!--              <div class="canva-wrap">                -->
+<!--                <div class="canva">-->
+<!--                   그래프 삽입 -->
+<!--                  워드 클라우드-->
+<!--                </div>-->
+<!--              </div> -->
+            </div>
+            <div class="flex-item">
+				<figure class="highcharts-figure">
+						<div class="text-right mb-1" id="chart8Type">
+							<button type="button" class="btn btn-primary addType" value="day">일</button>
+							<button type="button" class="btn btn-primary addType" value="week">주</button>
+							<button type="button" class="btn btn-primary addType" value="month">월</button>
+						</div>															
+						<div id="chart8"></div>
+				</figure>				
+<!--              <div class="canva-wrap">-->
+<!--                <div class="flex-wrap-sb card-hd">-->
+<!--                  <div class="flex-item fw-b fs-12">그래프타이틀</div>-->
+<!--                  <div class="flex-item fc-w fs-12">-->
+<!--                    <div class="range-wrap">-->
+<!--                      <input type="radio" id="select20" name="term5" checked><label for="select20">일</label>-->
+<!--                      <input type="radio" id="select21" name="term5"><label for="select21">주</label>-->
+<!--                      <input type="radio" id="select22" name="term5"><label for="select22">월</label>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="canva">-->
+<!--                   그래프 삽입 -->
+<!--                </div>-->
+<!--              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>      
+    </div>    
+  </div>
 </body>
-
 </html>

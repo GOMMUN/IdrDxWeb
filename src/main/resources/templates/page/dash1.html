@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+<script src="https://code.highcharts.com/modules/treemap.js"></script>
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/dash.js}"></script>
+<style>
+	.highcharts-figure,
+	.highcharts-data-table table {
+		min-width: 310px;
+		max-width: 800px;
+		margin: 1em auto;
+	}
+
+	#container {
+		height: 400px;
+	}
+
+	.highcharts-data-table table {
+		font-family: Verdana, sans-serif;
+		border-collapse: collapse;
+		border: 1px solid #ebebeb;
+		margin: 10px auto;
+		text-align: center;
+		width: 100%;
+		max-width: 500px;
+	}
+
+	.highcharts-data-table caption {
+		padding: 1em 0;
+		font-size: 1.2em;
+		color: #555;
+	}
+
+	.highcharts-data-table th {
+		font-weight: 600;
+		padding: 0.5em;
+	}
+
+	.highcharts-data-table td,
+	.highcharts-data-table th,
+	.highcharts-data-table caption {
+		padding: 0.5em;
+	}
+
+	.highcharts-data-table thead tr,
+	.highcharts-data-table tr:nth-child(even) {
+		background: #f8f8f8;
+	}
+
+	.highcharts-data-table tr:hover {
+		background: #f1f7ff;
+	}
+</style>
+
+<body>
+	<input id="parameterPlant" type="hidden" th:value="${plant}" />
+	<input id="parameterUsername" type="hidden" th:value="${username}" />
+	<div class="container-fluid mt-3">
+		<div class="row">
+		    <div class="col-lg-6">
+		      <h1>DASH Board</h1>
+		      <h5>KORENS EM> PRODUCT> DX</h5>
+		    </div>
+		    <div class="col-lg-6 text-right ">
+				<div class="row justify-content-end" >
+					<div class="col-lg-4">
+						<div class="card border-left-primary shadow h-100 py-2 alarm1">
+							<div class="card-body ">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="h4 font-weight-bold text-primary text-uppercase mb-1 text-left">
+											계획 대비 실적 이상</div>
+									</div>
+									<div class="col mr-2">
+										<i class="fas fa-bell fa-2x text-300" id="alarmbell1"></i>
+									</div>
+									<div class="col mr-2">
+										<div class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right" id="alarm1"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="card border-left-primary shadow h-100 py-2 alarm2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="h4 font-weight-bold text-primary text-uppercase mb-1 text-left">
+											품질 이상</div>
+									</div>
+									<div class="col mr-2">
+										<i class="fas fa-bell fa-2x text-300" id="alarmbell2"></i>
+									</div>
+									<div class="col mr-2">
+										<div class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right" id="alarm2"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="card border-left-primary shadow h-100 py-2 alarm3">
+							<div class="card-body ">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="h4 font-weight-bold text-primary text-uppercase mb-1 text-left">
+											설비 이상</div>
+									</div>
+									<div class="col mr-2">
+										<i class="fas fa-bell fa-2x text-300" sytle="color:red" id="alarmbell3"></i>
+									</div>
+									<div class="col mr-2">
+										<div class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right" id="alarm3"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		    </div>
+		</div>
+		<button type="button" class="btn btn-primary float-right" style="margin: 5px;" id="refresh" onclick="refreshTime()">새로고침</button>
+		<div class="text-right" style="margin: 15px;" id="refreshTime" >
+			<h5>최근 업데이트 : </h5>
+		</div>
+	</div>
+	
+	<div class="container-fluid mt-3">
+		<div class="row">
+			<div class="col-lg-3">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">P</span>roduction</div>
+							</div>
+							<div class="col-auto">
+								<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">시간당 생산량 UPH</div>
+								<div id="Uph" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+								<div class="col-auto">
+									<div id="preUph" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">Q</span>uality</div>
+							</div>
+							<div class="col-auto">
+								<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">일일 제품 불량률</div>
+								<div id="failRate" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+								<div class="col-auto">
+									<div id="preFailRate" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">C</span>ost</div>
+							</div>
+							<div class="col-auto">
+								<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">일일 설비 가동률</div>
+								<div id="operateRate" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+								<div class="col-auto">
+									<div id="preOperateRate" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="h5 font-weight-bold text-primary text-uppercase mb-1"><span style="font-size: 3em;">D</span>elivery</div>
+							</div>
+							<div class="col-auto">
+								<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">일일 생산계획 대비 실적 달성율</div>
+								<div id="successRate" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+								<div class="col-auto">
+									<div id="preSuccessRate" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid mt-3">
+		<div class="row">
+			<div class="col-lg-3">
+				<div class="card shadow mb-4">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="card shadow mb-4">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-lg-12">
+												<figure class="highcharts-figure">
+														<div class="text-right mb-1" id="chart1Type">
+															<button type="button" class="btn btn-primary addType" value="day">일</button>
+															<button type="button" class="btn btn-primary addType" value="week">주</button>
+															<button type="button" class="btn btn-primary addType" value="month">월</button>
+														</div>													
+													<div id="chart1"></div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" id="chart2Container">
+							<div class="col-lg-12">
+								<div class="card shadow mb-4">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-lg-12">
+												<figure class="highcharts-figure">
+														<div class="text-right mb-1" id="chart2Type">
+															<button type="button" class="btn btn-primary addType" value="day">일</button>
+															<button type="button" class="btn btn-primary addType" value="week">주</button>
+															<button type="button" class="btn btn-primary addType" value="month">월</button>
+														</div>
+														<div class="text-right mb-1" id="chart2Type">
+															<select id="factoryCodes" name="factoryid"
+																class="form-select-custom form-control-user" aria-label="공장">
+																<option value="">공장 선택</option>
+															</select>
+														</div>													
+													<div id="chart2"></div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-lg-3">
+				<div class="card shadow mb-4">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="card shadow mb-4">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-lg-12">
+												<figure class="highcharts-figure">
+													<div class="text-right mb-1" id="chart3Type">
+														<button type="button" class="btn btn-primary addMonth" value=""></button>
+														<button type="button" class="btn btn-primary addMonth" value=""></button>
+														<button type="button" class="btn btn-primary addMonth" value=""></button>
+													</div>	
+													<div class="text-right" id="chart3Type">
+														<button type="button" class="btn btn-primary addMonth" value=""></button>
+														<button type="button" class="btn btn-primary addMonth" value=""></button>
+														<button type="button" class="btn btn-primary addMonth" value=""></button>
+													</div>
+													<div>
+														<div id="chart3"></div>
+													</div>
+													<div style="margin-top: 100px">
+														<div id="chart4"></div>
+													</div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-lg-6">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="card shadow mb-1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="card shadow">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<figure class="highcharts-figure">
+															<div class="text-right mb-1" id="chart5Type">
+																<button type="button" class="btn btn-primary addType" value="day">일</button>
+																<button type="button" class="btn btn-primary addType" value="week">주</button>
+																<button type="button" class="btn btn-primary addType" value="month">월</button>
+															</div>
+															<div id="chart5"></div>
+														</figure>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				    
+					<div class="col-lg-6">
+						<div class="card shadow mb-1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="card shadow">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<figure class="highcharts-figure">
+															<div class="text-right mb-1" id="chart6Type">
+																<button type="button" class="btn btn-primary addType" value="day">일</button>
+																<button type="button" class="btn btn-primary addType" value="week">주</button>
+																<button type="button" class="btn btn-primary addType" value="month">월</button>
+															</div>
+															<div id="chart6"></div>
+														</figure>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card shadow mb-4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-4">
+										<div class="card border-left-primary shadow h-100 py-2">
+											<div class="card-body">
+												<div class="row no-gutters align-items-center">
+													<div class="col mr-2">
+														<div class="h2 font-weight-bold text-primary text-uppercase mb-1">비정형 데이터</div>
+													</div>
+													<div class="col mr-2">
+														<div class="font-weight-bold text-primary text-uppercase mb-1 text-right">일일 스마트 알람 발생 건</div>
+														<div id="todayAlarm" class="h1 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+														<div class="col-auto">
+															<div id="yesterdayAlarm" class="h7 font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="card shadow">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<figure class="highcharts-figure">
+															<div id="chart7"></div>
+														</figure>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="card shadow">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<figure class="highcharts-figure">
+															<div class="text-right mb-1" id="chart8Type">
+																<button type="button" class="btn btn-primary addType" value="day">일</button>
+																<button type="button" class="btn btn-primary addType" value="week">주</button>
+																<button type="button" class="btn btn-primary addType" value="month">월</button>
+															</div>															
+															<div id="chart8"></div>
+														</figure>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

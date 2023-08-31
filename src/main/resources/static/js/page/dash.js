@@ -12,13 +12,13 @@ var chart8data = null;
 var result = null;
 
 $(function(){
-	chart7();
-	
-	PQCDrate()
-	selectDayWeekMonthButton();
-	
 	realTime();
 	refreshTime();
+	selectDayWeekMonthButton();
+	chart7();
+	PQCDrate()
+	
+
 	findName();
 	initSetting();
 });
@@ -764,7 +764,7 @@ function selectDayWeekMonthButton() {
 	        
 	    $(".addType").removeClass("active");
         $(this).addClass("active");
-            
+        
 	    selectType(data,tagId);
 	});
 	
@@ -772,7 +772,7 @@ function selectDayWeekMonthButton() {
 	
 	$(".addMonth").each(function(index) {
         var newValue = (currentMonth + index) % 12 + 1;
-        $(this).text(newValue + "월");
+        $("label[for='month"+index+"']").text(newValue + "월");
         $(this).val(newValue);
     });
     
@@ -950,26 +950,26 @@ function realTime() {
 			
 			if(data[0] != '0' && data[0] != data[3]){
 				$('.alarm1').css('background-color', 'yellow');
-				$('#alarmbell1').css('color', 'red');
+				$('#alarmbell1').addClass( 'active' );
 			}else{
 				$('.alarm1').css('background-color', '#FFF');
-				$('#alarmbell1').css('color', 'gray');
+				$('#alarmbell1').removeClass( 'active' );
 			}
 			
 			if(data[1] != '0' && data[1] != data[4]){
 				$('.alarm2').css('background-color', 'yellow');
-				$('#alarmbell2').css('color', 'red');
+				$('#alarmbell2').addClass( 'active' );
 			}else{
 				$('.alarm2').css('background-color', '#FFF');
-				$('#alarmbell2').css('color', 'gray');
+				$('#alarmbell2').removeClass( 'active' );
 			}
 			
 			if(data[2] != '0' && data[2] != data[5]){
 				$('.alarm3').css('background-color', 'yellow');
-				$('#alarmbell3').css('color', 'red');
+				$('#alarmbell3').addClass( 'active' );
 			}else{
 				$('.alarm3').css('background-color', '#FFF');
-				$('#alarmbell3').css('color', 'gray');
+				$('#alarmbell3').removeClass( 'active' );
 			}		
 
 		}

@@ -21,7 +21,10 @@ public interface MonitoringMapper {
 
 	List<Monitoring> findstorage(Monitoring param);
 
-	Monitoring findreject(Monitoring param);
+	//Monitoring findreject(Monitoring param);
 
 	List<Monitoring> findnotoperate(Monitoring param);
+
+	Monitoring findreject1(Monitoring param);
+	Monitoring findreject2(Monitoring param);
 }

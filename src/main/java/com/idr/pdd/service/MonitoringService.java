@@ -70,33 +70,20 @@ public class MonitoringService {
 	}
 
 	public Monitoring findreject(Monitoring param) {
+
 		try {
-			Monitoring mt= mapper.findreject(param);
-			int total=0;
-			total+=Integer.parseInt(mt.getRi01());
-			total+=Integer.parseInt(mt.getRi02());
-			total+=Integer.parseInt(mt.getRi03());
-			total+=Integer.parseInt(mt.getRi04());
-			mt.setTotalprodQty(mt.getTotalprodQty()/total);
-			mt.setTotalfailQty(mt.getTotalfailQty()/total);
+			Monitoring mt= mapper.findreject1(param);
+			Monitoring mt2= mapper.findreject2(param);	
+			mt.setRi01(mt2.getRi01());
+			mt.setRi02(mt2.getRi02());
+			mt.setRi03(mt2.getRi03());
+			mt.setRi04(mt2.getRi04());
 			
-			double percent=Math.round((double)mt.getTotalfailQty()/(double)mt.getTotalprodQty()*100);
-			mt.setFailpercent(percent);
-			
-			return mt;
-			
-		}catch(Exception e)
-		{
-			Monitoring mt=new Monitoring();
-			mt.setTotalfailQty(0);
-			mt.setTotalprodQty(0);
-			mt.setRi01("-");
-			mt.setRi02("-");
-			mt.setRi03("-");
-			mt.setRi04("-");
-			return mt;
+			return mt;		
+		}catch(Exception e){
+			return null;
 		}
-		
+			
 	}
 
 	public List<Monitoring> findnotoperate(Monitoring param) {

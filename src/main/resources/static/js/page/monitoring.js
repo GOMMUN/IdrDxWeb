@@ -281,25 +281,24 @@ function ajaxRequest(params) {
 	$.get(findrejecturl + '?' + $.param(params)).then(function(res) {
 		let result = res;
 
-		if (result.failpercent > 0) {
-			$("#failper").text(result.failpercent + '%');
+		if(result==''){
+			$("#failper").text('-');
+			$("#failqty").text('-');
+			$("#prodqty").text('-');
+			$("#ri01").text('-');
+			$("#ri02").text('-');
+			$("#ri03").text('-');
+			$("#ri04").text('-');
+		}else{
+			$("#failper").text((result.totalfailQty/result.totalprodQty).toFixed(2)*100+'%');
 			$("#failqty").text(result.totalfailQty);
 			$("#prodqty").text(result.totalprodQty);
 			$("#ri01").text(result.ri01);
 			$("#ri02").text(result.ri02);
 			$("#ri03").text(result.ri03);
 			$("#ri04").text(result.ri04);
-		} else {
-			$("#failper").text("-");
-			$("#failqty").text("-");
-			$("#prodqty").text("-");
-			$("#ri01").text(result.ri01);
-			$("#ri02").text(result.ri02);
-			$("#ri03").text(result.ri03);
-			$("#ri04").text(result.ri04);
 		}
-
-
+			
 	})
 
 

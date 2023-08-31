@@ -900,7 +900,7 @@ function factroy() {
 
 	c_factory = null;
 
-	$.ajax({
+	$.ajax({ 
 		url: url,
 		type: 'GET',
 		success: function(data) {

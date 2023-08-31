@@ -84,7 +84,7 @@
 		, MANHOUR= #{manhour}
 		, CAUSE=
 		#{cause}
-		,CORRECTIVE_ACTION= #{correctiveAction}
+		,CORRECTIVE_ACTION= #{correctiveaction}
 		, EVENTTIME = GETDATE()
 		WHERE
 		DATASEQ = #{dataseq}

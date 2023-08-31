@@ -19,7 +19,7 @@ public class NotoperateContents {
 	private int manhour;
 	private String causeName;
 	private String cause;
-	private String correctiveAction;
+	private String correctiveaction;
 	private String notes;
 	private String images;
 	private String movies;

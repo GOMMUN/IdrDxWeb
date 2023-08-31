@@ -1,8 +1,8 @@
 /**
  * 
  */
-const CORE_URL = "https://localhost:8171";
-//const CORE_URL = "https://idrenvision.iptime.org:8171";
+//const CORE_URL = "https://localhost:8171";
+const CORE_URL = "https://idrenvision.iptime.org:8171";
 
 let c_factory = null;
 let c_block = null;
@@ -1463,7 +1463,8 @@ function setNonOperationEventListener() {
 		data.hands = $("input[name=nonhands]").val();
 		data.manhour = $("input[name=nonmanhour]").val();
 		data.cause = $("select[name=cause]").val();
-		data.correctiveaction = $("input[name=correctiveaction]").val();
+		data.correctiveaction = $("input[name=correctiveAction]").val();
+		
 		if (data.personid == "") {
 			alert("작업자를 선택 하세요.");
 			return;
@@ -2226,7 +2227,7 @@ function initNonOperation() {
 		"dataseq": "", "workdailySeq": "",/* "rulesysid": "", "plant": "",
 		"line": "", "shift": "", "date": "","images": "", "movies": "",  */"notoperatetimeFrom": "",
 		"notoperatetimeTo": "", "hands": "", "manhour": "", "cause": "",
-		"correctiveAction": "", "notes": "", "creator": "",
+		"correctiveaction": "", "notes": "", "creator": "",
 		"createtime": "", "event": "", "eventuser": "", "eventtime": ""
 		, "isusable": "", "tid": ""
 	};

@@ -29,4 +29,8 @@ public class Monitoring {
 	private String ri04;
 	private String notoperatetimeFrom;
 	private String notoperatetimeTo;
+	private int amProdQty;
+	private int pmProdQty;
+	private int amPlanQty;
+	private int pmPlanQty;
 }

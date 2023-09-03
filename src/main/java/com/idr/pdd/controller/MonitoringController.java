@@ -31,7 +31,7 @@ public class MonitoringController {
 	
 	@ResponseBody
 	@GetMapping("/findproduct")
-    public List<Monitoring> findproduct(Monitoring param) {
+    public Monitoring findproduct(Monitoring param) {
 		return service.findproduct(param);
     }
 	

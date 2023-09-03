@@ -20,84 +20,70 @@ public class MonitoringService {
 	@Autowired
 	MonitoringMapper mapper;
 
-	public List<Monitoring> findproduct(Monitoring param) {
+	public Monitoring findproduct(Monitoring param) {
 
-		List<Monitoring> mtlist = mapper.findproduct(param);
-		// 생산 필요 데이터
-
-		for (int i = 0; i < mtlist.size(); i++) {
-
-			int plantqty = mtlist.get(i).getPlanQty();
-			int pordqty = mtlist.get(i).getProdQty();
-
-			double percent = ((double)pordqty / (double)plantqty) * 100;
-			
-			percent=Math.round(percent);
-			mtlist.get(i).setPerformancepercent(percent);
+		try {
+			Monitoring mt = mapper.findproduct1(param);
+			Monitoring mt2 = mapper.findproduct2(param);
+			mt.setAmPlanQty(mt2.getAmPlanQty());
+			mt.setPmPlanQty(mt2.getPmPlanQty());
+			return mt;
+		} catch (Exception e) {
+			Monitoring mt = new Monitoring();
+			return null;
 		}
-
-
-		return mtlist;
 
 	}
 
 	public Monitoring findstorage(Monitoring param) {
-		
 
 		List<Monitoring> mtlist = mapper.findstorage(param);
-		int mqty=0;
-		int pqty=0;
-		
-		for(int i=0;i<mtlist.size();i++)
-		{
-			if(mtlist.get(i).getStoragename().contains("자재창고"))
-			{
-				mqty+=mtlist.get(i).getQty();
-			}
-			else if(mtlist.get(i).getStoragename().contains("제품창고"))
-			{
-				pqty+=mtlist.get(i).getQty();
+		int mqty = 0;
+		int pqty = 0;
+
+		for (int i = 0; i < mtlist.size(); i++) {
+			if (mtlist.get(i).getStoragename().contains("자재창고")) {
+				mqty += mtlist.get(i).getQty();
+			} else if (mtlist.get(i).getStoragename().contains("제품창고")) {
+				pqty += mtlist.get(i).getQty();
 			}
 		}
-		
-		
-		
-		Monitoring mt= new Monitoring();
+
+		Monitoring mt = new Monitoring();
 		mt.setMtotalqty(mqty);
 		mt.setPtotalqty(pqty);
-		
+
 		return mt;
 	}
 
 	public Monitoring findreject(Monitoring param) {
 
 		try {
-			Monitoring mt= mapper.findreject1(param);
-			Monitoring mt2= mapper.findreject2(param);	
+			Monitoring mt = mapper.findreject1(param);
+			Monitoring mt2 = mapper.findreject2(param);
 			mt.setRi01(mt2.getRi01());
 			mt.setRi02(mt2.getRi02());
 			mt.setRi03(mt2.getRi03());
 			mt.setRi04(mt2.getRi04());
-			
-			return mt;		
-		}catch(Exception e){
+
+			return mt;
+		} catch (Exception e) {
 			return null;
 		}
-			
+
 	}
 
 	public List<Monitoring> findnotoperate(Monitoring param) {
 		try {
-			List<Monitoring> mtlist=mapper.findnotoperate(param);
+			List<Monitoring> mtlist = mapper.findnotoperate(param);
 
 			return mtlist;
-			
-		}catch(Exception e)
-		{
-			
+
+		} catch (Exception e) {
+
 			return null;
 		}
-		
+
 	}
 
 }

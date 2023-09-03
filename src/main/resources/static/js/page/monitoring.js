@@ -228,31 +228,33 @@ function ajaxRequest(params) {
 	let findproducturl = '/monitoring/findproduct';
 
 	$.get(findproducturl + '?' + $.param(params)).then(function(res) {
-		let result = res;
-		if (result.length > 0) {
-			$("#dayplan").text(result[0].planQty);
-			$("#dayperformance").text(result[0].performancepercent + '%');
-			$("#daypl").text(result[0].prodQty);
-			$("#dayper").text(result[0].planQty);
-
-
-			$("#nightplan").text(result[1].planQty);
-			$("#nightperformance").text(result[1].performancepercent + '%');
-			$("#nightpl").text(result[1].prodQty);
-			$("#nightper").text(result[1].planQty);
-		} else {
-			$("#dayplan").text("-");
-			$("#dayperformance").text("-");
-			$("#daypl").text("-");
-			$("#dayper").text("-");
-
-
-			$("#nightplan").text("-");
-			$("#nightperformance").text("-");
-			$("#nightpl").text("-");
-			$("#nightper").text("-");
-		}
-
+		//let result = res;
+		
+			if(res.amPlanQty==0||res.amPlanQty==null){
+				$("#dayplan").text('-');
+				$("#dayperformance").text('-');
+				$("#daypl").text('-');
+				$("#dayper").text('-');
+			}else{
+				$("#dayplan").text(res.amPlanQty);
+				$("#dayperformance").text((res.amProdQty/res.amPlanQty).toFixed(2)*100+'%');
+				$("#daypl").text(res.amProdQty);
+				$("#dayper").text(res.amPlanQty);
+			}
+			
+			
+			if(res.pmPlanQty==0||res.pmPlanQty==null){
+				$("#nightplan").text('-');
+				$("#nightperformance").text('-');
+				$("#nightpl").text('-');
+				$("#nightper").text('-');
+			}else{
+				$("#nightplan").text(res.pmPlanQty);
+				$("#nightperformance").text((res.pmProdQty/res.pmPlanQty).toFixed(2)*100+'%');
+				$("#nightpl").text(res.pmProdQty);
+				$("#nightper").text(res.pmPlanQty);
+			}
+		
 
 	})
 

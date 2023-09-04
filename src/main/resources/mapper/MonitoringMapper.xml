@@ -22,6 +22,7 @@
 		#{factoryid}
 		AND B.LINEID = #{lineid}
 		AND B.ISUSABLE IS NOT NULL
+		AND A.ISUSABLE IS NOT NULL
 	</select>
 
 	<select id="findproduct2" resultType="Monitoring"
@@ -92,9 +93,8 @@
 		A.FACTORYID
 		=#{factoryid}
 		AND A.LINEID =#{lineid}
-		AND A.ISUSABLE IS NOT
-		NULL
-
+		AND A.ISUSABLE IS NOT NULL
+		AND B.ISUSABLE IS NOT NULL
 	</select>
 
 	<select id="findnotoperate" resultType="Monitoring"

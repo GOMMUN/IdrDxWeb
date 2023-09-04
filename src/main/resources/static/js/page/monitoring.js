@@ -283,7 +283,7 @@ function ajaxRequest(params) {
 	$.get(findrejecturl + '?' + $.param(params)).then(function(res) {
 		let result = res;
 
-		if(result==''){
+		if(result==''||result==null){
 			$("#failper").text('-');
 			$("#failqty").text('-');
 			$("#prodqty").text('-');

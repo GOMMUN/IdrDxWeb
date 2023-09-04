@@ -14,11 +14,11 @@ public interface DashMapper {
 	List<FairProd> findAllQ(String plant);
 	List<FairProd> findAllC(String plant);
 	List<FairProd> findAllD(String plant);
-	List<FairProd> chart15(String line, String month);
-	List<FairProd> chart2(String plant, String factory, String month);
-	List<FairProd> chart3(String plant, String month);
-	List<FairProd> chart4(String plant, String month);
-	List<FairProd> chart6(String plant, String month);
+	List<FairProd> chart15(String line, String month, String material);
+	List<FairProd> chart2(String plant, String factory, String month, String material);
+	List<FairProd> chart3(String plant, String month, String material);
+	List<FairProd> chart4(String plant, String month, String material);
+	List<FairProd> chart6(String plant, String month, String material);
 	List<FairProd> chart8(String month);
 	List<String> rank(String plant);
 

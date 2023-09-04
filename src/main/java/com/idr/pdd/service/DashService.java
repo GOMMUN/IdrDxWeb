@@ -40,7 +40,7 @@ public class DashService {
 		return mapper.findAllD(plant);
 	}
 
-	public List<List<FairProd>> chart15(String plant, String month) {
+	public List<List<FairProd>> chart15(String plant, String month, String material) {
 
 		List<String> rank = mapper.rank(plant);
 
@@ -53,20 +53,20 @@ public class DashService {
 			lineList.add(rank.get(1));
 			lineList.add(rank.get(rank.size() - 2));
 			lineList.add(rank.get(rank.size() - 1));
-			finalresult.add(mapper.chart15(lineList.get(0), month));
-			finalresult.add(mapper.chart15(lineList.get(1), month));
-			finalresult.add(mapper.chart15(lineList.get(2), month));
-			finalresult.add(mapper.chart15(lineList.get(3), month));
+			finalresult.add(mapper.chart15(lineList.get(0), month, material));
+			finalresult.add(mapper.chart15(lineList.get(1), month, material));
+			finalresult.add(mapper.chart15(lineList.get(2), month, material));
+			finalresult.add(mapper.chart15(lineList.get(3), month, material));
 		} else {
 			for (String line : rank) {
-				finalresult.add(mapper.chart15(line, month));
+				finalresult.add(mapper.chart15(line, month, material));
 			}
 		}
 
 		return finalresult;
 	}
 	
-	public List<List<FairProd>> chart2(String plant, String factory, String month) {
+	public List<List<FairProd>> chart2(String plant, String factory, String month, String material) {
 
 		List<String> rank = mapper.rank(factory);
 
@@ -74,11 +74,11 @@ public class DashService {
 
 		if (plant.equals("KEM")) {
 			if (factory.equals("LHO")) {
-				finalresult.add(mapper.chart15(rank.get(0), month));
+				finalresult.add(mapper.chart15(rank.get(0), month, material));
 			} else if (factory.equals("SWH")) {
-				finalresult.add(mapper.chart15(rank.get(0), month));	
+				finalresult.add(mapper.chart15(rank.get(0), month, material));	
 			} else if (factory.equals("SYM")) {
-				finalresult.add(mapper.chart15(rank.get(0), month));	
+				finalresult.add(mapper.chart15(rank.get(0), month, material));	
 			} 
 		}
 		
@@ -86,19 +86,19 @@ public class DashService {
 		return finalresult;
 	}
 	
-	public List<FairProd> chart3(String plant, String month) {
+	public List<FairProd> chart3(String plant, String month, String material) {
 		
-		return mapper.chart3(plant, month);
+		return mapper.chart3(plant, month, material);
 	}
 	
-	public List<FairProd> chart4(String plant, String month) {
+	public List<FairProd> chart4(String plant, String month, String material) {
 		
-		return mapper.chart4(plant, month);
+		return mapper.chart4(plant, month, material);
 	}
 	
-	public List<FairProd> chart6(String plant, String month) {
+	public List<FairProd> chart6(String plant, String month, String material) {
 
-		return mapper.chart6(plant, month);
+		return mapper.chart6(plant, month, material);
 	}
 
 	public List<FairProd> chart8(String month) {

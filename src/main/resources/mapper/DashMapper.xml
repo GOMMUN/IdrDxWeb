@@ -181,6 +181,7 @@
 			ON B.WORK_DATE =A.dt
 				AND B.LINEID = #{line}
 				AND B.ISUSABLE ='Usable'
+				AND B.MATERIALID = #{material}
 			LEFT JOIN DSP_WORK_CONTENTS C 
 			ON B.DATASEQ =C.WORKDAILY_SEQ
 				AND C.ISUSABLE ='Usable'
@@ -213,6 +214,7 @@
 			ON B.WORK_DATE =A.dt
 				AND B.FACTORYID = #{plant}
 				AND B.ISUSABLE ='Usable'
+				AND B.MATERIALID = #{material}
 			LEFT JOIN DSP_WORK_CONTENTS C 
 			ON B.DATASEQ =C.WORKDAILY_SEQ
 				AND C.ISUSABLE ='Usable'
@@ -253,6 +255,7 @@
 			ON B.WORK_DATE =A.dt
 				AND B.FACTORYID = #{plant}
 				AND B.ISUSABLE ='Usable'
+				AND B.MATERIALID = #{material}
 			LEFT JOIN DSP_WORK_CONTENTS C 
 			ON B.DATASEQ =C.WORKDAILY_SEQ
 				AND C.ISUSABLE ='Usable'
@@ -293,6 +296,7 @@
 				ON B.WORK_DATE = A.dt
 					AND B.FACTORYID = #{plant}
 					AND B.ISUSABLE = 'Usable'
+					AND B.MATERIALID = #{material}
 				LEFT JOIN DSP_WORK_CONTENTS C 
 				ON B.DATASEQ = C.WORKDAILY_SEQ
 					AND C.ISUSABLE = 'Usable'

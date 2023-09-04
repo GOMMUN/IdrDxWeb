@@ -69,46 +69,46 @@ public class DashController {
 	
 	@ResponseBody
 	@GetMapping("/chart1")
-    public List<List<FairProd>> chart1(String plant, String month) {
+    public List<List<FairProd>> chart1(String plant, String month, String material) {
 		
-		return service.chart15(plant, month);
+		return service.chart15(plant, month, material);
     }
 
 	@ResponseBody
 	@GetMapping("/chart2")
-    public List<List<FairProd>> chart2(String plant, String factory, String month) {
+    public List<List<FairProd>> chart2(String plant, String factory, String month, String material) {
 		
-		return service.chart2(plant, factory, month);
+		return service.chart2(plant, factory, month, material);
     }
 	
 	@ResponseBody
 	@GetMapping("/chart3")
-    public List<FairProd> chart3(String plant, String month) {
+    public List<FairProd> chart3(String plant, String month, String material) {
 		
-		List<FairProd> list = service.chart3(plant, month);
+		List<FairProd> list = service.chart3(plant, month, material);
 		return list;
     }
 	
 	@ResponseBody
 	@GetMapping("/chart4")
-    public List<FairProd> chart4(String plant, String month) {
+    public List<FairProd> chart4(String plant, String month, String material) {
 		
-		List<FairProd> list = service.chart4(plant, month);
+		List<FairProd> list = service.chart4(plant, month, material);
 		return list;
     }
 	
 	@ResponseBody
 	@GetMapping("/chart5")
-    public List<List<FairProd>> chart5(String plant, String month) {
+    public List<List<FairProd>> chart5(String plant, String month, String material) {
 		
-		return service.chart15(plant, month);
+		return service.chart15(plant, month, material);
     }
 	
 	@ResponseBody
 	@GetMapping("/chart6")
-    public List<FairProd> chart6(String plant, String month) {
+    public List<FairProd> chart6(String plant, String month, String material) {
 		
-		List<FairProd> list = service.chart6(plant, month);
+		List<FairProd> list = service.chart6(plant, month, material);
 		return list;
     }	
 	

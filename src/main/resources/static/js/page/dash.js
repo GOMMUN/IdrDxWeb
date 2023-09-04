@@ -29,7 +29,9 @@ function initSetting() {
 	localStorage.setItem("username", $("#parameterUsername").val());
 	
 	factroy();
+	matarial()
 }
+
 function setchart1(chart1data) {
 	var dateData = [];
 
@@ -841,7 +843,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var url = '/dash/chart1';
 		var params = {
 			plant: localStorage.getItem('plant'),
-			month: data
+			month: data,
+			material : localStorage.getItem('material')
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart1data = res;
@@ -860,7 +863,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		var params = {
 			plant: localStorage.getItem('plant'),
 			factory: factory,
-			month: data
+			month: data,
+			material : localStorage.getItem('material')
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart2data = res;
@@ -872,7 +876,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 
 		var params = {
 			plant: localStorage.getItem('plant'),
-			month: data
+			month: data,
+			material : localStorage.getItem('material')
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart3data = res;
@@ -883,7 +888,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 		var params = {
 			plant: localStorage.getItem('plant'),
-			month: data
+			month: data,
+			material : localStorage.getItem('material')
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart4data = res;
@@ -895,7 +901,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 		var params = {
 			plant: localStorage.getItem('plant'),
-			month: data
+			month: data,
+			material : localStorage.getItem('material')
 		};
 		
 		$.get(url + '?' + $.param(params)).then(function(res) {
@@ -908,7 +915,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 		var params = {
 			plant: localStorage.getItem('plant'),
-			month: data
+			month: data,
+			material : localStorage.getItem('material')
 		};
 		
 		$.get(url + '?' + $.param(params)).then(function(res) {
@@ -964,6 +972,42 @@ function factroy() {
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));
 			}
+		}
+	});
+}
+
+function matarial() {
+	let url = '/code/matarial';
+
+	c_material = null;
+
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			c_material = data;
+
+			let $dropdown5 = $("#wdrmatarialid");
+			$dropdown5.empty();
+
+			if (c_material) {
+				$.each(c_material, function() {
+					if (localStorage.getItem('plant') == this.mcode) {
+						$dropdown5.append($("<option/>").val(this.code).text(this.value));
+						localStorage.setItem("material", this.code);
+					}
+				});
+				$dropdown5.on('change', function() {
+                    let selectedText2 = $(this).find('option:selected').text();
+
+                    // 선택된 옵션의 value 값을 localStorage에 저장
+                    localStorage.setItem("material", selectedText2);
+                });
+			} else {
+				$dropdown5.append($("<option/>").val("").text("자재 선택"));
+
+			}
+
 		}
 	});
 }

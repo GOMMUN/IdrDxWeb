@@ -1,7 +1,6 @@
 package com.idr.pdd.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,7 +10,10 @@ import com.idr.pdd.dto.FairProd;
 public interface DashMapper {
 
 	List<FairProd> findAllName(String plant);
-	List<FairProd> findAllPQCD(String plant);
+	List<FairProd> findAllP(String plant);
+	List<FairProd> findAllQ(String plant);
+	List<FairProd> findAllC(String plant);
+	List<FairProd> findAllD(String plant);
 	List<FairProd> chart15(String line, String month);
 	List<FairProd> chart2(String plant, String factory, String month);
 	List<FairProd> chart3(String plant, String month);

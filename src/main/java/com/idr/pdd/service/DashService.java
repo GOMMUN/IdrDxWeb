@@ -2,10 +2,10 @@ package com.idr.pdd.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.idr.pdd.dto.FairProd;
 import com.idr.pdd.mapper.DashMapper;
 
@@ -20,9 +20,24 @@ public class DashService {
 		return mapper.findAllName(plant);
 	}
 
-	public List<FairProd> findAllPQCD(String plant){
+	public List<FairProd> findAllP(String plant){
 		
-		return mapper.findAllPQCD(plant);
+		return mapper.findAllP(plant);
+	}
+	
+	public List<FairProd> findAllQ(String plant){
+		
+		return mapper.findAllQ(plant);
+	}
+	
+	public List<FairProd> findAllC(String plant){
+		
+		return mapper.findAllC(plant);
+	}
+	
+	public List<FairProd> findAllD(String plant){
+		
+		return mapper.findAllD(plant);
 	}
 
 	public List<List<FairProd>> chart15(String plant, String month) {
@@ -55,7 +70,6 @@ public class DashService {
 
 		List<String> rank = mapper.rank(factory);
 
-		List<String> lineList = new ArrayList<>();
 		List<List<FairProd>> finalresult = new ArrayList<>();
 
 		if (plant.equals("KEM")) {

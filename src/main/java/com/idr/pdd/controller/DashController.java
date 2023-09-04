@@ -1,7 +1,5 @@
 package com.idr.pdd.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +35,36 @@ public class DashController {
     }
 
 	@ResponseBody
-	@GetMapping("/findPQCD")
-	public List<FairProd> findPQCD(String plant) {
+	@GetMapping("/findP")
+	public List<FairProd> findP(String plant) {
 		
-		List<FairProd> list = service.findAllPQCD(plant);
+		List<FairProd> list = service.findAllP(plant);
 		return list;
+
+    }
+	@ResponseBody
+	@GetMapping("/findQ")
+	public List<FairProd> findQ(String plant) {
+		
+		List<FairProd> list = service.findAllQ(plant);
+		return list;
+
+    }
+	@ResponseBody
+	@GetMapping("/findC")
+	public List<FairProd> findC(String plant) {
+		
+		List<FairProd> list = service.findAllC(plant);
+		return list;
+
+    }
+	@ResponseBody
+	@GetMapping("/findD")
+	public List<FairProd> findD(String plant) {
+		
+		List<FairProd> list = service.findAllD(plant);
+		return list;
+
     }
 	
 	@ResponseBody

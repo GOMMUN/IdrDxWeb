@@ -18,7 +18,7 @@ $(function(){
 	chart7();
 	PQCDrate()
 	
-
+	getName()
 	findName();
 	initSetting();
 });
@@ -84,7 +84,7 @@ function setchart1(chart1data) {
 			type: 'column'
 		},
 		title: {
-			text: localStorage.getItem('factoryname') + ' 공정별 생산실적',
+			text: '',
 			align: 'left'
 		},
 		xAxis: {
@@ -180,7 +180,7 @@ function setchart2(){
 	        type: 'column'
 	    },
 	    title: {
-	        text: localStorage.getItem('option') + ' 공정별 생산실적',
+	        text: '',
 	        align: 'left'
 	    },
 	    xAxis: {
@@ -235,7 +235,7 @@ function setchart3(chart3data){
         type: 'variablepie'
     },
     title: {
-        text: '불량 발생 비중',
+        text: '',
         align: 'left'
     },
 	credits: {
@@ -311,7 +311,7 @@ Highcharts.chart('chart4', {
         data: seriesData
     }],
     title: {
-        text: '불량 상세 유형별 빈도 수',
+        text: '',
         align: 'left'
     },
 	credits: {
@@ -377,7 +377,7 @@ function setchart5(chart5data) {
 	Highcharts.chart('chart5', {
 
     title: {
-        text: localStorage.getItem('factoryname') + ' 설비 가동율 현황',
+        text: '',
         align: 'left'
     },
 
@@ -466,7 +466,7 @@ function setchart6(chart6data){
 	    },
 	    
 	    title: {
-	        text: localStorage.getItem('factoryname') + ' 계획 대비 실적',
+	        text: '',
 	        align: 'left'
 	    },
 	    
@@ -556,7 +556,7 @@ Highcharts.chart('chart7', {
         name: 'Occurrences'
     }],
     title: {
-        text: '메신저 키워드 클라우드',
+        text: '',
         align: 'left'
     }
 });
@@ -594,7 +594,7 @@ function setchart8(chart8data){
 	    },
 	    
 	    title: {
-	        text: '스마트 알람 발생 현황(건)',
+			text: '',
 	        align: 'left'
 	    },
 	    
@@ -641,41 +641,35 @@ function setchart8(chart8data){
 }
 	
 function PQCDrate() {
-    var url = '/dash/findPQCD';
+    var urlp = '/dash/findP';
+    var urlq = '/dash/findQ';
+    var urlc = '/dash/findC';
+    var urld = '/dash/findD';
     
       	var params = {
-		factory: localStorage.getItem('plant')
+		plant: localStorage.getItem('plant')
 	};
 
-    $.get(url + '?' + $.param(params)).then(function(res) {
-        var result = res;
-        var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0,
-        	ManhourTo = 0, ManhourYe = 0, PlanQtyTo = 0, PlanQtyYe = 0, WorkTimeTo = 0, 
-        	WorkTimeYe = 0, NotoperateTimeTo = 0, NotoperateTimeYe = 0;
-        
-        var today = new Date();
+	var today = new Date();
 
-		var year = today.getFullYear();
-		var month = (today.getMonth() + 1).toString().padStart(2, '0');
-		var day = today.getDate().toString().padStart(2, '0');
+	var year = today.getFullYear();
+	var month = (today.getMonth() + 1).toString().padStart(2, '0');
+	var day = today.getDate().toString().padStart(2, '0');
 
-		var formattedDate = year + month + day;
+//	var formattedDate = year + month + day;
+	var formattedDate = "20230831"
 		
-        result.forEach(function(r) {
+	$.get(urlp + '?' + $.param(params)).then(function(res) {
+		var result = res;
+		var ProdQtyTo = 0, ProdQtyYe = 0, ManhourTo = 0, ManhourYe = 0;
+		
+		result.forEach(function(r) {
 			if (r.workDate == formattedDate) {
-	            FirstTimeFailQtyTo = r.firsttimeFailQty;
 	            ProdQtyTo = r.prodQty;
 	            ManhourTo = r.manhour;
-	            PlanQtyTo = r.planQty;
-	            WorkTimeTo = r.workTotal;
-	            NotoperateTimeTo = r.notoperateTotal;
             } else {
-				FirstTimeFailQtyYe = r.firsttimeFailQty;
 	            ProdQtyYe = r.prodQty;
 	            ManhourYe = r.manhour;
-	            PlanQtyYe = r.planQty;
-	            WorkTimeYe = r.workTotal;
-	            NotoperateTimeYe = r.notoperateTotal;
 			}
         });
         
@@ -684,58 +678,103 @@ function PQCDrate() {
         
         preUph = ProdQtyYe / ManhourYe;
 	    compareUph = Uph-preUph
-
+	    
+	    if (compareUph > 0){
+			$('#preUph').text(compareUph.toFixed(0)).removeClass('plus').addClass('minus');
+		} else if (compareUph == 0){
+			$('#preUph').text('-');
+		} else if (compareUph < 0){
+			$('#preUph').text(compareUph.toFixed(0)).removeClass('minus').addClass('plus');
+		} else if (isNaN(compareUph)) {
+			$('#preUph').text('-');
+		}
+	});
+	$.get(urlq + '?' + $.param(params)).then(function(res) {
+		var result = res;
+		var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0;
+		
+		result.forEach(function(r) {
+			if (r.workDate == formattedDate) {
+	            FirstTimeFailQtyTo = r.firsttimeFailQty;
+	            ProdQtyTo = r.prodQty;
+            } else {
+				FirstTimeFailQtyYe = r.firsttimeFailQty;
+	            ProdQtyYe = r.prodQty;
+			}
+        });
+        
         failRate = (FirstTimeFailQtyTo / ProdQtyTo) * 100; //불량률
         $('#failRate').text(isNaN(failRate) ? '-' : parseFloat(failRate.toFixed(2)) + '%');
         
         preFailRate = (FirstTimeFailQtyYe / ProdQtyYe) * 100;
 	    compareFailRate = failRate-preFailRate
 	    
-	    operateRate = (WorkTimeTo / (WorkTimeTo + NotoperateTimeTo)) * 100; //가동률
+		if (compareFailRate > 0){
+			$('#preFailRate').text(compareFailRate.toFixed(2) + '%').removeClass('plus').addClass('minus');
+		} else if (compareFailRate == 0){
+			$('#preFailRate').text('-');
+		} else if (compareFailRate < 0){
+			$('#preFailRate').text(compareFailRate.toFixed(2) + '%').removeClass('minus').addClass('plus');
+		} else if (isNaN(compareFailRate)) {
+			$('#preFailRate').text('-');
+		}
+	});
+	$.get(urlc + '?' + $.param(params)).then(function(res) {
+		var result = res;
+		var WorkTimeTo = 0, WorkTimeYe = 0, NotoperateTimeTo = 0, NotoperateTimeYe = 0;
+		
+		result.forEach(function(r) {
+			if (r.workDate == formattedDate) {
+	            WorkTimeTo = r.workTotal;
+	            NotoperateTimeTo = r.notoperateTotal;
+            } else {
+	            WorkTimeYe = r.workTotal;
+	            NotoperateTimeYe = r.notoperateTotal;
+			}
+        });
+        
+        operateRate = (WorkTimeTo / (WorkTimeTo + NotoperateTimeTo)) * 100; //가동률
         $('#operateRate').text(isNaN(operateRate) ? '-' : parseFloat(operateRate.toFixed(2)) + '%');
         
         preOperateRate = (WorkTimeYe / (WorkTimeYe + NotoperateTimeYe)) * 100;
 	    compareOperateRate = operateRate-preOperateRate
-	        
+	    
+	    if (compareOperateRate > 0){
+			$('#preOperateRate').text(compareOperateRate.toFixed(2) + '%').removeClass('plus').addClass('minus');
+		} else if (compareOperateRate == 0) {	
+			$('#preOperateRate').text('-');
+		} else if (compareOperateRate < 0){
+			$('#preOperateRate').text(compareOperateRate.toFixed(2) + '%').removeClass('minus').addClass('plus');
+		} else if (isNaN(compareOperateRate)) {
+			$('#preOperateRate').text('-');
+		}
+	});
+    $.get(urld + '?' + $.param(params)).then(function(res) {
+        var result = res;
+        var ProdQtyTo = 0, ProdQtyYe = 0, PlanQtyTo = 0, PlanQtyYe = 0;
+		
+        result.forEach(function(r) {
+			if (r.workDate == formattedDate) {
+	            ProdQtyTo = r.prodQty;
+	            PlanQtyTo = r.planQty;
+            } else {
+	            ProdQtyYe = r.prodQty;
+	            PlanQtyYe = r.planQty;
+			}
+        });
+    
 	    successRate = (ProdQtyTo / PlanQtyTo) * 100; //달성율
         $('#successRate').text(isNaN(successRate) ? '-' : parseFloat(successRate.toFixed(2)) + '%'); 
         
         preSuccessRate = (ProdQtyYe / PlanQtyYe) * 100;
 	    compareSuccessRate = successRate-preSuccessRate
 	    
-	    if (compareUph > 0){
-			$('#preUph').text('전일대비 ▲ '+ compareUph.toFixed(0));
-		} else if (compareUph == 0){
-			$('#preUph').text('전일대비 - ');
-		} else if (compareUph < 0){
-			$('#preUph').text('전일대비 ▼ '+ compareUph.toFixed(0));
-		} else if (isNaN(compareUph)) {
-			$('#preUph').text('-');
-		}
-		if (compareFailRate > 0){
-			$('#preFailRate').text('전일대비 ▲ '+ compareFailRate.toFixed(2) + '%');
-		} else if (compareFailRate == 0){
-			$('#preFailRate').text('전일대비 - ');
-		} else if (compareFailRate < 0){
-			$('#preFailRate').text('전일대비 ▼ '+ compareFailRate.toFixed(2) + '%');
-		} else if (isNaN(compareFailRate)) {
-			$('#preFailRate').text('-');
-		}
-		if (compareOperateRate > 0){
-			$('#preOperateRate').text('전일대비 ▲ '+ compareOperateRate.toFixed(2) + '%');
-		} else if (compareOperateRate == 0) {	
-			$('#preOperateRate').text('전일대비 - ');
-		} else if (compareOperateRate < 0){
-			$('#preOperateRate').text('전일대비 ▼ '+ compareOperateRate.toFixed(2) + '%');
-		} else if (isNaN(compareOperateRate)) {
-			$('#preOperateRate').text('-');
-		}
 		if (compareSuccessRate > 0) {
-			$('#preSuccessRate').text('전일대비 ▲ '+ compareSuccessRate.toFixed(2) + '%');
+			$('#preSuccessRate').text(compareSuccessRate.toFixed(2) + '%').removeClass('plus').addClass('minus');
 		} else if (compareSuccessRate == 0) {
-			$('#preSuccessRate').text('전일대비 - ');
+			$('#preSuccessRate').text('-');
 		} else if (compareSuccessRate < 0) {
-			$('#preSuccessRate').text('전일대비 ▼ ' + compareSuccessRate.toFixed(2) + '%');
+			$('#preSuccessRate').text(compareSuccessRate.toFixed(2) + '%').removeClass('minus').addClass('plus');
 		} else if (isNaN(compareSuccessRate)) {
 			$('#preSuccessRate').text('-');
 		}
@@ -949,8 +988,8 @@ function realTime() {
 			$('#alarm3').text(data[2]);
 			
 			if(data[0] != '0' && data[0] != data[3]){
-				$('.alarm1').css('background-color', 'yellow');
-				$('#alarmbell1').addClass( 'active' );
+				$('#alarmbell1').css('color', 'red');
+				$('#alarm1').addClass( 'active' );
 			}else{
 				$('.alarm1').css('background-color', '#FFF');
 				$('#alarmbell1').removeClass( 'active' );
@@ -1038,4 +1077,22 @@ function findName(){
 		
 		localStorage.setItem("factoryname", factoryname);
 	});
-}		
+}
+
+function getName(){
+		
+		var storedValue = localStorage.getItem('factoryname');
+		var selectedValue = localStorage.getItem('option');
+		
+		var titleElement = document.getElementById('title');
+		var titleElement2 = document.getElementById('title2');
+		var titleElement3 = document.getElementById('title3');
+		var titleElement4 = document.getElementById('title4');
+        if (storedValue !== null) {
+            titleElement.innerText = storedValue;
+            titleElement2.innerText = selectedValue;
+            titleElement3.innerText = storedValue;
+            titleElement4.innerText = storedValue;
+        }
+
+}			

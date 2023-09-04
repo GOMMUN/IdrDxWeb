@@ -94,7 +94,7 @@
           <!-- 이상발생 건수 있을시 active 클래스 추가 -->
           <div class="noti-box" id="alarmbell1">
             <span>계획대비 실적이상</span>
-            <span class="bell" id="alarm1"></span>
+            <span class="bell" id="alarm1"><img src="../../static/image/bell-default.svg" alt=""></span>
           </div>
         </div>
         <div class="flex-item">
@@ -187,80 +187,134 @@
     </div>
     <!-- p-그래프 -->
     <!-- 협력사 일때 class 'partner-view' 추가 -->
-    <div class="grid-item">
+    <div class="grid-item chair">
       <div class="dash-card">
-		<div class="range-wrap text-right ">
-			<figure class="highcharts-figure" id="chart1Type">
+        <div class="canva-wrap">
+          <div class="flex-wrap-sb card-hd">
+            <div class="flex-item fw-b fs-12"><span id="title"></span> 공정별 생산실적</div>
+            <div class="flex-item fc-w fs-12">
+              <div class="range-wrap" id="chart1Type">
                 <input type="radio" class="addType" id="select" name="term" value="day" checked><label for="select">일</label>
                 <input type="radio" class="addType" id="select2" name="term" value="week"><label for="select2">주</label>
                 <input type="radio" class="addType" id="select3" name="term" value="month"><label for="select3">월</label>
-				<div id="chart1"></div>
-			</figure>
+              </div>
+            </div>
+          </div>
+          <div class="canva">
+            <figure class="highcharts-figure">
+              <div id="chart1"></div>
+            </figure>
+          </div>
+        </div>
+      </div>
 
-			<figure class="highcharts-figure" id="chart2Type">
-	            <input type="radio" class="addType" id="select0" name="term0" value="day" checked><label for="select0">일</label>
-	            <input type="radio" class="addType" id="select02" name="term0" value="week"><label for="select02">주</label>
-	            <input type="radio" class="addType" id="select03" name="term0" value="month"><label for="select03">월</label>
-				<div class="text-right" style="width: 30%; " id="chart2Type">
-					<select id="factoryCodes" name="factoryid"
-						class="form-select-custom form-control-user" aria-label="공장">
-						<option value="">공장 선택</option>
-					</select>
-				</div>													
-				<div id="chart2"></div>
-			</figure>
-      	</div>
+      <div class="dash-card">
+        <div class="canva-wrap">
+          <div class="flex-wrap-sb card-hd">
+            <div class="flex-item fw-b fs-12"><span id="title2"></span> 공정별 생산실적</div>
+            <div class="flex-item fc-w fs-12">
+              <div class="range-wrap" id="chart2Type">
+                <input type="radio" class="addType" id="select0" name="term0" value="day" checked><label for="select0">일</label>
+                <input type="radio" class="addType" id="select02" name="term0" value="week"><label for="select02">주</label>
+                <input type="radio" class="addType" id="select03" name="term0" value="month"><label for="select03">월</label>
+              </div>
+              <div class="text-right mb-1" id="chart2Type">
+				<select id="factoryCodes" name="factoryid"
+				  class="form-select-custom form-control-user" aria-label="공장">
+				  <option value="">공장 선택</option>
+				</select>
+			  </div>
+            </div>
+          </div>
+          <div class="canva">
+            <figure class="highcharts-figure">
+              <div id="chart2"></div>
+            </figure>
+          </div>
+        </div>
       </div>
     </div>
     <!-- q-그래프 -->
     <div class="grid-item">
       <div class="dash-card">
-		  <div class="range-wrap text-right">
-			<figure class="highcharts-figure">
-				<div class="text-right" id="chart3Type">
-	                <input type="radio" class="addMonth" id="month0" name="month" value=""><label for="month0"></label>
-	                <input type="radio" class="addMonth" id="month1" name="month" value=""><label for="month1"></label>
-	                <input type="radio" class="addMonth" id="month2" name="month" value=""><label for="month2"></label>
-				</div>	
-				<div class="text-right" id="chart3Type" style="margin-top: 3px;">
-	                <input type="radio" class="addMonth" id="month3" name="month" value=""><label for="month3"></label>
-	                <input type="radio" class="addMonth" id="month4" name="month" value=""><label for="month4"></label>
-	                <input type="radio" class="addMonth" id="month5" name="month" value="" checked><label for="month5"></label>
+        <div class="canva-wrap">
+          <div class="flex-wrap-sb card-hd">
+            <div class="flex-item fw-b fs-12">불량 발생 비중</div>
+            <div class="flex-item fc-w fs-12">
+              <div class="range-wrap">
+				<div id="chart3Type">
+				  <input type="radio" class="addMonth" id="month1" name="month" value="" checked><label for="month0"></label>
+                  <input type="radio" class="addMonth" id="month2" name="month" value=""><label for="month1"></label>
+                  <input type="radio" class="addMonth" id="month3" name="month" value=""><label for="month2"></label>
 				</div>
-				<div>
-					<div id="chart3"></div>
+				<div id="chart3Type">
+				  <input type="radio" class="addMonth" id="month4" name="month" value=""><label for="month3"></label>
+                  <input type="radio" class="addMonth" id="month5" name="month" value=""><label for="month4"></label>
+                  <input type="radio" class="addMonth" id="month6" name="month" value=""><label for="month5"></label>	
 				</div>
-				<div style="margin-top: 100px">
-					<div id="chart4"></div>
-				</div>
-			</figure>
+              </div>
+            </div>
+          </div>
+          <div class="canva">
+            <figure class="highcharts-figure">
+              <div id="chart3"></div>
+            </figure>
+          </div>
         </div>    
+        <div class="canva-wrap">
+          <div class="flex-wrap-sb card-hd">
+            <div class="flex-item fw-b fs-12">불량 상세 유형별 빈도 수</div>           
+          </div>
+          <div class="canva">
+            <figure class="highcharts-figure">
+              <div id="chart4"></div>
+            </figure>
+          </div>
+        </div>     
       </div>
     </div>
     <!-- c-그래프 -->
     <div class="grid-item">
       <div class="dash-card">
-			<div class="range-wrap text-right ">
-				<figure class="highcharts-figure" id="chart5Type">
-	                <input type="radio" class="addType" id="select7" name="term2" value="day" checked><label for="select7">일</label>
-	                <input type="radio" class="addType" id="select8" name="term2" value="week"><label for="select8">주</label>
-	                <input type="radio" class="addType" id="select9" name="term2" value="month"><label for="select9">월</label>
-					<div id="chart5"></div>
-				</figure>	
-			</div>
+        <div class="canva-wrap">
+          <div class="flex-wrap-sb card-hd">
+            <div class="flex-item fw-b fs-12"><span id="title3"></span> 설비 가동율 현황</div>
+            <div class="flex-item fc-w fs-12">
+              <div class="range-wrap" id="chart5Type">
+                <input type="radio" class="addType" id="select7" name="term2" value="day" checked><label for="select7">일</label>
+                <input type="radio" class="addType" id="select8" name="term2" value="week"><label for="select8">주</label>
+                <input type="radio" class="addType" id="select9" name="term2" value="month"><label for="select9">월</label>
+              </div>
+            </div>
+          </div>
+          <div class="canva">
+          	<figure class="highcharts-figure">
+              <div id="chart5"></div>
+            </figure>
+          </div>
+        </div>    
       </div>
     </div>
     <!-- d-그래프 -->
     <div class="grid-item">
       <div class="dash-card">
-		  <div class="range-wrap text-right">
-			<figure class="highcharts-figure" id="chart6Type">
-				<input type="radio" class="addType" id="select10" name="term3" value="day" checked><label for="select10">일</label>
+        <div class="canva-wrap">
+          <div class="flex-wrap-sb card-hd">
+            <div class="flex-item fw-b fs-12"><span id="title4"></span> 계획 대비 실적</div>
+            <div class="flex-item fc-w fs-12">
+              <div class="range-wrap" id="chart6Type">
+                <input type="radio" class="addType" id="select10" name="term3" value="day" checked><label for="select10">일</label>
                 <input type="radio" class="addType" id="select11" name="term3" value="week"><label for="select11">주</label>
                 <input type="radio" class="addType" id="select12" name="term3" value="month"><label for="select12">월</label>
-				<div id="chart6"></div>
-			</figure>
-		</div>
+              </div>
+            </div>
+          </div>
+          <div class="canva">
+            <figure class="highcharts-figure">
+              <div id="chart6"></div>
+            </figure>
+          </div>
+        </div>    
       </div>
     </div>
     <!-- 비정형그래프 -->
@@ -284,40 +338,32 @@
         <div class="dash-card">          
           <div class="flex-wrap-sb card-bd">
             <div class="flex-item">
-				<figure class="highcharts-figure">
+              <div class="canva-wrap">                
+                <div class="canva">
+                  <figure class="highcharts-figure">
 					<div id="chart7"></div>
-				</figure>				
-<!--              <div class="canva-wrap">                -->
-<!--                <div class="canva">-->
-<!--                   그래프 삽입 -->
-<!--                  워드 클라우드-->
-<!--                </div>-->
-<!--              </div> -->
+				  </figure>
+                </div>
+              </div> 
             </div>
             <div class="flex-item">
-				<figure class="highcharts-figure">
-						<div class="text-right mb-1" id="chart8Type">
-							<button type="button" class="btn btn-primary addType" value="day">일</button>
-							<button type="button" class="btn btn-primary addType" value="week">주</button>
-							<button type="button" class="btn btn-primary addType" value="month">월</button>
-						</div>															
-						<div id="chart8"></div>
-				</figure>				
-<!--              <div class="canva-wrap">-->
-<!--                <div class="flex-wrap-sb card-hd">-->
-<!--                  <div class="flex-item fw-b fs-12">그래프타이틀</div>-->
-<!--                  <div class="flex-item fc-w fs-12">-->
-<!--                    <div class="range-wrap">-->
-<!--                      <input type="radio" id="select20" name="term5" checked><label for="select20">일</label>-->
-<!--                      <input type="radio" id="select21" name="term5"><label for="select21">주</label>-->
-<!--                      <input type="radio" id="select22" name="term5"><label for="select22">월</label>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="canva">-->
-<!--                   그래프 삽입 -->
-<!--                </div>-->
-<!--              </div> -->
+              <div class="canva-wrap">
+                <div class="flex-wrap-sb card-hd">
+                  <div class="flex-item fw-b fs-12">스마트 알람 발생 현황(건)</div>
+                  <div class="flex-item fc-w fs-12">
+                    <div class="range-wrap">
+                      <input type="radio" id="select20" name="term5" checked><label for="select20">일</label>
+                      <input type="radio" id="select21" name="term5"><label for="select21">주</label>
+                      <input type="radio" id="select22" name="term5"><label for="select22">월</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="canva">
+                  <figure class="highcharts-figure">
+                    <div id="chart8"></div>
+                  </figure> 
+                </div>
+              </div> 
             </div>
           </div>
         </div>

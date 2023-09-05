@@ -9,15 +9,18 @@ var chart5data = null;
 var chart6data = null;
 var chart8data = null;
 
-var repeat = null;
-var delay = 5000;
-repeat = setInterval(realTime, delay); // delay 간격으로 실행
-
 var result = null;
 
 $(function(){
+	realTime();
+	refreshTime();
+	selectDayWeekMonthButton();
+	chart7();
+	PQCDrate()
+	
+	getName()
+	findName();
 	initSetting();
-	setEventListener();
 });
 
 function initSetting() {
@@ -25,43 +28,11 @@ function initSetting() {
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
 	
-	chart7(); 	// TODO API 나온후 작업 및 setEventListener() 안에 넣음
-	
-	code();
-	
-	findName();		//공장명 가져오기
-	getName()		//공장명 넣기
-	realTime();		// 실시간 알람
-	refreshTime(); 	// 현재시간
-	
+	factroy();
+	matarial()
 }
 
-function code() {
-	factroy();		// 공장코드 조회
-	matarial();		// 자재코드 조회
-}
-
-// Jquery에서 해당 함수명이 있으면 자동으로 호출
-function setEventListener() {
-	setRefreshButtonClick();	//새로고침 버튼 클릭
-	selectDayWeekMonthButton();	// 일주월 버튼 클릭
-	PQCDrate()					// PQCD 퍼센트 비교
-	set_P_Representative();		// P 대표기업 공정별 생산실적
-	set_P_Partner();			// P 협력사 공정별 생산실적
-	set_Q_Erorr();				// Q 불량 발생 비중
-	set_Q_ErorrDetail();		// Q 불량 상세 유형별 빈도 수
-	set_C_Equipment();			// C 설비 가동율 현황
-	set_D_PlanToPerform();		// D 계획 대비 실적
-	
-}
-
-function setRefreshButtonClick(){
-	$('#refreshButton').click(function(){
-		setEventListener();
-	})
-}
-
-function set_P_Representative(chart1data) {
+function setchart1(chart1data) {
 	var dateData = [];
 
 	for (var j = 0; j <= 0; j++) {
@@ -153,7 +124,7 @@ function set_P_Representative(chart1data) {
 	});
 }
 
-function set_P_Partner(){
+function setchart2(){
 	if (localStorage.getItem('plant') !== 'KEM') {
         $("#chart2Container").remove();
         return;
@@ -246,7 +217,7 @@ function set_P_Partner(){
 	});
 }
 
-function set_Q_Erorr(chart3data){
+function setchart3(chart3data){
 	var seriesData = [];
 
 	for (var i = 0; i <= chart3data.length-1; i++) {
@@ -289,7 +260,7 @@ function set_Q_Erorr(chart3data){
 });
 }
 
-function set_Q_ErorrDetail(chart4data){
+function setchart4(chart4data){
 	var seriesData = [];
 
 	for (var i = 0; i <= chart3data.length-1; i++) {
@@ -352,7 +323,7 @@ Highcharts.chart('chart4', {
 
 }
 	     
-function set_C_Equipment(chart5data) {
+function setchart5(chart5data) {
 	var dateData = [];
 
 	for (var j = 0; j <= 0; j++) {
@@ -456,7 +427,7 @@ function set_C_Equipment(chart5data) {
 
 }
 
-function set_D_PlanToPerform(chart6data){
+function setchart6(chart6data){
 	var dateData = [];
 
 	for (var i = 0; i <= chart6data.length-1; i++) {
@@ -877,7 +848,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart1data = res;
-			set_P_Representative(chart1data);
+			setchart1(chart1data);
 		})
 				
 	}else if(tagId == "chart2Type"){
@@ -897,7 +868,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart2data = res;
-			set_P_Partner(chart2data);
+			setchart2(chart2data);
 		})
 		
 	}else if(tagId == "chart3Type"){
@@ -911,7 +882,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart3data = res;
-			set_Q_Erorr(chart3data);
+			setchart3(chart3data);
 		})
 		
 		var url = '/dash/chart4';
@@ -923,7 +894,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		};
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart4data = res;
-			set_Q_ErorrDetail(chart4data);
+			setchart4(chart4data);
 		})
 		
 	}else if(tagId == "chart5Type"){
@@ -937,7 +908,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 		$.get(url + '?' + $.param(params)).then(function(res) {
 			chart5data = res;
-			set_C_Equipment(chart5data);
+			setchart5(chart5data);
 		})
 		
 	}else if(tagId == "chart6Type"){
@@ -951,7 +922,7 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 		$.get(url + '?' + $.param(params)).then(function(res) {
 			chart6data = res;
-			set_D_PlanToPerform(chart6data);
+			setchart6(chart6data);
 		});
 		
 	}else if(tagId == "chart8Type"){
@@ -1042,6 +1013,10 @@ function matarial() {
 	});
 }
 
+var repeat = null;
+var delay = 5000;
+repeat = setInterval(realTime, delay); // delay 간격으로 실행.
+
 function realTime() {
 	
 	let url = '/dash/findAlarm';
@@ -1087,65 +1062,48 @@ function realTime() {
 }
 
 function refreshTime(){
-	var today = new Date();
-    
-    var year = today.getFullYear();
-	var month = (today.getMonth() + 1).toString().padStart(2, '0');
-	var day = today.getDate().toString().padStart(2, '0');
+	var url2 = '/dash/findDailyAlarm';
 
-	var formattedDate = year + '-' + month + '-' + day;
-	
-	var hours = ('0' + today.getHours()).slice(-2); 
-	var minutes = ('0' + today.getMinutes()).slice(-2);
-	var seconds = ('0' + today.getSeconds()).slice(-2); 
-	var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
-	
-	$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
-	
-	setEventListener();
-	
-//	var url2 = '/dash/findDailyAlarm';
-//
-//    $.get(url2).then(function(res) {
-//        var result = res;
-//        var SumTo = 0, SumYe = 0;
-//        
-//        var today = new Date();
-//        
-//        var year = today.getFullYear();
-//		var month = (today.getMonth() + 1).toString().padStart(2, '0');
-//		var day = today.getDate().toString().padStart(2, '0');
-//
-//		var formattedDate = year + '-' + month + '-' + day;
-//		
-//		var hours = ('0' + today.getHours()).slice(-2); 
-//		var minutes = ('0' + today.getMinutes()).slice(-2);
-//		var seconds = ('0' + today.getSeconds()).slice(-2); 
-//		var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
-//		
-//		$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
-//		
-//        result.forEach(function(r) {
-//			if (r.date == formattedDate) {
-//	            SumTo = r.sum;
-//            } else {
-//				SumYe = r.sum;
-//			}
-//        });
-//        
-//        // 오늘
-//        $('#todayAlarm').text(SumTo + '건');
-//        SumTotal = SumTo - SumYe;
-//
-//	    if (SumTotal> 0) {
-//			$('#yesterdayAlarm').text('전일대비 ▲ '+ SumTotal + '건');
-//		} else if (SumTotal == 0) {
-//			$('#yesterdayAlarm').text('전일대비 - ');
-//		} else if (SumTotal< 0) {
-//			$('#yesterdayAlarm').text('전일대비 ▼ '+ SumTotal + '건');
-//		}
-//     
-//    });
+    $.get(url2).then(function(res) {
+        var result = res;
+        var SumTo = 0, SumYe = 0;
+        
+        var today = new Date();
+        
+        var year = today.getFullYear();
+		var month = (today.getMonth() + 1).toString().padStart(2, '0');
+		var day = today.getDate().toString().padStart(2, '0');
+
+		var formattedDate = year + '-' + month + '-' + day;
+		
+		var hours = ('0' + today.getHours()).slice(-2); 
+		var minutes = ('0' + today.getMinutes()).slice(-2);
+		var seconds = ('0' + today.getSeconds()).slice(-2); 
+		var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
+		
+		$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
+		
+        result.forEach(function(r) {
+			if (r.date == formattedDate) {
+	            SumTo = r.sum;
+            } else {
+				SumYe = r.sum;
+			}
+        });
+        
+        // 오늘
+        $('#todayAlarm').text(SumTo + '건');
+        SumTotal = SumTo - SumYe;
+
+	    if (SumTotal> 0) {
+			$('#yesterdayAlarm').text('전일대비 ▲ '+ SumTotal + '건');
+		} else if (SumTotal == 0) {
+			$('#yesterdayAlarm').text('전일대비 - ');
+		} else if (SumTotal< 0) {
+			$('#yesterdayAlarm').text('전일대비 ▼ '+ SumTotal + '건');
+		}
+     
+    });
 }
 
 function findName(){

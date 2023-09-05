@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.idr.pdd.dto.FairProd;
 import com.idr.pdd.service.DashService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -18,13 +19,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/dash")
 public class DashController {
 	
-	@GetMapping("")
-    public String init() {
-        return "page/dash";
-    }
+	private static String plant = null;
 
 	@Autowired
 	private DashService service;
+	
+	@GetMapping("")
+    public String init(HttpServletRequest request) {
+		plant = request.getAttribute("plant").toString();
+        return "page/dash";
+    }
 	
 	@ResponseBody
 	@GetMapping("/findName")

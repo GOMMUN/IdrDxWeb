@@ -65,7 +65,7 @@
   <input id="parameterPlant" type="hidden" th:value="${plant}" />
   <input id="parameterUsername" type="hidden" th:value="${username}" />
   <div class="refresh-wrap">
-    <div class="refresh-btn" onclick="refreshTime()">새로고침</div>
+    <div class="refresh-btn" style="cursor : pointer;" id="refreshButton">새로고침</div>
     <div class="fs-12" id="refreshTime" >최근업데이트 : </div>
   </div>
   <div class="dash-wrap">
@@ -244,14 +244,14 @@
             <div class="flex-item fc-w fs-12">
               <div class="range-wrap">
 				<div id="chart3Type">
-				  <input type="radio" class="addMonth" id="month1" name="month" value="" checked><label for="month0"></label>
-                  <input type="radio" class="addMonth" id="month2" name="month" value=""><label for="month1"></label>
-                  <input type="radio" class="addMonth" id="month3" name="month" value=""><label for="month2"></label>
+				  <input type="radio" class="addMonth" id="month0" name="month" value=""><label for="month0"></label>
+                  <input type="radio" class="addMonth" id="month1" name="month" value=""><label for="month1"></label>
+                  <input type="radio" class="addMonth" id="month2" name="month" value=""><label for="month2"></label>
 				</div>
-				<div id="chart3Type">
-				  <input type="radio" class="addMonth" id="month4" name="month" value=""><label for="month3"></label>
-                  <input type="radio" class="addMonth" id="month5" name="month" value=""><label for="month4"></label>
-                  <input type="radio" class="addMonth" id="month6" name="month" value=""><label for="month5"></label>	
+				<div id="chart3Type" style="margin-top: 3px;">
+				  <input type="radio" class="addMonth" id="month3" name="month" value=""><label for="month3"></label>
+                  <input type="radio" class="addMonth" id="month4" name="month" value=""><label for="month4"></label>
+                  <input type="radio" class="addMonth" id="month5" name="month" value="" checked><label for="month5"></label>	
 				</div>
               </div>
             </div>

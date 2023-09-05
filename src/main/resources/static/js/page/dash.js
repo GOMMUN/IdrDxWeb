@@ -18,6 +18,7 @@ var result = null;
 $(function(){
 	initSetting();
 	setEventListener();
+//	serchChart();
 });
 
 function initSetting() {
@@ -32,8 +33,8 @@ function initSetting() {
 	findName();		//공장명 가져오기
 	getName()		//공장명 넣기
 	realTime();		// 실시간 알람
-	refreshTime(); 	// 현재시간
-	
+	nowTime();		//현재 시간
+	selectDayWeekMonthButton();	// 일주월 버튼 클릭
 }
 
 function code() {
@@ -41,29 +42,49 @@ function code() {
 	matarial();		// 자재코드 조회
 }
 
+function serchChart(){
+	
+	PQCDrate()					// PQCD 퍼센트 비교
+	set_P_Representative(chart1data);		// P 대표기업 공정별 생산실적
+	set_P_Partner(chart2data);			// P 협력사 공정별 생산실적
+	set_Q_Erorr(chart3data);				// Q 불량 발생 비중
+	set_Q_ErorrDetail(chart4data);		// Q 불량 상세 유형별 빈도 수
+	set_C_Equipment(chart5data);			// C 설비 가동율 현황
+	set_D_PlanToPerform(chart6data);		// D 계획 대비 실적
+}
+
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
 function setEventListener() {
 	setRefreshButtonClick();	//새로고침 버튼 클릭
-	selectDayWeekMonthButton();	// 일주월 버튼 클릭
-	PQCDrate()					// PQCD 퍼센트 비교
-	set_P_Representative();		// P 대표기업 공정별 생산실적
-	set_P_Partner();			// P 협력사 공정별 생산실적
-	set_Q_Erorr();				// Q 불량 발생 비중
-	set_Q_ErorrDetail();		// Q 불량 상세 유형별 빈도 수
-	set_C_Equipment();			// C 설비 가동율 현황
-	set_D_PlanToPerform();		// D 계획 대비 실적
+}
+
+function nowTime(){
+	var today = new Date();
+    
+    var year = today.getFullYear();
+	var month = (today.getMonth() + 1).toString().padStart(2, '0');
+	var day = today.getDate().toString().padStart(2, '0');
+
+	var formattedDate = year + '-' + month + '-' + day;
 	
+	var hours = ('0' + today.getHours()).slice(-2); 
+	var minutes = ('0' + today.getMinutes()).slice(-2);
+	var seconds = ('0' + today.getSeconds()).slice(-2); 
+	var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
+	
+	$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
 }
 
 function setRefreshButtonClick(){
 	$('#refreshButton').click(function(){
-		setEventListener();
+		nowTime();
+		serchChart()
 	})
 }
 
 function set_P_Representative(chart1data) {
 	var dateData = [];
-
+	
 	for (var j = 0; j <= 0; j++) {
 	    dateData[j] = []; 
 	    
@@ -76,17 +97,6 @@ function set_P_Representative(chart1data) {
 	            dateData[j][i] = chart1data[j][i].dt.toString() + '월';
 	        }
 	    }
-	}
-
-	function formatDate(dateString, inputFormat, outputFormat) {
-	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
-	    const month = parseInt(dateString.slice(4, 6));
-	    const day = parseInt(dateString.slice(6, 8));
-	
-	    const monthString = `${month}${outputFormat[0]}`;
-	    const dayString = `${day}${outputFormat[2]}`;
-	
-	    return `${monthString} ${dayString}`;
 	}
 	
 	var seriesData1 = [];
@@ -172,17 +182,6 @@ function set_P_Partner(){
 		            dateData[j][i] = chart2data[j][i].dt.toString() + '월';
 		        }
 		    }
-		}
-	
-		function formatDate(dateString, inputFormat, outputFormat) {
-		    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
-		    const month = parseInt(dateString.slice(4, 6));
-		    const day = parseInt(dateString.slice(6, 8));
-		
-		    const monthString = `${month}${outputFormat[0]}`;
-		    const dayString = `${day}${outputFormat[2]}`;
-		
-		    return `${monthString} ${dayString}`;
 		}
 		
 		var seriesData1 = [];
@@ -369,17 +368,6 @@ function set_C_Equipment(chart5data) {
 	    }
 
 	}
-
-	function formatDate(dateString, inputFormat, outputFormat) {
-	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
-	    const month = parseInt(dateString.slice(4, 6));
-	    const day = parseInt(dateString.slice(6, 8));
-	
-	    const monthString = `${month}${outputFormat[0]}`;
-	    const dayString = `${day}${outputFormat[2]}`;
-	
-	    return `${monthString} ${dayString}`;
-	}
 	
 	var seriesData1 = [];
 	var seriesData2 = [];
@@ -467,18 +455,6 @@ function set_D_PlanToPerform(chart6data){
 	    } else if (chart6data[i].dt < 20) {
 	            dateData[i] = chart6data[i].dt.toString() + '월';
 	    }
-	}
-
-
-	function formatDate(dateString, inputFormat, outputFormat) {
-	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
-	    const month = parseInt(dateString.slice(4, 6));
-	    const day = parseInt(dateString.slice(6, 8));
-	
-	    const monthString = `${month}${outputFormat[0]}`;
-	    const dayString = `${day}${outputFormat[2]}`;
-	
-	    return `${monthString} ${dayString}`;
 	}
 	
 	var plan = [];
@@ -605,18 +581,6 @@ function setchart8(chart8data){
 	    } else if (chart8data[i].dt < 20) {
 	            dateData[i] = chart8data[i].dt.toString() + '월';
 	    }
-	}
-
-
-	function formatDate(dateString, inputFormat, outputFormat) {
-	    const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
-	    const month = parseInt(dateString.slice(4, 6));
-	    const day = parseInt(dateString.slice(6, 8));
-	
-	    const monthString = `${month}${outputFormat[0]}`;
-	    const dayString = `${day}${outputFormat[2]}`;
-	
-	    return `${monthString} ${dayString}`;
 	}
 	
 	Highcharts.chart('chart8', {
@@ -814,6 +778,7 @@ function PQCDrate() {
 }
 
 function selectDayWeekMonthButton() {	    
+	
 	var defaultData = "day";
 	var defaultMonth = new Date().getMonth()+1;
 	
@@ -1087,23 +1052,23 @@ function realTime() {
 }
 
 function refreshTime(){
-	var today = new Date();
-    
-    var year = today.getFullYear();
-	var month = (today.getMonth() + 1).toString().padStart(2, '0');
-	var day = today.getDate().toString().padStart(2, '0');
-
-	var formattedDate = year + '-' + month + '-' + day;
-	
-	var hours = ('0' + today.getHours()).slice(-2); 
-	var minutes = ('0' + today.getMinutes()).slice(-2);
-	var seconds = ('0' + today.getSeconds()).slice(-2); 
-	var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
-	
-	$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
-	
-	setEventListener();
-	
+//	var today = new Date();
+//    
+//    var year = today.getFullYear();
+//	var month = (today.getMonth() + 1).toString().padStart(2, '0');
+//	var day = today.getDate().toString().padStart(2, '0');
+//
+//	var formattedDate = year + '-' + month + '-' + day;
+//	
+//	var hours = ('0' + today.getHours()).slice(-2); 
+//	var minutes = ('0' + today.getMinutes()).slice(-2);
+//	var seconds = ('0' + today.getSeconds()).slice(-2); 
+//	var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
+//	
+//	$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
+//	
+//	setEventListener();
+//	
 //	var url2 = '/dash/findDailyAlarm';
 //
 //    $.get(url2).then(function(res) {
@@ -1182,4 +1147,15 @@ function getName(){
             titleElement4.innerText = storedValue;
         }
 
-}			
+}		
+
+function formatDate(dateString, inputFormat, outputFormat) {
+	const year = inputFormat === "yyyymmdd" ? dateString.slice(0, 4) : dateString.slice(0, 2);
+    const month = parseInt(dateString.slice(4, 6));
+    const day = parseInt(dateString.slice(6, 8));
+
+    const monthString = `${month}${outputFormat[0]}`;
+    const dayString = `${day}${outputFormat[2]}`;
+
+    return `${monthString} ${dayString}`;
+}

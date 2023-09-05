@@ -4,6 +4,7 @@
 <script src="https://code.highcharts.com/modules/treemap.js"></script>
 
 <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/dash.js}"></script>
+<link rel="stylesheet" href="../../static/css/style.css">
 <style>
 	.highcharts-figure,
 	.highcharts-data-table table {
@@ -53,14 +54,6 @@
 	}
 </style>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
-
-</head>
 <body>
   <input id="parameterPlant" type="hidden" th:value="${plant}" />
   <input id="parameterUsername" type="hidden" th:value="${username}" />

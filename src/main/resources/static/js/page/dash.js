@@ -18,7 +18,6 @@ var result = null;
 $(function(){
 	initSetting();
 	setEventListener();
-//	serchChart();
 });
 
 function initSetting() {
@@ -34,7 +33,9 @@ function initSetting() {
 	getName()		//공장명 넣기
 	realTime();		// 실시간 알람
 	nowTime();		//현재 시간
+	PQCDrate()					// PQCD 퍼센트 비교
 	selectDayWeekMonthButton();	// 일주월 버튼 클릭
+	
 }
 
 function code() {
@@ -146,21 +147,51 @@ function set_P_Representative(chart1data) {
 				pointPadding: 0.2,
 				borderWidth: 0
 			},
-			series : {
-				minPointLength:3
-			}
+				
+	        series: {
+				minPointLength:3,
+	            },
+		},
+	    tooltip: {
+	        formatter: function () {
+	            let xValue = this.x; // X 좌표 값을 가져옵니다.
+	            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+	            
+	            // X 좌표에 해당하는 모든 데이터를 저장할 배열
+	            let dataToShow = [];
+	
+	            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+	            for (let i = 0; i < points.length; i++) {
+	                dataToShow.push({
+	                    seriesName: points[i].series.name,
+	                    value: points[i].y,
+	                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+	                });
+	            }
+	
+	            // 툴팁 내용을 구성
+	            let tooltipText = '<strong>' + xValue + '</strong><br>';
+	            for (let i = 0; i < dataToShow.length; i++) {
+	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + '<br>';
+	            }
+	
+	            return tooltipText;
+	        },
+	        shared: true, // 툴팁을 공유합니다.		
 		},
 		credits: {
             enabled: false
         },
 		series: seriesData2,
-		colors: [
-			'#0D70C6',
-			'#009CD8',
-			'#09D0D9',
-			'#0DCF9C'
-		]
-	});
+			colors: [
+				'#0D70C6',
+				'#009CD8',
+				'#09D0D9',
+				'#0DCF9C'
+			]
+		}
+	);
 }
 
 function set_P_Partner(){
@@ -235,6 +266,34 @@ function set_P_Partner(){
 				minPointLength:3
 			}
 	    },
+	    tooltip: {
+	        formatter: function () {
+	            let xValue = this.x; // X 좌표 값을 가져옵니다.
+	            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+	            
+	            // X 좌표에 해당하는 모든 데이터를 저장할 배열
+	            let dataToShow = [];
+	
+	            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+	            for (let i = 0; i < points.length; i++) {
+	                dataToShow.push({
+	                    seriesName: points[i].series.name,
+	                    value: points[i].y,
+	                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+	                });
+	            }
+	
+	            // 툴팁 내용을 구성
+	            let tooltipText = '<strong>' + xValue + '</strong><br>';
+	            for (let i = 0; i < dataToShow.length; i++) {
+	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + '<br>';
+	            }
+	
+	            return tooltipText;
+	        },
+	        shared: true, // 툴팁을 공유합니다.		
+		},	    
 		credits: {
 	        enabled: false
 	    },    
@@ -413,7 +472,36 @@ function set_C_Equipment(chart5data) {
             },
         }
     },
+    
+    tooltip: {
+        formatter: function () {
+            let xValue = this.x; // X 좌표 값을 가져옵니다.
+            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+            
+            // X 좌표에 해당하는 모든 데이터를 저장할 배열
+            let dataToShow = [];
 
+            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+            for (let i = 0; i < points.length; i++) {
+                dataToShow.push({
+                    seriesName: points[i].series.name,
+                    value: points[i].y,
+                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+                });
+            }
+
+            // 툴팁 내용을 구성
+            let tooltipText = '<strong>' + xValue + '</strong><br>';
+            for (let i = 0; i < dataToShow.length; i++) {
+                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + '<br>';
+            }
+
+            return tooltipText;
+        },
+        shared: true, // 툴팁을 공유합니다.		
+	},
+	
     xAxis: {
         categories: dateData[0],
         crosshair: true,
@@ -501,6 +589,35 @@ function set_D_PlanToPerform(chart6data){
 				minPointLength:3
 			}
 	    },
+	    
+		tooltip: {
+	        formatter: function () {
+	            let xValue = this.x; // X 좌표 값을 가져옵니다.
+	            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+	            
+	            // X 좌표에 해당하는 모든 데이터를 저장할 배열
+	            let dataToShow = [];
+	
+	            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+	            for (let i = 0; i < points.length; i++) {
+	                dataToShow.push({
+	                    seriesName: points[i].series.name,
+	                    value: points[i].y,
+	                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+	                });
+	            }
+	
+	            // 툴팁 내용을 구성
+	            let tooltipText = '<strong>' + xValue + '</strong><br>';
+	            for (let i = 0; i < dataToShow.length; i++) {
+	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + '<br>';
+	            }
+	
+	            return tooltipText;
+	        },
+	        shared: true, // 툴팁을 공유합니다.		
+		},
 	    
 		credits: {
 	        enabled: false

@@ -298,11 +298,17 @@
 			SUM(D.PROD_QTY) AS PROD_QTY
 			FROM(
 				SELECT 
-					CASE
-				   		WHEN 'day' = #{month} THEN A.dt 
-				   		WHEN 'week' = #{month} THEN CAST(CONVERT(VARCHAR(2), DATEPART(MONTH, A.dt)) AS INT) * 100 + CAST(CONVERT(VARCHAR(2), DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, convert(varchar(10),A.dt,120)), 0),convert(varchar(10),A.dt,120)) +1) AS INT)
-				   		WHEN 'month' = #{month} THEN DATEPART(MONTH, A.dt)
-				   	END AS dt,
+					<choose>
+						<when test='month == "day"'>
+							A.dt AS dt,
+						</when>
+						<when test='month == "week"'>
+							CONCAT(DATEPART( MONTH, DATEADD( DAY, ( ( 7 - DATEPART( WEEKDAY, A.dt ) ) % 7 ) - 3, A.dt ) ), '0',( DATEPART( DAY, DATEADD( DAY, ( ( 7 - DATEPART( WEEKDAY, A.dt) ) % 7 ) - 3, A.dt ) ) - 1 ) / 7 + 1) AS dt,
+						</when>
+						<otherwise>
+							DATEPART(MONTH, A.dt) AS dt,
+						</otherwise>
+					</choose>
 					ISNULL(SUM(B.PLAN_QTY),0) AS PLAN_QTY,
 					ISNULL(SUM(C.PROD_QTY),0) AS PROD_QTY
 				FROM CheckDayOff A 
@@ -314,13 +320,24 @@
 				LEFT JOIN DSP_WORK_CONTENTS C 
 				ON B.DATASEQ = C.WORKDAILY_SEQ
 					AND C.ISUSABLE = 'Usable'
-				WHERE ('day'= #{month} AND A.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY,-5,GETDATE()),112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, GETDATE()),112))
-				OR	  ('week' = #{month} AND A.dt BETWEEN DATEADD(WK, DATEDIFF(WK, 0, GETDATE()) -5, 0) AND DATEADD(MS, 0, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0)))
-				OR	  ('month' = #{month} AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0)))
+				WHERE 1=1
+				<choose>
+					<when test='month == "day"'>
+						AND A.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY,-5,GETDATE()),112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, GETDATE()),112)
+					</when>
+					<when test='month == "week"'>
+						AND A.dt BETWEEN CONVERT(VARCHAR(8),DATEADD(DAY, 1 - DATEPART(DW, CONVERT(DATE,GETDATE()-35)) , CONVERT(DATE,GETDATE()-35)),112) 
+									 AND CONVERT(VARCHAR(8),DATEADD(DAY, 7 - DATEPART(DW, CONVERT(DATE,GETDATE())) , CONVERT(DATE,GETDATE())),112)	
+					</when>
+					<otherwise>
+						AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, 0, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0))
+					</otherwise>
+				</choose>
 				GROUP BY A.dt
 			) D
-			GROUP BY D.dt;
-	</select>	
+			GROUP BY D.dt
+			ORDER BY D.dt ASC
+	</select>		
 	
 	<select id="chart8" parameterType="FairProd" resultType="FairProd">
 		SELECT   

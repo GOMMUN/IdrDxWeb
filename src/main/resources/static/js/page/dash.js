@@ -35,6 +35,11 @@ function initSetting() {
 	nowTime();		//현재 시간
 	PQCDrate()					// PQCD 퍼센트 비교
 	selectDayWeekMonthButton();	// 일주월 버튼 클릭
+	
+	if($("#parameterPlant").val() != "KEM"){// 대표기업시 대표 공정별 생산실적 히든
+		$('#isRepresentative').hide();
+	}
+	
 }
 
 function code() {
@@ -181,6 +186,11 @@ function set_P_Representative(chart1data) {
 		credits: {
             enabled: false
         },
+        navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 		series: seriesData2,
 			colors: [
 				'#0D70C6',
@@ -295,6 +305,11 @@ function set_P_Partner(){
 		credits: {
 	        enabled: false
 	    },    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 	    series: seriesData2,
 	    colors: [
 			'#0D70C6'
@@ -328,6 +343,11 @@ function set_Q_Erorr(chart3data){
 	credits: {
         enabled: false
     },    
+    navigation: {
+        buttonOptions: {
+            enabled: false
+        }
+    },
     series: [{
         minPointSize: 10,
         innerSize: '70%',
@@ -402,6 +422,11 @@ function set_Q_ErorrDetail(chart4data){
 	    },
 		credits: {
 	        enabled: false
+	    },
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
 	    }
 	});
 
@@ -516,7 +541,11 @@ function set_C_Equipment(chart5data) {
 	credits: {
         enabled: false
     },    
-
+	navigation: {
+        buttonOptions: {
+            enabled: false
+        }
+    },
     series: seriesData2,
     colors: [
             '#94F5F9',
@@ -619,7 +648,11 @@ function set_D_PlanToPerform(chart6data){
 		credits: {
 	        enabled: false
 	    },	    
-	    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 	    series: [
 	        {
 	            name: '계획',
@@ -671,6 +704,11 @@ function chart7(){
 		credits: {
 	        enabled: false
 	    },	    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 	    series: [{
 	        type: 'wordcloud',
 	        data,
@@ -735,7 +773,11 @@ function setchart8(chart8data){
 	    credits: {
 	        enabled: false
 	    },	
-	    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 	    series: [
 	        {
 	            name: '실적',

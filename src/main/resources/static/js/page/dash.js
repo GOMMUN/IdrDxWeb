@@ -25,7 +25,7 @@ function initSetting() {
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
 	
-	chart7(); 	// TODO API 나온후 작업 및 setEventListener() 안에 넣음
+	chart7(); 	// TODO API 나온후 작업 및 serchChart() 안에 넣음
 	
 	code();
 	
@@ -35,7 +35,6 @@ function initSetting() {
 	nowTime();		//현재 시간
 	PQCDrate()					// PQCD 퍼센트 비교
 	selectDayWeekMonthButton();	// 일주월 버튼 클릭
-	
 }
 
 function code() {
@@ -104,7 +103,6 @@ function set_P_Representative(chart1data) {
 	var seriesData2 = [];
 
 	for (var j = 0; j <= chart1data.length-1; j++) {
-	
 		
 	    seriesData1[j] = [];
 	    
@@ -371,42 +369,41 @@ function set_Q_ErorrDetail(chart4data){
 		
 	}
 	
-
-Highcharts.chart('chart4', {
-    series: [{
-        type: 'treemap',
-        layoutAlgorithm: 'stripes',
-        alternateStartingDirection: true,
-        borderColor: '#fff',
-        borderWidth: 2,
-        dataLabels: {
-            style: {
-                textOutline: 'none'
-            }
-        },
-        levels: [{
-            level: 1,
-            layoutAlgorithm: 'stripes',
-            dataLabels: {
-                enabled: true,
-                align: 'left',
-                verticalAlign: 'top',
-                style: {
-                    fontSize: '15px',
-                    fontWeight: 'bold'
-                }
-            }
-        }],
-        data: seriesData
-    }],
-    title: {
-        text: '',
-        align: 'left'
-    },
-	credits: {
-        enabled: false
-    }
-});
+	Highcharts.chart('chart4', {
+	    series: [{
+	        type: 'treemap',
+	        layoutAlgorithm: 'stripes',
+	        alternateStartingDirection: true,
+	        borderColor: '#fff',
+	        borderWidth: 2,
+	        dataLabels: {
+	            style: {
+	                textOutline: 'none'
+	            }
+	        },
+	        levels: [{
+	            level: 1,
+	            layoutAlgorithm: 'stripes',
+	            dataLabels: {
+	                enabled: true,
+	                align: 'left',
+	                verticalAlign: 'top',
+	                style: {
+	                    fontSize: '15px',
+	                    fontWeight: 'bold'
+	                }
+	            }
+	        }],
+	        data: seriesData
+	    }],
+	    title: {
+	        text: '',
+	        align: 'left'
+	    },
+		credits: {
+	        enabled: false
+	    }
+	});
 
 }
 	     
@@ -662,28 +659,28 @@ function chart7(){
         return arr;
     }, []);
 
-Highcharts.chart('chart7', {
-    accessibility: {
-        screenReaderSection: {
-            beforeChartFormat: '<h5>{chartTitle}</h5>' +
-                '<div>{chartSubtitle}</div>' +
-                '<div>{chartLongdesc}</div>' +
-                '<div>{viewTableButton}</div>'
-        }
-    },
-	credits: {
-        enabled: false
-    },	    
-    series: [{
-        type: 'wordcloud',
-        data,
-        name: 'Occurrences'
-    }],
-    title: {
-        text: '',
-        align: 'left'
-    }
-});
+	Highcharts.chart('chart7', {
+	    accessibility: {
+	        screenReaderSection: {
+	            beforeChartFormat: '<h5>{chartTitle}</h5>' +
+	                '<div>{chartSubtitle}</div>' +
+	                '<div>{chartLongdesc}</div>' +
+	                '<div>{viewTableButton}</div>'
+	        }
+	    },
+		credits: {
+	        enabled: false
+	    },	    
+	    series: [{
+	        type: 'wordcloud',
+	        data,
+	        name: 'Occurrences'
+	    }],
+	    title: {
+	        text: '',
+	        align: 'left'
+	    }
+	});
 
 }
 
@@ -1169,22 +1166,7 @@ function realTime() {
 }
 
 function refreshTime(){
-//	var today = new Date();
-//    
-//    var year = today.getFullYear();
-//	var month = (today.getMonth() + 1).toString().padStart(2, '0');
-//	var day = today.getDate().toString().padStart(2, '0');
-//
-//	var formattedDate = year + '-' + month + '-' + day;
-//	
-//	var hours = ('0' + today.getHours()).slice(-2); 
-//	var minutes = ('0' + today.getMinutes()).slice(-2);
-//	var seconds = ('0' + today.getSeconds()).slice(-2); 
-//	var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
-//	
-//	$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
-//	
-//	setEventListener();
+
 //	
 //	var url2 = '/dash/findDailyAlarm';
 //

@@ -146,7 +146,7 @@
 	</select>
 
 	<select id="chart15" parameterType="FairProd" resultType="FairProd">
-		SELECT DISTINCT
+		SELECT 
 			E.dt,
 			E.LINEID,
 			SUM(E.PROD_QTY) AS PROD_QTY,

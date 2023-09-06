@@ -1257,4 +1257,4 @@ function formatDate(dateString, inputFormat, outputFormat) {
     const dayString = `${day}${outputFormat[2]}`;
 
     return `${monthString} ${dayString}`;
-}
+} 

@@ -183,6 +183,11 @@ function set_P_Representative(chart1data) {
 		credits: {
             enabled: false
         },
+        navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 		series: seriesData2,
 			colors: [
 				'#0D70C6',
@@ -297,6 +302,11 @@ function set_P_Partner(){
 		credits: {
 	        enabled: false
 	    },    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 	    series: seriesData2,
 	    colors: [
 			'#0D70C6'
@@ -330,6 +340,11 @@ function set_Q_Erorr(chart3data){
 	credits: {
         enabled: false
     },    
+    navigation: {
+        buttonOptions: {
+            enabled: false
+        }
+    },
     series: [{
         minPointSize: 10,
         innerSize: '70%',
@@ -405,6 +420,11 @@ Highcharts.chart('chart4', {
     },
 	credits: {
         enabled: false
+    },
+    navigation: {
+        buttonOptions: {
+            enabled: false
+        }
     }
 });
 
@@ -519,7 +539,11 @@ function set_C_Equipment(chart5data) {
 	credits: {
         enabled: false
     },    
-
+	navigation: {
+        buttonOptions: {
+            enabled: false
+        }
+    },
     series: seriesData2,
     colors: [
             '#94F5F9',
@@ -622,7 +646,11 @@ function set_D_PlanToPerform(chart6data){
 		credits: {
 	        enabled: false
 	    },	    
-	    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 	    series: [
 	        {
 	            name: '계획',
@@ -674,6 +702,11 @@ Highcharts.chart('chart7', {
 	credits: {
         enabled: false
     },	    
+    navigation: {
+        buttonOptions: {
+            enabled: false
+        }
+    },
     series: [{
         type: 'wordcloud',
         data,
@@ -738,7 +771,11 @@ function setchart8(chart8data){
 	    credits: {
 	        enabled: false
 	    },	
-	    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
 	    series: [
 	        {
 	            name: '실적',

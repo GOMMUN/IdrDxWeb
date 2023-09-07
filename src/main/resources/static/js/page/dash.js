@@ -348,7 +348,7 @@ function set_Q_Erorr(chart3data){
 		    align: 'left', // 'right', 'center', 'left' 중에서 선택
 		    verticalAlign: 'middle', // 'top', 'middle', 'bottom' 중에서 선택
 		    layout: 'vertical', // 'horizontal', 'vertical' 중에서 선택
-		    labelFormat: '{name}: {y}', // 범례 아이템 이름 뒤에 값 표시
+		    labelFormat: '{name}: {y} 건', // 범례 아이템 이름 뒤에 값 표시
 		    itemMarginTop: 20, // 원하는 여백 값으로 설정
 		    itemMarginBottom: 20, // 원하는 여백 값으로 설정
     		symbolRadius: 0, // 아이콘의 모서리 반경을 0으로 설정하여 네모 모양으로 만듭니다.
@@ -359,7 +359,7 @@ function set_Q_Erorr(chart3data){
 	            cursor: 'pointer',
 				dataLabels: {
                     enabled: true, // 데이터 라벨 활성화
-                    format: '{point.y}', // 이름과 y 값 표시
+                    format: '{point.percentage:.1f}%', // 이름과 y 값 표시
                     distance: -30, // 라벨 위치 조정
                     style: {
                         fontWeight: 'bold',

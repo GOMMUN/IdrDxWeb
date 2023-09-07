@@ -369,6 +369,20 @@ function set_Q_Erorr(chart3data){
 	            showInLegend: true
 	        }
 	    },
+	    tooltip: {
+	        formatter: function () {
+//	            let xValue = this.x; // X 좌표 값을 가져옵니다.
+	            let point = this.point; // 모든 데이터 포인트를 가져옵니다.
+
+	            // 툴팁 내용을 구성
+	            let tooltipText = '<strong>' + localStorage.getItem('month') + '월' + '</strong><br>';
+
+	            tooltipText += '<span style="color:' + point.color + ';">' + point.name + ': </span>' + point.percentage.toFixed(1) + '<br>';
+
+	            return tooltipText;
+	        },
+	        shared: true, // 툴팁을 공유합니다.		
+		},
 	    series: [{
 	        minPointSize: 10,
 	        innerSize: '70%',
@@ -1001,6 +1015,7 @@ function selectDayWeekMonthButton() {
 		} else {
 			$("#addMonth[value='" + defaultMonth + "']").addClass("active");
         	selectType(defaultMonth, chartId);
+        	localStorage.setItem('month', defaultMonth);
 		}
     }    
 	$(".addType").click(function() {	//일 주 월 타입 선택
@@ -1029,6 +1044,7 @@ function selectDayWeekMonthButton() {
         $(this).addClass("active");
 
 	    selectType(data,tagId);
+	    localStorage.setItem('month', data);
 	});
 	$("#factoryCodes").change(function() {
 		var data = "day";

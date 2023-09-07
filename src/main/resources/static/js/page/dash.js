@@ -202,7 +202,7 @@ function set_P_Representative(chart1data) {
 	);
 }
 
-function set_P_Partner(){
+function set_P_Partner(chart2data){
 		var dateData = [];
 	
 		for (var j = 0; j <= 0; j++) {
@@ -1157,7 +1157,7 @@ function factroy() {
                     let selectedText = $(this).find('option:selected').text();
 
                     // 선택된 옵션의 value 값을 localStorage에 저장
-                    localStorage.setItem("option", selectedText);
+                    getName(selectedText);
                 });
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));
@@ -1311,10 +1311,14 @@ function findName(){
 	});
 }
 
-function getName(){
+function getName(selectedText){
+		if(selectedText == undefined){
+			var selectedValue = '리하온';
+		} else {
+			var selectedValue = selectedText;
+		}
 		
 		var storedValue = localStorage.getItem('factoryname');
-		var selectedValue = localStorage.getItem('option');
 		
 		var titleElement = document.getElementById('title');
 		var titleElement2 = document.getElementById('title2');
@@ -1326,7 +1330,6 @@ function getName(){
             titleElement3.innerText = storedValue;
             titleElement4.innerText = storedValue;
         }
-
 }		
 
 function formatDate(dateString, inputFormat, outputFormat) {

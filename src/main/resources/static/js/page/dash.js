@@ -344,13 +344,28 @@ function set_Q_Erorr(chart3data){
 	            enabled: false
 	        }
 	    },
+	    legend: {
+		    align: 'left', // 'right', 'center', 'left' 중에서 선택
+		    verticalAlign: 'middle', // 'top', 'middle', 'bottom' 중에서 선택
+		    layout: 'vertical', // 'horizontal', 'vertical' 중에서 선택
+		    labelFormat: '{name}: {y}', // 범례 아이템 이름 뒤에 값 표시
+		    itemMarginTop: 20, // 원하는 여백 값으로 설정
+		    itemMarginBottom: 20, // 원하는 여백 값으로 설정
+    		symbolRadius: 0, // 아이콘의 모서리 반경을 0으로 설정하여 네모 모양으로 만듭니다.
+		},
 	    plotOptions: {
 	        pie: {
 	            allowPointSelect: true,
 	            cursor: 'pointer',
-	            dataLabels: {
-	                enabled: false
-	            },
+				dataLabels: {
+                    enabled: true, // 데이터 라벨 활성화
+                    format: '{point.y}', // 이름과 y 값 표시
+                    distance: -30, // 라벨 위치 조정
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'black'
+                    }
+                },
 	            showInLegend: true
 	        }
 	    },
@@ -467,8 +482,8 @@ function set_C_Equipment(chart5data) {
 	    for (var i = 0; i <= chart5data[j].length-1; i++) {
 	        var percentage = 0;
 	        percentage = Number((parseInt(chart5data[j][i].workTotal) / ((parseInt(chart5data[j][i].workTotal) + parseInt(chart5data[j][i].notoperateTotal)) == 0 ? 1 : (parseInt(chart5data[j][i].workTotal) + parseInt(chart5data[j][i].notoperateTotal)))) * 100);
-	        
-	        seriesData1[j][i] = percentage;
+	        var percentage_data = parseFloat(percentage.toFixed(2));
+	        seriesData1[j][i] = percentage_data;
 	    }
 	    
 	    var series = {
@@ -522,7 +537,7 @@ function set_C_Equipment(chart5data) {
             let tooltipText = '<strong>' + xValue + '</strong><br>';
             for (let i = 0; i < dataToShow.length; i++) {
                 tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
-                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + '<br>';
+                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + "%" + '<br>';
             }
 
             return tooltipText;
@@ -1072,20 +1087,23 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart3data = res;
 			set_Q_Erorr(chart3data);
+			
+			var url = '/dash/chart4';
+		
+			var params = {
+				plant: localStorage.getItem('plant'),
+				month: data,
+				material : localStorage.getItem('material')
+			};
+			$.get(url+ '?' + $.param(params)).then(function(res) {
+				chart4data = res;
+				set_Q_ErorrDetail(chart4data);
+			})
+			
 		})
 		
-		var url = '/dash/chart4';
-		
-		var params = {
-			plant: localStorage.getItem('plant'),
-			month: data,
-			material : localStorage.getItem('material')
-		};
-		$.get(url+ '?' + $.param(params)).then(function(res) {
-			chart4data = res;
-			set_Q_ErorrDetail(chart4data);
-		})
-		
+
+
 	}else if(tagId == "chart5Type"){
 		var url = '/dash/chart5';
 		

@@ -377,7 +377,7 @@ function set_Q_Erorr(chart3data){
 	            // 툴팁 내용을 구성
 	            let tooltipText = '<strong>' + localStorage.getItem('month') + '월' + '</strong><br>';
 
-	            tooltipText += '<span style="color:' + point.color + ';">' + point.name + ': </span>' + point.percentage.toFixed(1) + '<br>';
+	            tooltipText += '<span style="color:' + point.color + ';">' + point.name + ': </span>' + point.percentage.toFixed(1) + '%' + '<br>';
 
 	            return tooltipText;
 	        },

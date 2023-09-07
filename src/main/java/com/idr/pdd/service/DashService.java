@@ -20,24 +20,24 @@ public class DashService {
 		return mapper.findAllName(plant);
 	}
 
-	public List<FairProd> findAllP(String plant){
+	public List<FairProd> findAllP(String plant, String material){
 		
-		return mapper.findAllP(plant);
+		return mapper.findAllP(plant, material);
 	}
 	
-	public List<FairProd> findAllQ(String plant){
+	public List<FairProd> findAllQ(String plant, String material){
 		
-		return mapper.findAllQ(plant);
+		return mapper.findAllQ(plant, material);
 	}
 	
-	public List<FairProd> findAllC(String plant){
+	public List<FairProd> findAllC(String plant, String material){
 		
-		return mapper.findAllC(plant);
+		return mapper.findAllC(plant, material);
 	}
 	
-	public List<FairProd> findAllD(String plant){
+	public List<FairProd> findAllD(String plant, String material){
 		
-		return mapper.findAllD(plant);
+		return mapper.findAllD(plant, material);
 	}
 
 	public List<List<FairProd>> chart15(String plant, String month, String material) {

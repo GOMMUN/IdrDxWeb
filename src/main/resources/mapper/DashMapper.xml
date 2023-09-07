@@ -25,10 +25,11 @@
 			LEFT JOIN DSP_WORK_CONTENTS B
 			ON A.DATASEQ = B.WORKDAILY_SEQ
 			WHERE A.WORK_DATE IN (
-								CONVERT(DATE, GETDATE()-4, 112),
-								CONVERT(DATE, GETDATE()-5, 112)
+								CONVERT(DATE, GETDATE(), 112),
+								CONVERT(DATE, GETDATE()-1, 112)
 								)
 				AND A.FACTORYID = #{plant}
+				AND A.MATERIALID = #{material}
 				AND A.ISUSABLE = 'Usable'
 				AND B.ISUSABLE = 'Usable'
 			) C
@@ -49,10 +50,11 @@
 			LEFT JOIN DSP_WORK_CONTENTS B
 			ON A.DATASEQ = B.WORKDAILY_SEQ
 			WHERE A.WORK_DATE IN (
-								CONVERT(DATE, GETDATE()-4, 112),
-								CONVERT(DATE, GETDATE()-5, 112)
+								CONVERT(DATE, GETDATE(), 112),
+								CONVERT(DATE, GETDATE()-1, 112)
 								)
 				AND A.FACTORYID = #{plant}
+				AND A.MATERIALID = #{material}
 				AND A.ISUSABLE = 'Usable'
 				AND B.ISUSABLE = 'Usable'
 			) C
@@ -85,10 +87,11 @@
 			LEFT JOIN DSP_WORK_CONTENTS C
 			ON A.DATASEQ = C.WORKDAILY_SEQ
 			WHERE A.WORK_DATE IN (
-								CONVERT(DATE, GETDATE()-4, 112),
-								CONVERT(DATE, GETDATE()-5, 112)
+								CONVERT(DATE, GETDATE(), 112),
+								CONVERT(DATE, GETDATE()-1, 112)
 								)
 				AND A.FACTORYID = #{plant}
+				AND A.MATERIALID = #{material}
 				AND A.ISUSABLE = 'Usable'
 				AND B.ISUSABLE = 'Usable'
 				AND C.ISUSABLE = 'Usable'
@@ -110,10 +113,11 @@
 			LEFT JOIN DSP_WORK_CONTENTS B
 			ON A.DATASEQ = B.WORKDAILY_SEQ
 			WHERE A.WORK_DATE IN (
-								CONVERT(DATE, GETDATE()-4, 112),
-								CONVERT(DATE, GETDATE()-5, 112)
+								CONVERT(DATE, GETDATE(), 112),
+								CONVERT(DATE, GETDATE()-1, 112)
 								)
 				AND A.FACTORYID = #{plant}
+				AND A.MATERIALID = #{material}
 				AND A.ISUSABLE = 'Usable'
 				AND B.ISUSABLE = 'Usable'
 			) C

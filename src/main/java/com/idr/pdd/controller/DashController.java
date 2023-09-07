@@ -40,33 +40,33 @@ public class DashController {
 
 	@ResponseBody
 	@GetMapping("/findP")
-	public List<FairProd> findP(String plant) {
+	public List<FairProd> findP(String plant, String material) {
 		
-		List<FairProd> list = service.findAllP(plant);
+		List<FairProd> list = service.findAllP(plant, material);
 		return list;
 
     }
 	@ResponseBody
 	@GetMapping("/findQ")
-	public List<FairProd> findQ(String plant) {
+	public List<FairProd> findQ(String plant, String material) {
 		
-		List<FairProd> list = service.findAllQ(plant);
+		List<FairProd> list = service.findAllQ(plant, material);
 		return list;
 
     }
 	@ResponseBody
 	@GetMapping("/findC")
-	public List<FairProd> findC(String plant) {
+	public List<FairProd> findC(String plant, String material) {
 		
-		List<FairProd> list = service.findAllC(plant);
+		List<FairProd> list = service.findAllC(plant, material);
 		return list;
 
     }
 	@ResponseBody
 	@GetMapping("/findD")
-	public List<FairProd> findD(String plant) {
+	public List<FairProd> findD(String plant, String material) {
 		
-		List<FairProd> list = service.findAllD(plant);
+		List<FairProd> list = service.findAllD(plant, material);
 		return list;
 
     }

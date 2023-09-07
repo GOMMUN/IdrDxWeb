@@ -203,10 +203,6 @@ function set_P_Representative(chart1data) {
 }
 
 function set_P_Partner(){
-	if (localStorage.getItem('plant') !== 'KEM') {
-        $("#chart2Container").remove();
-        return;
-    }
 		var dateData = [];
 	
 		for (var j = 0; j <= 0; j++) {
@@ -333,36 +329,46 @@ function set_Q_Erorr(chart3data){
 	}
 	
 	Highcharts.chart('chart3', {
-    chart: {
-        type: 'variablepie'
-    },
-    title: {
-        text: '',
-        align: 'left'
-    },
-	credits: {
-        enabled: false
-    },    
-    navigation: {
-        buttonOptions: {
-            enabled: false
-        }
-    },
-    series: [{
-        minPointSize: 10,
-        innerSize: '70%',
-        zMin: 0,
-        name: 'failurerate',
-        borderRadius: 5,
-        data: seriesData,
-        colors: [
-            '#C00500',
-            '#FF85FF',
-            '#993601',
-            '#F78E00'
-        ]
-    }]
-});
+	    chart: {
+	        type: 'pie'
+	    },
+	    title: {
+	        text: '',
+	        align: 'left'
+	    },
+		credits: {
+	        enabled: false
+	    },    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
+	    plotOptions: {
+	        pie: {
+	            allowPointSelect: true,
+	            cursor: 'pointer',
+	            dataLabels: {
+	                enabled: false
+	            },
+	            showInLegend: true
+	        }
+	    },
+	    series: [{
+	        minPointSize: 10,
+	        innerSize: '70%',
+	        zMin: 0,
+	        name: 'failurerate',
+	        borderRadius: 5,
+	        data: seriesData,
+	        colors: [
+	            '#C00500',
+	            '#FF85FF',
+	            '#993601',
+	            '#F78E00'
+	        ]
+	    }]
+	});
 }
 
 function set_Q_ErorrDetail(chart4data){
@@ -798,7 +804,8 @@ function PQCDrate() {
     var urld = '/dash/findD';
     
       	var params = {
-		plant: localStorage.getItem('plant')
+		plant: localStorage.getItem('plant'),
+		material : localStorage.getItem('material')
 	};
 
 	var today = new Date();
@@ -807,8 +814,8 @@ function PQCDrate() {
 	var month = (today.getMonth() + 1).toString().padStart(2, '0');
 	var day = today.getDate().toString().padStart(2, '0');
 
-//	var formattedDate = year + month + day;
-	var formattedDate = "20230831"
+	var formattedDate = year + month + day;
+//	var formattedDate = "20230831"
 		
 	$.get(urlp + '?' + $.param(params)).then(function(res) {
 		var result = res;
@@ -831,13 +838,21 @@ function PQCDrate() {
 	    compareUph = Uph-preUph
 	    
 	    if (compareUph > 0){
-			$('#preUph').text(compareUph.toFixed(0)).removeClass('plus').addClass('minus');
+		    $('#preUph .plus').text(compareUph.toFixed(0)).show();
+		    $('#preUph .same').text(compareUph.toFixed(0)).hide();
+		    $('#preUph .minus').text(compareUph.toFixed(0)).hide();
 		} else if (compareUph == 0){
-			$('#preUph').text('-');
+		    $('#preUph .plus').text(0).hide();
+		    $('#preUph .same').text(0).show();
+		    $('#preUph .minus').text(0).hide();
 		} else if (compareUph < 0){
-			$('#preUph').text(compareUph.toFixed(0)).removeClass('minus').addClass('plus');
+		    $('#preUph .plus').text(compareUph.toFixed(0)).hide();
+		    $('#preUph .same').text(compareUph.toFixed(0)).hide();
+		    $('#preUph .minus').text(compareUph.toFixed(0)).show();
 		} else if (isNaN(compareUph)) {
-			$('#preUph').text('-');
+			$('#preUph .plus').hide();
+			$('#preUph .same').text('-').show();
+			$('#preUph .minus').hide();
 		}
 	});
 	$.get(urlq + '?' + $.param(params)).then(function(res) {
@@ -861,13 +876,21 @@ function PQCDrate() {
 	    compareFailRate = failRate-preFailRate
 	    
 		if (compareFailRate > 0){
-			$('#preFailRate').text(compareFailRate.toFixed(2) + '%').removeClass('plus').addClass('minus');
+			$('#preFailRate .plus').text(compareFailRate.toFixed(2) + '%').show();
+		    $('#preFailRate .same').text(compareFailRate.toFixed(2) + '%').hide();
+		    $('#preFailRate .minus').text(compareFailRate.toFixed(2) + '%').hide();
 		} else if (compareFailRate == 0){
-			$('#preFailRate').text('-');
+		    $('#preFailRate .plus').text(0 + '%').hide();
+		    $('#preFailRate .same').text(0 + '%').show();
+		    $('#preFailRate .minus').text(0 + '%').hide();
 		} else if (compareFailRate < 0){
-			$('#preFailRate').text(compareFailRate.toFixed(2) + '%').removeClass('minus').addClass('plus');
+		    $('#preFailRate .plus').text(compareFailRate.toFixed(2) + '%').hide();
+		    $('#preFailRate .same').text(compareFailRate.toFixed(2) + '%').hide();
+		    $('#preFailRate .minus').text(compareFailRate.toFixed(2) + '%').show();
 		} else if (isNaN(compareFailRate)) {
-			$('#preFailRate').text('-');
+			$('#preFailRate .plus').hide();
+			$('#preFailRate .same').text('-').show();
+			$('#preFailRate .minus').hide();
 		}
 	});
 	$.get(urlc + '?' + $.param(params)).then(function(res) {
@@ -891,13 +914,21 @@ function PQCDrate() {
 	    compareOperateRate = operateRate-preOperateRate
 	    
 	    if (compareOperateRate > 0){
-			$('#preOperateRate').text(compareOperateRate.toFixed(2) + '%').removeClass('plus').addClass('minus');
-		} else if (compareOperateRate == 0) {	
-			$('#preOperateRate').text('-');
+			$('#preOperateRate .plus').text(compareOperateRate.toFixed(2) + '%').show();
+		    $('#preOperateRate .same').text(compareOperateRate.toFixed(2) + '%').hide();
+		    $('#preOperateRate .minus').text(compareOperateRate.toFixed(2) + '%').hide();
+		} else if (compareOperateRate == 0) {
+			$('#preOperateRate .plus').text(0 + '%').hide();
+		    $('#preOperateRate .same').text(0 + '%').show();
+		    $('#preOperateRate .minus').text(0 + '%').hide();
 		} else if (compareOperateRate < 0){
-			$('#preOperateRate').text(compareOperateRate.toFixed(2) + '%').removeClass('minus').addClass('plus');
+			$('#preOperateRate .plus').text(compareOperateRate.toFixed(2) + '%').hide();
+		    $('#preOperateRate .same').text(compareOperateRate.toFixed(2) + '%').hide();
+		    $('#preOperateRate .minus').text(compareOperateRate.toFixed(2) + '%').show();
 		} else if (isNaN(compareOperateRate)) {
-			$('#preOperateRate').text('-');
+			$('#preOperateRate .plus').hide();
+			$('#preOperateRate .same').text('-').show();
+			$('#preOperateRate .minus').hide();
 		}
 	});
     $.get(urld + '?' + $.param(params)).then(function(res) {
@@ -921,13 +952,21 @@ function PQCDrate() {
 	    compareSuccessRate = successRate-preSuccessRate
 	    
 		if (compareSuccessRate > 0) {
-			$('#preSuccessRate').text(compareSuccessRate.toFixed(2) + '%').removeClass('plus').addClass('minus');
+			$('#preSuccessRate .plus').text(compareSuccessRate.toFixed(2) + '%').show();
+		    $('#preSuccessRate .same').text(compareSuccessRate.toFixed(2) + '%').hide();
+		    $('#preSuccessRate .minus').text(compareSuccessRate.toFixed(2) + '%').hide();
 		} else if (compareSuccessRate == 0) {
-			$('#preSuccessRate').text('-');
+			$('#preSuccessRate .plus').text(0 + '%').hide();
+		    $('#preSuccessRate .same').text(0 + '%').show();
+		    $('#preSuccessRate .minus').text(0 + '%').hide();
 		} else if (compareSuccessRate < 0) {
-			$('#preSuccessRate').text(compareSuccessRate.toFixed(2) + '%').removeClass('minus').addClass('plus');
+			$('#preSuccessRate .plus').text(compareSuccessRate.toFixed(2) + '%').hide();
+		    $('#preSuccessRate .same').text(compareSuccessRate.toFixed(2) + '%').hide();
+		    $('#preSuccessRate .minus').text(compareSuccessRate.toFixed(2) + '%').show();
 		} else if (isNaN(compareSuccessRate)) {
-			$('#preSuccessRate').text('-');
+			$('#preSuccessRate .plus').hide();
+			$('#preSuccessRate .same').text('-').show();
+			$('#preSuccessRate .minus').hide();
 		}
      
     });

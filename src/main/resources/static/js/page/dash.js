@@ -31,7 +31,6 @@ function initSetting() {
 	code();
 	
 	findName();		//공장명 가져오기
-	getName()		//공장명 넣기
 	realTime();		// 실시간 알람
 	nowTime();		//현재 시간
 	PQCDrate()					// PQCD 퍼센트 비교

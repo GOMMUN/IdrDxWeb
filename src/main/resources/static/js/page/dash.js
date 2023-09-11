@@ -38,6 +38,7 @@ function initSetting() {
 	
 	if($("#parameterPlant").val() != "KEM"){// 대표기업시 대표 공정별 생산실적 히든
 		$('#isRepresentative').hide();
+		$('#selectFacBox').hide();
 	}
 	
 }
@@ -1081,6 +1082,8 @@ function selectDayWeekMonthButton() {
             
 	    selectType(data,tagId);
 	});
+	
+	setRefreshButtonClick();
 }
 
 function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
@@ -1200,6 +1203,7 @@ function factroy() {
 	$.ajax({ 
 		url: url,
 		type: 'GET',
+		async: false,
 		success: function(data) {
 			c_factory = data;
 
@@ -1234,6 +1238,7 @@ function matarial() {
 	$.ajax({
 		url: url,
 		type: 'GET',
+		async: false,
 		success: function(data) {
 			c_material = data;
 
@@ -1269,7 +1274,7 @@ function realTime() {
 	$.ajax({
 		url: url,
 		type: 'GET',
-		async: true,
+		async: false,
 		success: function(data) {
 //			alert(data);
 			

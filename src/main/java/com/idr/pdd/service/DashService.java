@@ -68,11 +68,12 @@ public class DashService {
 	
 	public List<List<FairProd>> chart2(String plant, String factory, String month, String material) {
 
-		List<String> rank = mapper.rank(factory);
+		List<String> rank = null;
 
 		List<List<FairProd>> finalresult = new ArrayList<>();
 
-		if (plant.equals("KEM")) {
+		if (plant.equals("KEM")) {	//대표기업 로그인
+			rank = mapper.rank(factory);
 			if (factory.equals("LHO")) {
 				finalresult.add(mapper.chart15(rank.get(0), month, material));
 			} else if (factory.equals("SWH")) {
@@ -80,6 +81,9 @@ public class DashService {
 			} else if (factory.equals("SYM")) {
 				finalresult.add(mapper.chart15(rank.get(0), month, material));	
 			} 
+		}else {	//협력사 로그인
+			rank = mapper.rank(plant);
+			finalresult.add(mapper.chart15(rank.get(0), month, material));	
 		}
 		
 

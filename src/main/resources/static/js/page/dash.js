@@ -8,10 +8,11 @@ var chart4data = null;
 var chart5data = null;
 var chart6data = null;
 var chart8data = null;
+var selectedText = null;
 
 var repeat = null;
 var delay = 5000;
-repeat = setInterval(realTime, delay); // delay 간격으로 실행
+//repeat = setInterval(realTime, delay); // delay 간격으로 실행
 
 var result = null;
 
@@ -31,7 +32,7 @@ function initSetting() {
 	
 	findName();		//공장명 가져오기
 	getName()		//공장명 넣기
-	realTime();		// 실시간 알람
+//	realTime();		// 실시간 알람
 	nowTime();		//현재 시간
 	PQCDrate()					// PQCD 퍼센트 비교
 	selectDayWeekMonthButton();	// 일주월 버튼 클릭
@@ -1206,7 +1207,7 @@ function factroy() {
 		async: false,
 		success: function(data) {
 			c_factory = data;
-
+//alert(JSON.stringify(c_factory));
 			let $dropdown = $("#factoryCodes");
 			$dropdown.empty();
 
@@ -1373,6 +1374,8 @@ function findName(){
 		});
 		
 		localStorage.setItem("factoryname", factoryname);
+		
+		getName(undefined);
 	});
 }
 

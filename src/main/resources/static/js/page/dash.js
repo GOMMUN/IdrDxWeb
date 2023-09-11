@@ -176,7 +176,7 @@ function set_P_Representative(chart1data) {
 	            let tooltipText = '<strong>' + xValue + '</strong><br>';
 	            for (let i = 0; i < dataToShow.length; i++) {
 	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
-	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + '<br>';
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '개' + '<br>';
 	            }
 	
 	            return tooltipText;
@@ -294,7 +294,7 @@ function set_P_Partner(chart2data){
 	            let tooltipText = '<strong>' + xValue + '</strong><br>';
 	            for (let i = 0; i < dataToShow.length; i++) {
 	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
-	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + '<br>';
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '개' + '<br>';
 	            }
 	
 	            return tooltipText;
@@ -491,7 +491,7 @@ function set_Q_ErorrDetail(chart4data){
 	            // 툴팁 내용을 구성
 	            let tooltipText = '<strong>' + localStorage.getItem('month') + '월' + '</strong><br>';
 
-	            tooltipText += '<span style="color:' + point.color + ';">' + point.name + ': </span>' + point.value + '건' + '<br>';
+	            tooltipText += '<span style="color:' + point.color + ';">' + point.name + ': </span>' + point.value.toLocaleString() + '건' + '<br>';
 
 	            return tooltipText;
 	        },
@@ -722,7 +722,7 @@ function set_D_PlanToPerform(chart6data){
 	            let tooltipText = '<strong>' + xValue + '</strong><br>';
 	            for (let i = 0; i < dataToShow.length; i++) {
 	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
-	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + '<br>';
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '개' + '<br>';
 	            }
 	
 	            return tooltipText;
@@ -914,23 +914,23 @@ function PQCDrate() {
         });
         
         Uph = ProdQtyTo / ManhourTo; // UPH
-        $('#Uph').text(isNaN(Uph) ? '-' : parseFloat(Uph.toFixed(2)));
+        $('#Uph').text(isNaN(Uph) ? '-' : parseFloat(Uph.toFixed(0)));
         
         preUph = ProdQtyYe / ManhourYe;
 	    compareUph = Uph-preUph
 	    
-	    if (compareUph > 0){
-		    $('#preUph .plus').text(compareUph.toFixed(0)).show();
-		    $('#preUph .same').text(compareUph.toFixed(0)).hide();
-		    $('#preUph .minus').text(compareUph.toFixed(0)).hide();
-		} else if (compareUph == 0){
-		    $('#preUph .plus').text(0).hide();
-		    $('#preUph .same').text(0).show();
-		    $('#preUph .minus').text(0).hide();
-		} else if (compareUph < 0){
+	    if (compareUph.toFixed(0) > 0){
 		    $('#preUph .plus').text(compareUph.toFixed(0)).hide();
 		    $('#preUph .same').text(compareUph.toFixed(0)).hide();
 		    $('#preUph .minus').text(compareUph.toFixed(0)).show();
+		} else if (compareUph.toFixed(0) == 0){
+		    $('#preUph .plus').text(0).hide();
+		    $('#preUph .same').text(0).show();
+		    $('#preUph .minus').text(0).hide();
+		} else if (compareUph.toFixed(0) < 0){
+		    $('#preUph .plus').text(compareUph.toFixed(0)).show();
+		    $('#preUph .same').text(compareUph.toFixed(0)).hide();
+		    $('#preUph .minus').text(compareUph.toFixed(0)).hide();
 		} else if (isNaN(compareUph)) {
 			$('#preUph .plus').hide();
 			$('#preUph .same').text('-').show();
@@ -957,18 +957,18 @@ function PQCDrate() {
         preFailRate = (FirstTimeFailQtyYe / ProdQtyYe) * 100;
 	    compareFailRate = failRate-preFailRate
 	    
-		if (compareFailRate > 0){
-			$('#preFailRate .plus').text(compareFailRate.toFixed(2) + '%').show();
-		    $('#preFailRate .same').text(compareFailRate.toFixed(2) + '%').hide();
-		    $('#preFailRate .minus').text(compareFailRate.toFixed(2) + '%').hide();
-		} else if (compareFailRate == 0){
+		if (parseFloat(compareFailRate.toFixed(2)) > 0){
+			$('#preFailRate .plus').text(parseFloat(compareFailRate.toFixed(2)) + '%').hide();
+		    $('#preFailRate .same').text(parseFloat(compareFailRate.toFixed(2)) + '%').hide();
+		    $('#preFailRate .minus').text(parseFloat(compareFailRate.toFixed(2)) + '%').show();
+		} else if (parseFloat(compareFailRate.toFixed(2)) == 0){
 		    $('#preFailRate .plus').text(0 + '%').hide();
 		    $('#preFailRate .same').text(0 + '%').show();
 		    $('#preFailRate .minus').text(0 + '%').hide();
-		} else if (compareFailRate < 0){
-		    $('#preFailRate .plus').text(compareFailRate.toFixed(2) + '%').hide();
-		    $('#preFailRate .same').text(compareFailRate.toFixed(2) + '%').hide();
-		    $('#preFailRate .minus').text(compareFailRate.toFixed(2) + '%').show();
+		} else if (parseFloat(compareFailRate.toFixed(2)) < 0){
+		    $('#preFailRate .plus').text(parseFloat(compareFailRate.toFixed(2)) + '%').show();
+		    $('#preFailRate .same').text(parseFloat(compareFailRate.toFixed(2)) + '%').hide();
+		    $('#preFailRate .minus').text(parseFloat(compareFailRate.toFixed(2)) + '%').hide();
 		} else if (isNaN(compareFailRate)) {
 			$('#preFailRate .plus').hide();
 			$('#preFailRate .same').text('-').show();
@@ -995,18 +995,18 @@ function PQCDrate() {
         preOperateRate = (WorkTimeYe / (WorkTimeYe + NotoperateTimeYe)) * 100;
 	    compareOperateRate = operateRate-preOperateRate
 	    
-	    if (compareOperateRate > 0){
-			$('#preOperateRate .plus').text(compareOperateRate.toFixed(2) + '%').show();
-		    $('#preOperateRate .same').text(compareOperateRate.toFixed(2) + '%').hide();
-		    $('#preOperateRate .minus').text(compareOperateRate.toFixed(2) + '%').hide();
-		} else if (compareOperateRate == 0) {
+	    if (parseFloat(compareOperateRate.toFixed(2)) > 0){
+			$('#preOperateRate .plus').text(parseFloat(compareOperateRate.toFixed(2)) + '%').hide();
+		    $('#preOperateRate .same').text(parseFloat(compareOperateRate.toFixed(2)) + '%').hide();
+		    $('#preOperateRate .minus').text(parseFloat(compareOperateRate.toFixed(2)) + '%').show();
+		} else if (parseFloat(compareOperateRate.toFixed(2)) == 0) {
 			$('#preOperateRate .plus').text(0 + '%').hide();
 		    $('#preOperateRate .same').text(0 + '%').show();
 		    $('#preOperateRate .minus').text(0 + '%').hide();
-		} else if (compareOperateRate < 0){
-			$('#preOperateRate .plus').text(compareOperateRate.toFixed(2) + '%').hide();
-		    $('#preOperateRate .same').text(compareOperateRate.toFixed(2) + '%').hide();
-		    $('#preOperateRate .minus').text(compareOperateRate.toFixed(2) + '%').show();
+		} else if (parseFloat(compareOperateRate.toFixed(2)) < 0){
+			$('#preOperateRate .plus').text(parseFloat(compareOperateRate.toFixed(2)) + '%').show();
+		    $('#preOperateRate .same').text(parseFloat(compareOperateRate.toFixed(2)) + '%').hide();
+		    $('#preOperateRate .minus').text(parseFloat(compareOperateRate.toFixed(2)) + '%').hide();
 		} else if (isNaN(compareOperateRate)) {
 			$('#preOperateRate .plus').hide();
 			$('#preOperateRate .same').text('-').show();
@@ -1033,18 +1033,18 @@ function PQCDrate() {
         preSuccessRate = (ProdQtyYe / PlanQtyYe) * 100;
 	    compareSuccessRate = successRate-preSuccessRate
 	    
-		if (compareSuccessRate > 0) {
-			$('#preSuccessRate .plus').text(compareSuccessRate.toFixed(2) + '%').show();
-		    $('#preSuccessRate .same').text(compareSuccessRate.toFixed(2) + '%').hide();
-		    $('#preSuccessRate .minus').text(compareSuccessRate.toFixed(2) + '%').hide();
-		} else if (compareSuccessRate == 0) {
+		if (parseFloat(compareSuccessRate.toFixed(2)) > 0) {
+			$('#preSuccessRate .plus').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').hide();
+		    $('#preSuccessRate .same').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').hide();
+		    $('#preSuccessRate .minus').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').show();
+		} else if (parseFloat(compareSuccessRate.toFixed(2)) == 0) {
 			$('#preSuccessRate .plus').text(0 + '%').hide();
 		    $('#preSuccessRate .same').text(0 + '%').show();
 		    $('#preSuccessRate .minus').text(0 + '%').hide();
-		} else if (compareSuccessRate < 0) {
-			$('#preSuccessRate .plus').text(compareSuccessRate.toFixed(2) + '%').hide();
-		    $('#preSuccessRate .same').text(compareSuccessRate.toFixed(2) + '%').hide();
-		    $('#preSuccessRate .minus').text(compareSuccessRate.toFixed(2) + '%').show();
+		} else if (parseFloat(compareSuccessRate.toFixed(2)) < 0) {
+			$('#preSuccessRate .plus').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').show();
+		    $('#preSuccessRate .same').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').hide();
+		    $('#preSuccessRate .minus').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').hide();
 		} else if (isNaN(compareSuccessRate)) {
 			$('#preSuccessRate .plus').hide();
 			$('#preSuccessRate .same').text('-').show();

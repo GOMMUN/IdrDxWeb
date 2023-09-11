@@ -694,7 +694,10 @@ function set_D_PlanToPerform(chart6data){
 	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
 	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '개' + '<br>';
 	            }
-	
+	            var successRate = (dataToShow[1].value/(dataToShow[0].value == 0 ? 1 : dataToShow[0].value))*100;
+	            
+				tooltipText += '<span style="color: orange;">' +
+	                               '달성율 : </span>' + parseFloat(successRate.toFixed(2)) + '%' + '<br>';
 	            return tooltipText;
 	        },
 	        shared: true, // 툴팁을 공유합니다.		

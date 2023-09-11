@@ -191,6 +191,9 @@ function set_P_Representative(chart1data) {
 	            enabled: false
 	        }
 	    },
+	    legend: {
+    		symbolRadius: 0
+		},
 		series: seriesData2,
 			colors: [
 				'#0D70C6',
@@ -306,6 +309,9 @@ function set_P_Partner(chart2data){
 	            enabled: false
 	        }
 	    },
+	    legend: {
+    		symbolRadius: 0
+		},
 	    series: seriesData2,
 	    colors: [
 			'#0D70C6'
@@ -321,7 +327,8 @@ function set_Q_Erorr(chart3data){
 	    var series = {
 	        name: chart3data[i].commgrpcdnm,
 	        y: chart3data[i].firsttimerejectQtySum,
-	        z: 120
+	        z: 120,
+	        isVisibleInLegend: true
 	    };
 	    
 	    seriesData.push(series);
@@ -501,7 +508,10 @@ function set_Q_ErorrDetail(chart4data){
 	        buttonOptions: {
 	            enabled: false
 	        }
-	    }
+	    },
+	    legend: {
+    		symbolRadius: 0
+		}
 	});
 
 }
@@ -541,7 +551,8 @@ function set_C_Equipment(chart5data) {
 	    
 	    var series = {
 	        name: chart5data[j][0].lineid,
-	        data: seriesData1[j]
+	        data: seriesData1[j],
+	        isVisibleInLegend: true
 	    };
 	    
 	    seriesData2.push(series);
@@ -727,6 +738,9 @@ function set_D_PlanToPerform(chart6data){
 	            enabled: false
 	        }
 	    },
+	    legend: {
+    		symbolRadius: 0
+		},
 	    series: [
 	        {
 	            name: '계획',

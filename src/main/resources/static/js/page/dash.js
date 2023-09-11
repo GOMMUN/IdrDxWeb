@@ -117,7 +117,7 @@ function set_P_Representative(chart1data) {
 	    
 	    var series = {
 	        name: chart1data[j][0].lineid,
-	        data: seriesData1[j]
+	        data: seriesData1[j],isVisibleInLegend: true
 	    };
 	    
 	    seriesData2.push(series);
@@ -327,8 +327,7 @@ function set_Q_Erorr(chart3data){
 	    var series = {
 	        name: chart3data[i].commgrpcdnm,
 	        y: chart3data[i].firsttimerejectQtySum,
-	        z: 120,
-	        isVisibleInLegend: true
+	        z: 120
 	    };
 	    
 	    seriesData.push(series);
@@ -433,40 +432,12 @@ function set_Q_ErorrDetail(chart4data){
 		seriesData.push(series2);
 		
 	}
-	
-	(function(H) {
-	  let pick = H.pick,
-	    defined = H.defined,
-	    fireEvent = H.fireEvent
-	  H.wrap(H.Legend.prototype.getAllItems = function(p) {
-	    var allItemsFirst = [],
-	      allItems = [];
-	    this.chart.series.forEach(function(series) {
-	      var seriesOptions = series && series.options;
-	      // Handle showInLegend. If the series is linked to another series,
-	      // defaults to false.
-	      if (series && pick(seriesOptions.showInLegend, !defined(seriesOptions.linkedTo) ? void 0 : false, true)) {
-	        // Use points or series for the legend item depending on
-	        // legendType
-	        allItemsFirst = allItems.concat(series.legendItems ||
-	          (seriesOptions.legendType === 'point' ?
-	            series.data :
-	            series));
-	      }
-	    });
-	
-	    allItemsFirst.forEach(el => {
-	      if (el.isVisibleInLegend) {
-	        allItems.push(el)
-	      }
-	    })
-	
-	    fireEvent(this, 'afterGetAllItems', {
-	      allItems: allItems
-	    });
-	    return allItems;
-	  });
-	}(Highcharts));
+
+	var H = Highcharts;
+
+    H.addEvent(H.Legend, 'afterGetAllItems', function(seriesData) {
+        seriesData.allItems.splice(4, 12)
+    });
 	
 	Highcharts.chart('chart4', {
 	    series: [{
@@ -551,8 +522,7 @@ function set_C_Equipment(chart5data) {
 	    
 	    var series = {
 	        name: chart5data[j][0].lineid,
-	        data: seriesData1[j],
-	        isVisibleInLegend: true
+	        data: seriesData1[j]
 	    };
 	    
 	    seriesData2.push(series);

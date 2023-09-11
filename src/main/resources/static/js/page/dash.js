@@ -401,6 +401,7 @@ function set_Q_Erorr(chart3data){
 }
 
 function set_Q_ErorrDetail(chart4data){
+	var seriesParent = [];
 	var seriesData = [];
 
 	for (var i = 0; i <= chart3data.length-1; i++) {
@@ -408,8 +409,10 @@ function set_Q_ErorrDetail(chart4data){
 	    var series1 = {
 			id: chart3data[i].rejectItemId,
 	        name: chart3data[i].commgrpcdnm,
-	        color: chart3data[i].rejectItemId == 'RI01' ? '#C00500' : chart3data[i].rejectItemId == 'RI02' ? '#FF85FF' : chart3data[i].rejectItemId == 'RI03' ? '#993601' : '#F78E00'
+	        color: chart3data[i].rejectItemId == 'RI01' ? '#C00500' : chart3data[i].rejectItemId == 'RI02' ? '#FF85FF' : chart3data[i].rejectItemId == 'RI03' ? '#993601' : '#F78E00',
+	        isVisibleInLegend: true
 	    };
+	    seriesParent.push(series1);
 	    seriesData.push(series1);
 	}    
 	for (var j = 0; j <= chart4data.length-1; j++) {
@@ -424,11 +427,47 @@ function set_Q_ErorrDetail(chart4data){
 		
 	}
 	
+	(function(H) {
+	  let pick = H.pick,
+	    defined = H.defined,
+	    fireEvent = H.fireEvent
+	  H.wrap(H.Legend.prototype.getAllItems = function(p) {
+	    var allItemsFirst = [],
+	      allItems = [];
+	    this.chart.series.forEach(function(series) {
+	      var seriesOptions = series && series.options;
+	      // Handle showInLegend. If the series is linked to another series,
+	      // defaults to false.
+	      if (series && pick(seriesOptions.showInLegend, !defined(seriesOptions.linkedTo) ? void 0 : false, true)) {
+	        // Use points or series for the legend item depending on
+	        // legendType
+	        allItemsFirst = allItems.concat(series.legendItems ||
+	          (seriesOptions.legendType === 'point' ?
+	            series.data :
+	            series));
+	      }
+	    });
+	
+	    allItemsFirst.forEach(el => {
+	      if (el.isVisibleInLegend) {
+	        allItems.push(el)
+	      }
+	    })
+	
+	    fireEvent(this, 'afterGetAllItems', {
+	      allItems: allItems
+	    });
+	    return allItems;
+	  });
+	}(Highcharts));
+	
 	Highcharts.chart('chart4', {
 	    series: [{
 	        type: 'treemap',
 	        layoutAlgorithm: 'stripes',
 	        alternateStartingDirection: true,
+	        showInLegend: true,
+        	legendType: 'point',
 	        borderColor: '#fff',
 	        borderWidth: 2,
 	        dataLabels: {
@@ -436,21 +475,21 @@ function set_Q_ErorrDetail(chart4data){
 	                textOutline: 'none'
 	            }
 	        },
-	        levels: [{
-	            level: 1,
-	            layoutAlgorithm: 'stripes',
-	            dataLabels: {
-	                enabled: true,
-	                align: 'left',
-	                verticalAlign: 'top',
-	                style: {
-	                    fontSize: '15px',
-	                    fontWeight: 'bold'
-	                }
-	            }
-	        }],
 	        data: seriesData
 	    }],
+	    tooltip: {
+	        formatter: function () {
+	            let point = this.point; // 모든 데이터 포인트를 가져옵니다.
+
+	            // 툴팁 내용을 구성
+	            let tooltipText = '<strong>' + localStorage.getItem('month') + '월' + '</strong><br>';
+
+	            tooltipText += '<span style="color:' + point.color + ';">' + point.name + ': </span>' + point.value + '건' + '<br>';
+
+	            return tooltipText;
+	        },
+	        shared: true, // 툴팁을 공유합니다.		
+		},
 	    title: {
 	        text: '',
 	        align: 'left'

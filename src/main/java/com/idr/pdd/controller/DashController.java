@@ -80,9 +80,9 @@ public class DashController {
 
 	@ResponseBody
 	@GetMapping("/chart2")
-    public List<List<FairProd>> chart2(String plant, String factory, String month, String material) {
+    public List<List<FairProd>> chart2(String plant, String factory, String month) {
 		
-		return service.chart2(plant, factory, month, material);
+		return service.chart2(plant, factory, month);
     }
 	
 	@ResponseBody

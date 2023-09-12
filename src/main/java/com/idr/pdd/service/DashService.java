@@ -66,24 +66,23 @@ public class DashService {
 		return finalresult;
 	}
 	
-	public List<List<FairProd>> chart2(String plant, String factory, String month, String material) {
+	public List<List<FairProd>> chart2(String plant, String factory, String month) {
 
-		List<String> rank = null;
+		List<String> rank = mapper.rank(factory);
 
 		List<List<FairProd>> finalresult = new ArrayList<>();
 
 		if (plant.equals("KEM")) {	//대표기업 로그인
-			rank = mapper.rank(factory);
 			if (factory.equals("LHO")) {
-				finalresult.add(mapper.chart15(rank.get(0), month, material));
+				finalresult.add(mapper.chart2(rank.get(0), month));
 			} else if (factory.equals("SWH")) {
-				finalresult.add(mapper.chart15(rank.get(0), month, material));	
+				finalresult.add(mapper.chart2(rank.get(0), month));	
 			} else if (factory.equals("SYM")) {
-				finalresult.add(mapper.chart15(rank.get(0), month, material));	
+				finalresult.add(mapper.chart2(rank.get(0), month));	
 			} 
 		}else {	//협력사 로그인
 			rank = mapper.rank(plant);
-			finalresult.add(mapper.chart15(rank.get(0), month, material));	
+			finalresult.add(mapper.chart2(rank.get(0), month));	
 		}
 		
 

@@ -15,7 +15,7 @@ public interface DashMapper {
 	List<FairProd> findAllC(String plant, String material);
 	List<FairProd> findAllD(String plant, String material);
 	List<FairProd> chart15(String line, String month, String material);
-	List<FairProd> chart2(String plant, String factory, String month, String material);
+	List<FairProd> chart2(String line, String month);
 	List<FairProd> chart3(String plant, String month, String material);
 	List<FairProd> chart4(String plant, String month, String material);
 	List<FairProd> chart6(String plant, String month, String material);

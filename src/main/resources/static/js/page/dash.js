@@ -38,7 +38,8 @@ function initSetting() {
 	
 	if($("#parameterPlant").val() != "KEM"){// 대표기업시 대표 공정별 생산실적 히든
 		$('#isRepresentative').hide();
-		$('#selectFacBox').hide();
+		$('#factoryCodes').hide();
+		$('#chart2').css('height', '710px');
 	}
 	
 }
@@ -118,7 +119,7 @@ function set_P_Representative(chart1data) {
 	    
 	    var series = {
 	        name: chart1data[j][0].lineid,
-	        data: seriesData1[j],isVisibleInLegend: true
+	        data: seriesData1[j]
 	    };
 	    
 	    seriesData2.push(series);
@@ -410,6 +411,7 @@ function set_Q_Erorr(chart3data){
 function set_Q_ErorrDetail(chart4data){
 	var seriesParent = [];
 	var seriesData = [];
+	var seriesChild = [];
 
 	for (var i = 0; i <= chart3data.length-1; i++) {
 		
@@ -429,7 +431,7 @@ function set_Q_ErorrDetail(chart4data){
 	        parent: chart4data[j].rejectItemId,
 	        value: chart4data[j].firsttimerejectQtySum
 		};
-		    
+		seriesChild.push(series2);    
 		seriesData.push(series2);
 		
 	}
@@ -437,7 +439,7 @@ function set_Q_ErorrDetail(chart4data){
 	var H = Highcharts;
 
     H.addEvent(H.Legend, 'afterGetAllItems', function(seriesData) {
-        seriesData.allItems.splice(4, 12)
+        seriesData.allItems.splice(seriesParent.length, seriesChild.length)
     });
 	
 	Highcharts.chart('chart4', {
@@ -1380,7 +1382,11 @@ function findName(){
 
 function getName(selectedText){
 		if(selectedText == undefined){
-			var selectedValue = '리하온';
+			if(localStorage.getItem('plant') == 'KEM'){
+				var selectedValue = '리하온';
+			} else {
+				var selectedValue = localStorage.getItem('factoryname');
+			}
 		} else {
 			var selectedValue = selectedText;
 		}

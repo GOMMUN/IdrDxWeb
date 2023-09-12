@@ -37,9 +37,8 @@ function initSetting() {
 	selectDayWeekMonthButton();	// 일주월 버튼 클릭
 	
 	if($("#parameterPlant").val() != "KEM"){// 대표기업시 대표 공정별 생산실적 히든
-		$('#isRepresentative').hide();
-		$('#factoryCodes').hide();
-		$('#chart2').css('height', '710px');
+		$('#isPartner').hide();
+		$('#chart1').css('height', '710px');
 	}
 	
 }

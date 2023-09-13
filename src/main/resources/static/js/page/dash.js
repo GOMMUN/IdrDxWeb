@@ -38,6 +38,7 @@ function initSetting() {
 	
 	if($("#parameterPlant").val() != "KEM"){// 대표기업시 대표 공정별 생산실적 히든
 		$('#isPartner').hide();
+		$('#alarm').hide();
 		$('#chart1').css('height', '710px');
 	}
 	
@@ -781,6 +782,9 @@ function chart7(){
     }, []);
 
 	Highcharts.chart('chart7', {
+		chart: {
+			width: 250
+		},
 	    accessibility: {
 	        screenReaderSection: {
 	            beforeChartFormat: '<h5>{chartTitle}</h5>' +
@@ -928,7 +932,7 @@ function PQCDrate() {
 		    $('#preUph .same').text(0).show();
 		    $('#preUph .minus').text(0).hide();
 		} else if (compareUph.toFixed(0) < 0){
-		    $('#preUph .plus').text(compareUph.toFixed(0)).show();
+		    $('#preUph .plus').text(Math.abs(compareUph.toFixed(0))).show();
 		    $('#preUph .same').text(compareUph.toFixed(0)).hide();
 		    $('#preUph .minus').text(compareUph.toFixed(0)).hide();
 		} else if (isNaN(compareUph)) {
@@ -966,7 +970,7 @@ function PQCDrate() {
 		    $('#preFailRate .same').text(0 + '%').show();
 		    $('#preFailRate .minus').text(0 + '%').hide();
 		} else if (parseFloat(compareFailRate.toFixed(2)) < 0){
-		    $('#preFailRate .plus').text(parseFloat(compareFailRate.toFixed(2)) + '%').show();
+		    $('#preFailRate .plus').text(parseFloat(Math.abs(compareFailRate.toFixed(2))) + '%').show();
 		    $('#preFailRate .same').text(parseFloat(compareFailRate.toFixed(2)) + '%').hide();
 		    $('#preFailRate .minus').text(parseFloat(compareFailRate.toFixed(2)) + '%').hide();
 		} else if (isNaN(compareFailRate)) {
@@ -1004,7 +1008,7 @@ function PQCDrate() {
 		    $('#preOperateRate .same').text(0 + '%').show();
 		    $('#preOperateRate .minus').text(0 + '%').hide();
 		} else if (parseFloat(compareOperateRate.toFixed(2)) < 0){
-			$('#preOperateRate .plus').text(parseFloat(compareOperateRate.toFixed(2)) + '%').show();
+			$('#preOperateRate .plus').text(parseFloat(Math.abs(compareOperateRate.toFixed(2))) + '%').show();
 		    $('#preOperateRate .same').text(parseFloat(compareOperateRate.toFixed(2)) + '%').hide();
 		    $('#preOperateRate .minus').text(parseFloat(compareOperateRate.toFixed(2)) + '%').hide();
 		} else if (isNaN(compareOperateRate)) {
@@ -1042,7 +1046,7 @@ function PQCDrate() {
 		    $('#preSuccessRate .same').text(0 + '%').show();
 		    $('#preSuccessRate .minus').text(0 + '%').hide();
 		} else if (parseFloat(compareSuccessRate.toFixed(2)) < 0) {
-			$('#preSuccessRate .plus').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').show();
+			$('#preSuccessRate .plus').text(parseFloat(Math.abs(compareSuccessRate.toFixed(2))) + '%').show();
 		    $('#preSuccessRate .same').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').hide();
 		    $('#preSuccessRate .minus').text(parseFloat(compareSuccessRate.toFixed(2)) + '%').hide();
 		} else if (isNaN(compareSuccessRate)) {

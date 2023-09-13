@@ -433,7 +433,7 @@ hr{
   cursor: pointer;
   height: 24px;
   width: 60px;
-  border: 1px solid #333;
+  border: 1px solid #F4F4F4 ;
   line-height: 24px;
   text-align: center;
   font-weight:bold;
@@ -441,7 +441,7 @@ hr{
 }
 .range-wrap input[type=radio]+label{
   background-color: #fff;
-  color: #2F3268;
+  color: #555555;
 }
 #chart1Type input[type=radio]:checked+label{
   background-color: #2F3168;

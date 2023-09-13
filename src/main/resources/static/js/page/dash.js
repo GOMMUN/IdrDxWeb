@@ -41,6 +41,28 @@ function initSetting() {
 		$('#chart1').css('height', '710px');
 	}
 	
+	if($("#parameterPlant").val() == "KEM"){// 기업별 로고
+		$('#logo1').show();
+		$('#logo2').hide();
+		$('#logo3').hide();
+		$('#logo4').hide();
+	} else if($("#parameterPlant").val() == "LHO"){
+		$('#logo1').hide();
+		$('#logo2').show();
+		$('#logo3').hide();
+		$('#logo4').hide();
+	} else if($("#parameterPlant").val() == "SYM"){
+		$('#logo1').hide();
+		$('#logo2').hide();
+		$('#logo3').show();
+		$('#logo4').hide();
+	} else if($("#parameterPlant").val() == "SWH"){
+		$('#logo1').hide();
+		$('#logo2').hide();
+		$('#logo3').hide();
+		$('#logo4').show();
+	}
+	
 }
 
 function code() {
@@ -193,6 +215,7 @@ function set_P_Representative(chart1data) {
 	        }
 	    },
 	    legend: {
+			itemDistance:15,
     		symbolRadius: 0
 		},
 		series: seriesData2,
@@ -398,10 +421,10 @@ function set_Q_Erorr(chart3data){
 	        borderRadius: 5,
 	        data: seriesData,
 	        colors: [
-	            '#C00500',
-	            '#FF85FF',
-	            '#993601',
-	            '#F78E00'
+	            '#94F5F9',
+            	'#7D9632',
+            	'#0A9B73',
+            	'#4FCDFF'
 	        ]
 	    }]
 	});
@@ -417,7 +440,7 @@ function set_Q_ErorrDetail(chart4data){
 	    var series1 = {
 			id: chart3data[i].rejectItemId,
 	        name: chart3data[i].commgrpcdnm,
-	        color: chart3data[i].rejectItemId == 'RI01' ? '#C00500' : chart3data[i].rejectItemId == 'RI02' ? '#FF85FF' : chart3data[i].rejectItemId == 'RI03' ? '#993601' : '#F78E00',
+	        color: chart3data[i].rejectItemId == 'RI01' ? '#94F5F9' : chart3data[i].rejectItemId == 'RI02' ? '#7D9632' : chart3data[i].rejectItemId == 'RI03' ? '#0A9B73' : '#4FCDFF',
 	        isVisibleInLegend: true
 	    };
 	    seriesParent.push(series1);
@@ -483,6 +506,7 @@ function set_Q_ErorrDetail(chart4data){
 	        }
 	    },
 	    legend: {
+			itemDistance:15,
     		symbolRadius: 0
 		}
 	});
@@ -540,6 +564,7 @@ function set_C_Equipment(chart5data) {
 
 
     legend: {
+		itemDistance:15,
         verticalAlign: 'bottom',
         align: 'center'
     },
@@ -605,10 +630,10 @@ function set_C_Equipment(chart5data) {
     },
     series: seriesData2,
     colors: [
-            '#94F5F9',
-            '#7D9632',
-            '#0A9B73',
-            '#4FCDFF'
+	        '#C00500',
+	        '#FF85FF',
+	        '#993601',
+	        '#F78E00'
         ]
 
 });
@@ -843,11 +868,11 @@ function setchart8(chart8data){
 	    },
 	    series: [
 	        {
-	            name: '실적',
+	            name: '스마트 알람',
 	            data: [Number(chart8data[0].cnt), Number(chart8data[1].cnt), 
 					Number(chart8data[2].cnt), Number(chart8data[3].cnt),
 					Number(chart8data[4].cnt), Number(chart8data[5].cnt)],
-	            color : '#FC6D00'
+	            color : '#555555'
 	        }
 	    ]
 	});
@@ -1383,8 +1408,6 @@ function getName(selectedText){
 		if(selectedText == undefined){
 			if(localStorage.getItem('plant') == 'KEM'){
 				var selectedValue = '리하온';
-			} else {
-				var selectedValue = localStorage.getItem('factoryname');
 			}
 		} else {
 			var selectedValue = selectedText;
@@ -1394,13 +1417,11 @@ function getName(selectedText){
 		
 		var titleElement = document.getElementById('title');
 		var titleElement2 = document.getElementById('title2');
-		var titleElement3 = document.getElementById('title3');
-		var titleElement4 = document.getElementById('title4');
         if (storedValue !== null) {
-            titleElement.innerText = storedValue;
+			if(localStorage.getItem('plant') == 'KEM'){
+				titleElement.innerText = storedValue;
+			}
             titleElement2.innerText = selectedValue;
-            titleElement3.innerText = storedValue;
-            titleElement4.innerText = storedValue;
         }
 }		
 

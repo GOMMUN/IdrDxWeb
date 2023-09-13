@@ -66,7 +66,10 @@
     <div class="grid-item">
       <div class="flex-wrap-st">
         <div class="flex-item pr-15 logo-wrap">
-          <img src="../../static/image/logo.png" alt="">
+          <img id="logo1" src="../../static/image/KEM.png" alt="">
+          <img id="logo2" src="../../static/image/LHO.png" alt="">
+          <img id="logo3" src="../../static/image/SYM.png" alt="">
+          <img id="logo4" src="../../static/image/SWH.png" alt="">
         </div>
         <div class="flex-item pr-15">
           <select id="wdrmatarialid" name="wdrmatarial"
@@ -193,7 +196,7 @@
       <div class="dash-card" style="height: 780px;">
         <div class="canva-wrap">
           <div class="flex-wrap-sb card-hd">
-            <div class="flex-item fw-b fs-12"><span id="title"></span> 공정별 생산실적</div>
+            <div class="flex-item fw-b fs-12"><span id="title"></span> 공정별 생산실적(개)</div>
             <div class="flex-item fc-w fs-12">
               <div class="range-wrap" id="chart1Type">
                 <input type="radio" class="addType" id="select" name="term" value="day" checked><label for="select">일</label>
@@ -207,7 +210,7 @@
         </div>
         <div class="canva-wrap"  id="isPartner">
           <div class="flex-wrap-sb card-hd">
-            <div class="flex-item fw-b fs-12"><span id="title2"></span> 공정별 생산실적</div>
+            <div class="flex-item fw-b fs-12"><span id="title2"></span> 공정별 생산실적(개)</div>
             <div class="flex-item fc-w fs-12">
               <div class="range-wrap" id="chart2Type">
                 <input type="radio" class="addType" id="select0" name="term0" value="day" checked><label for="select0">일</label>
@@ -253,7 +256,7 @@
         </div>    
         <div class="canva-wrap">
           <div class="flex-wrap-sb card-hd">
-            <div class="flex-item fw-b fs-12">불량 상세 유형별 빈도 수</div>           
+            <div class="flex-item fw-b fs-12">불량 발생 - 상세 유형별 빈도</div>           
           </div>
           <div class="canva highcharts-figure" id="chart4" style="height: 300px;">
           </div>
@@ -265,7 +268,7 @@
       <div class="dash-card" style="height: 530px;">
         <div class="canva-wrap">
           <div class="flex-wrap-sb card-hd">
-            <div class="flex-item fw-b fs-12"><span id="title3"></span> 설비 가동율 현황</div>
+            <div class="flex-item fw-b fs-12">설비 가동율 현황(%)</div>
             <div class="flex-item fc-w fs-12">
               <div class="range-wrap" id="chart5Type">
                 <input type="radio" class="addType" id="select7" name="term2" value="day" checked><label for="select7">일</label>
@@ -284,7 +287,7 @@
       <div class="dash-card" style="height: 530px;">
         <div class="canva-wrap">
           <div class="flex-wrap-sb card-hd">
-            <div class="flex-item fw-b fs-12"><span id="title4"></span> 계획 대비 실적</div>
+            <div class="flex-item fw-b fs-12">계획 대비 실적 현황(개)</div>
             <div class="flex-item fc-w fs-12">
               <div class="range-wrap" id="chart6Type">
                 <input type="radio" class="addType" id="select10" name="term3" value="day" checked><label for="select10">일</label>
@@ -305,7 +308,7 @@
           <div class="flex-wrap-sb card-hd  pt-1">
             <div class="flex-item fc-w fs-18"><span class="fw-b fs-h2">비정형데이터</span></div>          
           </div>
-          <div class="sub-info-tit fc-w fs-14 pt-4">시간당 생산량 UPH</div>
+          <div class="sub-info-tit fc-w fs-14 pt-4">일일 스마트알람 발생 건</div>
           <div class="card-bd fc-w">            
             <div class="fw-b fs-h1 ta-r pt-1">125건</div>
             <div class="fs-14 ta-r pt-4">
@@ -320,16 +323,16 @@
           <div class="flex-wrap-sb card-bd">
             <div class="flex-item" style="width: 42%;">
               <div class="canva-wrap">    
-                <div class="canva highcharts-figure" id="chart7" style="height: 200px;">
+                <div class="canva highcharts-figure" id="chart7" style="width:40%; height: 250px;">
                 </div>
               </div> 
             </div>
             <div class="flex-item" style="width: 58%;">
               <div class="canva-wrap">
                 <div class="flex-wrap-sb card-hd" style="padding: 0rem 0rem;">
-                  <div class="flex-item fw-b fs-12" style="padding: 0px 1px;">스마트 알람 발생현황(건)</div>
+                  <div class="flex-item fw-b fs-12" style="padding: 0px 1px;">스마트 알람 발생 현황(건)</div>
                   <div class="flex-item fc-w fs-12" style="padding: 0px 1px;">
-                    <div class="range-wrap">
+                    <div class="range-wrap" id="chart8Type">
                       <input type="radio" id="select20" name="term5" checked><label for="select20">일</label>
                       <input type="radio" id="select21" name="term5"><label for="select21">주</label>
                       <input type="radio" id="select22" name="term5"><label for="select22">월</label>

@@ -443,8 +443,28 @@ hr{
   background-color: #fff;
   color: #2F3268;
 }
-.range-wrap input[type=radio]:checked+label{
-  background-color: #2F3268;
+#chart1Type input[type=radio]:checked+label{
+  background-color: #2F3168;
+  color: #fff;
+}
+#chart2Type input[type=radio]:checked+label{
+  background-color: #2F3168;
+  color: #fff;
+}
+#chart3Type input[type=radio]:checked+label{
+  background-color: #6799FF;
+  color: #fff;
+}
+#chart5Type input[type=radio]:checked+label{
+  background-color: #FE808B;
+  color: #fff;
+}
+#chart6Type input[type=radio]:checked+label{
+  background-color: #FFB063;
+  color: #fff;
+}
+#chart8Type input[type=radio]:checked+label{
+  background-color: #555555;
   color: #fff;
 }
 .bg-ft{
@@ -483,7 +503,7 @@ hr{
   transform: translateY(-30%) rotate(180deg);
   width: 0;
   height: 0;
-  border-bottom: 10px solid #394dff;
+  border-bottom: 10px solid #fff;
   border-left: 6.5px solid transparent;
   border-right: 6.5px solid transparent;
 }
@@ -501,7 +521,7 @@ hr{
   transform: translateY(-30%) rotate(180deg);
   width: 0;
   height: 0;
-  border-top: 10px solid #ff3939;
+  border-top: 10px solid #fff;
   border-left: 6.5px solid transparent;
   border-right: 6.5px solid transparent;
 }

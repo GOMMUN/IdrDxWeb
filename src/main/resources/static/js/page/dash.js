@@ -1309,8 +1309,8 @@ function realTime() {
 			$('#alarm3').text(data[2]);
 			
 			if(data[0] != '0' && data[0] != data[3]){
-				$('#alarmbell1').css('color', 'red');
-				$('#alarm1').addClass( 'active' );
+				$('#alarm1').css('color', 'red');
+				$('#alarmbell1').addClass( 'active' );
 			}else{
 				$('.alarm1').css('color', '#000');
 				$('#alarmbell1').removeClass( 'active' );

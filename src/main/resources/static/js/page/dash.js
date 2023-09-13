@@ -1312,23 +1312,23 @@ function realTime() {
 				$('#alarmbell1').css('color', 'red');
 				$('#alarm1').addClass( 'active' );
 			}else{
-				$('.alarm1').css('background-color', '#FFF');
+				$('.alarm1').css('color', '#000');
 				$('#alarmbell1').removeClass( 'active' );
 			}
 			
 			if(data[1] != '0' && data[1] != data[4]){
-				$('.alarm2').css('background-color', 'yellow');
+				$('.alarm2').css('color', 'red');
 				$('#alarmbell2').addClass( 'active' );
 			}else{
-				$('.alarm2').css('background-color', '#FFF');
+				$('.alarm2').css('color', '#000');
 				$('#alarmbell2').removeClass( 'active' );
 			}
 			
 			if(data[2] != '0' && data[2] != data[5]){
-				$('.alarm3').css('background-color', 'yellow');
+				$('.alarm3').css('color', 'red');
 				$('#alarmbell3').addClass( 'active' );
 			}else{
-				$('.alarm3').css('background-color', '#FFF');
+				$('.alarm3').css('color', '#000');
 				$('#alarmbell3').removeClass( 'active' );
 			}		
 

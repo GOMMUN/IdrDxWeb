@@ -432,8 +432,8 @@ hr{
   display: inline-block;
   cursor: pointer;
   height: 24px;
-  width: 60px;
-  border: 1px solid #F4F4F4 ;
+  width: 50px;
+  border: 1px solid #D5D5D5 ;
   line-height: 24px;
   text-align: center;
   font-weight:bold;

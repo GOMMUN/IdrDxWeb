@@ -306,23 +306,28 @@
       <div class="grid-se">
         <div class="dash-card bg-gr">
           <div class="flex-wrap-sb card-hd  pt-1">
-            <div class="flex-item fc-w fs-18"><span class="fw-b fs-h2">비정형데이터</span></div>          
+            <div class="flex-item fc-w fs-18" style="margin-top: 10px;"><span class="fw-b fs-h2">비정형데이터</span></div>          
           </div>
-          <div class="sub-info-tit fc-w fs-14 pt-4">일일 스마트알람 발생 건</div>
+          <div class="sub-info-tit fc-w fs-14 pt-4"style="margin-top: 40px;">일일 스마트알람 발생 건</div>
           <div class="card-bd fc-w">            
-            <div class="fw-b fs-h1 ta-r pt-1">125건</div>
-            <div class="fs-14 ta-r pt-4">
-              <span>전일대비</span>
+            <div class="fw-b fs-h1 ta-r pt-1" ><span id="alarmCnt"></span></div>
+<!--            <div class="fs-14 ta-r pt-4">-->
+<!--              <span>전일대비</span>-->
               <!--class 명 변경 증가 plus / 감소 minus -->
-              <span class="plus">15건</span>
-            </div>
+<!--              <span class="plus">15건</span>-->
+<!--            </div>-->
           </div>
         </div>
 
         <div class="dash-card">          
           <div class="flex-wrap-sb card-bd">
             <div class="flex-item" style="width: 20%;">
-              <div class="canva-wrap">    
+              <div class="canva-wrap">
+				<div class="flex-wrap-sb card-hd" style="padding: 0rem 0rem;">
+                  <div class="flex-item fw-b fs-14" style="padding: 0px 1px;">워드 클라우드</div>
+                  <div class="flex-item fc-w fs-12" style="padding: 0px 1px;">
+                  </div>
+                </div>
                 <div class="canva highcharts-figure" id="chart7" style="height: 170px;">
                 </div>
               </div> 

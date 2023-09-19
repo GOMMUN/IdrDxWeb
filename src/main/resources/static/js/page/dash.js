@@ -7,6 +7,7 @@ var chart3data = null;
 var chart4data = null;
 var chart5data = null;
 var chart6data = null;
+var chart7data = null;
 var chart8data = null;
 var selectedText = null;
 
@@ -25,8 +26,6 @@ function initSetting() {
 	
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
-	
-	chart7(); 	// TODO API 나온후 작업 및 serchChart() 안에 넣음
 	
 	code();
 	
@@ -73,13 +72,15 @@ function code() {
 
 function serchChart(){
 	
-	PQCDrate()					// PQCD 퍼센트 비교
-	set_P_Representative(chart1data);		// P 대표기업 공정별 생산실적
+	PQCDrate()							// PQCD 퍼센트 비교
+	set_P_Representative(chart1data);	// P 대표기업 공정별 생산실적
 	set_P_Partner(chart2data);			// P 협력사 공정별 생산실적
-	set_Q_Erorr(chart3data);				// Q 불량 발생 비중
+	set_Q_Erorr(chart3data);			// Q 불량 발생 비중
 	set_Q_ErorrDetail(chart4data);		// Q 불량 상세 유형별 빈도 수
-	set_C_Equipment(chart5data);			// C 설비 가동율 현황
-	set_D_PlanToPerform(chart6data);		// D 계획 대비 실적
+	set_C_Equipment(chart5data);		// C 설비 가동율 현황
+	set_D_PlanToPerform(chart6data);	// D 계획 대비 실적
+	set_DailyAlarmCnt(chart7data);		// 비정형 데이터
+	set_APIData(chart8data); 			// 워드 클라우드+스마트 알람 발생 현황
 }
 
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
@@ -637,7 +638,7 @@ function set_C_Equipment(chart5data) {
 	        '#F78E00'
         ]
 
-});
+	});
 
 }
 
@@ -758,7 +759,11 @@ function set_D_PlanToPerform(chart6data){
 
 }
 
-function chart7(){
+function set_DailyAlarmCnt(chart7data){
+	$("#alarmCnt").text(chart7data + "건");
+}
+
+function set_APIData(){
 	const text =
         'A라인 이상발생 불량 작업자 관리자 회의 요청' +
         'A라인 이상발생 불량 알람 요청 이메일 전화 현장 공지' +
@@ -1176,9 +1181,6 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 			})
 			
 		})
-		
-
-
 	}else if(tagId == "chart5Type"){
 		var url = '/dash/chart5';
 		
@@ -1205,6 +1207,14 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		$.get(url + '?' + $.param(params)).then(function(res) {
 			chart6data = res;
 			set_D_PlanToPerform(chart6data);
+		});
+		
+	}else if(tagId == "chart7Type"){
+		var url = '/dash/chart7';
+		
+		$.get(url).then(function(res) {
+			chart7data = res;
+			set_DailyAlarmCnt(chart7data);
 		});
 		
 	}else if(tagId == "chart8Type"){
@@ -1236,7 +1246,6 @@ function factroy() {
 		async: false,
 		success: function(data) {
 			c_factory = data;
-//alert(JSON.stringify(c_factory));
 			let $dropdown = $("#factoryCodes");
 			$dropdown.empty();
 
@@ -1339,53 +1348,6 @@ function realTime() {
 		}
 	});
 		
-}
-
-function refreshTime(){
-
-//	
-//	var url2 = '/dash/findDailyAlarm';
-//
-//    $.get(url2).then(function(res) {
-//        var result = res;
-//        var SumTo = 0, SumYe = 0;
-//        
-//        var today = new Date();
-//        
-//        var year = today.getFullYear();
-//		var month = (today.getMonth() + 1).toString().padStart(2, '0');
-//		var day = today.getDate().toString().padStart(2, '0');
-//
-//		var formattedDate = year + '-' + month + '-' + day;
-//		
-//		var hours = ('0' + today.getHours()).slice(-2); 
-//		var minutes = ('0' + today.getMinutes()).slice(-2);
-//		var seconds = ('0' + today.getSeconds()).slice(-2); 
-//		var formattedDateTime = year + '-' + month + '-' + day + ' ' +hours + ':' + minutes  + ':' + seconds;
-//		
-//		$('#refreshTime').text("최근 업데이트 : "+formattedDateTime);
-//		
-//        result.forEach(function(r) {
-//			if (r.date == formattedDate) {
-//	            SumTo = r.sum;
-//            } else {
-//				SumYe = r.sum;
-//			}
-//        });
-//        
-//        // 오늘
-//        $('#todayAlarm').text(SumTo + '건');
-//        SumTotal = SumTo - SumYe;
-//
-//	    if (SumTotal> 0) {
-//			$('#yesterdayAlarm').text('전일대비 ▲ '+ SumTotal + '건');
-//		} else if (SumTotal == 0) {
-//			$('#yesterdayAlarm').text('전일대비 - ');
-//		} else if (SumTotal< 0) {
-//			$('#yesterdayAlarm').text('전일대비 ▼ '+ SumTotal + '건');
-//		}
-//     
-//    });
 }
 
 function findName(){

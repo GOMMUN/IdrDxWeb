@@ -117,6 +117,14 @@ public class DashController {
     }	
 	
 	@ResponseBody
+	@GetMapping("/chart7")
+    public String chart7() throws Exception {
+		
+		String AlarmCnt = service.chart7();
+		return AlarmCnt;
+    }
+	
+	@ResponseBody
 	@GetMapping("/chart8")
     public List<FairProd> chart8(String month) {
 		

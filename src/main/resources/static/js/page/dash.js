@@ -816,71 +816,57 @@ function set_WordCloud(chart8data){
 }
 
 function set_SmartAlarm(chart9data){
-	var dateData = [];
-
-	for (var i = 0; i <= 5; i++) {
-	    if (chart9data[i].dt >= 2000) {
-	            dateData[i] = formatDate(chart9data[i].dt.toString(), "yyyymmdd", "월 일");
-	    } else if (chart9data[i].dt < 2000 && chart9data[i].dt >= 20) {
-	            dateData[i] = ((chart9data[i].dt-(chart9data[i].dt%100))/100) + '월' + (chart9data[i].dt%100).toString() + '주';
-	    } else if (chart9data[i].dt < 20) {
-	            dateData[i] = chart9data[i].dt.toString() + '월';
-	    }
+	var seriesWord = [];
+	var seriesCount = [];
+	
+	for (var j = 0; j <= chart9data.length-1; j++) {
+	 
+		var series = {
+	        word: chart9data[j][1],
+			count: parseInt(chart9data[j][0])
+		};
+		
+		seriesWord.push(series.word)
+		seriesCount.push(series.count)
+		
 	}
 	
-	Highcharts.chart('chart8', {
-	    chart: {
-	        type: 'column'
-	    },
-	    
-	    title: {
-			text: '',
-	        align: 'left'
-	    },
-	    
-	    xAxis: {
-	        categories: [dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]],
-	        crosshair: true,
-	        accessibility: {
-	            description: 'Month'
-	        }
-	    },
-	    
-	    yAxis: {
-	        min: 0,
-	        title: {
-	            text: ''
-	        }
-	    },
-	    
-	    plotOptions: {
-	        column: {
-	            pointPadding: 0.2,
-	            borderWidth: 0
-	        },
-	        series : {
-				minPointLength:3
-			}
-	    },
-	    
-	    credits: {
-	        enabled: false
-	    },	
-	    navigation: {
-	        buttonOptions: {
-	            enabled: false
-	        }
-	    },
-	    series: [
-	        {
+Highcharts.chart('chart8', {
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: '',
+        align: 'left'
+    },
+    xAxis: {
+        categories: seriesWord,
+        title: {
+            text: null
+        },
+        gridLineWidth: 1,
+        lineWidth: 0
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '',
+            align: 'high'
+        },
+        labels: {
+            overflow: 'justify'
+        },
+        gridLineWidth: 0
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
 	            name: '스마트 알람',
-	            data: [Number(chart9data[0].cnt), Number(chart9data[1].cnt), 
-					Number(chart9data[2].cnt), Number(chart9data[3].cnt),
-					Number(chart9data[4].cnt), Number(chart9data[5].cnt)],
+	            data: seriesCount,
 	            color : '#555555'
-	        }
-	    ]
-	});
+	        }]
+});
 
 }
 	

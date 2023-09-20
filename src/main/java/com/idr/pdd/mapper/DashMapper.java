@@ -19,7 +19,6 @@ public interface DashMapper {
 	List<FairProd> chart3(String plant, String month, String material);
 	List<FairProd> chart4(String plant, String month, String material);
 	List<FairProd> chart6(String plant, String month, String material);
-	List<FairProd> chart8(String month);
 	List<String> rank(String plant);
 
 	String find1Alarm();

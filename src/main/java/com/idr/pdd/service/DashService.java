@@ -233,11 +233,46 @@ public class DashService {
 		return result.toString();
 	}
 	
-	public String[] chart9(String month) throws Exception{
-		
-		String[] list =null;
-		return list;
+	public List<String[]> chart9(String month) throws Exception {
+	    URL url = new URL("https://chat.teamply.co.kr/api/v1/smart/alarm/count");
+	    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+	    conn.setDoInput(true);
+	    conn.setRequestMethod("GET");
+	    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+	    conn.setDoOutput(true);
+
+	    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	    String input;
+	    StringBuilder ret = new StringBuilder();
+
+	    while ((input = br.readLine()) != null) {
+	        ret.append(input);
+	    }
+
+	    br.close();
+
+	    JSONParser jsonParser = new JSONParser();
+	    String res_data = ret.toString();
+	    JSONObject jsonObject = (JSONObject) jsonParser.parse(res_data);
+
+	    jsonObject = (JSONObject) jsonParser.parse(((JSONObject) jsonParser.parse(res_data)).get("data").toString());
+
+	    JSONArray dayArray = (JSONArray) jsonObject.get(month);
+
+	    List<String[]> resultArray = new ArrayList<>();
+
+	    for (int i = 0; i < 6; i++) {
+	        JSONObject jsonObj = (JSONObject) dayArray.get(i);
+	        int count = Integer.parseInt((String) jsonObj.get("count"));
+	        String word = (String) jsonObj.get("word");
+
+	        String[] entry = {String.valueOf(count), word};
+	        resultArray.add(entry);
+	    }
+
+	    return resultArray;
 	}
+
 	
 	public String find1Alarm(){
 		return mapper.find1Alarm();

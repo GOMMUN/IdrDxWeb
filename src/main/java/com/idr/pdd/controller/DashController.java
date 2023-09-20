@@ -126,17 +126,17 @@ public class DashController {
 	
 	@ResponseBody
 	@GetMapping("/chart8")
-    public String chart8() throws Exception {
+    public String chart8(String month) throws Exception {
 		
-		String wordCloud = service.chart8();
+		String wordCloud = service.chart8(month);
 		return wordCloud;
     }
 	
 	@ResponseBody
 	@GetMapping("/chart9")
-    public String[] chart9() throws Exception{
+    public String[] chart9(String month) throws Exception{
 		
-		String[] list = service.chart9();
+		String[] list = service.chart9(month);
 		return list;
     }
 	

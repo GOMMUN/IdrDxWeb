@@ -12,9 +12,9 @@ var chart8data = null;
 var chart9data = null;
 var selectedText = null;
 
-var repeat = null;
-var delay = 5000;
-repeat = setInterval(realTime, delay); // delay 간격으로 실행
+//var repeat = null;
+//var delay = 5000;
+//repeat = setInterval(realTime, delay); // delay 간격으로 실행
 
 var result = null;
 
@@ -766,9 +766,7 @@ function set_DailyAlarmCnt(chart7data){
 }
 
 function set_WordCloud(chart8data){
-	const text =
-
-        "A라인 이상발생 불량 이상 언제 몇시까지 협력사 회의실 공지 이상발생 이상발생 이상발생"
+	const text = chart8data;
     lines = text.replace(/[():'?0-9]+/g, '').split(/[,\. ]+/g),
     data = lines.reduce((arr, word) => {
         let obj = Highcharts.find(arr, obj => obj.name === word);
@@ -821,12 +819,12 @@ function set_SmartAlarm(chart9data){
 	var dateData = [];
 
 	for (var i = 0; i <= 5; i++) {
-	    if (chart8data[i].dt >= 2000) {
-	            dateData[i] = formatDate(chart8data[i].dt.toString(), "yyyymmdd", "월 일");
-	    } else if (chart8data[i].dt < 2000 && chart8data[i].dt >= 20) {
-	            dateData[i] = ((chart8data[i].dt-(chart8data[i].dt%100))/100) + '월' + (chart8data[i].dt%100).toString() + '주';
-	    } else if (chart8data[i].dt < 20) {
-	            dateData[i] = chart8data[i].dt.toString() + '월';
+	    if (chart9data[i].dt >= 2000) {
+	            dateData[i] = formatDate(chart9data[i].dt.toString(), "yyyymmdd", "월 일");
+	    } else if (chart9data[i].dt < 2000 && chart9data[i].dt >= 20) {
+	            dateData[i] = ((chart9data[i].dt-(chart9data[i].dt%100))/100) + '월' + (chart9data[i].dt%100).toString() + '주';
+	    } else if (chart9data[i].dt < 20) {
+	            dateData[i] = chart9data[i].dt.toString() + '월';
 	    }
 	}
 	
@@ -876,9 +874,9 @@ function set_SmartAlarm(chart9data){
 	    series: [
 	        {
 	            name: '스마트 알람',
-	            data: [Number(chart8data[0].cnt), Number(chart8data[1].cnt), 
-					Number(chart8data[2].cnt), Number(chart8data[3].cnt),
-					Number(chart8data[4].cnt), Number(chart8data[5].cnt)],
+	            data: [Number(chart9data[0].cnt), Number(chart9data[1].cnt), 
+					Number(chart9data[2].cnt), Number(chart9data[3].cnt),
+					Number(chart9data[4].cnt), Number(chart9data[5].cnt)],
 	            color : '#555555'
 	        }
 	    ]

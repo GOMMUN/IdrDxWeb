@@ -141,8 +141,6 @@ public class DashService {
 
 		br.close();
 		
-		System.out.println("###############"+ret);
-		
 		JSONParser jsonParser = new JSONParser();
 		String res_data = ret.toString();
 		JSONObject jsonObject = (JSONObject) jsonParser.parse(res_data);	
@@ -172,7 +170,7 @@ public class DashService {
 		
 	}
 	
-	public String chart8() throws Exception{
+	public String chart8(String month) throws Exception{
 
 		URL url = null;
 		HttpsURLConnection conn = null;
@@ -200,8 +198,6 @@ public class DashService {
 		
 		br.close();
 			
-		System.out.println("###############"+ret);
-		
 		JSONParser jsonParser = new JSONParser();
 		String res_data = ret.toString();
 		JSONObject jsonObject = (JSONObject) jsonParser.parse(res_data);	
@@ -210,13 +206,34 @@ public class DashService {
 		System.out.println(jsonObject.get("month"));
 		System.out.println(jsonObject.get("day"));
 		
-		// JSON 객체에서 "day" 필드 값을 가져와서 JSON 배열로 변환
-		JSONArray dayArray = (JSONArray) jsonObject.get("day");
+		// JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
+		JSONArray dayArray = (JSONArray) jsonObject.get(month);
+		System.out.println("month :"+month);
+		System.out.println("###############"+dayArray);
+		
+		
+		
+		// 결과 문자열을 저장할 StringBuilder 생성
+        StringBuilder result = new StringBuilder();
 
-		return"";
+        // 각 객체를 순회하면서 word 값을 count 만큼 추가
+        for (int i = 0; i < dayArray.size(); i++) {
+            JSONObject jsonObj = (JSONObject) dayArray.get(i);
+            int count = Integer.parseInt((String) jsonObj.get("count"));
+            String word = (String) jsonObj.get("word");
+
+            // count 만큼 word를 결과 문자열에 추가
+            for (int j = 0; j < count; j++) {
+                result.append(word+" ");
+            }
+        }
+
+        System.out.println("result :"+result);
+        
+		return result.toString();
 	}
 	
-	public String[] chart9() throws Exception{
+	public String[] chart9(String month) throws Exception{
 		
 		String[] list =null;
 		return list;

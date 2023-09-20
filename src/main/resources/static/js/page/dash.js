@@ -816,14 +816,30 @@ function set_WordCloud(chart8data){
 }
 
 function set_SmartAlarm(chart9data){
+	var today = new Date();
+	
+	var day = today.getDay();
+	var month = (today.getMonth() + 1);
+	var date = today.getDate();
+	var week = Math.floor((((7-day) % 7 - 3) + date - 1) / 7) + 1;
+
+	if (localStorage.getItem('data') == "day"){
+		var formattedDate = month + '월' + date + '일';
+	} else if (localStorage.getItem('data') == "week"){
+		var formattedDate = month + '월' + week + '주';
+	} else {
+		var formattedDate = month + '월';
+	}
+	
+	
 	var seriesWord = [];
 	var seriesCount = [];
 	
 	for (var j = 0; j <= chart9data.length-1; j++) {
 	 
 		var series = {
-	        word: chart9data[j][1],
-			count: parseInt(chart9data[j][0])
+	        word: chart9data[j].word,
+			count: parseInt(chart9data[j].count)
 		};
 		
 		seriesWord.push(series.word)
@@ -831,42 +847,61 @@ function set_SmartAlarm(chart9data){
 		
 	}
 	
-Highcharts.chart('chart8', {
-    chart: {
-        type: 'bar'
-    },
-    title: {
-        text: '',
-        align: 'left'
-    },
-    xAxis: {
-        categories: seriesWord,
-        title: {
-            text: null
-        },
-        gridLineWidth: 1,
-        lineWidth: 0
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: '',
-            align: 'high'
-        },
-        labels: {
-            overflow: 'justify'
-        },
-        gridLineWidth: 0
-    },
-    credits: {
-        enabled: false
-    },
-    series: [{
-	            name: '스마트 알람',
-	            data: seriesCount,
-	            color : '#555555'
-	        }]
-});
+	Highcharts.chart('chart8', {
+	    chart: {
+	        type: 'bar'
+	    },
+	    title: {
+	        text: '',
+	        align: 'left'
+	    },
+	    xAxis: {
+	        categories: seriesWord,
+	        title: {
+	            text: null
+	        },
+	        gridLineWidth: 1,
+	        lineWidth: 0
+	    },
+	    yAxis: {
+	        min: 0,
+	        title: {
+	            text: '',
+	            align: 'high'
+	        },
+	        labels: {
+	            overflow: 'justify'
+	        },
+	        gridLineWidth: 0
+	    },
+	    credits: {
+	        enabled: false
+	    },
+	    navigation: {
+		    buttonOptions: {
+		        enabled: false
+		    }
+		},
+		tooltip: {
+	        formatter: function () {
+				let xValue = this.x;
+	            let point = this.point; // 모든 데이터 포인트를 가져옵니다.
+
+	            // 툴팁 내용을 구성
+	            let tooltipText = '<strong>' + formattedDate + '</strong><br>';
+
+	            tooltipText += '<span style="color:' + point.color + ';">' + xValue + ': </span>' + point.y.toLocaleString() + '건' + '<br>';
+
+	            return tooltipText;
+	        },
+	        shared: true, // 툴팁을 공유합니다.		
+		},
+	    series: [{
+		            name: '스마트 알람',
+		            data: seriesCount,
+		            color : '#555555'
+		        }]
+	});
 
 }
 	
@@ -1201,6 +1236,8 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 	}else if(tagId == "chart8Type"){
 		var url = '/dash/chart8';
+		
+		localStorage.setItem('data', data);
 		
 		var params = {
 			month: data,

@@ -1,7 +1,9 @@
 package com.idr.pdd.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -134,7 +136,7 @@ public class DashController {
 	
 	@ResponseBody
 	@GetMapping("/chart9")
-    public List<String[]> chart9(String month) throws Exception{
+    public ArrayList<JSONObject> chart9(String month) throws Exception{
 		
 		return service.chart9(month);
     }

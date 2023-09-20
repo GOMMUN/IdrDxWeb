@@ -9,6 +9,7 @@ var chart5data = null;
 var chart6data = null;
 var chart7data = null;
 var chart8data = null;
+var chart9data = null;
 var selectedText = null;
 
 var repeat = null;
@@ -80,7 +81,8 @@ function serchChart(){
 	set_C_Equipment(chart5data);		// C 설비 가동율 현황
 	set_D_PlanToPerform(chart6data);	// D 계획 대비 실적
 	set_DailyAlarmCnt(chart7data);		// 비정형 데이터
-	set_APIData(chart8data); 			// 워드 클라우드+스마트 알람 발생 현황
+	set_WordCloud(chart8data); 			// 워드 클라우드
+	set_SmartAlarm(chart9data); 		// 스마트 알람 발생 현황
 }
 
 // Jquery에서 해당 함수명이 있으면 자동으로 호출
@@ -763,14 +765,10 @@ function set_DailyAlarmCnt(chart7data){
 	$("#alarmCnt").text(chart7data + "건");
 }
 
-function set_APIData(){
+function set_WordCloud(chart8data){
 	const text =
-        'A라인 이상발생 불량 작업자 관리자 회의 요청' +
-        'A라인 이상발생 불량 알람 요청 이메일 전화 현장 공지' +
-        '불량 \' A라인 \' A라인 \' 불량 \'' +
-        'A라인 이상발생 불량 이상 언제 몇시까지 협력사 회의실 공지 ' +
-        '이상발생 불량 ' +
-        '불량',
+
+        "A라인 이상발생 불량 이상 언제 몇시까지 협력사 회의실 공지 이상발생 이상발생 이상발생"
     lines = text.replace(/[():'?0-9]+/g, '').split(/[,\. ]+/g),
     data = lines.reduce((arr, word) => {
         let obj = Highcharts.find(arr, obj => obj.name === word);
@@ -819,7 +817,7 @@ function set_APIData(){
 
 }
 
-function setchart8(chart8data){
+function set_SmartAlarm(chart9data){
 	var dateData = [];
 
 	for (var i = 0; i <= 5; i++) {
@@ -1219,15 +1217,24 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		
 	}else if(tagId == "chart8Type"){
 		var url = '/dash/chart8';
-
+		
 		var params = {
-			plant: localStorage.getItem('plant'),
-			month: data
+			month: data,
 		};
 		
-		$.get(url + '?' + $.param(params)).then(function(res) {
+		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart8data = res;
-			setchart8(chart8data);
+			set_WordCloud(chart8data);
+			
+			var url = '/dash/chart9';
+		
+			var params = {
+				month: data,
+			};
+			$.get(url+ '?' + $.param(params)).then(function(res) {
+				chart9data = res;
+				set_SmartAlarm(chart9data);
+			})			
 		});
 				
 	}else{

@@ -172,9 +172,54 @@ public class DashService {
 		
 	}
 	
-	public List<FairProd> chart8(String month) {
+	public String chart8() throws Exception{
 
-		return mapper.chart8(month);
+		URL url = null;
+		HttpsURLConnection conn = null;
+		String ret = new String();
+		
+		url = new URL("https://chat.teamply.co.kr/api/v1/smart/alarm/count");
+		
+		conn = (HttpsURLConnection)url.openConnection();
+		conn.setDoInput(true);
+		
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			
+		conn.setDoOutput(true);
+			
+		BufferedReader br = null;
+		br = new BufferedReader(new InputStreamReader(conn.getInputStream()));  // BufferedReader객체 생성
+			
+		String input = null;
+			
+		//데이터를 읽어드림
+		while ((input = br.readLine()) != null){
+			ret += input;
+		}
+		
+		br.close();
+			
+		System.out.println("###############"+ret);
+		
+		JSONParser jsonParser = new JSONParser();
+		String res_data = ret.toString();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(res_data);	
+		
+		jsonObject = (JSONObject) jsonParser.parse(((JSONObject) jsonParser.parse(res_data)).get("data").toString());
+		System.out.println(jsonObject.get("month"));
+		System.out.println(jsonObject.get("day"));
+		
+		// JSON 객체에서 "day" 필드 값을 가져와서 JSON 배열로 변환
+		JSONArray dayArray = (JSONArray) jsonObject.get("day");
+
+		return"";
+	}
+	
+	public String[] chart9() throws Exception{
+		
+		String[] list =null;
+		return list;
 	}
 	
 	public String find1Alarm(){

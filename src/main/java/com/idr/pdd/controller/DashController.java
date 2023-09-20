@@ -126,11 +126,19 @@ public class DashController {
 	
 	@ResponseBody
 	@GetMapping("/chart8")
-    public List<FairProd> chart8(String month) {
+    public String chart8() throws Exception {
 		
-		List<FairProd> list = service.chart8(month);
+		String wordCloud = service.chart8();
+		return wordCloud;
+    }
+	
+	@ResponseBody
+	@GetMapping("/chart9")
+    public String[] chart9() throws Exception{
+		
+		String[] list = service.chart9();
 		return list;
-    }		
+    }
 	
 	@ResponseBody
 	@GetMapping("/findAlarm")

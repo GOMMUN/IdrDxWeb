@@ -23,6 +23,7 @@ let s_workerManHour = null;
 let s_workContent = null;
 let s_NonconFormity = null;
 let s_NonOperation = null;
+let m_dataSeq = 0;
 
 $(function() {
 	initSetting();
@@ -239,9 +240,9 @@ function setWorkDailyReportEventListener() {
 
 	$modalModifyBtn.click(function() {
 
-		if (s_workDailyReport) {
-			let data = s_workDailyReport;
+			let data = initWorkDailyReport();
 
+			data.dataseq = m_dataSeq;
 			data.workDate = $("input[name=workDate]").val();
 			//data.blockid = $("select[name=blockid]").val();
 			//data.factoryid = $("select[name=factoryid]").val();
@@ -249,7 +250,8 @@ function setWorkDailyReportEventListener() {
 			//data.groupid = $("select[name=groupid]").val();
 			data.lineid = $("select[name=lineid]").val();
 			data.shiftid = $("select[name=shiftid]").val();
-			data.metarialid = $("select[name=wdrmatarial]").val();
+			     
+			data.materialid = $("select[name=wdrmatarial]").val();
 			data.modelid = $("select[name=wdrmodel]").val();
 			data.approver = $("input[name=approver]").val();
 			data.reviewer = $("input[name=reviewer]").val();
@@ -269,17 +271,21 @@ function setWorkDailyReportEventListener() {
 				alert("라인을 선택해주세요.");
 				$("select[name=lineid]").focus();
 				return;
-			} else if (data.groupid == "") {
-				alert("조구분을 선택해주세요.");
-				$("select[name=groupid]").focus();
-				return;
 			} else if (data.shiftid == "") {
-				alert("주/야구분을 선택해주세요.");
+				alert("작업구분을 선택해주세요.");
 				$("select[name=shiftid]").focus();
 				return;
 			} else if (data.planQty == "") {
 				alert("계획수량을 선택해주세요.");
 				$("select[name=planqty]").focus();
+				return;
+			} else if (data.materialid == "") {
+				alert("자재를 선택해주세요.");
+				$("select[name=wdrmatarial]").focus();
+				return;
+			} else if (data.modelid == "") {
+				alert("차종을 선택해주세요.");
+				$("select[name=wdrmodel]").focus();
 				return;
 			}
 			let url = '/workDailyReport/modify';
@@ -296,7 +302,6 @@ function setWorkDailyReportEventListener() {
 					workDailyReport();
 				}
 			});
-		}
 	});
 
 	$gridRemoveBtn.click(function() {
@@ -1960,7 +1965,8 @@ function workDailyReportDetail(data) {
 	//	$("input[name=ruleid]").val(data.rulesysid);
 	//$('#workDateDetail').datepicker("setDate",new Date(data.workDate))
 	//$("input[name=workDate]").val(data.workDate);
-	s_workDailyReport = data;
+	//s_workDailyReport = data;
+	m_dataSeq = data.dataseq;
 
 	//$("input[name=workDate]").datepicker("setDate", new Date(data.workDate.substring(0, 4), data.workDate.substring(4, 6) - 1, data.workDate.substring(6, 8)));
 	$("input[name=workDate]").datepicker("setDate",data.workDate);

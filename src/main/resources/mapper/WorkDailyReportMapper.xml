@@ -71,7 +71,7 @@
 		WHERE ISUSABLE IS NOT NULL
 		AND A.ISUSABLE = 'Usable'
 		AND A.FACTORYID = #{plant}
-		ORDER BY CREATETIME DESC
+		ORDER BY WORK_DATE DESC
     </select>
     
      <select id="validationcheck" parameterType="WorkDailyReport" resultType="Integer">

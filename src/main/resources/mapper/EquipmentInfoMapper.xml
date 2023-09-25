@@ -29,6 +29,26 @@
         ORDER BY EVENTTIME DESC
     </select>
     
+    <select id="findByFactoryid" resultType="Equipment">
+		SELECT DATASEQ
+			 , FACTORYID
+			 , EQUIPMENTID
+			 , EQUIPMENTNAME
+			 , FAILURERATE
+			 , RECOVERYTIME
+			 , ERRORRATE
+			 , BUFFER
+			 , CREATOR
+			 , CREATETIME
+			 , EVENT
+		     , EVENTUSER
+			 , EVENTTIME
+			 , ISUSABLE
+			 , TID 
+		  FROM DSP_EQUIPMENT
+		ORDER BY EQUIPMENTID ASC
+    </select>
+    
     <insert id="create" parameterType="Equipment">
 			INSERT INTO DSP_EQUIPMENT(
         		 FACTORYID 

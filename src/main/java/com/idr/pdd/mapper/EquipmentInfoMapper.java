@@ -14,6 +14,8 @@ public interface EquipmentInfoMapper {
 
 	List<Equipment> findAll();
 	
+	List<Equipment> findByFactoryid();
+	
 	int create(Equipment param);
 	int modify(Equipment param);
 	int remove(List<Integer> param);

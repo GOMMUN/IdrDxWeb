@@ -19,6 +19,10 @@ public class EquipmentInfoService {
 		return mapper.findAll();
 	}
 	
+	public List<Equipment> findByFactoryid(){
+		return mapper.findByFactoryid();
+	}
+	
 	public int save(Equipment param) {
 		if(param.getDataseq() == 0) {
 			return mapper.create(param);

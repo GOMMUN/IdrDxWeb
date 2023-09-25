@@ -41,6 +41,13 @@ public class EquipmentInfoController {
     }
 	
 	@ResponseBody
+	@GetMapping("/findByFactoryid")
+    public List<Equipment> findByFactoryid() {
+		List<Equipment> list = service.findByFactoryid();
+		return list;
+    }
+	
+	@ResponseBody
 	@PostMapping("/create")
     public int create(@RequestBody Equipment param) {
 		return service.save(param);

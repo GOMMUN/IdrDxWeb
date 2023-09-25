@@ -2,6 +2,7 @@
  * 
  */
 let c_factory = null;
+let c_equipment = null;
 let s_lineInfo = null;
 
 $(function(){
@@ -15,6 +16,7 @@ function initSetting() {
 	localStorage.setItem("username", $("#parameterUsername").val());
 	
 	factroy();		// 라인코드 조회
+	equipment(); 	// 설비코드 조회
 }
 
 
@@ -71,6 +73,7 @@ function initSetting() {
 		
 		data.factoryid = $("select[name=factoryid]").val();
 		data.locationid = $("input[name=locationid]").val();
+		data.equipmentid = $("select[name=equipmentid]").val();
 		data.locationname = $("input[name=locationname]").val();
 		data.isusable = $("select[name=isusable]").val();
 		data.creator = localStorage.getItem("username");
@@ -115,6 +118,7 @@ function initSetting() {
 
 		data.factoryid = $("select[name=factoryid]").val();
 		data.locationid = $("input[name=locationid]").val();
+		data.equipmentid = $("select[name=equipmentid]").val();
 		data.locationname = $("input[name=locationname]").val();
 		data.isusable = $("select[name=isusable]").val();
 		data.eventuser = localStorage.getItem("username");
@@ -184,6 +188,26 @@ function initSetting() {
 			}
 		});
 	});
+	
+	// modal 
+	$factoryCodes = $("#factoryCodes");
+	
+	$factoryCodes.change(function() {
+
+		let $dropdown1 = $("#equipmentCodes");
+		$dropdown1.empty();
+
+		if (c_equipment) {
+			$dropdown1.append($("<option/>").val("").text("설비 선택"));
+			$.each(c_equipment, function() {
+				if ($("select[name=factoryid]").val() == this.factoryid) {
+					$dropdown1.append($("<option/>").val(this.equipmentid).text(this.equipmentname));
+				}
+			});
+		} else {
+			$dropdown1.append($("<option/>").val("").text("설비 선택"));
+		}
+	});
 };
  
 function lineinfo(data) {
@@ -224,6 +248,32 @@ function factroy() {
 	});
 }
 
+function equipment(){
+	let url = '/equipmentinfo/findByFactoryid';
+
+	c_equipment = null;
+	
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			c_equipment = data;
+
+//			let $dropdown = $("#factoryCodes");
+//			$dropdown.empty();
+//
+//			if (c_factory) {
+//				$dropdown.append($("<option/>").val("").text("공장 선택"));
+//				$.each(data, function() {
+//					$dropdown.append($("<option/>").val(this.code).text(this.value));
+//				});
+//			} else {
+//				$dropdown.append($("<option/>").val("").text("공장 선택"));
+//			}
+		}
+	});
+}
+
 function lineinfoOperateFormatter(value, row, index) {
 	return [
 		'<a class="lineinfoModify" href="javascript:void(0)" title="수정">',
@@ -243,6 +293,9 @@ window.operateEvents = {
 		$("#addLineinfoModalModify").css('display', "block");
 
 		$('#addLineinfoModal').modal('show');
+		
+		$factoryCodes = $("#factoryCodes");
+		$factoryCodes.trigger("change");
 
 		lineinfoDetail(row);
 	}
@@ -252,6 +305,7 @@ function lineinfoDetail(data) {
 	
 	$("select[name=factoryid]").val(data.factoryid);
 	$("input[name=locationid]").val(data.locationid);
+	$("select[name=equipmentid]").val(data.equipmentid);
 	$("input[name=locationname]").val(data.locationname);
 	$("select[name=isusable]").val(data.isusable);
 }

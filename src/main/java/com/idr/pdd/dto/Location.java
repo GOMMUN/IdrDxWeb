@@ -22,5 +22,6 @@ public class Location {
 	private String eventtime;
 	private String isusable;
 	private String tid;
+	private String equipmentid;
 
 }

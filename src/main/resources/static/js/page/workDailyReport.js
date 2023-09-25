@@ -1080,6 +1080,7 @@ function setWorkContentsEventListener() {
 	});
 
 	$modalModifyBtn.click(function() {
+		
 		// s_workDailyReport
 		data.dataseq = s_workContent.dataseq;
 		data.worktimeFrom = $("input[name=worktimeFrom]").val();
@@ -1091,6 +1092,8 @@ function setWorkContentsEventListener() {
 		data.goodsumQty = $("input[name=goodsumQty]").val();
 		data.reworkGoodQty = $("input[name=reworkGoodQty]").val();
 		data.reworkFailQty = $("input[name=reworkFailQty]").val();
+		data.firsttimeGoodQty = $("input[name=firsttimeGoodQty]").val();
+		data.firsttimeFailQty = $("input[name=firsttimeFailQty]").val();
 		data.notes = $("input[name=workcontentnotes]").val();
 		if (data.personid == "") {
 			alert("작업자를 선택 하세요.");

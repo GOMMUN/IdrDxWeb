@@ -81,6 +81,8 @@
 		, MANHOUR = #{manhour}
 		, PROD_QTY = #{prodQty}
 		, GOODSUM_QTY = #{goodsumQty}
+		, FIRSTTIME_GOOD_QTY=#{firsttimeGoodQty}
+		, FIRSTTIME_FAIL_QTY=#{firsttimeFailQty}
 		, REWORK_GOOD_QTY = #{reworkGoodQty}
 		, REWORK_FAIL_QTY = #{reworkFailQty}
 		, NOTES = #{notes}

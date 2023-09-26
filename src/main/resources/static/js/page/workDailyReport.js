@@ -1998,9 +1998,10 @@ function workDailyReportDetail(data) {
 	//$("input[name=workDate]").val(data.workDate);
 	//s_workDailyReport = data;
 	m_dataSeq = data.dataseq;
-
+	var inputDate = data.workDate;
+	var formattedDate = inputDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
 	//$("input[name=workDate]").datepicker("setDate", new Date(data.workDate.substring(0, 4), data.workDate.substring(4, 6) - 1, data.workDate.substring(6, 8)));
-	$("input[name=workDate]").datepicker("setDate",data.workDate);
+	$("input[name=workDate]").datepicker("setDate",formattedDate);
 	$("select[name=blockid]").val(data.blockid);
 	$("select[name=wdrmodel]").val(data.modelid);
 	//$("select[name=factoryid]").val(data.factoryid);

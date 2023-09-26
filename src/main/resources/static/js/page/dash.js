@@ -12,9 +12,9 @@ var chart8data = null;
 var chart9data = null;
 var selectedText = null;
 
-var repeat = null;
-var delay = 5000;
-repeat = setInterval(realTime, delay); // delay 간격으로 실행 
+//var repeat = null;
+//var delay = 5000;
+//repeat = setInterval(realTime, delay); // delay 간격으로 실행 
 
 var result = null;
 

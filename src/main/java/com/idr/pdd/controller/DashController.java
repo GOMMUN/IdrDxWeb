@@ -58,10 +58,9 @@ public class DashController {
     }
 	@ResponseBody
 	@GetMapping("/findC")
-	public List<FairProd> findC(String plant, String material) {
+	public List<List<FairProd>> findC(String plant, String material) {
 		
-		List<FairProd> list = service.findAllC(plant, material);
-		return list;
+		return service.findAllC(plant, material);
 
     }
 	@ResponseBody
@@ -77,7 +76,7 @@ public class DashController {
 	@GetMapping("/chart1")
     public List<List<FairProd>> chart1(String plant, String month, String material) {
 		
-		return service.chart15(plant, month, material);
+		return service.chart1(plant, month, material);
     }
 
 	@ResponseBody
@@ -107,7 +106,7 @@ public class DashController {
 	@GetMapping("/chart5")
     public List<List<FairProd>> chart5(String plant, String month, String material) {
 		
-		return service.chart15(plant, month, material);
+		return service.chart5(plant, month, material);
     }
 	
 	@ResponseBody

@@ -12,9 +12,9 @@ var chart8data = null;
 var chart9data = null;
 var selectedText = null;
 
-var repeat = null;
-var delay = 5000;
-repeat = setInterval(realTime, delay); // delay 간격으로 실행 
+//var repeat = null;
+//var delay = 5000;
+//repeat = setInterval(realTime, delay); // delay 간격으로 실행 
 
 var result = null;
 
@@ -42,7 +42,12 @@ function initSetting() {
 		$('#chart1').css('height', '710px');
 	}
 	
-	if($("#parameterPlant").val() == "KEM"){// 기업별 로고
+	if($("#parameterPlant").val() == "") {
+		$('#logo1').hide();
+		$('#logo2').hide();
+		$('#logo3').hide();
+		$('#logo4').hide();
+	} else if($("#parameterPlant").val() == "KEM"){// 기업별 로고
 		$('#logo1').show();
 		$('#logo2').hide();
 		$('#logo3').hide();
@@ -150,7 +155,11 @@ function set_P_Representative(chart1data) {
 	    seriesData2.push(series);
 	
 	}
-	
+	if(localStorage.getItem('plant') == 'KEM'){
+		
+	} else {
+		
+	}
 	Highcharts.chart('chart1', {
 		chart: {
 			type: 'column'
@@ -545,13 +554,13 @@ function set_C_Equipment(chart5data) {
 	    
 	    for (var i = 0; i <= chart5data[j].length-1; i++) {
 	        var percentage = 0;
-	        percentage = Number((parseInt(chart5data[j][i].workTotal) / ((parseInt(chart5data[j][i].workTotal) + parseInt(chart5data[j][i].notoperateTotal)) == 0 ? 1 : (parseInt(chart5data[j][i].workTotal) + parseInt(chart5data[j][i].notoperateTotal)))) * 100);
+	        percentage = Number(parseInt(chart5data[j][i].total));
 	        var percentage_data = parseFloat(percentage.toFixed(2));
 	        seriesData1[j][i] = percentage_data;
 	    }
 	    
 	    var series = {
-	        name: chart5data[j][0].lineid,
+	        name: chart5data[j][0].equipmentid,
 	        data: seriesData1[j]
 	    };
 	    
@@ -1003,23 +1012,40 @@ function PQCDrate() {
 	});
 	$.get(urlc + '?' + $.param(params)).then(function(res) {
 		var result = res;
-		var WorkTimeTo = 0, WorkTimeYe = 0, NotoperateTimeTo = 0, NotoperateTimeYe = 0;
+//		var WorkTimeTo = 0, WorkTimeYe = 0, NotoperateTimeTo = 0, NotoperateTimeYe = 0;
+//		
+//		result.forEach(function(r) {
+//			if (r.workDate == formattedDate) {
+//	            WorkTimeTo = r.workTotal;
+//	            NotoperateTimeTo = r.notoperateTotal;
+//            } else {
+//	            WorkTimeYe = r.workTotal;
+//	            NotoperateTimeYe = r.notoperateTotal;
+//			}
+//        });
+	
+		var totalYe = [];
+		var totalTo = [];
+	
+		for (var j = 0; j <= result.length-1; j++) {
+
+		    for (var i = 0; i <= result[j].length-1; i++) {
+				if(i==0){
+					total1 = parseFloat(result[j][i].total)
+					totalYe.push(total1)
+				} else {
+					total2 = parseFloat(result[j][i].total)
+					totalTo.push(total2)
+				}
+		    }  
+		}
 		
-		result.forEach(function(r) {
-			if (r.workDate == formattedDate) {
-	            WorkTimeTo = r.workTotal;
-	            NotoperateTimeTo = r.notoperateTotal;
-            } else {
-	            WorkTimeYe = r.workTotal;
-	            NotoperateTimeYe = r.notoperateTotal;
-			}
-        });
+		avgYe = (totalYe[0] + totalYe[1] + totalYe[2] + totalYe[3])/4
+		avgTo = (totalTo[0] + totalTo[1] + totalTo[2] + totalTo[3])/4
         
-        operateRate = (WorkTimeTo / (WorkTimeTo + NotoperateTimeTo)) * 100; //가동률
-        $('#operateRate').text(isNaN(operateRate) ? '-' : parseFloat(operateRate.toFixed(2)) + '%');
-        
-        preOperateRate = (WorkTimeYe / (WorkTimeYe + NotoperateTimeYe)) * 100;
-	    compareOperateRate = operateRate-preOperateRate
+        //가동률
+        $('#operateRate').text(isNaN(avgTo) ? '-' : parseFloat(avgTo.toFixed(2)) + '%');
+	    compareOperateRate = avgTo-avgYe
 	    
 	    if (parseFloat(compareOperateRate.toFixed(2)) > 0){
 			$('#preOperateRate .plus').text(parseFloat(compareOperateRate.toFixed(2)) + '%').hide();
@@ -1082,7 +1108,7 @@ function PQCDrate() {
 
 function selectDayWeekMonthButton() {	    
 	
-	var defaultData = "day";
+	var defaultData = "month";
 	var defaultMonth = new Date().getMonth()+1;
 	
 	for (var chartNumber = 1; chartNumber <= 8; chartNumber++) {
@@ -1126,7 +1152,7 @@ function selectDayWeekMonthButton() {
 	    localStorage.setItem('month', data);
 	});
 	$("#factoryCodes").change(function() {
-		var data = "day";
+		var data = "month";
 		var tagId = $(this).parent().attr('id');
 	        
 	    $(".addType").removeClass("active");
@@ -1407,16 +1433,12 @@ function getName(selectedText){
 			var selectedValue = selectedText;
 		}
 		
-		var storedValue = localStorage.getItem('factoryname');
-		
 		var titleElement = document.getElementById('title');
 		var titleElement2 = document.getElementById('title2');
-        if (storedValue !== null) {
-			if(localStorage.getItem('plant') == 'KEM'){
-				titleElement.innerText = storedValue;
-			}
-            titleElement2.innerText = selectedValue;
-        }
+   
+		titleElement.innerText = localStorage.getItem('plant');
+		titleElement2.innerText = selectedValue;
+
 }		
 
 function formatDate(dateString, inputFormat, outputFormat) {

@@ -41,37 +41,72 @@ public class DashService {
       return mapper.findAllQ(plant, material);
    }
    
-   public List<FairProd> findAllC(String plant, String material){
-      
-      return mapper.findAllC(plant, material);
-   }
+   public List<List<FairProd>> findAllC(String plant, String material){
+	   
+
+	      List<String> lineList = new ArrayList<>();
+	      List<List<FairProd>> finalresult = new ArrayList<>();
+
+	      if (plant.equals("KEM")) {
+	    	  finalresult.add(mapper.findAllC("KEM-P0002", material));
+	    	  finalresult.add(mapper.findAllC("KEM-P0003", material));
+	    	  finalresult.add(mapper.findAllC("KEM-P0008", material));
+	    	  finalresult.add(mapper.findAllC("KEM-P0005", material));
+	      } else {
+	    	  List<String> rank2 = mapper.rank2(plant, "day");
+	    	  
+	    	  if (rank2.size() > 4) {
+	    	      lineList.add(rank2.get(0));
+	    	      lineList.add(rank2.get(1));
+	    	      lineList.add(rank2.get(rank2.size() - 2));
+	    	      lineList.add(rank2.get(rank2.size() - 1));
+	    	      finalresult.add(mapper.findAllC(lineList.get(0), material));
+	    	      finalresult.add(mapper.findAllC(lineList.get(1), material));
+	    	      finalresult.add(mapper.findAllC(lineList.get(2), material));
+	    	      finalresult.add(mapper.findAllC(lineList.get(3), material));
+	    	  } else {
+	    	      for (String line : rank2) {
+	    	         finalresult.add(mapper.findAllC(line, material));
+	    	      }
+	    	  }
+	      }
+
+	      return finalresult;
+	   }
    
    public List<FairProd> findAllD(String plant, String material){
       
       return mapper.findAllD(plant, material);
    }
 
-   public List<List<FairProd>> chart15(String plant, String month, String material) {
+   public List<List<FairProd>> chart1(String plant, String month, String material) {
 
-      List<String> rank = mapper.rank(plant);
 
       List<String> lineList = new ArrayList<>();
       List<List<FairProd>> finalresult = new ArrayList<>();
 
-
-      if (rank.size() > 4) {
-         lineList.add(rank.get(0));
-         lineList.add(rank.get(1));
-         lineList.add(rank.get(rank.size() - 2));
-         lineList.add(rank.get(rank.size() - 1));
-         finalresult.add(mapper.chart15(lineList.get(0), month, material));
-         finalresult.add(mapper.chart15(lineList.get(1), month, material));
-         finalresult.add(mapper.chart15(lineList.get(2), month, material));
-         finalresult.add(mapper.chart15(lineList.get(3), month, material));
+      if (plant.equals("KEM")) {
+    	  finalresult.add(mapper.chart1("KEM-P0002", month, material));
+    	  finalresult.add(mapper.chart1("KEM-P0003", month, material));
+    	  finalresult.add(mapper.chart1("KEM-P0008", month, material));
+    	  finalresult.add(mapper.chart1("KEM-P0005", month, material));
       } else {
-         for (String line : rank) {
-            finalresult.add(mapper.chart15(line, month, material));
-         }
+    	  List<String> rank = mapper.rank(plant, month);
+    	  
+    	  if (rank.size() > 4) {
+    	      lineList.add(rank.get(0));
+    	      lineList.add(rank.get(1));
+    	      lineList.add(rank.get(rank.size() - 2));
+    	      lineList.add(rank.get(rank.size() - 1));
+    	      finalresult.add(mapper.chart1(lineList.get(0), month, material));
+    	      finalresult.add(mapper.chart1(lineList.get(1), month, material));
+    	      finalresult.add(mapper.chart1(lineList.get(2), month, material));
+    	      finalresult.add(mapper.chart1(lineList.get(3), month, material));
+    	  } else {
+    	      for (String line : rank) {
+    	         finalresult.add(mapper.chart1(line, month, material));
+    	      }
+    	  }
       }
 
       return finalresult;
@@ -79,7 +114,7 @@ public class DashService {
    
    public List<List<FairProd>> chart2(String plant, String factory, String month) {
 
-      List<String> rank = mapper.rank(factory);
+      List<String> rank = mapper.rank(factory, month);
 
       List<List<FairProd>> finalresult = new ArrayList<>();
 
@@ -92,7 +127,7 @@ public class DashService {
             finalresult.add(mapper.chart2(rank.get(0), month));   
          } 
       }else {   //협력사 로그인
-         rank = mapper.rank(plant);
+         rank = mapper.rank(plant, month);
          finalresult.add(mapper.chart2(rank.get(0), month));   
       }
       
@@ -109,6 +144,38 @@ public class DashService {
       
       return mapper.chart4(plant, month, material);
    }
+   
+   public List<List<FairProd>> chart5(String plant, String month, String material) {
+
+	      List<String> lineList = new ArrayList<>();
+	      List<List<FairProd>> finalresult = new ArrayList<>();
+
+	      if (plant.equals("KEM")) {
+	    	  finalresult.add(mapper.chart5("KEM-P0002", month, material));
+	    	  finalresult.add(mapper.chart5("KEM-P0003", month, material));
+	    	  finalresult.add(mapper.chart5("KEM-P0008", month, material));
+	    	  finalresult.add(mapper.chart5("KEM-P0005", month, material));
+	      } else {
+	    	  List<String> rank2 = mapper.rank2(plant, month);
+	    	  
+	    	  if (rank2.size() > 4) {
+	    	      lineList.add(rank2.get(0));
+	    	      lineList.add(rank2.get(1));
+	    	      lineList.add(rank2.get(rank2.size() - 2));
+	    	      lineList.add(rank2.get(rank2.size() - 1));
+	    	      finalresult.add(mapper.chart5(lineList.get(0), month, material));
+	    	      finalresult.add(mapper.chart5(lineList.get(1), month, material));
+	    	      finalresult.add(mapper.chart5(lineList.get(2), month, material));
+	    	      finalresult.add(mapper.chart5(lineList.get(3), month, material));
+	    	  } else {
+	    	      for (String line : rank2) {
+	    	         finalresult.add(mapper.chart5(line, month, material));
+	    	      }
+	    	  }
+	      }
+
+	      return finalresult;
+	   }
    
    public List<FairProd> chart6(String plant, String month, String material) {
 

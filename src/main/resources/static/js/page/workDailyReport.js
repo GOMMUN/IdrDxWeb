@@ -28,6 +28,7 @@ let m_dataSeq = 0;
 $(function() {
 	initSetting();
 	setEventListener();
+	
 });
 
 function initSetting() {
@@ -41,7 +42,7 @@ function initSetting() {
 		language: "ko"
 	});
 
-	code();
+	code();	
 }
 
 function code() {
@@ -124,7 +125,7 @@ function setWorkDailyReportEventListener() {
 			 $workerManhour.bootstrapTable('removeAll');
 			 $workerSupport.bootstrapTable('removeAll');
 			 $rejectContents.bootstrapTable('removeAll');
-			 $notoperateContents.bootstrapTable('removeAll');
+			 $notoperateContents.bootstrapTable('removeAll');	 
 		}
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
@@ -468,7 +469,7 @@ function setWorkerInputEventListener() {
 		$selectWorker = $("#selectWorker");
 		$selectWorker.bootstrapTable('uncheckAll');		
 		
-		$("select[name=overtimeyn]").val("");
+		$("select[name=overtimeyn]").val("N");
 		$("input[name=workinputdesc]").val("");
 		$("#addWorkerInputModalCreate").css('display', "block");
 		$("#addWorkerInputModalModify").css('display', "none");

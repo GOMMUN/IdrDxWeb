@@ -12,7 +12,7 @@ public interface DashMapper {
 	List<FairProd> findAllName(String plant);
 	List<FairProd> findAllP(String plant, String material);
 	List<FairProd> findAllQ(String plant, String material);
-	List<FairProd> findAllC(String plant, String material);
+	List<FairProd> findAllC(String line, String material);
 	List<FairProd> findAllD(String plant, String material);
 	List<FairProd> chart1(String line, String month, String material);
 	List<FairProd> chart2(String line, String month);

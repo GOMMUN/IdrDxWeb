@@ -47,12 +47,12 @@ public class DashService {
 	      List<String> lineList = new ArrayList<>();
 	      List<List<FairProd>> finalresult = new ArrayList<>();
 
-	      if (plant.equals("KEM")) {
-	    	  finalresult.add(mapper.findAllC("KEM-P0002", material));
-	    	  finalresult.add(mapper.findAllC("KEM-P0003", material));
-	    	  finalresult.add(mapper.findAllC("KEM-P0008", material));
-	    	  finalresult.add(mapper.findAllC("KEM-P0005", material));
-	      } else {
+//	      if (plant.equals("KEM")) {
+//	    	  finalresult.add(mapper.findAllC("KEM-P0002", material));
+//	    	  finalresult.add(mapper.findAllC("KEM-P0003", material));
+//	    	  finalresult.add(mapper.findAllC("KEM-P0008", material));
+//	    	  finalresult.add(mapper.findAllC("KEM-P0005", material));
+//	      } else {
 	    	  List<String> rank2 = mapper.rank2(plant, "day");
 	    	  
 	    	  if (rank2.size() > 4) {
@@ -69,7 +69,7 @@ public class DashService {
 	    	         finalresult.add(mapper.findAllC(line, material));
 	    	      }
 	    	  }
-	      }
+//	      }
 
 	      return finalresult;
 	   }

@@ -577,7 +577,7 @@ function set_C_Equipment(chart5data) {
 
 
     legend: {
-		itemDistance: 20,
+		itemDistance: 25,
         verticalAlign: 'bottom',
         align: 'center'
     },

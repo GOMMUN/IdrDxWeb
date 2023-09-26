@@ -150,12 +150,12 @@ public class DashService {
 	      List<String> lineList = new ArrayList<>();
 	      List<List<FairProd>> finalresult = new ArrayList<>();
 
-	      if (plant.equals("KEM")) {
-	    	  finalresult.add(mapper.chart5("KEM-P0002", month, material));
-	    	  finalresult.add(mapper.chart5("KEM-P0003", month, material));
-	    	  finalresult.add(mapper.chart5("KEM-P0008", month, material));
-	    	  finalresult.add(mapper.chart5("KEM-P0005", month, material));
-	      } else {
+//	      if (plant.equals("KEM")) {
+//	    	  finalresult.add(mapper.chart5("KEM-P0002", month, material));
+//	    	  finalresult.add(mapper.chart5("KEM-P0003", month, material));
+//	    	  finalresult.add(mapper.chart5("KEM-P0008", month, material));
+//	    	  finalresult.add(mapper.chart5("KEM-P0005", month, material));
+//	      } else {
 	    	  List<String> rank2 = mapper.rank2(plant, month);
 	    	  
 	    	  if (rank2.size() > 4) {
@@ -172,7 +172,7 @@ public class DashService {
 	    	         finalresult.add(mapper.chart5(line, month, material));
 	    	      }
 	    	  }
-	      }
+//	      }
 
 	      return finalresult;
 	   }

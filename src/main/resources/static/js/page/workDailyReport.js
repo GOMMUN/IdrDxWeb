@@ -191,9 +191,9 @@ function setWorkDailyReportEventListener() {
 			alert("날짜를 선택해주세요.");
 			$("input[name=workDate]").focus();
 			return;
-		} else if (data.plant == "") {
-			alert("공장을 선택해주세요.");
-			$("select[name=factoryid]").focus();
+		} else if (data.model == "") {
+			alert("차종을 선택해주세요.");
+			$("select[name=wdrmodel]").focus();
 			return;
 		} else if (data.line == "") {
 			alert("공정을 선택해주세요.");
@@ -207,12 +207,8 @@ function setWorkDailyReportEventListener() {
 			alert("자재를 선택해주세요.");
 			$("select[name=wdrmatarial]").focus();
 			return;
-		} else if (data.model == "") {
-			alert("차종을 선택해주세요.");
-			$("select[name=wdrmodel]").focus();
-			return;
-		} else if (data.planqty == "") {
-			alert("계획수량을 선택해주세요.");
+		}else if (data.planqty == "") {
+			alert("계획수량을 입력해주세요.");
 			$("select[name=planqty]").focus();
 			return;
 		}else if (data.planqty.indexOf('-') != -1) {
@@ -531,13 +527,13 @@ function setWorkerInputEventListener() {
 		data.overtime = $("select[name=overtimeyn]").val();
 		data.tid = tid();
 
-		if (data.worker == "") {
-			alert("작업자를 선택 하세요.");
+		if (data.personid == "") {
+			alert("작업자를 선택 해주세요.");
 			return;
 		}
 
 		if (data.overtime == null) {
-			alert("잔업여부를 선택 하세요.");
+			alert("잔업여부를 선택 해주세요.");
 			return;
 		}
 
@@ -672,11 +668,11 @@ function setWorkerManhourEventListener() {
 		data.tid = tid();
 
 		if (!data.man) {
-			alert("인원을  선택해주세요.");
+			alert("인원을 입력 해주세요.");
 			return;
 		}
 		if (!data.manhour) {
-			alert("공수를 선택해주세요.");
+			alert("공수를 입력 해주세요.");
 			return;
 		}
 		if (!data.separation) {
@@ -863,8 +859,17 @@ function setWorkerSupportEventListener() {
 		data.totime = $("input[name=supporttimeTo]").val();
 		data.tid = tid();
 
-		if (data.man == "") {
-			alert("작업자를 선택 하세요.");
+		if (data.personid == "") {
+			alert("작업자를 선택 해주세요.");
+			return;
+		}else if(data.manhour ==""){
+			alert("공수를 입력 해주세요.");
+			return;
+		}else if(data.fromtime ==""){
+			alert("시작시간을 선택 해주세요.");
+			return;
+		}else if(data.totime ==""){
+			alert("종료시간을 선택 해주세요.");
 			return;
 		}
 
@@ -1034,38 +1039,35 @@ function setWorkContentsEventListener() {
 		//		data.shift=s_workDailyReport.shiftid;
 		//		data.date=s_workDailyReport.workDate;
 
-		if (data.fromtime == "") {
-			alert("작업시간을 선택 하세요.");
+		if (data.fromtime == "00") {
+			alert("시작시간을 선택 해주세요.");
 			return;
 		}
-		if (data.totime == "") {
-			alert("작업종료시간을 선택 하세요.");
+		if (data.totime == "00") {
+			alert("종료시간을 선택 해주세요.");
 			return;
 		}
 		if (data.manhour == "") {
-			alert("공수를 선택 하세요.");
-			return;
-		}
-		if (data.prodqty == "") {
-			alert("생산수량을 선택 하세요.");
+			alert("공수를 입력 해주세요.");
 			return;
 		}
 		if (data.firstgoodqty == "") {
-			alert("양품을선택 하세요.");
+			alert("양품을 입력 해주세요.");
 			return;
 		}
-		if (data.reworkgoodqty == "") {
-			alert("재작업양품을 선택 하세요.");
-			return;
-		}
-		if (data.reworkfailqty == "") {
-			alert("재작업불량을 선택 하세요.");
+		if (data.prodqty == "") {
+			alert("생산수량을 입력 해주세요.");
 			return;
 		}
 		if (data.firstfailqty == "") {
-			alert("불량을 선택 하세요.");
+			alert("불량을 입력 해주세요.");
 			return;
 		}
+		if(Number(data.firstgoodqty)+Number(data.firstfailqty)!=Number(data.prodqty)){
+			alert("불량 및 양품 합산수량을 확인 해주세요.");
+			return;
+		}
+		
 
 
 		let url = CORE_URL + '/work-contents/';
@@ -1115,8 +1117,10 @@ function setWorkContentsEventListener() {
 		data.firsttimeGoodQty = $("input[name=firsttimeGoodQty]").val();
 		data.firsttimeFailQty = $("input[name=firsttimeFailQty]").val();
 		data.notes = $("input[name=workcontentnotes]").val();
-		if (data.personid == "") {
-			alert("작업자를 선택 하세요.");
+		
+
+		if(Number(data.firsttimeGoodQty)+Number(data.firsttimeFailQty)!=Number(data.prodQty)){
+			alert("불량 및 양품 합산수량을 확인 해주세요.");
 			return;
 		}
 
@@ -1225,22 +1229,24 @@ function setNonconFormityEventListener() {
 		data.reworkrejectqty = $("input[name=reworkRejectQty]").val();
 		data.tid = tid();
 
-		if (data.firstrejectqty == "") {
-			alert("본을 선택 하세요.");
-			return;
-		}
-		if (data.reworkrejectqty == "") {
-			alert("재투입을 선택 하세요.");
-			return;
-		}
 		if (data.rejectcode == "") {
-			alert("불량내용을 선택 하세요.");
+			alert("불량내용을 선택 해주세요.");
 			return;
 		}
 		if (data.rejecttype == "") {
-			alert("불량유형을 선택 하세요.");
+			alert("불량유형을 선택 해주세요.");
 			return;
 		}
+		if (data.firstrejectqty == "") {
+			alert("본을 입력 해주세요.");
+			return;
+		}
+		if (data.reworkrejectqty == "") {
+			alert("재투입을 입력 해주세요.");
+			return;
+		}
+		
+		
 
 
 		let url = CORE_URL + '/reject-contents/';
@@ -1432,24 +1438,24 @@ function setNonOperationEventListener() {
 		//		data.date=s_workDailyReport.workDate;
 
 
-		if (data.fromtime == "") {
-			alert("비가동시작을 선택 하세요.");
+		if (data.fromtime == "00") {
+			alert("시작시간을 선택 해주세요.");
 			return;
 		}
-		if (data.totime == "") {
-			alert("비가동종료를 선택 하세요.");
+		if (data.totime == "00") {
+			alert("종료시간을 선택 해주세요.");
 			return;
 		}
 		if (data.man == "") {
-			alert("인원을 선택 하세요.");
+			alert("인원을 입력 해주세요.");
 			return;
 		}
 		if (data.manhour == "") {
-			alert("공수를 선택 하세요.");
+			alert("공수를 입력 해주세요.");
 			return;
 		}
 		if (data.contentcause == "") {
-			alert("내용/원인을 선택 하세요.");
+			alert("내용/원인을 선택 해주세요.");
 			return;
 		}
 
@@ -1923,6 +1929,7 @@ window.operateEvents = {
 		$("input[name=goodsumQty]").val(row.goodsumQty);
 		$("input[name=reworkGoodQty]").val(row.reworkGoodQty);
 		$("input[name=reworkFailQty]").val(row.reworkFailQty);
+		$("input[name=firsttimeGoodQty]").val(row.firsttimeGoodQty);
 		$("input[name=firsttimeFailQty]").val(row.firsttimeFailQty);
 		$("input[name=workcontentnotes]").val(row.notes);
 

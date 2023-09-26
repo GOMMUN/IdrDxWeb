@@ -43,6 +43,7 @@ function initSetting() {
 	});
 
 	code();	
+	workDailyReport();
 }
 
 function code() {
@@ -109,6 +110,7 @@ function setWorkDailyReportEventListener() {
 			rejectContents($element);
 			notoperateContents($element);
 			personfind($element);
+			
 		}
 
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
@@ -125,7 +127,7 @@ function setWorkDailyReportEventListener() {
 			 $workerManhour.bootstrapTable('removeAll');
 			 $workerSupport.bootstrapTable('removeAll');
 			 $rejectContents.bootstrapTable('removeAll');
-			 $notoperateContents.bootstrapTable('removeAll');	 
+			 $notoperateContents.bootstrapTable('removeAll');				  
 		}
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
@@ -1979,6 +1981,7 @@ function workDailyReport() {
 		$table = $("#workDailyReport");
 		$table.bootstrapTable('removeAll');
 		$table.bootstrapTable('append', res);
+		$table.bootstrapTable('check', 0);
 	})
 }
 
@@ -2079,6 +2082,7 @@ function workContents(data) {
 		$table.bootstrapTable('removeAll');
 		$table.bootstrapTable('append', res);
 	})
+	
 }
 
 function notoperateContents(data) {

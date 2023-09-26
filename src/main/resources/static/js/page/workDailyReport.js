@@ -76,7 +76,14 @@ function setWorkDailyReportEventListener() {
 	let $modalCloseBtn = $("#addWorkDailyReportModalClose");	// 작업일보 모달 close 버튼
 	let $modalCreateBtn = $("#addWorkDailyReportModalCreate");	// 작업일보 모달 insert 버튼
 	let $modalModifyBtn = $("#addWorkDailyReportModalModify");	// 작업일보 모달 update 버튼
-
+	
+	let $workContents = $("#workContents");
+	let $workerInput = $("#workerInput");
+	let $workerManhour = $("#workerManhour");
+	let $workerSupport = $("#workerSupport");
+	let $rejectContents = $("#rejectContents");
+	let $notoperateContents = $("#notoperateContents");
+	
 	$grid.on('check.bs.table', function(row, $element) {
 
 		if ($grid.bootstrapTable('getSelections').length == 1) {
@@ -112,6 +119,12 @@ function setWorkDailyReportEventListener() {
 			s_workDailyReport = $grid.bootstrapTable('getSelections')[0];
 		} else {
 			s_workDailyReport = null;
+			 $workContents.bootstrapTable('removeAll');
+			 $workerInput.bootstrapTable('removeAll');
+			 $workerManhour.bootstrapTable('removeAll');
+			 $workerSupport.bootstrapTable('removeAll');
+			 $rejectContents.bootstrapTable('removeAll');
+			 $notoperateContents.bootstrapTable('removeAll');
 		}
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});

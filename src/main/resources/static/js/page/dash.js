@@ -554,7 +554,7 @@ function set_C_Equipment(chart5data) {
 	    
 	    for (var i = 0; i <= chart5data[j].length-1; i++) {
 	        var percentage = 0;
-	        percentage = Number(parseInt(chart5data[j][i].total));
+	        percentage = Number(parseFloat(chart5data[j][i].total));
 	        var percentage_data = parseFloat(percentage.toFixed(2));
 	        seriesData1[j][i] = percentage_data;
 	    }

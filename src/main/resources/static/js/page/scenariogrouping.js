@@ -213,6 +213,10 @@ function setEventListener (){
 	});
 	
 	$gridRemoveBtnL.click(function() {
+		
+		if(!confirm('선택한 데이터를 삭제하시겠습니까?')){
+            return false;
+        }
 
 		let selections = [];
 
@@ -342,6 +346,10 @@ function setEventListener (){
 	});
 	
 	$gridRemoveBtnG.click(function() {
+		
+		if(!confirm('선택한 데이터를 삭제하시겠습니까?')){
+            return false;
+        }
 
 		let selections = [];
 

@@ -170,6 +170,10 @@ function setEventListener (){
 	
 	$gridRemoveBtn.click(function() {
 
+		if(!confirm('선택한 데이터를 삭제하시겠습니까?')){
+            return false;
+        }
+
 		let selections = [];
 
 		$gridGroup.bootstrapTable('getSelections').forEach(function(data) {

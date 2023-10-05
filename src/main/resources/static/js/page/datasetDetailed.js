@@ -73,7 +73,7 @@ $(function(){
 			$("input[name=activitynm]").focus();
 			return;
 		} else if (data.pqcdid == "") {
-			alert("분류ID를 선택하세요.");
+			alert("주/야구분을 선택하세요.");
 			$("select[name=pqcdid]").focus();
 			return;
 		} else if (data.isusable == "") {
@@ -124,7 +124,7 @@ $(function(){
 			$("input[name=activitynm]").focus();
 			return;
 		} else if (data.pqcdid == "") {
-			alert("분류ID를 선택하세요.");
+			alert("주/야구분을 선택하세요.");
 			$("select[name=pqcdid]").focus();
 			return;
 		} else if (data.isusable == "") {
@@ -159,6 +159,10 @@ $(function(){
 	});
 	
 	$gridRemoveBtn.click(function() {
+		
+		if(!confirm('선택한 데이터를 삭제하시겠습니까?')){
+            return false;
+        }
 
 		let selections = [];
 

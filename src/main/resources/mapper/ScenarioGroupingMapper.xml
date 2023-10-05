@@ -91,16 +91,13 @@
 			WHERE DATASEQ	 		= #{dataseq}
 	</update>
 
-    <update id="remove1" parameterType="list">
-    	UPDATE CM0901
-		SET ISUSABLE			= 'N',
-			FNL_EDIT_USER_ID 	= 'idrAdmin',
-			FNL_EDIT_DT 		= GETDATE()
+    <delete id="remove1" parameterType="list">
+    	DELETE FROM CM0901
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
+    </delete>
 
 	<insert id="create2" parameterType="CM0902">
 			INSERT INTO CM0902(
@@ -141,15 +138,12 @@
 			WHERE DATASEQ	 		= #{dataseq}
 	</update>
 
-    <update id="remove2" parameterType="list">
-    	UPDATE CM0902
-		SET ISUSABLE			= 'N',
-			FNL_EDIT_USER_ID 	= 'idrAdmin',
-			FNL_EDIT_DT 		= GETDATE()
+    <delete id="remove2" parameterType="list">
+    	DELETE FROM CM0902
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
+    </delete>
 
 </mapper>

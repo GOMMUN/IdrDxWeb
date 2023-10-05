@@ -79,15 +79,12 @@
 			WHERE DATASEQ			= #{dataseq}
 	</update>
 
-    <update id="remove" parameterType="list">
-    	UPDATE CM0701
-		SET ISUSABLE	= 'N',
-			FNL_EDIT_USER_ID 	= 'idrAdmin',
-			FNL_EDIT_DT 		= GETDATE()
+    <delete id="remove" parameterType="list">
+    	DELETE FROM CM0701
 		WHERE 1=1 AND DATASEQ IN
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
-    </update>
+    </delete>
 
 </mapper>

@@ -209,11 +209,15 @@ function setWorkDailyReportEventListener() {
 			return;
 		}else if (data.planqty == "") {
 			alert("계획수량을 입력해주세요.");
-			$("select[name=planqty]").focus();
+			$("input[name=planqty]").focus();
 			return;
 		}else if (data.planqty.indexOf('-') != -1) {
-			alert("계획수량 음수값은 입력할 수 없습니다.");
-			$("select[name=planqty]").focus();
+			alert("계획수량은 음수값은 입력할 수 없습니다.");
+			$("input[name=planqty]").focus();
+			return;
+		}else if (isNaN(data.planqty) || data.planqty.indexOf('-') != -1) {
+			alert("계획수량은 문자를 입력할 수 없습니다.");
+			$("input[name=planqty]").focus();
 			return;
 		}
 

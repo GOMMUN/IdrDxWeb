@@ -63,20 +63,20 @@ function initSetting() {
 		data.creator = localStorage.getItem("username");
 
 		//validation check
-		 if (data.personid == "") {
+		if (data.factoryid == "") {
+			alert("공장을 선택하세요.");
+			$("select[name=factoryid]").focus();
+			return;
+		} else if (data.personid == "") {
 			alert("작업자 ID를 입력하세요.");
 			$("input[name=personid]").focus();
-			return;
-		} else if (data.factoryid == "") {
-			alert("공장명을 선택하세요.");
-			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.personname == "") {
 			alert("작업자명을 입력하세요.");
 			$("input[name=personname]").focus();
 			return;
 		} else if (data.useyn == "") {
-			alert("사용유무를 선택하세요.");
+			alert("사용여부를 선택하세요.");
 			$("select[name=isusable]").focus();
 			return;
 		}
@@ -115,20 +115,20 @@ function initSetting() {
 		data.eventuser = localStorage.getItem("username");
 		
 		//validation check
-		 if (data.personid == "") {
+		if (data.factoryid == "") {
+			alert("공장을 선택하세요.");
+			$("select[name=factoryid]").focus();
+			return;
+		} else if (data.personid == "") {
 			alert("작업자 ID를 입력하세요.");
 			$("input[name=personid]").focus();
-			return;
-		} else if (data.factoryid == "") {
-			alert("공장명을 선택하세요.");
-			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.personname == "") {
 			alert("작업자명을 입력하세요.");
 			$("input[name=personname]").focus();
 			return;
 		} else if (data.useyn == "") {
-			alert("사용유무를 선택하세요.");
+			alert("사용여부를 선택하세요.");
 			$("select[name=isusable]").focus();
 			return;
 		}

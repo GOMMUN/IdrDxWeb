@@ -139,12 +139,20 @@ function setInventoryEventListener() {
 			alert("수량을 입력해주세요.");
 			$("input[name=groupid]").focus();
 			return;
-		} else if (data.inventorydate == "") {
-			alert("주/야구분을 선택해주세요.");
+		}  else if (data.qty.indexOf('-') != -1) {
+			alert("수량은 음수값은 입력할 수 없습니다.");
+			$("insert[name=qty]").focus();
+			return;
+		}  else if (isNaN(data.qty) || data.qty.indexOf('-') != -1) {
+			alert("수량은 문자를 입력할 수 없습니다.");
+			$("insert[name=qty]").focus();
+			return;
+		}  else if (data.inventorydate == "") {
+			alert("재고일자를 선택해주세요.");
 			$("select[name=inventorydate]").focus();
 			return;
 		}
-
+		
 		let url = '/inventory/create';
 
 		$.ajax({
@@ -184,16 +192,24 @@ function setInventoryEventListener() {
 			$("select[name=storageid]").focus();
 			return;
 		} else if (data.materialid == "") {
-			alert("자재을 선택해주세요.");
+			alert("자재를 선택해주세요.");
 			$("select[name=materialid]").focus();
 			return;
 		} else if (data.qty == "") {
 			alert("수량을 선택해주세요.");
 			$("insert[name=qty]").focus();
 			return;
-		} else if (data.inventorydate == "") {
-			alert("주/야구분을 선택해주세요.");
-			$("insert[name=inventorydate]").focus();
+		}  else if (data.qty.indexOf('-') != -1) {
+			alert("수량은 음수값은 입력할 수 없습니다.");
+			$("insert[name=qty]").focus();
+			return;
+		}  else if (isNaN(data.qty) || data.qty.indexOf('-') != -1) {
+			alert("수량은 문자를 입력할 수 없습니다.");
+			$("insert[name=qty]").focus();
+			return;
+		}  else if (data.inventorydate == "") {
+			alert("재고일자를 선택해주세요.");
+			$("select[name=inventorydate]").focus();
 			return;
 		}
 		

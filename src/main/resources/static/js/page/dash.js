@@ -1126,7 +1126,7 @@ function selectDayWeekMonthButton() {
 	var defaultData = "month";
 	var defaultMonth = new Date().getMonth()+1;
 	
-	for (var chartNumber = 1; chartNumber <= 8; chartNumber++) {
+	for (var chartNumber = 1; chartNumber <= 9; chartNumber++) {
         var chartId = "chart" + chartNumber + "Type";
         
         if (chartNumber != 3 && chartNumber != 4){

@@ -182,38 +182,29 @@ public class DashService {
       return mapper.chart6(plant, month, material);
    }
 
-   public String chart7() throws Exception{
+   public Integer[] chart7() throws Exception{
 
       JSONObject jsonObject = callApi();
       
-      // JSON 객체에서 "day" 필드 값을 가져와서 JSON 배열로 변환
-      JSONArray dayArray = (JSONArray) jsonObject.get("day");
+      int count = Integer.parseInt(String.valueOf(jsonObject.get("count")));
+      int diff = Integer.parseInt(String.valueOf(jsonObject.get("diff")));
       
-      // 합계를 저장할 변수
-      int totalCount = 0;
+      Integer[] list = new Integer[2];
       
-      // JSON 배열의 각 원소를 int로 변환하고 더하기
-      for (Object dayValue : dayArray) {
-         JSONObject item = (JSONObject) dayValue;
-          int intValue = Integer.parseInt(item.get("count").toString());
-          totalCount += intValue;
-      }
+      list[0] = count;
+      list[1] = diff;
       
-      if(jsonObject.get("day") == "[]") {
-         return "0";
-      }else {
-         return String.valueOf(totalCount);
-      }
+      return list;
       
    }
    
-   public String chart8(String month) throws Exception{
+   public String chart8() throws Exception{
 
       JSONObject jsonObject = callApi();
       
       // JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
-      JSONArray dayArray = (JSONArray) jsonObject.get(month);
-      System.out.println("###############"+dayArray);
+      JSONArray dayArray = (JSONArray) jsonObject.get("day");
+//      System.out.println("###############"+dayArray);
       
       
       
@@ -243,7 +234,7 @@ public class DashService {
       
       // JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
       JSONArray dayArray = (JSONArray) jsonObject.get(month);
-      System.out.println("###############"+dayArray);
+//      System.out.println("###############"+dayArray);
       
        // JSON 데이터를 Java 객체로 변환하여 리스트에 저장
         List<JSONObject> jsonObjects = new ArrayList<>();

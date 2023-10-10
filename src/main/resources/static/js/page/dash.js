@@ -771,7 +771,22 @@ function set_D_PlanToPerform(chart6data){
 }
 
 function set_DailyAlarmCnt(chart7data){
-	$("#alarmCnt").text(chart7data + "건");
+	$("#alarmCnt").text(chart7data[0] + "건");
+	
+	if (chart7data[1] > 0) {
+		$('#alarmDiff').removeClass();
+		$('#alarmDiff').addClass('minus');
+		$('#alarmDiff').text(chart7data[1] + '건');
+	} else if (chart7data[1] == 0) {
+		$('#alarmDiff').removeClass();
+		$('#alarmDiff').text(chart7data[1] + '건');
+	} else if (chart7data[1] < 0){
+		$('#alarmDiff').removeClass();
+		$('#alarmDiff').addClass('plus');
+		$('#alarmDiff').text(chart7data[1] + '건');
+	}
+	
+	$("#alarmDiff").text(chart7data[1] + "건");
 }
 
 function set_WordCloud(chart8data){
@@ -1272,20 +1287,18 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart8data = res;
 			set_WordCloud(chart8data);
-			
-			var url = '/dash/chart9';
-		
-			var params = {
-				month: data,
-			};
-			$.get(url+ '?' + $.param(params)).then(function(res) {
-				chart9data = res;
-				set_SmartAlarm(chart9data);
-			})			
 		});
 				
-	}else{
+	}else if(tagId == "chart9Type"){
+		var url = '/dash/chart9';
 		
+		var params = {
+			month: data,
+		};
+		$.get(url+ '?' + $.param(params)).then(function(res) {
+			chart9data = res;
+			set_SmartAlarm(chart9data);
+		})			
 	}
 }
 

@@ -86,6 +86,8 @@ function setWorkDailyReportEventListener() {
 	let $rejectContents = $("#rejectContents");
 	let $notoperateContents = $("#notoperateContents");
 	
+	var selectedItems = [];
+	
 	$grid.on('check.bs.table', function(row, $element) {
 
 		if ($grid.bootstrapTable('getSelections').length == 1) {
@@ -94,10 +96,11 @@ function setWorkDailyReportEventListener() {
 			const originalString = $element.workDate;
 			const charToRemove = "-";
 			const regex = new RegExp(charToRemove, "g");
-			const modifiedString = originalString.replace(regex, "");
+			const modifiedString = originalString.replace(regex, "-");
 			
 			s_workDailyReport.workDate=modifiedString;
 			dataseq = $element.dataseq;
+			selectedItems.push($element);
 		} else {
 			s_workDailyReport = null;
 		}
@@ -143,12 +146,12 @@ function setWorkDailyReportEventListener() {
 	});
 
 	$grid.on('page-change.bs.table', function(number, size) {
-		s_workDailyReport = null;
+		$grid.bootstrapTable('checkBy', { field: 'dataseq', values: selectedItems.map(item => item.dataseq) });
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
 	});
 
 	$gridAddBtn.click(function() {
-
+		
 		resetWorkDailyReport();
 
 		$("#addWorkDailyReportModalCreate").css('display', "block");
@@ -166,8 +169,7 @@ function setWorkDailyReportEventListener() {
 		let data = initWorkDailyReport();
 
 		 // 현재 입력 요소의 값을 가져옵니다.
-	    let originalWorkDate = $("input[name=workDate]").val();
-	
+		let originalWorkDate = $("input[name=workDate]").val();
 	    // 하이픈(-)을 제거하여 원하는 형식으로 변환합니다.
 	    let convertedWorkDate = originalWorkDate.replace(/-/g, '');
 	
@@ -207,15 +209,15 @@ function setWorkDailyReportEventListener() {
 			alert("자재를 선택해주세요.");
 			$("select[name=wdrmatarial]").focus();
 			return;
-		}else if (data.planqty == "") {
+		} else if (data.planqty == "") {
 			alert("계획수량을 입력해주세요.");
 			$("input[name=planqty]").focus();
 			return;
-		}else if (data.planqty.indexOf('-') != -1) {
-			alert("계획수량은 음수값은 입력할 수 없습니다.");
+		} else if (data.planqty.indexOf('-') != -1) {
+			alert("계획수량은 음수값을 입력할 수 없습니다.");
 			$("input[name=planqty]").focus();
 			return;
-		}else if (isNaN(data.planqty) || data.planqty.indexOf('-') != -1) {
+		} else if (isNaN(data.planqty) || data.planqty.indexOf('-') != -1) {
 			alert("계획수량은 문자를 입력할 수 없습니다.");
 			$("input[name=planqty]").focus();
 			return;
@@ -295,10 +297,6 @@ function setWorkDailyReportEventListener() {
 				alert("작업구분을 선택해주세요.");
 				$("select[name=shiftid]").focus();
 				return;
-			} else if (data.planQty == "") {
-				alert("계획수량을 선택해주세요.");
-				$("select[name=planqty]").focus();
-				return;
 			} else if (data.materialid == "") {
 				alert("자재를 선택해주세요.");
 				$("select[name=wdrmatarial]").focus();
@@ -307,7 +305,20 @@ function setWorkDailyReportEventListener() {
 				alert("차종을 선택해주세요.");
 				$("select[name=wdrmodel]").focus();
 				return;
+			} else if (data.planQty == "") {
+				alert("계획수량을 선택해주세요.");
+				$("input[name=planqty").focus();
+				return;
+			}  else if (data.planQty.indexOf('-') != -1) {
+				alert("계획수량은 음수값을 입력할 수 없습니다.");
+				$("input[name=planqty]").focus();
+				return;
+			} else if (isNaN(data.planQty) || data.planQty.indexOf('-') != -1) {
+				alert("계획수량은 문자를 입력할 수 없습니다.");
+				$("input[name=planqty]").focus();
+				return;
 			}
+			
 			let url = '/workDailyReport/modify';
 
 			$.ajax({
@@ -514,6 +525,10 @@ function setWorkerInputEventListener() {
 
 	});
 
+	$selectworker.on('uncheck.bs.table', function (row, $element, field) {
+	    data.personid = null;
+	});
+	
 	$modalCloseBtn.click(function() {
 		$('#addWorkerIntputModal').modal('hide');
 	});
@@ -531,7 +546,7 @@ function setWorkerInputEventListener() {
 		data.overtime = $("select[name=overtimeyn]").val();
 		data.tid = tid();
 
-		if (data.personid == "") {
+		if (data.personid == "" || data.personid == null) {
 			alert("작업자를 선택 해주세요.");
 			return;
 		}
@@ -587,6 +602,16 @@ function setWorkerInputEventListener() {
 		data.notes = $("input[name=workinputdesc]").val();
 		data.overtime = $("select[name=overtimeyn]").val();
 		data.dataseq = s_workerInput.dataseq;
+		
+		if (data.personid == "" || data.personid == null) {
+			alert("작업자를 선택 해주세요.");
+			return;
+		}
+
+		if (data.overtime == null) {
+			alert("잔업여부를 선택 해주세요.");
+			return;
+		}
 
 		let url = '/workerInput/modify';
 
@@ -617,9 +642,6 @@ function setWorkerManhourEventListener() {
 
 	$grid.on('check.bs.table', function(row, $element) {
 		$gridRemoveBtn.prop('disabled', !$grid.bootstrapTable('getSelections').length)
-
-
-
 	});
 
 	$grid.on('uncheck.bs.table', function(row, $element) {
@@ -674,15 +696,32 @@ function setWorkerManhourEventListener() {
 		if (!data.man) {
 			alert("인원을 입력 해주세요.");
 			return;
+		}else if (data.man.indexOf('-') != -1) {
+			alert("인원은 음수값을 입력할 수 없습니다.");
+			$("input[name=hands]").focus();
+			return;
+		}else if (isNaN(data.man) || data.man.indexOf('-') != -1) {
+			alert("인원은 문자를 입력할 수 없습니다.");
+			$("input[name=hands]").focus();
+			return;
 		}
 		if (!data.manhour) {
 			alert("공수를 입력 해주세요.");
+			return;
+		}else if (data.manhour.indexOf('-') != -1) {
+			alert("공수는 음수값을 입력할 수 없습니다.");
+			$("input[name=manhour]").focus();
+			return;
+		}else if (isNaN(data.manhour) || data.manhour.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=manhour]").focus();
 			return;
 		}
 		if (!data.separation) {
 			alert("구분을 선택해주세요.");
 			return;
 		}
+		
 		let url = CORE_URL + '/worker-manhour/';
 
 		$.ajax({
@@ -747,6 +786,35 @@ function setWorkerManhourEventListener() {
 		data.hands = $("input[name=hands]").val();
 		data.manhour = $("input[name=manhour]").val();
 		data.inputItemid = $("select[name=inputItemid]").val();
+		
+		if (!data.hands) {
+			alert("인원을 입력 해주세요.");
+			return;
+		}else if (data.hands.indexOf('-') != -1) {
+			alert("인원은 음수값을 입력할 수 없습니다.");
+			$("input[name=hands]").focus();
+			return;
+		}else if (isNaN(data.hands) || data.hands.indexOf('-') != -1) {
+			alert("인원은 문자를 입력할 수 없습니다.");
+			$("input[name=hands]").focus();
+			return;
+		}
+		if (!data.manhour) {
+			alert("공수를 입력 해주세요.");
+			return;
+		}else if (data.manhour.indexOf('-') != -1) {
+			alert("공수는 음수값을 입력할 수 없습니다.");
+			$("input[name=manhour]").focus();
+			return;
+		}else if (isNaN(data.manhour) || data.manhour.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=manhour]").focus();
+			return;
+		}
+		if (!data.inputItemid) {
+			alert("구분을 선택해주세요.");
+			return;
+		}
 
 		let url = '/workerManhour/modify';
 
@@ -845,10 +913,15 @@ function setWorkerSupportEventListener() {
 		data.workdailySeq = dataseq;
 
 	});
+		
+	$selectworker.on('uncheck.bs.table', function (row, $element, field) {
+	    data.personid = null;
+	});
 
 	$modalCloseBtn.click(function() {
 		$('#addWorkerSupportModal').modal('hide');
 	});
+	
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
 		data.date = s_workDailyReport.workDate;
@@ -863,17 +936,28 @@ function setWorkerSupportEventListener() {
 		data.totime = $("input[name=supporttimeTo]").val();
 		data.tid = tid();
 
-		if (data.personid == "") {
+		if (data.personid == "" || data.personid == null) {
 			alert("작업자를 선택 해주세요.");
 			return;
 		}else if(data.manhour ==""){
 			alert("공수를 입력 해주세요.");
+			return;
+		}else if (data.manhour.indexOf('-') != -1) {
+			alert("공수는 음수값을 입력할 수 없습니다.");
+			$("input[name=planqty]").focus();
+			return;
+		}else if (isNaN(data.manhour) || data.manhour.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=planqty]").focus();
 			return;
 		}else if(data.fromtime ==""){
 			alert("시작시간을 선택 해주세요.");
 			return;
 		}else if(data.totime ==""){
 			alert("종료시간을 선택 해주세요.");
+			return;
+		}else if(data.fromtime > data.totime){
+			alert("조회 시작일이 조회 종료일보다 큽니다.");
 			return;
 		}
 
@@ -910,11 +994,31 @@ function setWorkerSupportEventListener() {
 		// s_workDailyReport
 		data.dataseq = s_workerInput.dataseq;
 		data.manhour = $("input[name=supportmanhour]").val();
-		data.lineid = $("select[name=inputLineid]").val();
 		data.supporttimeFrom = $("input[name=supporttimeFrom]").val();
 		data.supporttimeTo = $("input[name=supporttimeTo]").val();
-		if (data.personid == "") {
+		
+		if (data.personid == "" || data.personid == null) {
 			alert("작업자를 선택 하세요.");
+			return;
+		}else if(data.manhour ==""){
+			alert("공수를 입력 해주세요.");
+			return;
+		}else if (data.manhour.indexOf('-') != -1) {
+			alert("공수는 음수값을 입력할 수 없습니다.");
+			$("input[name=planqty]").focus();
+			return;
+		}else if (isNaN(data.manhour) || data.manhour.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=planqty]").focus();
+			return;
+		}else if(data.supporttimeFrom ==""){
+			alert("시작시간을 선택 해주세요.");
+			return;
+		}else if(data.supporttimeTo ==""){
+			alert("종료시간을 선택 해주세요.");
+			return;
+		}else if(data.supporttimeFrom > data.supporttimeTo){
+			alert("조회 시작일이 조회 종료일보다 큽니다.");
 			return;
 		}
 
@@ -978,6 +1082,7 @@ function setWorkContentsEventListener() {
 		$("input[name=goodsumQty]").val("");
 		$("input[name=reworkGoodQty]").val("");
 		$("input[name=reworkFailQty]").val("");
+		$("input[name=firsttimeGoodQty]").val("");
 		$("input[name=firsttimeFailQty]").val("");
 		$("input[name=workcontentnotes]").val("");
 
@@ -1046,33 +1151,83 @@ function setWorkContentsEventListener() {
 		if (data.fromtime == "00") {
 			alert("시작시간을 선택 해주세요.");
 			return;
-		}
-		if (data.totime == "00") {
+		}else if (data.totime == "00") {
 			alert("종료시간을 선택 해주세요.");
+			return;
+		}else if(data.fromtime > data.totime){
+			alert("조회 시작일이 조회 종료일보다 큽니다.");
 			return;
 		}
 		if (data.manhour == "") {
 			alert("공수를 입력 해주세요.");
 			return;
-		}
-		if (data.firstgoodqty == "") {
-			alert("양품을 입력 해주세요.");
+		}else if (data.manhour.indexOf('-') != -1) {
+			alert("공수는 음수값을 입력할 수 없습니다.");
+			$("input[name=workcontentmanhour]").focus();
+			return;
+		}else if (isNaN(data.manhour) || data.manhour.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=workcontentmanhour]").focus();
 			return;
 		}
 		if (data.prodqty == "") {
 			alert("생산수량을 입력 해주세요.");
 			return;
+		}else if (data.prodqty.indexOf('-') != -1) {
+			alert("생산수량은 음수값을 입력할 수 없습니다.");
+			$("input[name=prodQty]").focus();
+			return;
+		}else if (isNaN(data.prodqty) || data.prodqty.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=prodQty]").focus();
+			return;
+		}
+		if (data.firstgoodqty == "") {
+			alert("양품을 입력 해주세요.");
+			return;
+		}else if (data.firstgoodqty.indexOf('-') != -1) {
+			alert("양품은 음수값을 입력할 수 없습니다.");
+			$("input[name=firsttimeGoodQty]").focus();
+			return;
+		}else if (isNaN(data.firstgoodqty) || data.firstgoodqty.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=firsttimeGoodQty]").focus();
+			return;
 		}
 		if (data.firstfailqty == "") {
 			alert("불량을 입력 해주세요.");
+			return;
+		}else if (data.firstfailqty.indexOf('-') != -1) {
+			alert("불량은 음수값을 입력할 수 없습니다.");
+			$("input[name=firsttimeFailQty]").focus();
+			return;
+		}else if (isNaN(data.firstfailqty) || data.firstfailqty.indexOf('-') != -1) {
+			alert("불량은 문자를 입력할 수 없습니다.");
+			$("input[name=firsttimeFailQty]").focus();
+			return;
+		}
+		if (data.reworkgoodqty.indexOf('-') != -1) {
+			alert("재작업양품수량은 음수값을 입력할 수 없습니다.");
+			$("input[name=reworkGoodQty]").focus();
+			return;
+		}else if (isNaN(data.reworkgoodqty) || data.reworkgoodqty.indexOf('-') != -1) {
+			alert("재작업양품수량은 문자를 입력할 수 없습니다.");
+			$("input[name=reworkGoodQty]").focus();
+			return;
+		}
+		if (data.reworkfailqty.indexOf('-') != -1) {
+			alert("재작업불량수량은 음수값을 입력할 수 없습니다.");
+			$("input[name=reworkFailQty]").focus();
+			return;
+		}else if (isNaN(data.reworkfailqty) || data.reworkfailqty.indexOf('-') != -1) {
+			alert("재작업불량수량은 문자를 입력할 수 없습니다.");
+			$("input[name=reworkFailQty]").focus();
 			return;
 		}
 		if(Number(data.firstgoodqty)+Number(data.firstfailqty)!=Number(data.prodqty)){
 			alert("불량 및 양품 합산수량을 확인 해주세요.");
 			return;
 		}
-		
-
 
 		let url = CORE_URL + '/work-contents/';
 		//		let url = 'http://idrenvision.iptime.org:8271/work-contents';
@@ -1122,7 +1277,82 @@ function setWorkContentsEventListener() {
 		data.firsttimeFailQty = $("input[name=firsttimeFailQty]").val();
 		data.notes = $("input[name=workcontentnotes]").val();
 		
-
+		if (data.worktimeFrom == "00") {
+			alert("시작시간을 선택 해주세요.");
+			return;
+		}else if (data.worktimeTo == "00") {
+			alert("종료시간을 선택 해주세요.");
+			return;
+		}else if(data.worktimeFrom > data.worktimeTo){
+			alert("조회 시작일이 조회 종료일보다 큽니다.");
+			return;
+		}
+		if (data.manhour == "") {
+			alert("공수를 입력 해주세요.");
+			return;
+		}else if (data.manhour.indexOf('-') != -1) {
+			alert("공수는 음수값을 입력할 수 없습니다.");
+			$("input[name=workcontentmanhour]").focus();
+			return;
+		}else if (isNaN(data.manhour) || data.manhour.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=workcontentmanhour]").focus();
+			return;
+		}
+		if (data.prodQty == "") {
+			alert("생산수량을 입력 해주세요.");
+			return;
+		}else if (data.prodQty.indexOf('-') != -1) {
+			alert("생산수량은 음수값을 입력할 수 없습니다.");
+			$("input[name=prodQty]").focus();
+			return;
+		}else if (isNaN(data.prodQty) || data.prodQty.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=prodQty]").focus();
+			return;
+		}
+		if (data.firsttimeGoodQty == "") {
+			alert("양품을 입력 해주세요.");
+			return;
+		}else if (data.firsttimeGoodQty.indexOf('-') != -1) {
+			alert("양품은 음수값을 입력할 수 없습니다.");
+			$("input[name=firsttimeGoodQty]").focus();
+			return;
+		}else if (isNaN(data.firsttimeGoodQty) || data.firsttimeGoodQty.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=firsttimeGoodQty]").focus();
+			return;
+		}
+		if (data.firsttimeFailQty == "") {
+			alert("불량을 입력 해주세요.");
+			return;
+		}else if (data.firsttimeFailQty.indexOf('-') != -1) {
+			alert("불량은 음수값을 입력할 수 없습니다.");
+			$("input[name=firsttimeFailQty]").focus();
+			return;
+		}else if (isNaN(data.firsttimeFailQty) || data.firsttimeFailQty.indexOf('-') != -1) {
+			alert("불량은 문자를 입력할 수 없습니다.");
+			$("input[name=firsttimeFailQty]").focus();
+			return;
+		}
+		if (data.reworkGoodQty.indexOf('-') != -1) {
+			alert("재작업양품수량은 음수값을 입력할 수 없습니다.");
+			$("input[name=reworkGoodQty]").focus();
+			return;
+		}else if (isNaN(data.reworkGoodQty) || data.reworkGoodQty.indexOf('-') != -1) {
+			alert("재작업양품수량은 문자를 입력할 수 없습니다.");
+			$("input[name=reworkGoodQty]").focus();
+			return;
+		}
+		if (data.reworkFailQty.indexOf('-') != -1) {
+			alert("재작업불량수량은 음수값을 입력할 수 없습니다.");
+			$("input[name=reworkFailQty]").focus();
+			return;
+		}else if (isNaN(data.reworkFailQty) || data.reworkFailQty.indexOf('-') != -1) {
+			alert("재작업불량수량은 문자를 입력할 수 없습니다.");
+			$("input[name=reworkFailQty]").focus();
+			return;
+		}
 		if(Number(data.firsttimeGoodQty)+Number(data.firsttimeFailQty)!=Number(data.prodQty)){
 			alert("불량 및 양품 합산수량을 확인 해주세요.");
 			return;
@@ -1244,9 +1474,25 @@ function setNonconFormityEventListener() {
 		if (data.firstrejectqty == "") {
 			alert("본을 입력 해주세요.");
 			return;
+		}else if (data.firstrejectqty.indexOf('-') != -1) {
+			alert("본은 음수값을 입력할 수 없습니다.");
+			$("input[name=firsttimeRejectQty]").focus();
+			return;
+		}else if (isNaN(data.firstrejectqty) || data.firstrejectqty.indexOf('-') != -1) {
+			alert("본은 문자를 입력할 수 없습니다.");
+			$("input[name=firsttimeRejectQty]").focus();
+			return;
 		}
 		if (data.reworkrejectqty == "") {
 			alert("재투입을 입력 해주세요.");
+			return;
+		}else if (data.reworkrejectqty.indexOf('-') != -1) {
+			alert("재투입은 음수값을 입력할 수 없습니다.");
+			$("input[name=reworkRejectQty]").focus();
+			return;
+		}else if (isNaN(data.reworkrejectqty) || data.reworkrejectqty.indexOf('-') != -1) {
+			alert("재투입은 문자를 입력할 수 없습니다.");
+			$("input[name=reworkRejectQty]").focus();
 			return;
 		}
 		
@@ -1293,9 +1539,25 @@ function setNonconFormityEventListener() {
 		if (data.firsttimeRejectQty == "") {
 			alert("본을 선택 하세요.");
 			return;
+		}else if (data.firsttimeRejectQty.indexOf('-') != -1) {
+			alert("본은 음수값을 입력할 수 없습니다.");
+			$("input[name=firsttimeRejectQty]").focus();
+			return;
+		}else if (isNaN(data.firsttimeRejectQty) || data.firsttimeRejectQty.indexOf('-') != -1) {
+			alert("본은 문자를 입력할 수 없습니다.");
+			$("input[name=firsttimeRejectQty]").focus();
+			return;
 		}
 		if (data.reworkRejectQty == "") {
 			alert("재투입을 선택 하세요.");
+			return;
+		}else if (data.reworkRejectQty.indexOf('-') != -1) {
+			alert("재투입은 음수값을 입력할 수 없습니다.");
+			$("input[name=reworkRejectQty]").focus();
+			return;
+		}else if (isNaN(data.reworkRejectQty) || data.reworkRejectQty.indexOf('-') != -1) {
+			alert("재투입은 문자를 입력할 수 없습니다.");
+			$("input[name=reworkRejectQty]").focus();
 			return;
 		}
 		if (data.rejectItemid == "") {
@@ -1306,7 +1568,7 @@ function setNonconFormityEventListener() {
 			alert("불량유형을 선택 하세요.");
 			return;
 		}
-
+		
 		let url = '/rejectContents/modify';
 
 		$.ajax({
@@ -1445,17 +1707,35 @@ function setNonOperationEventListener() {
 		if (data.fromtime == "00") {
 			alert("시작시간을 선택 해주세요.");
 			return;
-		}
-		if (data.totime == "00") {
+		}else if (data.totime == "00") {
 			alert("종료시간을 선택 해주세요.");
+			return;
+		}else if(data.fromtime > data.totime) {
+			alert("조회 시작일이 조회 종료일보다 큽니다.");
 			return;
 		}
 		if (data.man == "") {
 			alert("인원을 입력 해주세요.");
 			return;
+		}else if (data.man.indexOf('-') != -1) {
+			alert("인원은 음수값을 입력할 수 없습니다.");
+			$("input[name=nonhands]").focus();
+			return;
+		}else if (isNaN(data.man) || data.man.indexOf('-') != -1) {
+			alert("인원은 문자를 입력할 수 없습니다.");
+			$("input[name=nonhands]").focus();
+			return;
 		}
 		if (data.manhour == "") {
 			alert("공수를 입력 해주세요.");
+			return;
+		}else if (data.manhour.indexOf('-') != -1) {
+			alert("공수는 음수값을 입력할 수 없습니다.");
+			$("input[name=nonmanhour]").focus();
+			return;
+		}else if (isNaN(data.manhour) || data.manhour.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=nonmanhour]").focus();
 			return;
 		}
 		if (data.contentcause == "") {
@@ -1503,8 +1783,42 @@ function setNonOperationEventListener() {
 		data.cause = $("select[name=cause]").val();
 		data.correctiveaction = $("input[name=correctiveAction]").val();
 		
-		if (data.personid == "") {
-			alert("작업자를 선택 하세요.");
+		if (data.notoperatetimeFrom == "00") {
+			alert("시작시간을 선택 해주세요.");
+			return;
+		}else if (data.notoperatetimeTo == "00") {
+			alert("종료시간을 선택 해주세요.");
+			return;
+		}else if(data.notoperatetimeFrom > data.notoperatetimeTo) {
+			alert("조회 시작일이 조회 종료일보다 큽니다.");
+			return;
+		}
+		if (data.hands == "") {
+			alert("인원을 입력 해주세요.");
+			return;
+		}else if (data.hands.indexOf('-') != -1) {
+			alert("인원은 음수값을 입력할 수 없습니다.");
+			$("input[name=nonhands]").focus();
+			return;
+		}else if (isNaN(data.hands) || data.hands.indexOf('-') != -1) {
+			alert("인원은 문자를 입력할 수 없습니다.");
+			$("input[name=nonhands]").focus();
+			return;
+		}
+		if (data.manhour == "") {
+			alert("공수를 입력 해주세요.");
+			return;
+		}else if (data.manhour.indexOf('-') != -1) {
+			alert("공수는 음수값을 입력할 수 없습니다.");
+			$("input[name=nonmanhour]").focus();
+			return;
+		}else if (isNaN(data.manhour) || data.manhour.indexOf('-') != -1) {
+			alert("공수는 문자를 입력할 수 없습니다.");
+			$("input[name=nonmanhour]").focus();
+			return;
+		}
+		if (data.cause == "") {
+			alert("내용/원인을 선택 해주세요.");
 			return;
 		}
 
@@ -2163,8 +2477,11 @@ function personfind(data) {
 }
 
 function resetWorkDailyReport() {
+	let today = new Date();
+	let WorkDate = today.getFullYear().toString() + '-' + (today.getMonth()+1).toString() + '-' + today.getDate().toString();
+		
 	$("input[name=ruleid]").val("");
-	$("input[name=workDate]").val("");
+	$("input[name=workDate]").val(WorkDate);
 	$("select[name=blockid]").val("");
 	//$("select[name=factoryid]").val("");
 	$("select[name=groupid]").val("");

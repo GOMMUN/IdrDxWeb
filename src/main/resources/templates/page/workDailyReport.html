@@ -183,7 +183,7 @@
 									<th data-field="supporttimeFrom" data-sortable="true" data-align="center">지원시작시간
 									</th>
 									<th data-field="supporttimeTo" data-sortable="true" data-align="center">지원종료시간</th>
-									<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
+									<th data-field="manhour" data-sortable="true" data-align="center">공수(M/H)</th>
 									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
 										data-formatter="workerSupportFormatter" data-events="operateEvents">수정</th>
 								</tr>
@@ -220,7 +220,7 @@
 									<th data-field="worktimeFrom" data-sortable="true" data-align="center">작업시작시간
 									</th>
 									<th data-field="worktimeTo" data-sortable="true" data-align="center">작업종료시간</th>
-									<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
+									<th data-field="manhour" data-sortable="true" data-align="center">공수(M/H)</th>
 									<th data-field="prodQty" data-sortable="true" data-align="center">생산수량</th>
 									<th data-field="goodsumQty" data-sortable="true" data-align="center">양품합계</th>
 									<th data-field="firsttimeGoodQty" data-sortable="true" data-align="center">양품
@@ -307,8 +307,8 @@
 									</th>
 									<th data-field="notoperatetimeTo" data-sortable="true" data-align="center">비가동종료
 									</th>
-									<th data-field="hands" data-sortable="true" data-align="center">인원</th>
-									<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
+									<th data-field="hands" data-sortable="true" data-align="center">인원(Man)</th>
+									<th data-field="manhour" data-sortable="true" data-align="center">공수(M/H)</th>
 									<th data-field="causeName" data-sortable="true" data-align="center">내용/원인</th>
 									<th data-field="correctiveaction" data-sortable="true" data-align="center">조치사항
 									</th>
@@ -670,10 +670,10 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-6">
-											<label for="">공수</label>
+											<label for="">공수(M/H)</label>
 											<input type="text" name="workcontentmanhour"
 												class="form-control-custom form-control-user" id="Airlift"
-												placeholder='공수'>
+												placeholder='공수(M/H)'>
 										</div>
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<label for="">생산수량</label>
@@ -697,17 +697,17 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<div class="col-sm-6">
-											<label for="">재작업불량수량</label>
-											<input type="text" name="reworkFailQty"
-												class="form-control-custom form-control-user" id="Airlift"
-												placeholder='재작업불량'>
-										</div>
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<label for="">재작업양품수량</label>										
 											<input type="text" name="reworkGoodQty"
 												class="form-control-custom form-control-user" id="personnel"
 												placeholder='재작업양품'>
+										</div>
+										<div class="col-sm-6">
+											<label for="">재작업불량수량</label>
+											<input type="text" name="reworkFailQty"
+												class="form-control-custom form-control-user" id="Airlift"
+												placeholder='재작업불량'>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -856,16 +856,16 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label for="">인원</label>
+											<label for="">인원(Man)</label>
 											<input type="text" name="nonhands"
 												class="form-control-custom form-control-user" id="personnel"
-												placeholder='인원'>
+												placeholder='인원(Man)'>
 										</div>
 										<div class="col-sm-6">
-											<label for="">공수</label>
+											<label for="">공수(M/H)</label>
 											<input type="text" name="nonmanhour"
 												class="form-control-custom form-control-user" id="Airlift"
-												placeholder='공수'>
+												placeholder='공수(M/H)'>
 										</div>
 									</div>
 									<div class="form-group row">

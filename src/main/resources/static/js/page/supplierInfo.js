@@ -81,13 +81,21 @@ function initSetting() {
 
 	
 		//validation check
-		if (data.vendorid == "") {
-			alert("공급업체ID를 입력하세요.");
-			$("select[name=vendorid]").focus();
-			return;
-		} else if (data.factoryid == "") {
+		if (data.factoryid == "") {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
+			return;
+		} else if (data.vendorid == "") {
+			alert("공급업체ID를 입력하세요.");
+			$("input[name=vendorid]").focus();
+			return;
+		} else if (data.vendorname == "") {
+			alert("공급업체명을 입력하세요.");
+			$("input[name=vendorname]").focus();
+			return;
+		} else if (data.vendornickname == "") {
+			alert("공급업체별칭을 입력하세요.");
+			$("input[name=vendornickname]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
@@ -134,13 +142,21 @@ function initSetting() {
 		data.eventuser = localStorage.getItem("username");
 		
 		//validation check
-		if (data.vendorid == "") {
-			alert("공급업체ID를 입력하세요.");
-			$("select[name=vendorid]").focus();
-			return;
-		} else if (data.factoryid == "") {
+		if (data.factoryid == "") {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
+			return;
+		} else if (data.vendorid == "") {
+			alert("공급업체ID를 입력하세요.");
+			$("input[name=vendorid]").focus();
+			return;
+		} else if (data.vendorname == "") {
+			alert("공급업체명을 입력하세요.");
+			$("input[name=vendorname]").focus();
+			return;
+		} else if (data.vendornickname == "") {
+			alert("공급업체별칭을 입력하세요.");
+			$("input[name=vendornickname]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");

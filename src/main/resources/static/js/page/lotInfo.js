@@ -88,6 +88,46 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
+		} else if (data.materialid == "") {
+			alert("자재코드를 입력하세요.");
+			$("input[name=materialid]").focus();
+			return;
+		} else if (data.materialname == "") {
+			alert("자재명을 입력하세요.");
+			$("input[name=materialname]").focus();
+			return;
+		} else if (data.lotid == "") {
+			alert("LOT ID를 입력하세요.");
+			$("input[name=lotid]").focus();
+			return;
+		} else if (data.lotname == "") {
+			alert("LOT명을 입력하세요.");
+			$("input[name=lotname]").focus();
+			return;
+		} else if (data.lotsize == "") {
+			alert("크기를 입력하세요.");
+			$("input[name=lotsize]").focus();
+			return;
+		} else if (data.lotunit == "") {
+			alert("단위를 입력하세요.");
+			$("input[name=lotunit]").focus();
+			return;
+		} else if (data.fromlinecode == "") {
+			alert("From 공정코드를 입력하세요.");
+			$("input[name=fromlinecode]").focus();
+			return;
+		} else if (data.fromlinecnt == "") {
+			alert("From 수량을 입력하세요.");
+			$("input[name=fromlinecnt]").focus();
+			return;
+		} else if (data.tolinecode == "") {
+			alert("To 공정코드를 입력하세요.");
+			$("input[name=tolinecode]").focus();
+			return;
+		} else if (data.tolinecnt == "") {
+			alert("To 수량을 입력하세요.");
+			$("input[name=tolinecnt]").focus();
+			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
@@ -140,11 +180,52 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
+		} else if (data.materialid == "") {
+			alert("자재코드를 입력하세요.");
+			$("input[name=materialid]").focus();
+			return;
+		} else if (data.materialname == "") {
+			alert("자재명을 입력하세요.");
+			$("input[name=materialname]").focus();
+			return;
+		} else if (data.lotid == "") {
+			alert("LOT ID를 입력하세요.");
+			$("input[name=lotid]").focus();
+			return;
+		} else if (data.lotname == "") {
+			alert("LOT명을 입력하세요.");
+			$("input[name=lotname]").focus();
+			return;
+		} else if (data.lotsize == "") {
+			alert("크기를 입력하세요.");
+			$("input[name=lotsize]").focus();
+			return;
+		} else if (data.lotunit == "") {
+			alert("단위를 입력하세요.");
+			$("input[name=lotunit]").focus();
+			return;
+		} else if (data.fromlinecode == "") {
+			alert("From 공정코드를 입력하세요.");
+			$("input[name=fromlinecode]").focus();
+			return;
+		} else if (data.fromlinecnt == "") {
+			alert("From 수량을 입력하세요.");
+			$("input[name=fromlinecnt]").focus();
+			return;
+		} else if (data.tolinecode == "") {
+			alert("To 공정코드를 입력하세요.");
+			$("input[name=tolinecode]").focus();
+			return;
+		} else if (data.tolinecnt == "") {
+			alert("To 수량을 입력하세요.");
+			$("input[name=tolinecnt]").focus();
+			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
 		} 
+
 		
 		let url = '/lotinfo/modify';
 

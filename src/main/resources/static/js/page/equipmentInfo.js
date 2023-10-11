@@ -83,20 +83,28 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
+		} else if (data.equipmentid == "") {
+			alert("장비코드를 입력하세요.");
+			$("input[name=equipmentid]").focus();
+			return;
+		} else if (data.equipmentname == "") {
+			alert("장비명을 입력하세요.");
+			$("input[name=equipmentname]").focus();
+			return;
 		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-			alert("고장률을 확인해주세요.");
+			alert("고장률을 입력하세요.");
 			$("input[name=failurerate]").focus();
 			return;
 		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-			alert("복구시간을 확인해주세요.");
+			alert("복구시간을 입력하세요.");
 			$("input[name=recoverytime]").focus();
 			return;
 		} else if (isNaN(data.errorrate) || data.errorrate == "") {
-			alert("불량률을 확인해주세요.");
+			alert("불량률을 입력하세요.");
 			$("input[name=errorrate]").focus();
 			return;
 		} else if (isNaN(data.buffer) || data.buffer == "") {
-			alert("Buffer를 확인해주세요.");
+			alert("Buffer를 입력하세요.");
 			$("input[name=buffer]").focus();
 			return;
 		} else if (data.isusable == "") {
@@ -148,31 +156,35 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
-		} else if (data.isusable == "") {
-			alert("사용여부를 선택해주세요.");
-			$("select[name=isusable]").focus();
+		} else if (data.equipmentid == "") {
+			alert("장비코드를 입력하세요.");
+			$("input[name=equipmentid]").focus();
+			return;
+		} else if (data.equipmentname == "") {
+			alert("장비명을 입력하세요.");
+			$("input[name=equipmentname]").focus();
 			return;
 		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-			alert("고장률을 확인해주세요.");
+			alert("고장률을 입력하세요.");
 			$("input[name=failurerate]").focus();
 			return;
 		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-			alert("복구시간을 확인해주세요.");
+			alert("복구시간을 입력하세요.");
 			$("input[name=recoverytime]").focus();
 			return;
 		} else if (isNaN(data.errorrate) || data.errorrate == "") {
-			alert("불량률을 확인해주세요.");
+			alert("불량률을 입력하세요.");
 			$("input[name=errorrate]").focus();
 			return;
-		}  else if (isNaN(data.buffer) || data.buffer == "") {
-			alert("Buffer를 확인해주세요.");
+		} else if (isNaN(data.buffer) || data.buffer == "") {
+			alert("Buffer를 입력하세요.");
 			$("input[name=buffer]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
-		}  
+		} 
 		
 		let url = '/equipmentinfo/modify';
 

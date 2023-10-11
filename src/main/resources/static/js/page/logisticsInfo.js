@@ -85,29 +85,41 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
-		} else if (data.isusable == "") {
-			alert("사용여부를 선택해주세요.");
-			$("select[name=isusable]").focus();
+		} else if (data.logisticsid == "") {
+			alert("물류코드를 입력하세요.");
+			$("input[name=logisticsid]").focus();
+			return;
+		} else if (data.logisticsname == "") {
+			alert("물류명을 입력하세요.");
+			$("input[name=logisticsname]").focus();
 			return;
 		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-			alert("고장률을 확인해주세요.");
+			alert("고장률을 입력하세요.");
 			$("input[name=failurerate]").focus();
 			return;
 		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-			alert("복구시간을 확인해주세요.");
+			alert("복구시간을 입력하세요.");
 			$("input[name=recoverytime]").focus();
 			return;
 		} else if (isNaN(data.speed) || data.speed == "") {
-			alert("속도를 확인해주세요.");
+			alert("속도를 입력하세요.");
 			$("input[name=speed]").focus();
 			return;
 		} else if (isNaN(data.loadingtime) || data.loadingtime == "") {
-			alert("로딩시간을 확인해주세요.");
+			alert("로딩시간을 입력하세요.");
 			$("input[name=loadingtime]").focus();
 			return;
 		} else if (isNaN(data.unloadingtime) || data.unloadingtime == "") {
-			alert("언로딩시간을 확인해주세요.");
+			alert("언로딩시간을 입력하세요.");
 			$("input[name=unloadingtime]").focus();
+			return;
+		} else if (isNaN(data.lotsize) || data.lotsize == "") {
+			alert("Lot크기를 입력하세요.");
+			$("input[name=lotsize]").focus();
+			return;
+		} else if (data.isusable == "") {
+			alert("사용여부를 선택해주세요.");
+			$("select[name=isusable]").focus();
 			return;
 		}  
 
@@ -153,31 +165,43 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
+		} else if (data.logisticsid == "") {
+			alert("물류코드를 입력하세요.");
+			$("input[name=logisticsid]").focus();
+			return;
+		} else if (data.logisticsname == "") {
+			alert("물류명을 입력하세요.");
+			$("input[name=logisticsname]").focus();
+			return;
+		} else if (isNaN(data.failurerate) || data.failurerate == "") {
+			alert("고장률을 입력하세요.");
+			$("input[name=failurerate]").focus();
+			return;
+		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
+			alert("복구시간을 입력하세요.");
+			$("input[name=recoverytime]").focus();
+			return;
+		} else if (isNaN(data.speed) || data.speed == "") {
+			alert("속도를 입력하세요.");
+			$("input[name=speed]").focus();
+			return;
+		} else if (isNaN(data.loadingtime) || data.loadingtime == "") {
+			alert("로딩시간을 입력하세요.");
+			$("input[name=loadingtime]").focus();
+			return;
+		} else if (isNaN(data.unloadingtime) || data.unloadingtime == "") {
+			alert("언로딩시간을 입력하세요.");
+			$("input[name=unloadingtime]").focus();
+			return;
+		} else if (isNaN(data.lotsize) || data.lotsize == "") {
+			alert("Lot크기를 입력하세요.");
+			$("input[name=lotsize]").focus();
+			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
-		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-			alert("고장률을 확인해주세요.");
-			$("input[name=failurerate]").focus();
-			return;
-		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-			alert("복구시간을 확인해주세요.");
-			$("input[name=recoverytime]").focus();
-			return;
-		} else if (isNaN(data.speed) || data.speed == "") {
-			alert("속도를 확인해주세요.");
-			$("input[name=speed]").focus();
-			return;
-		} else if (isNaN(data.loadingtime) || data.loadingtime == "") {
-			alert("로딩시간을 확인해주세요.");
-			$("input[name=loadingtime]").focus();
-			return;
-		} else if (isNaN(data.unloadingtime) || data.unloadingtime == "") {
-			alert("언로딩시간을 확인해주세요.");
-			$("input[name=unloadingtime]").focus();
-			return;
-		} 
+		}  
 		
 		let url = '/logisticsinfo/modify';
 

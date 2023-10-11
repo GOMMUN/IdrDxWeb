@@ -83,6 +83,18 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
+		} else if (data.equipmentid == "") {
+			alert("설비코드를 선택해주세요.");
+			$("select[name=equipmentid]").focus();
+			return;
+		} else if (data.locationid == "") {
+			alert("라인코드를 입력하세요.");
+			$("input[name=locationid]").focus();
+			return;
+		} else if (data.locationname == "") {
+			alert("라인명을 입력하세요.");
+			$("input[name=locationname]").focus();
+			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
@@ -128,11 +140,23 @@ function initSetting() {
 			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
+		} else if (data.equipmentid == "") {
+			alert("설비코드를 선택해주세요.");
+			$("select[name=equipmentid]").focus();
+			return;
+		} else if (data.locationid == "") {
+			alert("라인코드를 입력하세요.");
+			$("input[name=locationid]").focus();
+			return;
+		} else if (data.locationname == "") {
+			alert("라인명을 입력하세요.");
+			$("input[name=locationname]").focus();
+			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
-		} 
+		}  
 		
 		let url = '/lineinfo/modify';
 

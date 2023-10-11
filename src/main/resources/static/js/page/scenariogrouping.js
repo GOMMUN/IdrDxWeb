@@ -134,12 +134,24 @@ function setEventListener (){
 	
 		//validation check
 		if (data.scenarioid == "") {
-			alert("시나리오ID를 입력해주세요.");
+			alert("시나리오ID를 입력하세요.");
 			$("input[name=scenarioid]").focus();
 			return;
 		} else if (data.scenarionm == "") {
-			alert("시나리오명을 입력해주세요.");
+			alert("시나리오명을 입력하세요.");
 			$("input[name=scenarionm]").focus();
+			return;
+		}  else if (data.axisid == "") {
+			alert("분류 축(Axis)을 입력하세요.");
+			$("input[name=axisid]").focus();
+			return;
+		}  else if (data.groupingid == "") {
+			alert("1st DataSet을 입력하세요.");
+			$("input[name=groupingid]").focus();
+			return;
+		}  else if (data.isusable == "") {
+			alert("사용여부를 선택해주세요.");
+			$("select[name=isusable]").focus();
 			return;
 		} 
 
@@ -179,14 +191,26 @@ function setEventListener (){
 	
 		//validation check
 		if (data.scenarioid == "") {
-			alert("시나리오ID를 입력해주세요.");
+			alert("시나리오ID를 입력하세요.");
 			$("input[name=scenarioid]").focus();
 			return;
 		} else if (data.scenarionm == "") {
-			alert("시나리오명을 입력해주세요.");
+			alert("시나리오명을 입력하세요.");
 			$("input[name=scenarionm]").focus();
 			return;
-		} 
+		}  else if (data.axisid == "") {
+			alert("분류 축(Axis)을 입력하세요.");
+			$("input[name=axisid]").focus();
+			return;
+		}  else if (data.groupingid == "") {
+			alert("1st DataSet을 입력하세요.");
+			$("input[name=groupingid]").focus();
+			return;
+		}  else if (data.isusable == "") {
+			alert("사용여부를 선택해주세요.");
+			$("select[name=isusable]").focus();
+			return;
+		}  
 
 		let url = '/scenario/modify1';
 
@@ -267,15 +291,23 @@ function setEventListener (){
 		data.isusable = $("select[name=isusable]").val();
 	
 		//validation check
-		if (data.pqcdid == "") {
+		if (data.scenarioid == "") {
+			alert("시나리오 ID를 입력하세요.");
+			$("input[name=scenarioid]").focus();
+			return;
+		} else if (data.pqcdid == "") {
 			alert("주/야 구분을 선택해주세요.");
 			$("select[name=pqcdid]").focus();
 			return;
 		} else if (data.activityid == "") {
-			alert("Activity ID를 입력해주세요.");
+			alert("Activity ID를 입력하세요.");
 			$("input[name=activityid]").focus();
 			return;
-		} 
+		} else if (data.isusable == "") {
+			alert("사용여부를 선택해주세요.");
+			$("select[name=isusable]").focus();
+			return;
+		}
 
 		let url = '/scenario/create2';
 

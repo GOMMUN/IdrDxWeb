@@ -7,6 +7,7 @@ $(function() {
 });
 
 function search() {
+	
 	$(document).ready(function() {
 	    // 오늘의 날짜를 얻습니다.
 	    var today = new Date();
@@ -20,12 +21,17 @@ function search() {
 	    // input 요소에 날짜를 설정합니다.
 	    $('#startid').val(formattedDate);
 	    $('#endid').val(formattedDate);
+	    
+	    main(formattedDate, formattedDate);
 	});
 
 	$("#endid").change(function() {
 		var start = $("input[name=start]").val();
 		var end = $("input[name=end]").val();
-
+		main(start, end);
+	});
+	
+	function main(start, end) {	
 		var params = {
 			start: start,
 			end: end
@@ -94,7 +100,7 @@ function search() {
 			$table.bootstrapTable('hideLoading')
 		});*/
 
-	});
+	}
 
 
 }

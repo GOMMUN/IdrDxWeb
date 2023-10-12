@@ -93,10 +93,6 @@ function initSetting() {
 			alert("공급업체명을 입력하세요.");
 			$("input[name=vendorname]").focus();
 			return;
-		} else if (data.vendornickname == "") {
-			alert("공급업체별칭을 입력하세요.");
-			$("input[name=vendornickname]").focus();
-			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
@@ -153,10 +149,6 @@ function initSetting() {
 		} else if (data.vendorname == "") {
 			alert("공급업체명을 입력하세요.");
 			$("input[name=vendorname]").focus();
-			return;
-		} else if (data.vendornickname == "") {
-			alert("공급업체별칭을 입력하세요.");
-			$("input[name=vendornickname]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");

@@ -83,13 +83,21 @@ function initSetting() {
 
 	
 		//validation check
-		if (data.materialid == "") {
+		if (data.factoryid == "") {
+			alert("공장을 선택해주세요.");
+			$("select[name=factoryid]").focus();
+			return;
+		}else if (data.materialid == "") {
 			alert("자재마스터ID를 입력하세요.");
 			$("input[name=materialid]").focus();
 			return;
 		} else if (data.factoryid == "") {
-			alert("공장을 선택해주세요.");
-			$("select[name=factoryid]").focus();
+			alert("자재명을 입력하세요.");
+			$("input[name=materialname]").focus();
+			return;
+		} else if (data.receivinginspection == "") {
+			alert("수입검사 여부를 선택해주세요.");
+			$("select[name=receivinginspection]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
@@ -135,13 +143,21 @@ function initSetting() {
 		data.eventuser = localStorage.getItem("username");
 		
 		//validation check
-		if (data.materialid == "") {
+		if (data.factoryid == "") {
+			alert("공장을 선택해주세요.");
+			$("select[name=factoryid]").focus();
+			return;
+		}else if (data.materialid == "") {
 			alert("자재마스터ID를 입력하세요.");
 			$("input[name=materialid]").focus();
 			return;
 		} else if (data.factoryid == "") {
-			alert("공장을 선택해주세요.");
-			$("select[name=factoryid]").focus();
+			alert("자재명을 입력하세요.");
+			$("input[name=materialname]").focus();
+			return;
+		} else if (data.receivinginspection == "") {
+			alert("수입검사 여부를 선택해주세요.");
+			$("select[name=receivinginspection]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");

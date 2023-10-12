@@ -72,15 +72,33 @@ function initSetting() {
 		
 		//validation check
 		 if (data.factoryid == "") {
-			alert("공장을 선택하세요.");
+			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.shiftid == "") {
-			alert("그룹/SHIFT 코드를 선텍하세요.");
-			$("select[name=shiftid]").focus();
+			alert("그룹/SHIFT 코드를 입력하세요.");
+			$("input[name=shiftid]").focus();
+			return;
+		} else if (data.shiftname == "") {
+			alert("그룹/Shift명을 선택해주세요.");
+			$("select[name=shiftname]").focus();
+			return;
+		} else if (data.shifttype == "") {
+			alert("그룹/Shift타입을 입력하세요.");
+			$("input[name=shifttype]").focus();
+			return;
+		}
+		if (data.starttime == "00") {
+			alert("시작시간을 선택해주세요.");
+			return;
+		}else if (data.endtime == "00") {
+			alert("종료시간을 선택해주세요.");
+			return;
+		}else if(data.starttime > data.endtime){
+			alert("조회 시작일이 조회 종료일보다 큽니다.");
 			return;
 		} else if (data.isusable == "") {
-			alert("사용여부를 선택하세요.");
+			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
 		}
@@ -122,16 +140,34 @@ function initSetting() {
 		data.eventuser = localStorage.getItem("username");
 
 		//validation check
-		 if (data.factoryid == "") {
-			alert("공장을 선택하세요.");
+		if (data.factoryid == "") {
+			alert("공장을 선택해주세요.");
 			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.shiftid == "") {
-			alert("그룹/SHIFT 명을 선텍하세요.");
-			$("select[name=shiftid]").focus();
+			alert("그룹/SHIFT 코드를 입력하세요.");
+			$("input[name=shiftid]").focus();
+			return;
+		} else if (data.shiftname == "") {
+			alert("그룹/Shift명을 선택해주세요.");
+			$("select[name=shiftname]").focus();
+			return;
+		} else if (data.shifttype == "") {
+			alert("그룹/Shift타입을 입력하세요.");
+			$("input[name=shifttype]").focus();
+			return;
+		}
+		if (data.starttime == "00") {
+			alert("시작시간을 선택해주세요.");
+			return;
+		}else if (data.endtime == "00") {
+			alert("종료시간을 선택해주세요.");
+			return;
+		}else if(data.starttime > data.endtime){
+			alert("조회 시작일이 조회 종료일보다 큽니다.");
 			return;
 		} else if (data.isusable == "") {
-			alert("사용여부를 선택하세요.");
+			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
 		}

@@ -7,7 +7,20 @@ $(function() {
 });
 
 function search() {
-
+	$(document).ready(function() {
+	    // 오늘의 날짜를 얻습니다.
+	    var today = new Date();
+	    
+	    // 날짜를 "YYYY-MM-DD" 형식으로 변환합니다.
+	    var year = today.getFullYear();
+	    var month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1이 필요하며, 두 자리 숫자로 만듭니다.
+	    var day = today.getDate().toString().padStart(2, '0'); // 날짜도 두 자리 숫자로 만듭니다.
+	    var formattedDate = year + '-' + month + '-' + day;
+	    
+	    // input 요소에 날짜를 설정합니다.
+	    $('#startid').val(formattedDate);
+	    $('#endid').val(formattedDate);
+	});
 
 	$("#endid").change(function() {
 		var start = $("input[name=start]").val();

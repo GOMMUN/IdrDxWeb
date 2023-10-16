@@ -58,10 +58,10 @@
 							<i class="fa fa-trash"></i> Simulation
 						</button>
 					</div>
-					<table id="table" data-toggle="table" data-toolbar="#toolbarWorkDailyReport" data-height="350"
+					<table id="table1" data-toggle="table" data-toolbar="#toolbarWorkDailyReport" data-height="350"
 						data-multiple-select-row="true" data-click-to-select="true" data-search="true"
 						data-show-columns="true" data-show-columns-toggle-all="true" data-pagination="true"
-						data-ajax="select">
+						>
 						<thead class="thead-light">
 							<tr>
 								<th data-field="state" data-checkbox="true"></th>
@@ -73,7 +73,7 @@
 								<th data-field="end_time" data-sortable="true" data-align="center">납기</th>
 								<th data-field="lot_work" data-sortable="true" data-align="center">총 생산계획</th>
 								<th data-field="notworkcolumn" data-sortable="false" data-align="center"
-									data-formatter="tableOperateFormatter" data-events="operateEvents">수정
+									data-formatter="tableOperateFormatter" data-events="simulOperateEvents">수정
 								</th>
 							</tr>
 						</thead>
@@ -145,7 +145,7 @@
 											</a>
 										</div>
 										<div class="col-lg-2">
-											<a id="addLogisticsInfoModalClose"
+											<a id="ModalClose"
 												class="btn btn-google btn-user btn-block">
 												X
 											</a>

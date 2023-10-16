@@ -1,20 +1,21 @@
 let item_id = null;
 let element = null;
-let tableOperation=0;
+let tableOperation = null;
 $(function() {
 	setEventListener();
 	select();
 });
 
 function setEventListener() {
-	let $grid = $("#table");
+	let $grid = $("#table1");
 	let $addbtn = $("#addbtn");
 	let $removebtn = $("#removebtn");
 	let $simulstart = $("#simulstart");
 	let $createbtn = $("#Create");
-
+	let $ModifyBtn = $("#Modify");
+	let $modalCloseBtn = $("#ModalClose");
 	$simulstart.click(function() {
-		
+
 		$.ajax({
 			url: "http://idrenvisionhq.iptime.org:8272/pytest",
 			type: "GET",
@@ -27,7 +28,11 @@ function setEventListener() {
 				console.error("에러: " + textStatus, errorThrown);
 			}
 		});
-		
+
+	});
+
+	$modalCloseBtn.click(function() {
+		$('#addmodal').modal('hide');
 	});
 
 	$grid.on('check.bs.table', function(row, $element) {
@@ -49,6 +54,12 @@ function setEventListener() {
 		$("#Modify").css('display', "none");
 
 		$('#addmodal').modal('show');
+		$("#rejectItemCode").val("");
+		$("input[name=ordername]").val("");
+		$("select[name=lot]").val("");
+		$("input[name=lotwork]").val("");
+		$("input[name=start]").val("");
+		$("input[name=end]").val("");
 		item();
 	});
 
@@ -64,16 +75,48 @@ function setEventListener() {
 		let date = new Date(start);
 		// 유닉스 타임 스탬프로 변환
 		let startunixTimestamp = date.getTime() / 1000; // 밀리초를 초로 변환
-		date = new Date(end);
-		let endunixTimestamp = date.getTime() / 1000; // 밀리초를 초로 변환
+		let date2 = new Date(end);
+		let endunixTimestamp = date2.getTime() / 1000; // 밀리초를 초로 변환
 
 		let data = {
-			item_id: parseInt(itemid,10),
+			item_id: parseInt(itemid, 10),
 			order_name: ordername,
-			lot_id: parseInt(lotid,10),
+			lot_id: parseInt(lotid, 10),
 			lot_work: lotwork,
 			start_time: startunixTimestamp,
 			end_time: endunixTimestamp
+		}
+
+		if (data.order_name == "") {
+			alert("주문명을 입력해주세요");
+			$("input[name=ordername]").focus;
+			return;
+		} else if (Number.isNaN(data.item_id)) {
+			$("select[name=rejectItemCode]").focus();
+			alert("아이템을 선택해주세요");
+			return;
+		} else if (Number.isNaN(data.lot_id)) {
+			alert("Lot을 선택해주세요");
+			$("select[name=lot]").focus();
+			return;
+		} else if (data.lot_work == "") {
+			alert("생산수량을 입력해주세요");
+			$("input[name=lotwork]").focus;
+			return;
+		} else if (Number.isNaN(data.start_time)) {
+			alert("날짜를 선택해주세요");
+			return;
+		} else if (Number.isNaN(data.end_time)) {
+			alert("납기를 선택해주세요");
+			return;
+		} else if (parseInt(data.lot_work, 10) < 0) {
+			alert("음수는 입력 할수 없습니다.");
+			return;
+		}
+
+		if (date > date2) {
+			alert("시작 시간이 납기보다 늦을 수 없습니다.");
+			return;
 		}
 
 		let url = 'http://localhost:8271/primary/insertplan';
@@ -85,21 +128,28 @@ function setEventListener() {
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
+				if (result.status == 200) {
 					alert("저장완료");
-					
-					
+					$('#addmodal').modal('hide');
+					select();
+				}
 			},
-			error: function(request, status, error) {
-					alert(message);	
+			error: function(result) {
+				if (result.status == 400) {
+					alert("저장실패");
+				}
 			}
 		});
-	
+
 	})
 
 
 
 	$removebtn.click(function() {		//  add 버튼
 
+		if (!confirm("생산계획 삭제 시 연관된 세부 데이터도 전부 삭제됩니다.\n정말 삭제하시겠습니까?")) {
+			return;
+		}
 		params = {
 			order_id: element.order_id
 		}
@@ -113,11 +163,17 @@ function setEventListener() {
 			dataType: "json",
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
-				$removebtn.prop('disabled', true);
-				alert("삭제 되었습니다.");
+				if (result.status == 200) {
+					$removebtn.prop('disabled', true);
+					alert("삭제 되었습니다.");
+					select();
+				} else if (result.status == 400) {
+					alert("삭제실패");
+				}
+
 			}
 		});
-		
+
 	});
 
 	$("#rejectItemCode").on("change", function() {
@@ -147,10 +203,9 @@ function setEventListener() {
 		})
 
 	})
-/*
-	$modalModifyBtn.click(function() {
-	
-	
+
+	$ModifyBtn.click(function() {
+
 		let itemid = $("#rejectItemCode").val();
 		let ordername = $("input[name=ordername]").val();
 		let lotid = $("select[name=lot]").val();
@@ -161,11 +216,11 @@ function setEventListener() {
 		let date = new Date(start);
 		// 유닉스 타임 스탬프로 변환
 		let startunixTimestamp = date.getTime() / 1000; // 밀리초를 초로 변환
-		date = new Date(end);
-		let endunixTimestamp = date.getTime() / 1000; // 밀리초를 초로 변환
+		date2 = new Date(end);
+		let endunixTimestamp = date2.getTime() / 1000; // 밀리초를 초로 변환
 
 
-		let url = 'http://localhost:8271/primary/udpate';
+		let url = 'http://localhost:8271/primary/update';
 
 		let data = {
 			item_id: itemid,
@@ -176,7 +231,39 @@ function setEventListener() {
 			end_time: endunixTimestamp,
 			order_id: tableOperation.order_id
 		}
-		
+
+		if (data.order_name == "") {
+			alert("주문명을 입력해주세요");
+			$("input[name=ordername]").focus;
+			return;
+		} else if (itemid == "") {
+			$("select[name=rejectItemCode]").focus();
+			alert("아이템을 선택해주세요");
+			return;
+		} else if (lotid == "") {
+			alert("Lot을 선택해주세요");
+			$("select[name=lot]").focus();
+			return;
+		} else if (data.lot_work == "") {
+			alert("생산수량을 입력해주세요");
+			$("input[name=lotwork]").focus;
+			return;
+		} else if (start == "") {
+			alert("날짜를 선택해주세요");
+			return;
+		} else if (end == "") {
+			alert("납기를 선택해주세요");
+			return;
+		} else if (parseInt(data.lot_work, 10) < 0) {
+			alert("음수는 입력 할수 없습니다.");
+			return;
+		}
+
+		if (date > date2) {
+			alert("시작 시간이 납기보다 늦을 수 없습니다.");
+			return;
+		}
+
 		$.ajax({
 			url: url,
 			type: 'PUT',
@@ -185,31 +272,31 @@ function setEventListener() {
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
 
-				if (code == 200) {
+				if (result.status == 200) {
 
-					alert("저장완료");
-
+					alert("수정완료");
+					$('#addmodal').modal('hide');
+					select();
 				}
 			},
-			error: function(request, status, error) {
+			error: function(result) {
 
-				if (code == 400) {
+				if (result.status == 400) {
 					alert(message);
 				}
 			}
 		});
 	});
-*/
 
 }
 
-
 function select() {
 	var rows = []
-	$table = $("#table");
+	$table = $("#table1");
 	var url = 'http://localhost:8271/primary/productionPlan/findAll'
-	
+
 	$.get(url).then(function(res) {
+		$table.bootstrapTable('removeAll')
 		for (var i = 0; i < res.data.length; i++) {
 			rows.push({
 				order_id: res.data[i].order_id,
@@ -254,25 +341,33 @@ function item() {
 
 function tableOperateFormatter(value, row, index) {
 	return [
-		'<a class="workDailyReportModify" href="javascript:void(0)" title="수정">',
+		'<a class="simulaterModify" href="javascript:void(0)" title="수정">',
 		'<i class="fa-solid fa-pen"></i>',
 		'</a>'
 	].join('');
 }
 
-/*
-window.operateEvents = {
-	"click .workDailyReportModify": function(e, value, row, index) {
+var simulOperateEvents = {
+	"click .simulaterModify": function(e, value, row, index) {
+		item();
 		tableOperation = row;
+		
+		$("select[name=rejectItemCode]").val(row.item_name);
+
+		$("input[name=ordername]").val(row.order_name);
+		$("select[name=lot]").val(row.lot_name);
+		$("input[name=lotwork]").val(row.lot_work);
+		$("input[name=start]").val(row.start_time.slice(0, 10));
+		$("input[name=end]").val(row.end_time.slice(0, 10));
 
 		$("#Create").css('display', "none");
 		$("#Modify").css('display', "block");
 
 		$('#addmodal').modal('show');
 
-
 	}
-}*/
+
+}
 
 // 로딩창 키는 함수
 function openLoading() {

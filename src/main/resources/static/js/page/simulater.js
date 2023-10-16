@@ -15,7 +15,7 @@ function setEventListener() {
 	let $ModifyBtn = $("#Modify");
 	let $modalCloseBtn = $("#ModalClose");
 	$simulstart.click(function() {
-
+		openLoading(); // 로딩 화면 표시
 		$.ajax({
 			url: "http://idrenvisionhq.iptime.org:8272/pytest",
 			type: "GET",
@@ -26,6 +26,9 @@ function setEventListener() {
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.error("에러: " + textStatus, errorThrown);
+			},
+			complete: function() {
+				closeLoading(); // AJAX 완료 후 로딩 화면 숨기기
 			}
 		});
 
@@ -351,7 +354,7 @@ var simulOperateEvents = {
 	"click .simulaterModify": function(e, value, row, index) {
 		item();
 		tableOperation = row;
-		
+
 		$("select[name=rejectItemCode]").val(row.item_name);
 
 		$("input[name=ordername]").val(row.order_name);

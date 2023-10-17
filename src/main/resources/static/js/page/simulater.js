@@ -55,7 +55,8 @@ function setEventListener() {
 
 		$("#Create").css('display', "block");
 		$("#Modify").css('display', "none");
-
+		$("select[name=rejectItemCode]").prop('disabled', false);
+		$("select[name=lot]").prop('disabled', false);
 		$('#addmodal').modal('show');
 		$("#rejectItemCode").val("");
 		$("input[name=ordername]").val("");
@@ -179,31 +180,41 @@ function setEventListener() {
 
 	});
 
-	$("#rejectItemCode").on("change", function() {
+	$("#rejectItemCode").on("change", function(event) {
 		let url = 'http://localhost:8271/primary/getlot';
 
-		item_id = $("#rejectItemCode").val();
+		let item_id;
+		if (event.data) {
+			item_id = event.data.item_id; // 데이터에서 item_id를 가져옵니다.
+		} else {
+			item_id = $(this).val();
+		}
 
 		var params = {
 			get_id: item_id
 		}
 
-		$.get(url + '?' + $.param(params)).then(function(res) {
-			var c_reject_lot = res;
+		$.ajax({
+			url: url + '?' + $.param(params),
+			type: 'GET',
+			async: false,
+			success: function(res) {
+				var c_reject_lot = res;
 
-			let $dropdown = $("#lot");
-			$dropdown.empty();
+				let $dropdown = $("#lot");
+				$dropdown.empty();
 
-			if (c_reject_lot) {
-				$dropdown.append($("<option/>").val("").text("lot선택"));
-				for (var i = 0; i < res.data.length; i++) {
-					$dropdown.append($("<option/>").val(res.data[i].lot_id).text(res.data[i].lot_name));
+				if (c_reject_lot) {
+					$dropdown.append($("<option/>").val("").text("lot선택"));
+					for (var i = 0; i < res.data.length; i++) {
+						$dropdown.append($("<option/>").val(res.data[i].lot_id).text(res.data[i].lot_name));
+					}
+
+				} else {
+					$dropdown.append($("<option/>").val("").text("item선택"));
 				}
-
-			} else {
-				$dropdown.append($("<option/>").val("").text("item선택"));
 			}
-		})
+		});
 
 	})
 
@@ -304,7 +315,10 @@ function select() {
 			rows.push({
 				order_id: res.data[i].order_id,
 				order_name: res.data[i].order_name,
+				item_id: res.data[i].item_id,
 				item_name: res.data[i].item_name,
+				lot_id: res.data[i].lot_id,
+				lot_name: res.data[i].lot_name,
 				start_time: res.data[i].start_time,
 				end_time: res.data[i].end_time,
 				lot_work: res.data[i].lot_work
@@ -323,6 +337,7 @@ function item() {
 	$.ajax({
 		url: url,
 		type: 'GET',
+		async: false,
 		success: function(res) {
 			var c_reject_item = res;
 
@@ -355,17 +370,23 @@ var simulOperateEvents = {
 		item();
 		tableOperation = row;
 
-		$("select[name=rejectItemCode]").val(row.item_name);
+		// 이벤트 객체를 생성하고 데이터를 설정
 
+
+		$("select[name=rejectItemCode]").val(row.item_id);
 		$("input[name=ordername]").val(row.order_name);
-		$("select[name=lot]").val(row.lot_name);
+		var event = $.Event("change");
+		event.data = { item_id: row.item_id };
+		$("#rejectItemCode").trigger(event);
+		$("select[name=lot]").val(row.lot_id);
 		$("input[name=lotwork]").val(row.lot_work);
 		$("input[name=start]").val(row.start_time.slice(0, 10));
 		$("input[name=end]").val(row.end_time.slice(0, 10));
 
 		$("#Create").css('display', "none");
 		$("#Modify").css('display', "block");
-
+		$("select[name=rejectItemCode]").prop('disabled', true);
+		$("select[name=lot]").prop('disabled', true);
 		$('#addmodal').modal('show');
 
 	}

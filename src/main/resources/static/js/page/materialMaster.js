@@ -91,7 +91,7 @@ function initSetting() {
 			alert("자재마스터ID를 입력하세요.");
 			$("input[name=materialid]").focus();
 			return;
-		} else if (data.factoryid == "") {
+		} else if (data.materialname == "") {
 			alert("자재명을 입력하세요.");
 			$("input[name=materialname]").focus();
 			return;
@@ -151,7 +151,7 @@ function initSetting() {
 			alert("자재마스터ID를 입력하세요.");
 			$("input[name=materialid]").focus();
 			return;
-		} else if (data.factoryid == "") {
+		} else if (data.materialname == "") {
 			alert("자재명을 입력하세요.");
 			$("input[name=materialname]").focus();
 			return;

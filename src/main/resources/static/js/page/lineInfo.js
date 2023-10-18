@@ -84,7 +84,7 @@ function initSetting() {
 			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.equipmentid == "") {
-			alert("설비코드를 선택해주세요.");
+			alert("설비를 선택해주세요.");
 			$("select[name=equipmentid]").focus();
 			return;
 		} else if (data.locationid == "") {
@@ -141,7 +141,7 @@ function initSetting() {
 			$("select[name=factoryid]").focus();
 			return;
 		} else if (data.equipmentid == "") {
-			alert("설비코드를 선택해주세요.");
+			alert("설비를 선택해주세요.");
 			$("select[name=equipmentid]").focus();
 			return;
 		} else if (data.locationid == "") {

@@ -50,7 +50,7 @@
 			OR DIVISIONTYPE LIKE CONCAT('%', #{search}, '%') 
 		)
         </if>
-		ORDER BY ROWNUM ASC
+		ORDER BY SUBSTRING(STARTTIME, 1, 19) DESC
 		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
     

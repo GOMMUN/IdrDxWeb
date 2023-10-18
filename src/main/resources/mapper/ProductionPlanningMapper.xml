@@ -45,7 +45,7 @@
 			OR DELIVERY LIKE CONCAT('%', #{search}, '%') 
 		)
         </if>
-		ORDER BY ROWNUM ASC
+		ORDER BY SUBSTRING(START_TIME, 1, 19) DESC
 		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
     

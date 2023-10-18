@@ -534,7 +534,7 @@ function setWorkerInputEventListener() {
 	});
 	
 	$modalCreateBtn.click(function() {
-		data.date = s_workDailyReport.workDate;
+		data.date = s_workDailyReport.workDate.replace(/-/g, '');
 		data.line = s_workDailyReport.lineid;
 		data.material = s_workDailyReport.materialid;
 		data.model = s_workDailyReport.modelid;
@@ -680,7 +680,7 @@ function setWorkerManhourEventListener() {
 		// s_workDailyReport
 		let data = initWorkerManhour();
 		
-		data.date = s_workDailyReport.workDate;
+		data.date = s_workDailyReport.workDate.replace(/-/g, '');
 		data.line = s_workDailyReport.lineid;
 		data.material = s_workDailyReport.materialid;
 		data.model = s_workDailyReport.modelid;
@@ -924,7 +924,7 @@ function setWorkerSupportEventListener() {
 	
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
-		data.date = s_workDailyReport.workDate;
+		data.date = s_workDailyReport.workDate.replace(/-/g, '');
 		data.line = s_workDailyReport.lineid;
 		data.material = s_workDailyReport.materialid;
 		data.model = s_workDailyReport.modelid;
@@ -1123,7 +1123,7 @@ function setWorkContentsEventListener() {
 	});
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
-		data.date = s_workDailyReport.workDate;
+		data.date = s_workDailyReport.workDate.replace(/-/g, '');
 		data.line = s_workDailyReport.lineid;
 		data.material = s_workDailyReport.materialid;
 		data.plant = s_workDailyReport.factoryid;
@@ -1449,7 +1449,7 @@ function setNonconFormityEventListener() {
 	});
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
-		data.date = s_workDailyReport.workDate;
+		data.date = s_workDailyReport.workDate.replace(/-/g, '');
 		data.line = s_workDailyReport.lineid;
 		data.material = s_workDailyReport.materialid;
 		data.plant = s_workDailyReport.factoryid;
@@ -1682,7 +1682,7 @@ function setNonOperationEventListener() {
 	});
 	$modalCreateBtn.click(function() {
 		// s_workDailyReport
-		data.date = s_workDailyReport.workDate;
+		data.date = s_workDailyReport.workDate.replace(/-/g, '');
 		data.line = s_workDailyReport.lineid;
 		data.material = s_workDailyReport.materialid;
 		data.plant = s_workDailyReport.factoryid;

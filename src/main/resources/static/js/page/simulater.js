@@ -4,6 +4,7 @@ let tableOperation = null;
 $(function() {
 	setEventListener();
 	select();
+	chart();
 });
 
 function setEventListener() {
@@ -123,8 +124,8 @@ function setEventListener() {
 			return;
 		}
 
-		let url = 'http://localhost:8271/primary/insertplan';
-
+		//let url = 'http://localhost:8271/primary/insertplan';
+		var url = 'http://idrenvisionhq.iptime.org:8271/primary/insertplan'
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -158,8 +159,8 @@ function setEventListener() {
 			order_id: element.order_id
 		}
 
-		let url = 'http://localhost:8271/primary/remove';
-
+		//let url = 'http://localhost:8271/primary/remove';
+		var url = 'http://idrenvisionhq.iptime.org:8271/primary/remove'
 		$.ajax({
 			url: url,
 			type: 'DELETE',
@@ -234,8 +235,8 @@ function setEventListener() {
 		let endunixTimestamp = date2.getTime() / 1000; // 밀리초를 초로 변환
 
 
-		let url = 'http://localhost:8271/primary/update';
-
+		//let url = 'http://localhost:8271/primary/update';
+		var url = 'http://idrenvisionhq.iptime.org:8271/primary/update'
 		let data = {
 			item_id: itemid,
 			order_name: ordername,
@@ -307,8 +308,9 @@ function setEventListener() {
 function select() {
 	var rows = []
 	$table = $("#table1");
-	var url = 'http://localhost:8271/primary/productionPlan/findAll'
-
+	//var url = 'http://localhost:8271/primary/productionPlan/findAll'
+	var url = 'http://idrenvisionhq.iptime.org:8271/primary/productionPlan/findAll'
+    
 	$.get(url).then(function(res) {
 		$table.bootstrapTable('removeAll')
 		for (var i = 0; i < res.data.length; i++) {
@@ -427,4 +429,177 @@ function closeLoading() {
 	$('#mask, #loadingImg').empty();
 }
 
+function chart(){
+	// Data retrieved from https://netmarketshare.com/
+Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Browser<br>shares<br>January<br>2022',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%'],
+            size: '110%'
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '50%',
+        data: [
+            ['Chrome', 73.86],
+            ['Edge', 11.97],
+            ['Firefox', 5.52],
+            ['Safari', 2.98],
+            ['Internet Explorer', 1.90],
+            {
+                name: 'Other',
+                y: 3.77,
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        ]
+    }]
+});
+
+Highcharts.chart('container2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Browser<br>shares<br>January<br>2022',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%'],
+            size: '110%'
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '50%',
+        data: [
+            ['Chrome', 73.86],
+            ['Edge', 11.97],
+            ['Firefox', 5.52],
+            ['Safari', 2.98],
+            ['Internet Explorer', 1.90],
+            {
+                name: 'Other',
+                y: 3.77,
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        ]
+    }]
+});
+
+Highcharts.chart('container3', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Browser<br>shares<br>January<br>2022',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%'],
+            size: '110%'
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '50%',
+        data: [
+            ['Chrome', 73.86],
+            ['Edge', 11.97],
+            ['Firefox', 5.52],
+            ['Safari', 2.98],
+            ['Internet Explorer', 1.90],
+            {
+                name: 'Other',
+                y: 3.77,
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        ]
+    }]
+});
+}
 

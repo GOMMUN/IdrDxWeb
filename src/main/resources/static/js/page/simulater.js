@@ -18,7 +18,7 @@ function setEventListener() {
 	$simulstart.click(function() {
 		openLoading(); // 로딩 화면 표시
 		$.ajax({
-			url: "http://idrenvisionhq.iptime.org:8272/pytest",
+			url: "https://simulator.idrenvision.com:8272/pytest",
 			type: "GET",
 			dataType: "json",
 			success: function(data) {
@@ -125,7 +125,7 @@ function setEventListener() {
 		}
 
 		//let url = 'http://localhost:8271/primary/insertplan';
-		var url = 'http://idrenvisionhq.iptime.org:8271/primary/insertplan'
+		var url = 'https://simulator.idrenvision.com:8271/primary/insertplan'
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -160,7 +160,7 @@ function setEventListener() {
 		}
 
 		//let url = 'http://localhost:8271/primary/remove';
-		var url = 'http://idrenvisionhq.iptime.org:8271/primary/remove'
+		var url = 'https://simulator.idrenvision.com:8271/primary/remove'
 		$.ajax({
 			url: url,
 			type: 'DELETE',
@@ -182,7 +182,7 @@ function setEventListener() {
 	});
 
 	$("#rejectItemCode").on("change", function(event) {
-		let url = 'http://localhost:8271/primary/getlot';
+		let url = 'https://simulator.idrenvision.com:8271/primary/getlot';
 
 		let item_id;
 		if (event.data) {
@@ -236,7 +236,7 @@ function setEventListener() {
 
 
 		//let url = 'http://localhost:8271/primary/update';
-		var url = 'http://idrenvisionhq.iptime.org:8271/primary/update'
+		var url = 'https://simulator.idrenvision.com:8271/primary/update'
 		let data = {
 			item_id: itemid,
 			order_name: ordername,
@@ -309,7 +309,8 @@ function select() {
 	var rows = []
 	$table = $("#table1");
 	//var url = 'http://localhost:8271/primary/productionPlan/findAll'
-	var url = 'http://idrenvisionhq.iptime.org:8271/primary/productionPlan/findAll'
+	
+	var url = 'https://simulator.idrenvision.com:8271/primary/productionPlan/findAll'
     
 	$.get(url).then(function(res) {
 		$table.bootstrapTable('removeAll')
@@ -332,7 +333,7 @@ function select() {
 }
 
 function item() {
-	let url = 'http://localhost:8271/primary/getItem';
+	let url = 'https://simulator.idrenvision.com:8271/primary/getItem';
 
 	var c_reject_item = null;
 

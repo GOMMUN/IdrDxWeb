@@ -431,176 +431,100 @@ function closeLoading() {
 }
 
 function chart(){
-	// Data retrieved from https://netmarketshare.com/
-Highcharts.chart('container', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: 0,
-        plotShadow: false
-    },
-    title: {
-        text: 'Browser<br>shares<br>January<br>2022',
-        align: 'center',
-        verticalAlign: 'middle',
-        y: 60
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            dataLabels: {
-                enabled: true,
-                distance: -50,
-                style: {
-                    fontWeight: 'bold',
-                    color: 'white'
-                }
-            },
-            startAngle: -90,
-            endAngle: 90,
-            center: ['50%', '75%'],
-            size: '110%'
-        }
-    },
-    series: [{
-        type: 'pie',
-        name: 'Browser share',
-        innerSize: '50%',
-        data: [
-            ['Chrome', 73.86],
-            ['Edge', 11.97],
-            ['Firefox', 5.52],
-            ['Safari', 2.98],
-            ['Internet Explorer', 1.90],
-            {
-                name: 'Other',
-                y: 3.77,
-                dataLabels: {
-                    enabled: false
-                }
-            }
-        ]
-    }]
-});
-
-Highcharts.chart('container2', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: 0,
-        plotShadow: false
-    },
-    title: {
-        text: 'Browser<br>shares<br>January<br>2022',
-        align: 'center',
-        verticalAlign: 'middle',
-        y: 60
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            dataLabels: {
-                enabled: true,
-                distance: -50,
-                style: {
-                    fontWeight: 'bold',
-                    color: 'white'
-                }
-            },
-            startAngle: -90,
-            endAngle: 90,
-            center: ['50%', '75%'],
-            size: '110%'
-        }
-    },
-    series: [{
-        type: 'pie',
-        name: 'Browser share',
-        innerSize: '50%',
-        data: [
-            ['Chrome', 73.86],
-            ['Edge', 11.97],
-            ['Firefox', 5.52],
-            ['Safari', 2.98],
-            ['Internet Explorer', 1.90],
-            {
-                name: 'Other',
-                y: 3.77,
-                dataLabels: {
-                    enabled: false
-                }
-            }
-        ]
-    }]
-});
 
 Highcharts.chart('container3', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: 0,
-        plotShadow: false
+	chart: {
+        type: 'line'
     },
     title: {
-        text: 'Browser<br>shares<br>January<br>2022',
-        align: 'center',
-        verticalAlign: 'middle',
-        y: 60
+        text: '',
+        align: 'left'
     },
+
+
+    legend: {
+		itemDistance: 40,
+        verticalAlign: 'bottom',
+        align: 'center'
+    },
+    
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+        }
+    },
+    
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        formatter: function () {
+            let xValue = this.x; // X 좌표 값을 가져옵니다.
+            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+            
+            // X 좌표에 해당하는 모든 데이터를 저장할 배열
+            let dataToShow = [];
+
+            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+            for (let i = 0; i < points.length; i++) {
+                dataToShow.push({
+                    seriesName: points[i].series.name,
+                    value: points[i].y,
+                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+                });
+            }
+
+            // 툴팁 내용을 구성
+            let tooltipText = '<strong>' + xValue + '</strong><br>';
+            for (let i = 0; i < dataToShow.length; i++) {
+                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + "개" + '<br>';
+            }
+
+            return tooltipText;
+        },
+        shared: true, // 툴팁을 공유합니다.		
+	},
+	
+    xAxis: {
+        categories: ['9월 1일', '9월 2일', '9월 3일', '9월 4일', '9월 5일', '9월 6일', '9월 7일', '9월 8일', '9월 9일', '9월 10일', '9월 11일', '9월 12일',
+        '9월 13일', '9월 14일', '9월 15일', '9월 16일', '9월 17일', '9월 18일', '9월 19일', '9월 20일', '9월 21일', '9월 22일', '9월 23일', '9월 24일',
+        '9월 25일', '9월 26일', '9월 27일', '9월 28일', '9월 29일', '9월 30일'],
+        labels: {
+	        rotation: -90 // Rotate the labels by -45 degrees
+	    }
     },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
+    
+    scrollbar: {
+        enabled: true
+    },
+    
+    yAxis: {
+        title: {
+            text: ''
+        }
+    },   
+    
+	credits: {
+        enabled: false
+    },    
+	navigation: {
+        buttonOptions: {
+            enabled: false
         }
     },
     plotOptions: {
-        pie: {
-            dataLabels: {
-                enabled: true,
-                distance: -50,
-                style: {
-                    fontWeight: 'bold',
-                    color: 'white'
-                }
-            },
-            startAngle: -90,
-            endAngle: 90,
-            center: ['50%', '75%'],
-            size: '110%'
+        line: {
+            marker: {
+                enabled: false // 점 표시 비활성화
+            }
         }
     },
     series: [{
-        type: 'pie',
-        name: 'Browser share',
-        innerSize: '50%',
-        data: [
-            ['Chrome', 73.86],
-            ['Edge', 11.97],
-            ['Firefox', 5.52],
-            ['Safari', 2.98],
-            ['Internet Explorer', 1.90],
-            {
-                name: 'Other',
-                y: 3.77,
-                dataLabels: {
-                    enabled: false
-                }
-            }
-        ]
-    }]
+        name: 'Installation & Developers',
+        data: [85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90],
+        lineWidth: 3
+    	}],
+    colors: ['#0019F4']
 });
 }
 

@@ -4,7 +4,7 @@
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
 
 <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/simulater.js}"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <style>
@@ -86,6 +86,86 @@
 	.highcharts-data-table tr:hover {
 		background: #f1f7ff;
 	}
+	
+	.graph-container {
+	    position: relative;
+	    width: 400px; /* 원하는 너비로 설정하세요 */
+	    height: 400px; /* 원하는 높이로 설정하세요 */
+	    margin: 0 auto; /* 가운데 정렬을 위한 설정 */
+	    color: #555;
+	}
+	
+	.quadrant {
+	    position: absolute;
+	    width: 70%;
+	    height: 50%;
+	    transform: translate(-50%, -50%);
+	}
+	
+	.quadrant-po {
+		text-align: right;
+		font-size: 45px;
+		margin-top: 35px;
+	}
+	
+	#quadrant1 {
+	    top: 35%;
+	    left: 10%;
+	}
+	
+	#quadrant2 {
+	    top: 35%;
+	    left: 90%;
+	}
+	
+	#quadrant3 {
+	    top: 80%;
+	    left: 10%;
+	}
+	
+	#quadrant4 {
+	    top: 80%;
+	    left: 90%;
+	}
+	
+	.x-axis {
+	    position: absolute;
+	    width: 130%;
+	    height: 2px;
+	    background-color: #bbb;
+	    top: 50%;
+	    left: -15%;
+	    transform: translateY(-50%);
+	}
+	
+	.y-axis {
+	    position: absolute;
+	    width: 2px;
+	    height: 80%;
+	    background-color: #bbb;
+	    top: 10%;
+	    left: 50%;
+	    transform: translateX(-50%);
+	}
+	
+	.custom .table1 {
+		margin-top: 2.5%;
+		margin-left: 4%;
+		color: #555;
+	}
+		
+	.custom .table2 {
+		margin-top: 2.5%;
+		text-align: right;
+		color: #555;
+	}
+	
+	.custom .tableline{
+		width: 90%;
+	    height: 2px;
+	    background-color: #bbb;
+	    margin-left: 5%;
+	}
 </style>
 
 <body>
@@ -134,33 +214,90 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-4">
-			<div class="grid-item">
-				<div class="dash-card" style="height: 780px;">
-					<figure class="highcharts-figure">
-						<div id="container"></div>
-					</figure>
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">장비가동률 (%)</h6>
 				</div>
-			</div>
+				<div class="graph-container">
+					<div class="quadrant" id="quadrant1">
+					    <div class="quadrant-content">
+					            <!-- 1사분면 내용 -->
+					        <div style="font-size: 25px; margin-left: 20%;"><b>KEM</b></div>
+					        <div class="quadrant-po"><b>76%</b></div>
+					    </div>
+					</div>
+					<div class="quadrant" id="quadrant2">
+					    <div class="quadrant-content">
+					            <!-- 2사분면 내용 -->
+					        <div style="font-size: 25px;"><b>LHO</b></div>
+					        <div class="quadrant-po mr-5"><b>86%</b></div>
+					    </div>
+					</div>
+					<div class="quadrant" id="quadrant3">
+					    <div class="quadrant-content">
+					            <!-- 3사분면 내용 -->
+					        <div style="font-size: 25px; margin-left: 20%;"><b>OOO</b></div>
+					        <div class="quadrant-po"><b>96%</b></div>
+					    </div>
+					</div>
+					<div class="quadrant" id="quadrant4">
+					    <div class="quadrant-content">
+					            <!-- 4사분면 내용 -->
+					    	<div style="font-size: 25px;"><b>LLL</b></div>
+					        <div class="quadrant-po mr-5"><b>89%</b></div>
+						</div>
+					</div>
+					<div class="x-axis"></div>
+					<div class="y-axis"></div>
+				</div>		
+			</div>	
 		</div>
 		<div class="col-lg-4">
-			<div class="grid-item">
-				<div class="dash-card" style="height: 780px;">
-					<figure class="highcharts-figure">
-						<div id="container2"></div>
-					</figure>
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">리드타임 분석 (시간)</h6>
 				</div>
-			</div>
+				<div class="grid-item" style="margin-top: 6%; margin-bottom: 11.2%;">
+					<div class="row custom">
+						<div class="col-lg-3 table1"><b>공정시간</b></div>
+						<div class="col-lg-8 table2"><b>00:01:40.000</b></div>
+						<div class="tableline"></div>
+						<div class="col-lg-3 table1"><b>평균LeadTime</b></div>
+						<div class="col-lg-8 table2"><b>02:15:57.127</b></div>
+						<div class="tableline"></div>
+						<div class="col-lg-3 table1">최대LeadTime</div>
+						<div class="col-lg-8 table2">1d 04:44:49.000</div>
+						<div class="tableline"></div>
+						<div class="col-lg-3 table1">최소LeadTime</div>
+						<div class="col-lg-8 table2">00:01:00.000</div>
+						<div class="tableline"></div>
+						<div class="col-lg-3 table1"><b>평균LossTime</b></div>
+						<div class="col-lg-8 table2"><b>02:04:17.127</b></div>
+						<div class="tableline"></div>
+						<div class="col-lg-3 table1">최대LossTime</div>
+						<div class="col-lg-8 table2">1d 04:44:49.000</div>
+						<div class="tableline"></div>
+						<div class="col-lg-3 table1">최소LossTime</div>
+						<div class="col-lg-8 table2">00:00:00.000</div>
+						<div class="tableline"></div>
+					</div>
+				</div>
+			</div>		
 		</div>
 		<div class="col-lg-4">
-			<div class="grid-item">
-				<div class="dash-card" style="height: 780px;">
-					<figure class="highcharts-figure">
-						<div id="container3"></div>
-					</figure>
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">일별 생산량 추이 (개)</h6>
 				</div>
-			</div>
+				<div class="grid-item">
+					<div class="dash-card">
+						<div class="highcharts-figure" id="container3" style="height: 368px;"></div>
+					</div>
+				</div>	
+			</div>		
 		</div>
 	</div>
+	
 	<!-- Modal -->
 	<div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 		aria-hidden="true">

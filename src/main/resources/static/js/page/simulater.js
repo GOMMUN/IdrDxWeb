@@ -2,14 +2,16 @@ let item_id = null;
 let element = null;
 let tableOperation = null;
 
-var result = [];
+var result = []; 
+var chart1data = []; 
+var chart2data = []; 
 
 $(function() {
 	setEventListener();
 	select();
 	get();
-	chart1();
-	chart2();
+	chart1(chart1data);
+	chart2(chart2data);
 });
 
 function setEventListener() {
@@ -558,15 +560,13 @@ function closeLoading() {
 }
 
 function chart1(chart1data){
-
-	var result = chart1data;
-		
+	
 	var date = [];
 	var count = [];
 			
-	for(var i=0; i< result.length; i++) {
-		date[i] = parseInt(result[i].date.substring(0, 2)) + '월 ' + parseInt(result[i].date.substring(3,5)) + '일';
-		count[i] = result[i].count;
+	for(var i=0; i< chart1data.length; i++) {
+		date[i] = parseInt(chart1data[i].date.substring(0, 2)) + '월 ' + parseInt(chart1data[i].date.substring(3,5)) + '일';
+		count[i] = chart1data[i].count;
 	}
 
 	Highcharts.chart('chart1', {
@@ -684,7 +684,8 @@ function chart1(chart1data){
 	});
 }
 
-function chart2(){
+function chart2(chart2data){
+	
 	Highcharts.chart('chart2', {
 	    chart: {
 	        type: 'column',

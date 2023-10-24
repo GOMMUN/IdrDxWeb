@@ -155,6 +155,48 @@
 		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
 	        #{data}
 	     </foreach>
+	    
+	    UPDATE DSP_WORKER_INPUT
+		SET ISUSABLE= null
+		WHERE 1=1 AND WORKDAILY_SEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+	    
+	    UPDATE DSP_WORKER_MANHOUR
+		SET ISUSABLE= null
+		WHERE 1=1 AND WORKDAILY_SEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+
+	    UPDATE DSP_WORKER_SUPPORT
+		SET ISUSABLE= null
+		WHERE 1=1 AND WORKDAILY_SEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+	     	     	     	     
+	    UPDATE DSP_WORK_CONTENTS
+		SET ISUSABLE= null
+		WHERE 1=1 AND WORKDAILY_SEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+
+	    UPDATE DSP_REJECT_CONTENTS
+		SET ISUSABLE= null
+		WHERE 1=1 AND WORKDAILY_SEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
+	     	     
+	    UPDATE DSP_NOTOPERATE_CONTENTS
+		SET ISUSABLE= null
+		WHERE 1=1 AND WORKDAILY_SEQ IN
+		<foreach collection="list" item="data" index="index" separator="," open="(" close=")">
+	        #{data}
+	     </foreach>
     </update>
 
 </mapper>

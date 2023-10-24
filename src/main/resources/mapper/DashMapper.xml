@@ -24,6 +24,7 @@
 			FROM DSP_WORKDAILY_REPORT A
 			LEFT JOIN DSP_WORK_CONTENTS B
 			ON A.DATASEQ = B.WORKDAILY_SEQ
+				AND B.ISUSABLE = 'Usable'
 			WHERE A.WORK_DATE IN (
 								CONVERT(DATE, GETDATE(), 112),
 								CONVERT(DATE, GETDATE()-1, 112)
@@ -31,7 +32,6 @@
 				AND A.FACTORYID = #{plant}
 				AND A.MATERIALID = #{material}
 				AND A.ISUSABLE = 'Usable'
-				AND B.ISUSABLE = 'Usable'
 			) C
 		GROUP BY C.WORK_DATE 
     </select>
@@ -49,6 +49,7 @@
 			FROM DSP_WORKDAILY_REPORT A
 			LEFT JOIN DSP_WORK_CONTENTS B
 			ON A.DATASEQ = B.WORKDAILY_SEQ
+				AND B.ISUSABLE = 'Usable'
 			WHERE A.WORK_DATE IN (
 								CONVERT(DATE, GETDATE(), 112),
 								CONVERT(DATE, GETDATE()-1, 112)
@@ -56,7 +57,6 @@
 				AND A.FACTORYID = #{plant}
 				AND A.MATERIALID = #{material}
 				AND A.ISUSABLE = 'Usable'
-				AND B.ISUSABLE = 'Usable'
 			) C
 		GROUP BY C.WORK_DATE
     </select>
@@ -125,6 +125,7 @@
 			FROM DSP_WORKDAILY_REPORT A
 			LEFT JOIN DSP_WORK_CONTENTS B
 			ON A.DATASEQ = B.WORKDAILY_SEQ
+				AND B.ISUSABLE = 'Usable'			
 			WHERE A.WORK_DATE IN (
 								CONVERT(DATE, GETDATE(), 112),
 								CONVERT(DATE, GETDATE()-1, 112)
@@ -132,7 +133,6 @@
 				AND A.FACTORYID = #{plant}
 				AND A.MATERIALID = #{material}
 				AND A.ISUSABLE = 'Usable'
-				AND B.ISUSABLE = 'Usable'
 			) C
 		GROUP BY C.WORK_DATE
     </select>
@@ -502,11 +502,12 @@
 	</select>
     
 	<select id="chart6" parameterType="FairProd" resultType="FairProd">
-		SELECT	D.dt,
-			SUM(D.PLAN_QTY) AS PLAN_QTY,
-			SUM(D.PROD_QTY) AS PROD_QTY
-			FROM(
-				SELECT 
+			SELECT 
+				D.dt,
+				SUM(ISNULL(D.PLAN_QTY, 0)) AS PLAN_QTY, 
+				SUM(ISNULL(D.PROD_QTY, 0)) AS PROD_QTY
+			FROM (
+				SELECT
 					<choose>
 						<when test='month == "day"'>
 							A.dt AS dt,
@@ -518,31 +519,31 @@
 							DATEPART(MONTH, A.dt) AS dt,
 						</otherwise>
 					</choose>
-					ISNULL(SUM(B.PLAN_QTY),0) AS PLAN_QTY,
-					ISNULL(SUM(C.PROD_QTY),0) AS PROD_QTY
-				FROM CheckDayOff A 
-				LEFT JOIN DSP_WORKDAILY_REPORT B 
-				ON B.WORK_DATE = A.dt
+					B.PLAN_QTY,
+					SUM(C.PROD_QTY) AS PROD_QTY 
+				FROM CheckDayOff A
+				LEFT JOIN DSP_WORKDAILY_REPORT B
+				ON A.dt = B.WORK_DATE 
 					AND B.FACTORYID = #{plant}
-					AND B.ISUSABLE = 'Usable'
 					AND B.MATERIALID = #{material}
-				LEFT JOIN DSP_WORK_CONTENTS C 
+					AND B.ISUSABLE = 'Usable'
+				LEFT JOIN DSP_WORK_CONTENTS C
 				ON B.DATASEQ = C.WORKDAILY_SEQ
 					AND C.ISUSABLE = 'Usable'
 				WHERE 1=1
-				<choose>
-					<when test='month == "day"'>
-						AND A.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY,-5,GETDATE()),112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, GETDATE()),112)
-					</when>
-					<when test='month == "week"'>
-						AND A.dt BETWEEN CONVERT(VARCHAR(8),DATEADD(DAY, 1 - DATEPART(DW, CONVERT(DATE,GETDATE()-35)) , CONVERT(DATE,GETDATE()-35)),112) 
-									 AND CONVERT(VARCHAR(8),DATEADD(DAY, 7 - DATEPART(DW, CONVERT(DATE,GETDATE())) , CONVERT(DATE,GETDATE())),112)	
-					</when>
-					<otherwise>
-						AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, 0, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0))
-					</otherwise>
-				</choose>
-				GROUP BY A.dt
+					<choose>
+						<when test='month == "day"'>
+							AND A.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY,-5,GETDATE()),112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, GETDATE()),112)
+						</when>
+						<when test='month == "week"'>
+							AND A.dt BETWEEN CONVERT(VARCHAR(8),DATEADD(DAY, 1 - DATEPART(DW, CONVERT(DATE,GETDATE()-35)) , CONVERT(DATE,GETDATE()-35)),112) 
+										 AND CONVERT(VARCHAR(8),DATEADD(DAY, 7 - DATEPART(DW, CONVERT(DATE,GETDATE())) , CONVERT(DATE,GETDATE())),112)	
+						</when>
+						<otherwise>
+							AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, 0, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0))
+						</otherwise>
+					</choose>
+				GROUP BY A.dt, B.DATASEQ, B.PLAN_QTY
 			) D
 			GROUP BY D.dt
 			ORDER BY D.dt ASC

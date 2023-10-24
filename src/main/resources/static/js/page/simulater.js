@@ -1,9 +1,13 @@
 let item_id = null;
 let element = null;
 let tableOperation = null;
+
+var result = [];
+
 $(function() {
 	setEventListener();
 	select();
+	get();
 	chart();
 });
 
@@ -148,9 +152,7 @@ function setEventListener() {
 		});
 
 	})
-
-
-
+	
 	$removebtn.click(function() {		//  add 버튼
 
 		if (!confirm("생산계획 삭제 시 연관된 세부 데이터도 전부 삭제됩니다.\n정말 삭제하시겠습니까?")) {
@@ -344,6 +346,107 @@ function select() {
 			})
 		}
 		$table2.bootstrapTable('append', rows2)
+	})
+
+}
+
+function get() {
+	
+	var url1 = 'https://simulator.idrenvision.com:8271/secondary/EquipResult'
+    
+	$.get(url1).then(function(res) {
+		var result = res.data;
+		
+		var machineName = [];
+		var equipPerformace = [];
+			
+		for(var i=0; i<4; i++) {
+			machineName[i] = result[i].machineName;
+		    equipPerformace[i] = result[i].equipPerformace;
+		}
+		
+        if (machineName[0] !== null && machineName[0] !== undefined) {
+        	$('#machineName1').text(machineName[0]);
+        } else {
+		    $('#machineName1').text('-');
+		}	
+        if (equipPerformace[0] !== null && !isNaN(equipPerformace[0])) {
+		    $('#equipPerformance1').text(equipPerformace[0] + '%');
+		} else {
+		    $('#equipPerformance1').text('-');
+		}
+        if (machineName[1] !== null && !machineName[1] !== undefined) {		
+        	$('#machineName2').text(machineName[1]);
+        } else {
+		    $('#machineName2').text('-');
+		}	
+		if (equipPerformace[1] !== null && !isNaN(equipPerformace[1])) {        	
+        	$('#equipPerformance2').text(equipPerformace[1] + '%');
+        } else {
+		    $('#equipPerformance2').text('-');
+		}
+        if (machineName[2] !== null && machineName[2] !== undefined) {
+        	$('#machineName3').text(machineName[2]);
+        } else {
+		    $('#machineName3').text('-');
+		}	
+        if (equipPerformace[2] !== null && !isNaN(equipPerformace[2])) {        	
+        	$('#equipPerformance3').text(equipPerformace[2] + '%');
+        } else {
+		    $('#equipPerformance3').text('-');
+		}
+        if (machineName[3] !== null && machineName[3] !== undefined) {
+        	$('#machineName4').text(machineName[3]);
+        } else {
+		    $('#machineName4').text('-');
+		}	
+        if (equipPerformace[3] !== null && !isNaN(equipPerformace[3])) {        	
+        	$('#equipPerformance4').text(equipPerformace[3] + '%');
+        } else {
+		    $('#equipPerformance4').text('-');
+		}
+	})
+	
+	var url2 = 'https://simulator.idrenvision.com:8271/secondary/LeadTime'
+    
+	$.get(url2).then(function(res) {
+		var result = res.data;
+
+        if (result.procTimeH !== null && result.procTimeH !== undefined) {        	
+        	$('#procTimeH').text(result.procTimeH);
+        } else {
+		    $('#procTimeH').text('-');
+		}
+		if (result.avgLeadTimeH !== null && result.avgLeadTimeH !== undefined) {        	
+        	$('#avgLeadTimeH').text(result.avgLeadTimeH);
+        } else {
+		    $('#avgLeadTimeH').text('-');
+		}
+		if (result.maxLeadTimeH !== null && result.maxLeadTimeH !== undefined) {        	
+        	$('#maxLeadTimeH').text(result.maxLeadTimeH);
+        } else {
+		    $('#maxLeadTimeH').text('-');
+		}
+		if (result.minLeadTimeH !== null && result.minLeadTimeH !== undefined) {        	
+        	$('#minLeadTimeH').text(result.minLeadTimeH);
+        } else {
+		    $('#minLeadTimeH').text('-');
+		}
+		if (result.avgLossTimeH !== null && result.avgLossTimeH !== undefined) {        	
+        	$('#avgLossTimeH').text(result.avgLossTimeH);
+        } else {
+		    $('#avgLossTimeH').text('-');
+		}
+		if (result.maxLossTimeH !== null && result.maxLossTimeH !== undefined) {        	
+        	$('#maxLossTimeH').text(result.maxLossTimeH);
+        } else {
+		    $('#maxLossTimeH').text('-');
+		}
+		if (result.minLossTimeH !== null && result.minLossTimeH !== undefined) {        	
+        	$('#minLossTimeH').text(result.minLossTimeH);
+        } else {
+		    $('#minLossTimeH').text('-');
+		}
 	})
 
 }

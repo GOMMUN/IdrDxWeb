@@ -8,7 +8,8 @@ $(function() {
 	setEventListener();
 	select();
 	get();
-	chart();
+	chart1();
+	chart2();
 });
 
 function setEventListener() {
@@ -448,6 +449,13 @@ function get() {
 		    $('#minLossTimeH').text('-');
 		}
 	})
+	
+	var url3 = 'https://simulator.idrenvision.com:8271/secondary/DailyProduction';
+		
+	$.get(url3).then(function(res) {
+		chart1data = res.data;
+		chart1(chart1data);
+	});
 
 }
 
@@ -549,125 +557,135 @@ function closeLoading() {
 	$('#mask, #loadingImg').empty();
 }
 
-function chart(){
+function chart1(chart1data){
 
-Highcharts.chart('chart1', {
-	chart: {
-        type: 'line'
-    },
-    title: {
-        text: '',
-        align: 'left'
-    },
+	var result = chart1data;
+		
+	var date = [];
+	var count = [];
+			
+	for(var i=0; i< result.length; i++) {
+		date[i] = parseInt(result[i].date.substring(0, 2)) + '월 ' + parseInt(result[i].date.substring(3,5)) + '일';
+		count[i] = result[i].count;
+	}
 
-
-    legend: {
-		itemDistance: 40,
-        verticalAlign: 'bottom',
-        align: 'center'
-    },
-    
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            },
-        },
-        line: {
-            marker: {
-                enabled: false // 점 표시 비활성화
-            }
-        }
-    },
-    lang: {
-        noData: 'No matching records found'
-    },
-	noData: {
-	    	style: {
-	        fontWeight: 'bold',
-	        fontSize: '15px',
-	        color: '#333333'
-	    }
-	},	
-    tooltip: {
-        formatter: function () {
-            let xValue = this.x; // X 좌표 값을 가져옵니다.
-            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
-            
-            // X 좌표에 해당하는 모든 데이터를 저장할 배열
-            let dataToShow = [];
-
-            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
-            for (let i = 0; i < points.length; i++) {
-                dataToShow.push({
-                    seriesName: points[i].series.name,
-                    value: points[i].y,
-                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
-                });
-            }
-
-            // 툴팁 내용을 구성
-            let tooltipText = '<strong>' + xValue + '</strong><br>';
-            for (let i = 0; i < dataToShow.length; i++) {
-                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
-                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + "개" + '<br>';
-            }
-
-            return tooltipText;
-        },
-        shared: true, // 툴팁을 공유합니다.		
-	},
+	Highcharts.chart('chart1', {
+		chart: {
+	        type: 'line'
+	    },
+	    title: {
+	        text: '',
+	        align: 'left'
+	    },
 	
-    xAxis: {
-        categories: ['9월 1일', '9월 2일', '9월 3일', '9월 4일', '9월 5일', '9월 6일', '9월 7일', '9월 8일', '9월 9일', '9월 10일', '9월 11일', '9월 12일',
-        '9월 13일', '9월 14일', '9월 15일', '9월 16일', '9월 17일', '9월 18일', '9월 19일', '9월 20일', '9월 21일', '9월 22일', '9월 23일', '9월 24일',
-        '9월 25일', '9월 26일', '9월 27일', '9월 28일', '9월 29일', '9월 30일'],
-        labels: {
-	        rotation: -90 // Rotate the labels by -45 degrees
-	    }
-    },
-    
-    scrollbar: {
-        enabled: true
-    },
-    
-    yAxis: {
-        title: {
-            text: ''
-        }
-    },   
-    
-	credits: {
-        enabled: false
-    }, 
-       
-	navigation: {
-        buttonOptions: {
-            enabled: false
-        }
-    },
-    
-    lang: {
-        noData: 'No matching records found'
-    },
-	noData: {
-	    	style: {
-	        fontWeight: 'bold',
-	        fontSize: '15px',
-	        color: '#333333'
-	    }
-	},
+	
+	    legend: {
+			itemDistance: 40,
+	        verticalAlign: 'bottom',
+	        align: 'center'
+	    },
+	    
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            },
+	        },
+	        line: {
+	            marker: {
+	                enabled: false // 점 표시 비활성화
+	            }
+	        }
+	    },
+	    lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},	
+	    tooltip: {
+	        formatter: function () {
+	            let xValue = this.x; // X 좌표 값을 가져옵니다.
+	            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+	            
+	            // X 좌표에 해당하는 모든 데이터를 저장할 배열
+	            let dataToShow = [];
+	
+	            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+	            for (let i = 0; i < points.length; i++) {
+	                dataToShow.push({
+	                    seriesName: points[i].series.name,
+	                    value: points[i].y,
+	                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+	                });
+	            }
+	
+	            // 툴팁 내용을 구성
+	            let tooltipText = '<strong>' + xValue + '</strong><br>';
+	            for (let i = 0; i < dataToShow.length; i++) {
+	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + "개" + '<br>';
+	            }
+	
+	            return tooltipText;
+	        },
+	        shared: true, // 툴팁을 공유합니다.		
+		},
+		
+	    xAxis: {
+	        categories: date,
+	        labels: {
+		        rotation: -90 // Rotate the labels by -45 degrees
+		    }
+	    },
+	    
+	    scrollbar: {
+	        enabled: true
+	    },
+	    
+	    yAxis: {
+	        title: {
+	            text: ''
+	        }
+	    },   
+	    
+		credits: {
+	        enabled: false
+	    }, 
+	       
+		navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
+	    
+	    lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},
+	
+	    series: [{
+		        name: 'MOT-DK',
+		        data: count,
+		        lineWidth: 3
+	    	}],
+	    	
+	    colors: ['#0019F4']
+	});
+}
 
-    series: [{
-	        name: 'MOT-DK',
-	        data: [85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90],
-	        lineWidth: 3
-    	}],
-    	
-    colors: ['#0019F4']
-});
-
-Highcharts.chart('chart2', {
+function chart2(){
+	Highcharts.chart('chart2', {
 	    chart: {
 	        type: 'column',
 	        scrollablePlotArea: {

@@ -4,9 +4,11 @@
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
 
 <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/simulater.js}"></script>
-<!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+
 <style>
 	.form-control-custom {
 		display: block;
@@ -43,7 +45,7 @@
 	.highcharts-figure,
 	.highcharts-data-table table {
 		min-width: 320px;
-		max-width: 500px;
+		max-width: 800px;
 		margin: 1em auto;
 	}
 
@@ -150,8 +152,8 @@
 	
 	.custom .table1 {
 		margin-top: 2.5%;
-		margin-left: 4%;
-		color: #555;
+		margin-left: 4%; 
+		color: #555; 
 	}
 		
 	.custom .table2 {
@@ -291,9 +293,42 @@
 				</div>
 				<div class="grid-item">
 					<div class="dash-card">
-						<div class="highcharts-figure" id="container3" style="height: 368px;"></div>
+						<div class="highcharts-figure" id="chart1" style="width: 500px; height: 368px;"></div>
 					</div>
 				</div>	
+			</div>		
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">주문별 납기준수율</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-6">
+							<table id="table2" data-toggle="table" data-height="408" data-search="true"
+								data-show-columns="true" data-show-columns-toggle-all="true">
+								<thead class="thead-light">
+									<tr>
+										<th data-field="order_name" data-sortable="true" data-align="center">주문명</th>
+										<th data-field="start_time" data-sortable="true" data-align="center">시작시간</th>
+										<th data-field="" data-sortable="true" data-align="center">종료시간</th>
+										<th data-field="" data-sortable="true" data-align="center">소요시간</th>
+										<th data-field="end_time" data-sortable="true" data-align="center">납기</th>
+										<th data-field="" data-sortable="true" data-align="center">납기준수율</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="col-lg-6">
+							<div class="dash-card">
+								<div class="highcharts-figure" id="chart2" style="height: 390px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>		
 		</div>
 	</div>

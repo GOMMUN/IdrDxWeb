@@ -191,6 +191,16 @@ function set_P_Representative(chart1data) {
 				minPointLength:3,
 	            },
 		},
+		lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},
 	    tooltip: {
 	        formatter: function () {
 	            let xValue = this.x; // X 좌표 값을 가져옵니다.
@@ -310,6 +320,16 @@ function set_P_Partner(chart2data){
 				minPointLength:3
 			}
 	    },
+		lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},	    
 	    tooltip: {
 	        formatter: function () {
 	            let xValue = this.x; // X 좌표 값을 가져옵니다.
@@ -412,6 +432,16 @@ function set_Q_Erorr(chart3data){
 	            showInLegend: true
 	        }
 	    },
+		lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},	    
 	    tooltip: {
 	        formatter: function () {
 //	            let xValue = this.x; // X 좌표 값을 가져옵니다.
@@ -493,6 +523,16 @@ function set_Q_ErorrDetail(chart4data){
 	        },
 	        data: seriesData
 	    }],
+		lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},	    
 	    tooltip: {
 	        formatter: function () {
 	            let point = this.point; // 모든 데이터 포인트를 가져옵니다.
@@ -590,6 +630,16 @@ function set_C_Equipment(chart5data) {
         }
     },
     
+	lang: {
+        noData: 'No matching records found'
+    },
+	noData: {
+	    	style: {
+	        fontWeight: 'bold',
+	        fontSize: '15px',
+	        color: '#333333'
+	    }
+	},
     tooltip: {
         formatter: function () {
             let xValue = this.x; // X 좌표 값을 가져옵니다.
@@ -635,12 +685,14 @@ function set_C_Equipment(chart5data) {
     
 	credits: {
         enabled: false
-    },    
+    },  
+      
 	navigation: {
         buttonOptions: {
             enabled: false
         }
     },
+    
     series: seriesData2,
     colors: [
 	        '#C00500',
@@ -710,7 +762,16 @@ function set_D_PlanToPerform(chart6data){
 				minPointLength:3
 			}
 	    },
-	    
+		lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},	    
 		tooltip: {
 	        formatter: function () {
 	            let xValue = this.x; // X 좌표 값을 가져옵니다.
@@ -826,6 +887,16 @@ function set_WordCloud(chart8data){
 	            enabled: false
 	        }
 	    },
+		lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},	    
 	    series: [{
 	        type: 'wordcloud',
 	        data,
@@ -906,6 +977,16 @@ function set_SmartAlarm(chart9data){
 		        enabled: false
 		    }
 		},
+		lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},		
 		tooltip: {
 	        formatter: function () {
 				let xValue = this.x;

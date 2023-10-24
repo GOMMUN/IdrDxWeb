@@ -9,6 +9,7 @@ $(function() {
 
 function setEventListener() {
 	let $grid = $("#table1");
+	let $grid2 = $("#table2");
 	let $addbtn = $("#addbtn");
 	let $removebtn = $("#removebtn");
 	let $simulstart = $("#simulstart");
@@ -306,8 +307,10 @@ function setEventListener() {
 }
 
 function select() {
-	var rows = []
+	var rows1 = []
+	var rows2 = []
 	$table = $("#table1");
+	$table2 = $("#table2");
 	//var url = 'http://localhost:8271/primary/productionPlan/findAll'
 	
 	var url = 'https://simulator.idrenvision.com:8271/primary/productionPlan/findAll'
@@ -315,7 +318,7 @@ function select() {
 	$.get(url).then(function(res) {
 		$table.bootstrapTable('removeAll')
 		for (var i = 0; i < res.data.length; i++) {
-			rows.push({
+			rows1.push({
 				order_id: res.data[i].order_id,
 				order_name: res.data[i].order_name,
 				item_id: res.data[i].item_id,
@@ -327,7 +330,20 @@ function select() {
 				lot_work: res.data[i].lot_work
 			})
 		}
-		$table.bootstrapTable('append', rows)
+		$table.bootstrapTable('append', rows1)
+	})
+	
+	$.get(url).then(function(res) {
+		$table2.bootstrapTable('removeAll')
+		for (var i = 0; i < res.data.length; i++) {
+			rows2.push({
+				order_id: res.data[i].order_id,
+				order_name: res.data[i].order_name,
+				start_time: res.data[i].start_time,
+				end_time: res.data[i].end_time,
+			})
+		}
+		$table2.bootstrapTable('append', rows2)
 	})
 
 }
@@ -432,7 +448,7 @@ function closeLoading() {
 
 function chart(){
 
-Highcharts.chart('container3', {
+Highcharts.chart('chart1', {
 	chart: {
         type: 'line'
     },
@@ -453,9 +469,23 @@ Highcharts.chart('container3', {
             label: {
                 connectorAllowed: false
             },
+        },
+        line: {
+            marker: {
+                enabled: false // 점 표시 비활성화
+            }
         }
     },
-    
+    lang: {
+        noData: 'No matching records found'
+    },
+	noData: {
+	    	style: {
+	        fontWeight: 'bold',
+	        fontSize: '15px',
+	        color: '#333333'
+	    }
+	},	
     tooltip: {
         formatter: function () {
             let xValue = this.x; // X 좌표 값을 가져옵니다.
@@ -506,25 +536,126 @@ Highcharts.chart('container3', {
     
 	credits: {
         enabled: false
-    },    
+    }, 
+       
 	navigation: {
         buttonOptions: {
             enabled: false
         }
     },
-    plotOptions: {
-        line: {
-            marker: {
-                enabled: false // 점 표시 비활성화
-            }
-        }
+    
+    lang: {
+        noData: 'No matching records found'
     },
+	noData: {
+	    	style: {
+	        fontWeight: 'bold',
+	        fontSize: '15px',
+	        color: '#333333'
+	    }
+	},
+
     series: [{
-        name: 'Installation & Developers',
-        data: [85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90],
-        lineWidth: 3
+	        name: 'MOT-DK',
+	        data: [85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90, 85, 100, 90, 95, 85, 90],
+	        lineWidth: 3
     	}],
+    	
     colors: ['#0019F4']
 });
+
+Highcharts.chart('chart2', {
+	    chart: {
+	        type: 'column',
+	        scrollablePlotArea: {
+		      minWidth: 2500,
+		      scrollPositionX: 1
+		    }
+	    },
+	    title: {
+	        text: '',
+	        align: 'left'
+	    },
+	    xAxis: {
+			min: 0,
+	        categories: ['7월', '8월', '9월'],
+	        crosshair: true,
+	        accessibility: {
+	            description: 'Month'
+	        }
+	    },
+	    yAxis: {
+	        min: 0,
+	        title: {
+	            text: ''
+	        }
+	    },
+	    plotOptions: {
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
+	        },
+	        series : {
+				minPointLength:3
+			}
+	    },
+		lang: {
+	        noData: 'No matching records found'
+	    },
+		noData: {
+		    	style: {
+		        fontWeight: 'bold',
+		        fontSize: '15px',
+		        color: '#333333'
+		    }
+		},	    
+	    tooltip: {
+	        formatter: function () {
+	            let xValue = this.x; // X 좌표 값을 가져옵니다.
+	            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+	            
+	            // X 좌표에 해당하는 모든 데이터를 저장할 배열
+	            let dataToShow = [];
+	
+	            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+	            for (let i = 0; i < points.length; i++) {
+	                dataToShow.push({
+	                    seriesName: points[i].series.name,
+	                    value: points[i].y,
+	                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+	                });
+	            }
+	
+	            // 툴팁 내용을 구성
+	            let tooltipText = '<strong>' + xValue + '</strong><br>';
+	            for (let i = 0; i < dataToShow.length; i++) {
+	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '개' + '<br>';
+	            }
+	
+	            return tooltipText;
+	        },
+	        shared: true, // 툴팁을 공유합니다.		
+		},	    
+		credits: {
+	        enabled: false
+	    },    
+	    navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
+	    legend: {
+    		symbolRadius: 0
+		},
+	    series: 
+			[{
+		        name: '납기준수율',
+		        data: [77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93]
+		    }],
+	    colors: [
+			'#0D70C6'
+			]
+	});
 }
 

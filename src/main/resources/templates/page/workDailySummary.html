@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/workDailySummary.js}"></script>
+<style>
+	.form-control-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+
+	.form-select-custom {
+		display: block;
+		width: 100%;
+		/* 		    height: calc(1.5em + 0.75rem + 2px); */
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: 0.35rem;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+</style>
+
+<body>
+	<input id="parameterPlant" type="hidden" th:value="${plant}" />
+	<input id="parameterUsername" type="hidden" th:value="${username}" />
+	<div class="d-flex bd-highlight">
+		<div class="p-2 col-12 bd-highlight">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">작업일보 Summary</h6>
+				</div>
+				<div class="card-body">
+					<table id="workDailySummary" data-toggle="table" data-toolbar="#toolbarFactoryinfo" data-height="750"
+						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/workDailySummary/findName" data-show-columns="true"
+						data-show-columns-toggle-all="true">
+						<thead class="thead-light">
+							<tr>
+								<th data-field="factoryid" data-sortable="true" data-align="center">공장코드</th>															
+								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
+								<th data-field="workdate" data-sortable="true" data-align="center">날짜</th>
+								<th data-field="lineid" data-sortable="true" data-align="center">공정</th>
+								<th data-field="shiftid" data-sortable="true" data-align="center">작업구분</th>
+								<th data-field="materialid" data-sortable="true" data-align="center">자재</th>
+								<th data-field="modelid" data-sortable="true" data-align="center">차종</th>
+								<th data-field="planqty" data-sortable="true" data-align="center">계획수량</th>
+								<th data-field="dspworkerinput" data-sortable="true" data-align="center">작업자 투입 인원</th>
+								<th data-field="manhour" data-sortable="true" data-align="center">공수</th>
+								<th data-field="prodqty" data-sortable="true" data-align="center">생산수량</th>
+								<th data-field="firsttimegoodqty" data-sortable="true" data-align="center">양품</th>
+								<th data-field="firsttimefailqty" data-sortable="true" data-align="center">불량</th>
+								<th data-field="notoperatetime" data-sortable="true" data-align="center">비가동 시간</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>		
+		</div>
+	</div>
+</body>
+
+</html>

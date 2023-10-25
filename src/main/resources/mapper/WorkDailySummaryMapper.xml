@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.WorkDailySummaryMapper">
+	
+	<select id="findAllName" parameterType="WorkDailySummary" resultType="WorkDailySummary">
+	SELECT 
+			A.DATASEQ, 
+			A.FACTORYID, 
+			(SELECT FACTORYNAME 
+			FROM DSP_FACTORY B
+			WHERE B.FACTORYID = A.FACTORYID) AS FACTORYNAME,
+			A.WORK_DATE,
+			A.LINEID,
+			A.SHIFTID,
+			A.MATERIALID,
+			A.MODELID,
+			A.PLAN_QTY,
+			(SELECT COUNT(*)
+				FROM DSP_WORKER_INPUT C
+				WHERE C.WORKDAILY_SEQ = A.DATASEQ
+				AND C.ISUSABLE ='Usable') AS DSP_WORKER_INPUT,
+			(SELECT SUM(MANHOUR)
+				FROM DSP_WORKER_MANHOUR D
+				WHERE D.WORKDAILY_SEQ = A.DATASEQ
+				AND D.ISUSABLE ='Usable') AS MANHOUR,
+			(SELECT SUM(PROD_QTY)
+				FROM DSP_WORK_CONTENTS E
+				WHERE E.WORKDAILY_SEQ = A.DATASEQ
+				AND E.ISUSABLE ='Usable') AS PROD_QTY,
+			(SELECT SUM(FIRSTTIME_GOOD_QTY)
+				FROM DSP_WORK_CONTENTS E
+				WHERE E.WORKDAILY_SEQ = A.DATASEQ
+				AND E.ISUSABLE ='Usable') AS FIRSTTIME_GOOD_QTY,
+			(SELECT SUM(FIRSTTIME_FAIL_QTY)
+				FROM DSP_WORK_CONTENTS E
+				WHERE E.WORKDAILY_SEQ = A.DATASEQ
+				AND E.ISUSABLE ='Usable') AS FIRSTTIME_FAIL_QTY,
+			(SELECT CONVERT (VARCHAR, DATEADD (s, (
+													SELECT SUM(G.NOTOPERATE_TIME)
+														FROM(
+															SELECT 
+															 	F.WORKDAILY_SEQ,
+															 	DATEDIFF(SECOND, (SUBSTRING(F.NOTOPERATETIME_FROM,1,2) + ':' + 
+																SUBSTRING(F.NOTOPERATETIME_FROM,3,2) + ':' + SUBSTRING(F.NOTOPERATETIME_FROM,5,2)) , 
+																(SUBSTRING(F.NOTOPERATETIME_TO,1,2) + ':' + SUBSTRING(F.NOTOPERATETIME_TO,3,2) + ':' + 
+																SUBSTRING(F.NOTOPERATETIME_TO,5,2))) AS NOTOPERATE_TIME
+															FROM DSP_NOTOPERATE_CONTENTS F
+															WHERE F.WORKDAILY_SEQ = A.DATASEQ 
+															AND F.ISUSABLE ='Usable'
+														) G
+														WHERE G.WORKDAILY_SEQ = A.DATASEQ
+													), '' ), 8)
+				) AS NOTOPERATE_TIME
+	FROM DSP_WORKDAILY_REPORT A
+	WHERE 1=1
+	AND A.FACTORYID = #{plant}
+	AND A.ISUSABLE ='Usable'
+	ORDER BY DATASEQ
+    </select>
+    
+</mapper>

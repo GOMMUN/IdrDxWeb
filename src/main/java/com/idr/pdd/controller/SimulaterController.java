@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/simulater")
+@RequestMapping("/simulator")
 public class SimulaterController {
 
 	@GetMapping("")

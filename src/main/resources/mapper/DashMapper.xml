@@ -526,6 +526,20 @@
 				ON A.dt = B.WORK_DATE 
 					AND B.FACTORYID = #{plant}
 					AND B.MATERIALID = #{material}
+					<choose>
+						<when test='plant == "KEM"'>
+							AND B.LINEID = 'KEM-P0009'
+						</when>
+						<when test='plant == "LHO"'>
+							AND B.LINEID = 'LHO-P0005'
+						</when>
+						<when test='plant == "SYM"'>
+							AND B.LINEID = 'SYM-P0005'
+						</when>
+						<otherwise>
+							AND B.LINEID = 'SWH-P0005'
+						</otherwise>
+					</choose>
 					AND B.ISUSABLE = 'Usable'
 				LEFT JOIN DSP_WORK_CONTENTS C
 				ON B.DATASEQ = C.WORKDAILY_SEQ

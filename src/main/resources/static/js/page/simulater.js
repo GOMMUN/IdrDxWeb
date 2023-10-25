@@ -318,9 +318,9 @@ function select() {
 	$table2 = $("#table2");
 	//var url = 'http://localhost:8271/primary/productionPlan/findAll'
 	
-	var url = 'https://simulator.idrenvision.com:8271/primary/productionPlan/findAll'
+	var url1 = 'https://simulator.idrenvision.com:8271/primary/productionPlan/findAll'
     
-	$.get(url).then(function(res) {
+	$.get(url1).then(function(res) {
 		$table.bootstrapTable('removeAll')
 		for (var i = 0; i < res.data.length; i++) {
 			rows1.push({
@@ -338,14 +338,21 @@ function select() {
 		$table.bootstrapTable('append', rows1)
 	})
 	
-	$.get(url).then(function(res) {
+	var url2 = 'https://simulator.idrenvision.com:8271/secondary/ComplianceRate'
+	
+	$.get(url2).then(function(res) {
+		chart2data = res.data;
+		chart2(chart2data);
+				
 		$table2.bootstrapTable('removeAll')
 		for (var i = 0; i < res.data.length; i++) {
 			rows2.push({
-				order_id: res.data[i].order_id,
 				order_name: res.data[i].order_name,
 				start_time: res.data[i].start_time,
 				end_time: res.data[i].end_time,
+				taken_time: res.data[i].taken_time,
+				due_time: res.data[i].due_time,
+				rate: res.data[i].rate,
 			})
 		}
 		$table2.bootstrapTable('append', rows2)
@@ -685,13 +692,27 @@ function chart1(chart1data){
 }
 
 function chart2(chart2data){
+
+	var order_name = [];
+	var rate = [];
+			
+	for(var i=0; i< chart2data.length; i++) {
+		order_name[i] = chart2data[i].order_name;
+		rate[i] = parseFloat(chart2data[i].rate);
+	}
 	
+	if (chart2data.length > 10){
+		var min = 1500;
+	} else {
+		var min = 500;
+	}
+		
 	Highcharts.chart('chart2', {
 	    chart: {
 	        type: 'column',
 	        scrollablePlotArea: {
-		      minWidth: 2500,
-		      scrollPositionX: 1
+		      minWidth: min,
+		      scrollPositionX: 0
 		    }
 	    },
 	    title: {
@@ -700,11 +721,8 @@ function chart2(chart2data){
 	    },
 	    xAxis: {
 			min: 0,
-	        categories: ['7월', '8월', '9월'],
-	        crosshair: true,
-	        accessibility: {
-	            description: 'Month'
-	        }
+	        categories: order_name,
+	        crosshair: true
 	    },
 	    yAxis: {
 	        min: 0,
@@ -718,7 +736,8 @@ function chart2(chart2data){
 	            borderWidth: 0
 	        },
 	        series : {
-				minPointLength:3
+				minPointLength:3,
+				pointWidth: 40
 			}
 	    },
 		lang: {
@@ -752,7 +771,7 @@ function chart2(chart2data){
 	            let tooltipText = '<strong>' + xValue + '</strong><br>';
 	            for (let i = 0; i < dataToShow.length; i++) {
 	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
-	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '개' + '<br>';
+	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '%' + '<br>';
 	            }
 	
 	            return tooltipText;
@@ -773,7 +792,7 @@ function chart2(chart2data){
 	    series: 
 			[{
 		        name: '납기준수율',
-		        data: [77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93,77, 87, 93]
+		        data: rate
 		    }],
 	    colors: [
 			'#0D70C6'

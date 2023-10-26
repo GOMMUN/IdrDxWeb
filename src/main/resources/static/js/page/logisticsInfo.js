@@ -93,14 +93,14 @@ function initSetting() {
 			alert("물류명을 입력하세요.");
 			$("input[name=logisticsname]").focus();
 			return;
-		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-			alert("고장률을 입력하세요.");
-			$("input[name=failurerate]").focus();
-			return;
-		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-			alert("복구시간을 입력하세요.");
-			$("input[name=recoverytime]").focus();
-			return;
+//		} else if (isNaN(data.failurerate) || data.failurerate == "") {
+//			alert("고장률을 입력하세요.");
+//			$("input[name=failurerate]").focus();
+//			return;
+//		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
+//			alert("복구시간을 입력하세요.");
+//			$("input[name=recoverytime]").focus();
+//			return;
 		} else if (isNaN(data.speed) || data.speed == "") {
 			alert("속도를 입력하세요.");
 			$("input[name=speed]").focus();

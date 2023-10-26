@@ -88,14 +88,17 @@ function initSetting() {
 			$("input[name=shifttype]").focus();
 			return;
 		}
-		if (data.starttime == "00") {
+		if (data.starttime == "") {
 			alert("시작시간을 선택해주세요.");
+			$("input[name=starttime]").focus();
 			return;
-		}else if (data.endtime == "00") {
+		}else if (data.endtime == "") {
 			alert("종료시간을 선택해주세요.");
+			$("input[name=endtime]").focus();
 			return;
 		}else if(data.starttime > data.endtime){
 			alert("조회 시작일이 조회 종료일보다 큽니다.");
+			$("input[name=starttime]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
@@ -157,14 +160,17 @@ function initSetting() {
 			$("input[name=shifttype]").focus();
 			return;
 		}
-		if (data.starttime == "00") {
+		if (data.starttime == "") {
 			alert("시작시간을 선택해주세요.");
+			$("input[name=starttime]").focus();
 			return;
-		}else if (data.endtime == "00") {
+		}else if (data.endtime == "") {
 			alert("종료시간을 선택해주세요.");
+			$("input[name=endtime]").focus();
 			return;
 		}else if(data.starttime > data.endtime){
 			alert("조회 시작일이 조회 종료일보다 큽니다.");
+			$("input[name=starttime]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");

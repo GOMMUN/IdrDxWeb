@@ -63,15 +63,15 @@ function initSetting() {
 		//validation check
 		 if (data.modelid == "") {
 			alert("MODEL ID를 입력하세요.");
-			$("select[name=modelid]").focus();
+			$("input[name=modelid]").focus();
 			return;
 		} else if (data.modelnm == "") {
 			alert("MODEL 명을 입력하세요.");
-			$("select[name=modelnm]").focus();
+			$("input[name=modelnm]").focus();
 			return;
 		} else if (data.modeldesc == "") {
 			alert("MODEL 설명을 입력하세요.");
-			$("select[name=modeldesc]").focus();
+			$("input[name=modeldesc]").focus();
 			return;
 		} else if (data.useyn == "") {
 			alert("사용여부를 선택하세요.");
@@ -115,15 +115,15 @@ function initSetting() {
 		//validation check
 		 if (data.modelid == "") {
 			alert("MODEL ID를 입력하세요.");
-			$("select[name=modelid]").focus();
+			$("input[name=modelid]").focus();
 			return;
 		} else if (data.modelnm == "") {
 			alert("MODEL 명을 입력하세요.");
-			$("select[name=modelnm]").focus();
+			$("input[name=modelnm]").focus();
 			return;
 		} else if (data.modeldesc == "") {
 			alert("MODEL 설명을 입력하세요.");
-			$("select[name=modeldesc]").focus();
+			$("input[name=modeldesc]").focus();
 			return;
 		} else if (data.useyn == "") {
 			alert("사용여부를 선택하세요.");

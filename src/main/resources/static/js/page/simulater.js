@@ -7,11 +7,12 @@ var chart1data = [];
 var chart2data = [];
 
 $(function() {
+	
+	$("#simulResultDataView").hide();
+	
 	setEventListener();
 	select();
-	getsimulResult();
-	chart1(chart1data);
-	chart2(chart2data);
+	
 });
 
 function setEventListener() {
@@ -30,11 +31,19 @@ function setEventListener() {
 			type: "GET",
 			dataType: "json",
 			success: function(data) {
-				// 데이터를 표시하기 위해 prompt 대신 alert 사용
-				alert(JSON.stringify(data));
+				
+				if(data.OK){
+					getsimulResult();
+					chart1(chart1data);
+					chart2(chart2data);
+					$("#simulResultDataView").show();
+				}else{
+					$("#simulResultDataView").hide();
+				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.error("에러: " + textStatus, errorThrown);
+				alert("연결 실패");
+				$("#simulResultDataView").hide();
 			},
 			complete: function() {
 				closeLoading(); // AJAX 완료 후 로딩 화면 숨기기
@@ -313,9 +322,9 @@ function setEventListener() {
 
 function select() {
 	var rows1 = []
-	var rows2 = []
+	
 	$table = $("#table1");
-	$table2 = $("#table2");
+	
 	//var url = 'http://localhost:8271/primary/productionPlan/findAll'
 
 	var url1 = 'https://simulator.idrenvision.com:8271/primary/productionPlan/findAll'
@@ -337,26 +346,7 @@ function select() {
 		}
 		$table.bootstrapTable('append', rows1)
 	})
-
-	var url2 = 'https://simulator.idrenvision.com:8271/secondary/ComplianceRate'
-
-	$.get(url2).then(function(res) {
-		chart2data = res.data;
-		chart2(chart2data);
-
-		$table2.bootstrapTable('removeAll')
-		for (var i = 0; i < res.data.length; i++) {
-			rows2.push({
-				order_name: res.data[i].order_name,
-				start_time: res.data[i].start_time,
-				end_time: res.data[i].end_time,
-				taken_time: res.data[i].taken_time,
-				due_time: res.data[i].due_time,
-				rate: res.data[i].rate,
-			})
-		}
-		$table2.bootstrapTable('append', rows2)
-	})
+	
 
 }
 
@@ -419,9 +409,42 @@ function getsimulResult() {
 	var url3 = 'https://simulator.idrenvision.com:8271/secondary/DailyProduction';
 
 	$.get(url3).then(function(res) {
-		chart1data = res.data;
-		chart1(chart1data);
+		if(res.status==200){
+			chart1data = res.data;
+			chart1(chart1data);
+		}else{
+			alert("일별 생산량 추이 데이터를 불러 올 수 없습니다.");
+		}
+			
 	});
+	
+	var rows2 = []
+	$table2 = $("#table2");
+	
+	var url4 = 'https://simulator.idrenvision.com:8271/secondary/ComplianceRate'
+
+	$.get(url4).then(function(res) {
+		if(res.status==200){
+			chart2data = res.data;
+		chart2(chart2data);
+
+		$table2.bootstrapTable('removeAll')
+		for (var i = 0; i < res.data.length; i++) {
+			rows2.push({
+				order_name: res.data[i].order_name,
+				start_time: res.data[i].start_time,
+				end_time: res.data[i].end_time,
+				taken_time: res.data[i].taken_time,
+				due_time: res.data[i].due_time,
+				rate: res.data[i].rate,
+			})
+		}
+		$table2.bootstrapTable('append', rows2)
+		}else{
+			alert("주문별 납기 준수율 데이터를 불러 올 수 없습니다.")
+		}
+		
+	})
 
 }
 

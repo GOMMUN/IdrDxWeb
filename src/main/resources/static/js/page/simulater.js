@@ -9,7 +9,6 @@ var chart2data = [];
 $(function() {
 	
 	$("#simulResultDataView").hide();
-	
 	setEventListener();
 	select();
 	
@@ -34,11 +33,12 @@ function setEventListener() {
 				
 				if(data.OK){
 					getsimulResult();
-					chart1(chart1data);
+					chart1();
 					chart2(chart2data);
 					$("#simulResultDataView").show();
 				}else{
 					$("#simulResultDataView").hide();
+					closeLoading();
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -406,17 +406,6 @@ function getsimulResult() {
 
 	})
 
-	var url3 = 'https://simulator.idrenvision.com:8271/secondary/DailyProduction';
-
-	$.get(url3).then(function(res) {
-		if(res.status==200){
-			chart1data = res.data;
-			chart1(chart1data);
-		}else{
-			alert("일별 생산량 추이 데이터를 불러 올 수 없습니다.");
-		}
-			
-	});
 	
 	var rows2 = []
 	$table2 = $("#table2");
@@ -546,9 +535,13 @@ function closeLoading() {
 	$('#mask, #loadingImg').empty();
 }
 
-function chart1(chart1data) {
+function chart1() {
+	var url3 = 'https://simulator.idrenvision.com:8271/secondary/DailyProduction';
 
-	var date = [];
+	$.get(url3).then(function(res) {
+		if(res.status==200){
+			chart1data = res.data;
+			var date = [];
 	var count = [];
 
 	for (var i = 0; i < chart1data.length; i++) {
@@ -662,13 +655,21 @@ function chart1(chart1data) {
 		},
 
 		series: [{
-			name: 'MOT-DK',
+			name: chart1data[0].item_name,
 			data: count,
 			lineWidth: 3
 		}],
 
 		colors: ['#0019F4']
 	});
+
+		}else{
+			alert("일별 생산량 추이 데이터를 불러 올 수 없습니다.");
+			return;
+		}
+			
+	});
+	
 }
 
 function chart2(chart2data) {

@@ -371,7 +371,7 @@ function get() {
 		var equipPerformace = [];
 			
 		for(var i=0; i<4; i++) {
-			machineName[i] = result[i].machineName;
+			machineName[i] = result[i].machine_name;
 		    equipPerformace[i] = result[i].equipPerformace;
 		}
 		

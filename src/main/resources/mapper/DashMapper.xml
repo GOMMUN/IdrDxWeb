@@ -131,7 +131,7 @@
 								CONVERT(DATE, GETDATE()-1, 112)
 								)
 				AND A.FACTORYID = #{plant}
-				AND A.MATERIALID = #{material}
+				AND A.MATERIALID = #{material} 
 				AND A.ISUSABLE = 'Usable'
 			) C
 		GROUP BY C.WORK_DATE

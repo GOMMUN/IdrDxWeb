@@ -2,14 +2,14 @@ let item_id = null;
 let element = null;
 let tableOperation = null;
 
-var result = []; 
-var chart1data = []; 
-var chart2data = []; 
+var result = [];
+var chart1data = [];
+var chart2data = [];
 
 $(function() {
 	setEventListener();
 	select();
-	get();
+	getsimulResult();
 	chart1(chart1data);
 	chart2(chart2data);
 });
@@ -126,6 +126,7 @@ function setEventListener() {
 			alert("음수는 입력 할수 없습니다.");
 			return;
 		}
+
 		if (date > date2) {
 			alert("시작 시간이 납기보다 늦을 수 없습니다.");
 			return;
@@ -154,7 +155,7 @@ function setEventListener() {
 		});
 
 	})
-	
+
 	$removebtn.click(function() {		//  add 버튼
 
 		if (!confirm("생산계획 삭제 시 연관된 세부 데이터도 전부 삭제됩니다.\n정말 삭제하시겠습니까?")) {
@@ -316,9 +317,9 @@ function select() {
 	$table = $("#table1");
 	$table2 = $("#table2");
 	//var url = 'http://localhost:8271/primary/productionPlan/findAll'
-	
+
 	var url1 = 'https://simulator.idrenvision.com:8271/primary/productionPlan/findAll'
-    
+
 	$.get(url1).then(function(res) {
 		$table.bootstrapTable('removeAll')
 		for (var i = 0; i < res.data.length; i++) {
@@ -336,13 +337,13 @@ function select() {
 		}
 		$table.bootstrapTable('append', rows1)
 	})
-	
+
 	var url2 = 'https://simulator.idrenvision.com:8271/secondary/ComplianceRate'
-	
+
 	$.get(url2).then(function(res) {
 		chart2data = res.data;
 		chart2(chart2data);
-				
+
 		$table2.bootstrapTable('removeAll')
 		for (var i = 0; i < res.data.length; i++) {
 			rows2.push({
@@ -359,107 +360,64 @@ function select() {
 
 }
 
-function get() {
-	
-	var url1 = 'https://simulator.idrenvision.com:8271/secondary/EquipResult'
-    
-	$.get(url1).then(function(res) {
-		var result = res.data;
-		
-		var machineName = [];
-		var equipPerformace = [];
-			
-		for(var i=0; i<4; i++) {
-			machineName[i] = result[i].machine_name;
-		    equipPerformace[i] = result[i].equipPerformace;
-		}
-		
-        if (machineName[0] !== null && machineName[0] !== undefined) {
-        	$('#machineName1').text(machineName[0]);
-        } else {
-		    $('#machineName1').text('-');
-		}	
-        if (equipPerformace[0] !== null && !isNaN(equipPerformace[0])) {
-		    $('#equipPerformance1').text(equipPerformace[0] + '%');
-		} else {
-		    $('#equipPerformance1').text('-');
-		}
-        if (machineName[1] !== null && !machineName[1] !== undefined) {		
-        	$('#machineName2').text(machineName[1]);
-        } else {
-		    $('#machineName2').text('-');
-		}	
-		if (equipPerformace[1] !== null && !isNaN(equipPerformace[1])) {        	
-        	$('#equipPerformance2').text(equipPerformace[1] + '%');
-        } else {
-		    $('#equipPerformance2').text('-');
-		}
-        if (machineName[2] !== null && machineName[2] !== undefined) {
-        	$('#machineName3').text(machineName[2]);
-        } else {
-		    $('#machineName3').text('-');
-		}	
-        if (equipPerformace[2] !== null && !isNaN(equipPerformace[2])) {        	
-        	$('#equipPerformance3').text(equipPerformace[2] + '%');
-        } else {
-		    $('#equipPerformance3').text('-');
-		}
-        if (machineName[3] !== null && machineName[3] !== undefined) {
-        	$('#machineName4').text(machineName[3]);
-        } else {
-		    $('#machineName4').text('-');
-		}	
-        if (equipPerformace[3] !== null && !isNaN(equipPerformace[3])) {        	
-        	$('#equipPerformance4').text(equipPerformace[3] + '%');
-        } else {
-		    $('#equipPerformance4').text('-');
-		}
-	})
-	
-	var url2 = 'https://simulator.idrenvision.com:8271/secondary/LeadTime'
-    
-	$.get(url2).then(function(res) {
-		var result = res.data;
+function getsimulResult() {
 
-        if (result.procTimeH !== null && result.procTimeH !== undefined) {        	
-        	$('#procTimeH').text(result.procTimeH);
-        } else {
-		    $('#procTimeH').text('-');
+	var url1 = 'https://simulator.idrenvision.com:8271/secondary/EquipResult'
+
+	$.get(url1).then(function(res) {
+		if (res.status == 200) {
+			var result = res.data;
+			$('#machineName1').text(result[0].machine_name);
+			$('#machineName2').text(result[1].machine_name);
+			$('#machineName3').text(result[2].machine_name);
+			$('#machineName4').text(result[3].machine_name);
+
+			$('#equipPerformance1').text(result[0].equipPerformace + '%');
+			$('#equipPerformance2').text(result[1].equipPerformace + '%');
+			$('#equipPerformance3').text(result[2].equipPerformace + '%');
+			$('#equipPerformance4').text(result[3].equipPerformace + '%');
+		} else {
+			$('#machineName1').text("-");
+			$('#machineName2').text("-");
+			$('#machineName3').text("-");
+			$('#machineName4').text("-");
+
+			$('#equipPerformance1').text("-");
+			$('#equipPerformance2').text("-");
+			$('#equipPerformance3').text("-");
+			$('#equipPerformance4').text("-");
+			alert("장비가동률 데이터를 불러 올 수 없습니다.");
 		}
-		if (result.avgLeadTimeH !== null && result.avgLeadTimeH !== undefined) {        	
-        	$('#avgLeadTimeH').text(result.avgLeadTimeH);
-        } else {
-		    $('#avgLeadTimeH').text('-');
-		}
-		if (result.maxLeadTimeH !== null && result.maxLeadTimeH !== undefined) {        	
-        	$('#maxLeadTimeH').text(result.maxLeadTimeH);
-        } else {
-		    $('#maxLeadTimeH').text('-');
-		}
-		if (result.minLeadTimeH !== null && result.minLeadTimeH !== undefined) {        	
-        	$('#minLeadTimeH').text(result.minLeadTimeH);
-        } else {
-		    $('#minLeadTimeH').text('-');
-		}
-		if (result.avgLossTimeH !== null && result.avgLossTimeH !== undefined) {        	
-        	$('#avgLossTimeH').text(result.avgLossTimeH);
-        } else {
-		    $('#avgLossTimeH').text('-');
-		}
-		if (result.maxLossTimeH !== null && result.maxLossTimeH !== undefined) {        	
-        	$('#maxLossTimeH').text(result.maxLossTimeH);
-        } else {
-		    $('#maxLossTimeH').text('-');
-		}
-		if (result.minLossTimeH !== null && result.minLossTimeH !== undefined) {        	
-        	$('#minLossTimeH').text(result.minLossTimeH);
-        } else {
-		    $('#minLossTimeH').text('-');
-		}
+
 	})
-	
+
+	var url2 = 'https://simulator.idrenvision.com:8271/secondary/LeadTime'
+
+	$.get(url2).then(function(res) {
+		if (res.status == 200) {
+			var result = res.data;
+			$('#procTimeH').text(result.proctime);
+			$('#avgLeadTimeH').text(result.maxleadtime);
+			$('#maxLeadTimeH').text(result.avgleadtime);
+			$('#minLeadTimeH').text(result.minleadtime);
+			$('#avgLossTimeH').text(result.maxlosstime);
+			$('#maxLossTimeH').text(result.minlosstime);
+			$('#minLossTimeH').text(result.avglosstime);
+		} else {
+			$('#procTimeH').text("-");
+			$('#avgLeadTimeH').text("-");
+			$('#maxLeadTimeH').text("-");
+			$('#minLeadTimeH').text("-");
+			$('#avgLossTimeH').text("-");
+			$('#maxLossTimeH').text("-");
+			$('#minLossTimeH').text("-");
+			alert("리드타임 분석 데이터를 불러 올 수 없습니다.");
+		}
+
+	})
+
 	var url3 = 'https://simulator.idrenvision.com:8271/secondary/DailyProduction';
-		
+
 	$.get(url3).then(function(res) {
 		chart1data = res.data;
 		chart1(chart1data);
@@ -565,237 +523,237 @@ function closeLoading() {
 	$('#mask, #loadingImg').empty();
 }
 
-function chart1(chart1data){
-	
+function chart1(chart1data) {
+
 	var date = [];
 	var count = [];
-			
-	for(var i=0; i< chart1data.length; i++) {
-		date[i] = parseInt(chart1data[i].date.substring(0, 2)) + '월 ' + parseInt(chart1data[i].date.substring(3,5)) + '일';
+
+	for (var i = 0; i < chart1data.length; i++) {
+		date[i] = parseInt(chart1data[i].date.substring(0, 2)) + '월 ' + parseInt(chart1data[i].date.substring(3, 5)) + '일';
 		count[i] = chart1data[i].count;
 	}
 
 	Highcharts.chart('chart1', {
 		chart: {
-	        type: 'line'
-	    },
-	    title: {
-	        text: '',
-	        align: 'left'
-	    },
-	
-	
-	    legend: {
+			type: 'line'
+		},
+		title: {
+			text: '',
+			align: 'left'
+		},
+
+
+		legend: {
 			itemDistance: 40,
-	        verticalAlign: 'bottom',
-	        align: 'center'
-	    },
-	    
-	    plotOptions: {
-	        series: {
-	            label: {
-	                connectorAllowed: false
-	            },
-	        },
-	        line: {
-	            marker: {
-	                enabled: false // 점 표시 비활성화
-	            }
-	        }
-	    },
-	    lang: {
-	        noData: 'No matching records found'
-	    },
-		noData: {
-		    	style: {
-		        fontWeight: 'bold',
-		        fontSize: '15px',
-		        color: '#333333'
-		    }
-		},	
-	    tooltip: {
-	        formatter: function () {
-	            let xValue = this.x; // X 좌표 값을 가져옵니다.
-	            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
-	            
-	            // X 좌표에 해당하는 모든 데이터를 저장할 배열
-	            let dataToShow = [];
-	
-	            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
-	            for (let i = 0; i < points.length; i++) {
-	                dataToShow.push({
-	                    seriesName: points[i].series.name,
-	                    value: points[i].y,
-	                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
-	                });
-	            }
-	
-	            // 툴팁 내용을 구성
-	            let tooltipText = '<strong>' + xValue + '</strong><br>';
-	            for (let i = 0; i < dataToShow.length; i++) {
-	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
-	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + "개" + '<br>';
-	            }
-	
-	            return tooltipText;
-	        },
-	        shared: true, // 툴팁을 공유합니다.		
+			verticalAlign: 'bottom',
+			align: 'center'
 		},
-		
-	    xAxis: {
-	        categories: date,
-	        labels: {
-		        rotation: -90 // Rotate the labels by -45 degrees
-		    }
-	    },
-	    
-	    scrollbar: {
-	        enabled: true
-	    },
-	    
-	    yAxis: {
-	        title: {
-	            text: ''
-	        }
-	    },   
-	    
+
+		plotOptions: {
+			series: {
+				label: {
+					connectorAllowed: false
+				},
+			},
+			line: {
+				marker: {
+					enabled: false // 점 표시 비활성화
+				}
+			}
+		},
+		lang: {
+			noData: 'No matching records found'
+		},
+		noData: {
+			style: {
+				fontWeight: 'bold',
+				fontSize: '15px',
+				color: '#333333'
+			}
+		},
+		tooltip: {
+			formatter: function() {
+				let xValue = this.x; // X 좌표 값을 가져옵니다.
+				let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+
+				// X 좌표에 해당하는 모든 데이터를 저장할 배열
+				let dataToShow = [];
+
+				// X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+				for (let i = 0; i < points.length; i++) {
+					dataToShow.push({
+						seriesName: points[i].series.name,
+						value: points[i].y,
+						color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+					});
+				}
+
+				// 툴팁 내용을 구성
+				let tooltipText = '<strong>' + xValue + '</strong><br>';
+				for (let i = 0; i < dataToShow.length; i++) {
+					tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+						dataToShow[i].seriesName + ': </span>' + dataToShow[i].value + "개" + '<br>';
+				}
+
+				return tooltipText;
+			},
+			shared: true, // 툴팁을 공유합니다.		
+		},
+
+		xAxis: {
+			categories: date,
+			labels: {
+				rotation: -90 // Rotate the labels by -45 degrees
+			}
+		},
+
+		scrollbar: {
+			enabled: true
+		},
+
+		yAxis: {
+			title: {
+				text: ''
+			}
+		},
+
 		credits: {
-	        enabled: false
-	    }, 
-	       
-		navigation: {
-	        buttonOptions: {
-	            enabled: false
-	        }
-	    },
-	    
-	    lang: {
-	        noData: 'No matching records found'
-	    },
-		noData: {
-		    	style: {
-		        fontWeight: 'bold',
-		        fontSize: '15px',
-		        color: '#333333'
-		    }
+			enabled: false
 		},
-	
-	    series: [{
-		        name: 'MOT-DK',
-		        data: count,
-		        lineWidth: 3
-	    	}],
-	    	
-	    colors: ['#0019F4']
+
+		navigation: {
+			buttonOptions: {
+				enabled: false
+			}
+		},
+
+		lang: {
+			noData: 'No matching records found'
+		},
+		noData: {
+			style: {
+				fontWeight: 'bold',
+				fontSize: '15px',
+				color: '#333333'
+			}
+		},
+
+		series: [{
+			name: 'MOT-DK',
+			data: count,
+			lineWidth: 3
+		}],
+
+		colors: ['#0019F4']
 	});
 }
 
-function chart2(chart2data){
+function chart2(chart2data) {
 
 	var order_name = [];
 	var rate = [];
-			
-	for(var i=0; i< chart2data.length; i++) {
+
+	for (var i = 0; i < chart2data.length; i++) {
 		order_name[i] = chart2data[i].order_name;
 		rate[i] = parseFloat(chart2data[i].rate);
 	}
-	
-	if (chart2data.length > 10){
+
+	if (chart2data.length > 10) {
 		var min = 1500;
 	} else {
 		var min = 500;
 	}
-		
+
 	Highcharts.chart('chart2', {
-	    chart: {
-	        type: 'column',
-	        scrollablePlotArea: {
-		      minWidth: min,
-		      scrollPositionX: 0
-		    }
-	    },
-	    title: {
-	        text: '',
-	        align: 'left'
-	    },
-	    xAxis: {
+		chart: {
+			type: 'column',
+			scrollablePlotArea: {
+				minWidth: min,
+				scrollPositionX: 0
+			}
+		},
+		title: {
+			text: '',
+			align: 'left'
+		},
+		xAxis: {
 			min: 0,
-	        categories: order_name,
-	        crosshair: true
-	    },
-	    yAxis: {
-	        min: 0,
-	        title: {
-	            text: ''
-	        }
-	    },
-	    plotOptions: {
-	        column: {
-	            pointPadding: 0.2,
-	            borderWidth: 0
-	        },
-	        series : {
-				minPointLength:3,
+			categories: order_name,
+			crosshair: true
+		},
+		yAxis: {
+			min: 0,
+			title: {
+				text: ''
+			}
+		},
+		plotOptions: {
+			column: {
+				pointPadding: 0.2,
+				borderWidth: 0
+			},
+			series: {
+				minPointLength: 3,
 				pointWidth: 40
 			}
-	    },
-		lang: {
-	        noData: 'No matching records found'
-	    },
-		noData: {
-		    	style: {
-		        fontWeight: 'bold',
-		        fontSize: '15px',
-		        color: '#333333'
-		    }
-		},	    
-	    tooltip: {
-	        formatter: function () {
-	            let xValue = this.x; // X 좌표 값을 가져옵니다.
-	            let points = this.points; // 모든 데이터 포인트를 가져옵니다.
-	            
-	            // X 좌표에 해당하는 모든 데이터를 저장할 배열
-	            let dataToShow = [];
-	
-	            // X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
-	            for (let i = 0; i < points.length; i++) {
-	                dataToShow.push({
-	                    seriesName: points[i].series.name,
-	                    value: points[i].y,
-	                    color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
-	                });
-	            }
-	
-	            // 툴팁 내용을 구성
-	            let tooltipText = '<strong>' + xValue + '</strong><br>';
-	            for (let i = 0; i < dataToShow.length; i++) {
-	                tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
-	                               dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '%' + '<br>';
-	            }
-	
-	            return tooltipText;
-	        },
-	        shared: true, // 툴팁을 공유합니다.		
-		},	    
-		credits: {
-	        enabled: false
-	    },    
-	    navigation: {
-	        buttonOptions: {
-	            enabled: false
-	        }
-	    },
-	    legend: {
-    		symbolRadius: 0
 		},
-	    series: 
+		lang: {
+			noData: 'No matching records found'
+		},
+		noData: {
+			style: {
+				fontWeight: 'bold',
+				fontSize: '15px',
+				color: '#333333'
+			}
+		},
+		tooltip: {
+			formatter: function() {
+				let xValue = this.x; // X 좌표 값을 가져옵니다.
+				let points = this.points; // 모든 데이터 포인트를 가져옵니다.
+
+				// X 좌표에 해당하는 모든 데이터를 저장할 배열
+				let dataToShow = [];
+
+				// X 좌표에 해당하는 모든 데이터를 찾아 배열에 추가
+				for (let i = 0; i < points.length; i++) {
+					dataToShow.push({
+						seriesName: points[i].series.name,
+						value: points[i].y,
+						color: points[i].series.color, // 시리즈의 컬러를 가져옵니다.
+					});
+				}
+
+				// 툴팁 내용을 구성
+				let tooltipText = '<strong>' + xValue + '</strong><br>';
+				for (let i = 0; i < dataToShow.length; i++) {
+					tooltipText += '<span style="color:' + dataToShow[i].color + ';">' +
+						dataToShow[i].seriesName + ': </span>' + dataToShow[i].value.toLocaleString() + '%' + '<br>';
+				}
+
+				return tooltipText;
+			},
+			shared: true, // 툴팁을 공유합니다.		
+		},
+		credits: {
+			enabled: false
+		},
+		navigation: {
+			buttonOptions: {
+				enabled: false
+			}
+		},
+		legend: {
+			symbolRadius: 0
+		},
+		series:
 			[{
-		        name: '납기준수율',
-		        data: rate
-		    }],
-	    colors: [
+				name: '납기준수율',
+				data: rate
+			}],
+		colors: [
 			'#0D70C6'
-			]
+		]
 	});
 }
 

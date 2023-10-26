@@ -10,6 +10,7 @@ public class WorkDailySummary {
 	private String factoryname;
 	private String workdate;
 	private String lineid;
+	private String linename;
 	private String shiftid;
 	private String materialid;
 	private String modelid;

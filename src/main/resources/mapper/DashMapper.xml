@@ -121,7 +121,7 @@
 			SELECT DISTINCT
 				A.WORK_DATE,
 				A.PLAN_QTY,
-				B.PROD_QTY
+				SUM(B.PROD_QTY) AS PROD_QTY
 			FROM DSP_WORKDAILY_REPORT A
 			LEFT JOIN DSP_WORK_CONTENTS B
 			ON A.DATASEQ = B.WORKDAILY_SEQ
@@ -131,8 +131,16 @@
 								CONVERT(DATE, GETDATE()-1, 112)
 								)
 				AND A.FACTORYID = #{plant}
-				AND A.MATERIALID = #{material} 
+				AND A.MATERIALID = #{material}
 				AND A.ISUSABLE = 'Usable'
+				AND A.LINEID = (SELECT TOP 1
+									LOCATIONID
+									FROM DSP_LOCATION
+									WHERE FACTORYID = 'KEM'
+									AND ISUSABLE = 'Y'
+									ORDER BY LOCATIONID DESC
+									)
+			GROUP BY A.WORK_DATE, A.PLAN_QTY
 			) C
 		GROUP BY C.WORK_DATE
     </select>
@@ -526,20 +534,13 @@
 				ON A.dt = B.WORK_DATE 
 					AND B.FACTORYID = #{plant}
 					AND B.MATERIALID = #{material}
-					<choose>
-						<when test='plant == "KEM"'>
-							AND B.LINEID = 'KEM-P0009'
-						</when>
-						<when test='plant == "LHO"'>
-							AND B.LINEID = 'LHO-P0005'
-						</when>
-						<when test='plant == "SYM"'>
-							AND B.LINEID = 'SYM-P0005'
-						</when>
-						<otherwise>
-							AND B.LINEID = 'SWH-P0005'
-						</otherwise>
-					</choose>
+					AND B.LINEID = (SELECT TOP 1
+									LOCATIONID
+									FROM DSP_LOCATION
+									WHERE FACTORYID = 'KEM'
+									AND ISUSABLE = 'Y'
+									ORDER BY LOCATIONID DESC
+									)
 					AND B.ISUSABLE = 'Usable'
 				LEFT JOIN DSP_WORK_CONTENTS C
 				ON B.DATASEQ = C.WORKDAILY_SEQ
@@ -554,7 +555,7 @@
 										 AND CONVERT(VARCHAR(8),DATEADD(DAY, 7 - DATEPART(DW, CONVERT(DATE,GETDATE())) , CONVERT(DATE,GETDATE())),112)	
 						</when>
 						<otherwise>
-							AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, 0, GETDATE()) -5, 0) AND DATEADD(MS, 0, DATEADD(WK, DATEDIFF(WK, 0, GETDATE()), 0))
+							AND A.dt BETWEEN DATEADD(MONTH , DATEDIFF(MONTH, -1, GETDATE()) -5, 0) AND DATEADD(MS, -3, DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE())+1, 0))
 						</otherwise>
 					</choose>
 				GROUP BY A.dt, B.DATASEQ, B.PLAN_QTY

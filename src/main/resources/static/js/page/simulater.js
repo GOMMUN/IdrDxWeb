@@ -126,7 +126,6 @@ function setEventListener() {
 			alert("음수는 입력 할수 없습니다.");
 			return;
 		}
-
 		if (date > date2) {
 			alert("시작 시간이 납기보다 늦을 수 없습니다.");
 			return;
@@ -421,14 +420,42 @@ function get() {
     
 	$.get(url2).then(function(res) {
 		var result = res.data;
-		$('#procTimeH').text(result.proctime);
-		$('#avgLeadTimeH').text(result.maxleadtime);
-		$('#maxLeadTimeH').text(result.avgleadtime);
-		$('#minLeadTimeH').text(result.minleadtime);
-		$('#avgLossTimeH').text(result.maxlosstime);
-		$('#maxLossTimeH').text(result.minlosstime);
-		$('#minLossTimeH').text(result.avglosstime);
 
+        if (result.procTimeH !== null && result.procTimeH !== undefined) {        	
+        	$('#procTimeH').text(result.procTimeH);
+        } else {
+		    $('#procTimeH').text('-');
+		}
+		if (result.avgLeadTimeH !== null && result.avgLeadTimeH !== undefined) {        	
+        	$('#avgLeadTimeH').text(result.avgLeadTimeH);
+        } else {
+		    $('#avgLeadTimeH').text('-');
+		}
+		if (result.maxLeadTimeH !== null && result.maxLeadTimeH !== undefined) {        	
+        	$('#maxLeadTimeH').text(result.maxLeadTimeH);
+        } else {
+		    $('#maxLeadTimeH').text('-');
+		}
+		if (result.minLeadTimeH !== null && result.minLeadTimeH !== undefined) {        	
+        	$('#minLeadTimeH').text(result.minLeadTimeH);
+        } else {
+		    $('#minLeadTimeH').text('-');
+		}
+		if (result.avgLossTimeH !== null && result.avgLossTimeH !== undefined) {        	
+        	$('#avgLossTimeH').text(result.avgLossTimeH);
+        } else {
+		    $('#avgLossTimeH').text('-');
+		}
+		if (result.maxLossTimeH !== null && result.maxLossTimeH !== undefined) {        	
+        	$('#maxLossTimeH').text(result.maxLossTimeH);
+        } else {
+		    $('#maxLossTimeH').text('-');
+		}
+		if (result.minLossTimeH !== null && result.minLossTimeH !== undefined) {        	
+        	$('#minLossTimeH').text(result.minLossTimeH);
+        } else {
+		    $('#minLossTimeH').text('-');
+		}
 	})
 	
 	var url3 = 'https://simulator.idrenvision.com:8271/secondary/DailyProduction';

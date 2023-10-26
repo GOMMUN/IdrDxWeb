@@ -29,7 +29,7 @@ function setEventListener(){
         
         $.ajax({
                 type : 'POST',
-                url : "/simullator/productionplanning/excelUpload",
+                url : "/productionplanning/excelUpload",
                 dataType: 'text',
                 data : formData,
                 processData : false,
@@ -79,7 +79,7 @@ function excelUploadProgress(){
         
     $.ajax({
 	    type: "post",
-	    url: "/simullator/productionplanning/excelUploadPercent",
+	    url: "/productionplanning/excelUploadPercent",
 	    dataType :"text",
 	    success : function(resultData){
 			if(!isNaN(resultData)){

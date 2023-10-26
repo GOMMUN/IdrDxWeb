@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/simullator/productInformation")
+@RequestMapping("/productInformation")
 public class ProductInformationController {
 	private int totalRowCount = 0; // 전체 행 개수
 	private int successRowCount = 0; // 성공한 데이터 개수

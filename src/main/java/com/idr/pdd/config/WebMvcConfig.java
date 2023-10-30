@@ -18,8 +18,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         				"/simullator/fairPerformance",			// 공정실적
         				"/simullator/logisticsPerformance",		// 물류실적
         				"/simullator/workerPerformance",		// 작업자실적
-        				"/simullator/productionplanning",		// 생산계획
-        				"/simullator/productInformation",		// 제풍정보
+        				"/productionplanning",					// 생산계획
+        				"/productInformation",					// 제풍정보
         				"/perbyproductplan",					// 생산계획별실적
         				"/perbyprocess",						// 공정별실적
         				"/leadtime",							// LeadTime

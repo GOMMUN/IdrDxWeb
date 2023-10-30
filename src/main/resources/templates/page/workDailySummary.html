@@ -45,23 +45,25 @@
 		<div class="p-2 col-12 bd-highlight">
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">작업일보 Summary</h6>
+					<h6 class="m-0 font-weight-bold text-primary">생산일보 Summary</h6>
 				</div>
 				<div class="card-body">
 					<table id="workDailySummary" data-toggle="table" data-toolbar="#toolbarFactoryinfo" data-height="750"
 						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/workDailySummary/findName" data-show-columns="true"
-						data-show-columns-toggle-all="true">
+						data-show-columns-toggle-all="true" data-show-footer="true" data-footer-style="footerStyle">
 						<thead class="thead-light">
 							<tr>
-								<th data-field="factoryname" data-sortable="true" data-align="center">공장</th>
+								<th data-field="factoryname" data-footer-formatter="Total" data-sortable="true" data-align="center">공장</th>
 								<th data-field="workdate" data-sortable="true" data-align="center">날짜</th>
 								<th data-field="linename" data-sortable="true" data-align="center">공정</th>
 								<th data-field="shiftid" data-sortable="true" data-align="center">작업구분</th>
 								<th data-field="modelid" data-sortable="true" data-align="center">차종</th>
-								<th data-field="planqty" data-sortable="true" data-align="center">계획수량(개)</th>
+								<th data-field="planqty" data-sortable="true" data-footer-formatter="planqtySumFormatter" data-align="center">계획수량(개)</th>
 <!--								<th data-field="prodqty" data-sortable="true" data-align="center">생산실적(개)</th>-->
-								<th data-field="firsttimegoodqty" data-sortable="true" data-align="center">생산실적(개)</th>
-								<th data-field="firsttimefailqty" data-sortable="true" data-align="center">불량수량(개)</th>
+								<th data-field="firsttimegoodqty" data-sortable="true" data-footer-formatter="firsttimegoodqtySumFormatter" data-align="center">생산실적(개)</th>
+								<th data-field="firsttimefailqty" data-sortable="true" data-footer-formatter="firsttimefailqtySumFormatter" data-align="center">불량수량(개)</th>
+								<th id="percent1" data-field="" data-sortable="true" data-align="center" data-footer-formatter="percent1Formatter">납기준수율(%)</th>
+								<th id="percent2" data-field="" data-sortable="true" data-align="center" data-footer-formatter="percent2Formatter">불량율(%)</th>
 								<th data-field="notoperatetime" data-sortable="true" data-align="center">비가동 시간</th>
 								<th data-field="dspworkerinput" data-sortable="true" data-align="center">작업자 투입 인원</th>
 								<th data-field="manhour" data-sortable="true" data-align="center">공수</th>

@@ -59,6 +59,13 @@
 	WHERE 1=1
 	AND A.FACTORYID = #{plant}
 	AND A.ISUSABLE ='Usable'
+	AND A.LINEID = (SELECT TOP 1
+						LOCATIONID
+						FROM DSP_LOCATION
+						WHERE FACTORYID = #{plant}
+						AND ISUSABLE = 'Y'
+						ORDER BY LOCATIONID DESC
+						)
 	ORDER BY DATASEQ
     </select>
     

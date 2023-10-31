@@ -358,10 +358,10 @@ function getsimulResult() {
 	$.get(url1).then(function(res) {
 		if (res.status == 200) {
 			var result = res.data;
-			$('#machineName1').text(result[0].machine_name);
-			$('#machineName2').text(result[1].machine_name);
-			$('#machineName3').text(result[2].machine_name);
-			$('#machineName4').text(result[3].machine_name);
+			$('#machineName1').text(result[0].machine_group);
+			$('#machineName2').text(result[1].machine_group);
+			$('#machineName3').text(result[2].machine_group);
+			$('#machineName4').text(result[3].machine_group);
 
 			$('#equipPerformance1').text(result[0].equipPerformace + '%');
 			$('#equipPerformance2').text(result[1].equipPerformace + '%');

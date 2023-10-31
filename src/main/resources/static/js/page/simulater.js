@@ -29,7 +29,6 @@ function setEventListener() {
 			url: "https://simulator.idrenvision.com:8272/pytest",
 			type: "GET",
 			dataType: "json",
-			timeout: 600000,
 			success: function(data) {
 				
 				if(data.OK){

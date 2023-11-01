@@ -171,183 +171,176 @@
 </style>
 
 <body>
-	<div class="row">
-		<div class="col-lg-12" style="padding-right: 0px;">
-			<div class="card-header py-3">
-				<h1 class="m-0 font-weight-bold text-primary">What-if Simulation</h1>
-			</div>
-			<div class="card-body">
-				<h5 class="m-0 font-weight-bold text-primary">시나리오 설정</h5>
-			</div>
-			<div class="ml-2 mr-2">
-				<div class="col-lg-12">
-					<div class="card shadow mb-4 ">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">생산계획</h6>
+	<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+		<h1 class="h2 mb-2 font-weight-bold text-primary">What-if Simulation</h1>
+    </nav>
+	<div class="container-fluid mt-4">
+		<h4 class="h5 mb-2 font-weight-bold text-primary">시나리오 설정</h4>
+		<div class="row">
+			<div class="col-lg-12" style="padding-right: 0px;">
+				<div class="card shadow mb-4 ">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">생산계획</h6>
+					</div>
+					<div class="card-body">
+						<div id="toolbarWorkDailyReport">
+							<button type="button" class="btn btn-primary" id="addbtn" data-toggle="modal"
+								data-target="#addmodal">
+								<i class="fa-solid fa-plus"></i> Add
+							</button>
+							<button id="removebtn" class="btn btn-danger" disabled>
+								<i class="fa fa-trash"></i> Delete
+							</button>
+							<button id="simulstart" class="btn btn-primary">
+								<i class="fa fa-play"></i> Simulation
+							</button>
 						</div>
-						<div class="card-body">
-							<div id="toolbarWorkDailyReport">
-								<button type="button" class="btn btn-primary" id="addbtn" data-toggle="modal"
-									data-target="#addmodal">
-									<i class="fa-solid fa-plus"></i> Add
-								</button>
-								<button id="removebtn" class="btn btn-danger" disabled>
-									<i class="fa fa-trash"></i> Delete
-								</button>
-								<button id="simulstart" class="btn btn-primary">
-									<i class="fa fa-play"></i> Simulation
-								</button>
-							</div>
-							<table id="table1" data-toggle="table" data-toolbar="#toolbarWorkDailyReport" data-height="350"
-								data-multiple-select-row="true" data-click-to-select="true" data-search="true"
-								data-show-columns="true" data-show-columns-toggle-all="true" data-pagination="true">
-								<thead class="thead-light">
-									<tr>
-										<th data-field="state" data-checkbox="true"></th>
-										<!--<th data-field="rownum" data-sortable="true" data-align="center">순번</th>-->
-										<!--<th data-field="order_id" data-sortable="true" data-align="center">주문ID</th>-->
-										<th data-field="order_name" data-sortable="true" data-align="center">주문명</th>
-										<th data-field="item_name" data-sortable="true" data-align="center">item 이름</th>
-										<th data-field="lot_name" data-sortable="true" data-align="center">Lot</th>
-										<th data-field="start_time" data-sortable="true" data-align="center">시작시간</th>
-										<th data-field="end_time" data-sortable="true" data-align="center">납기</th>
-										<th data-field="lot_work" data-sortable="true" data-align="center">총 생산계획</th>
-										<th data-field="notworkcolumn" data-sortable="false" data-align="center"
-											data-formatter="tableOperateFormatter" data-events="simulOperateEvents">수정
-										</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="simulResultDataView">
-				<div class="card-body">
-					<h5 class="m-0 font-weight-bold text-primary">결과 및 분석</h5>
-				</div>
-				<div class="row ml-2 mr-2">
-					<div class="col-lg-4">
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">장비가동률 (%)</h6>
-							</div>
-							<div class="graph-container">
-								<div class="quadrant" id="quadrant1">
-									<div class="quadrant-content">
-									<!-- 1사분면 내용 -->
-										<div style="font-size: 25px; margin-left: 20%;"><b id="machineName1"></b></div>
-										<div class="quadrant-po"><b id="equipPerformance1"></b></div>
-									</div>
-								</div>
-								<div class="quadrant" id="quadrant2">
-									<div class="quadrant-content">
-									<!-- 2사분면 내용 -->
-										<div style="font-size: 25px;"><b id="machineName2"></b></div>
-										<div class="quadrant-po mr-5"><b id="equipPerformance2"></b></div>
-									</div>
-								</div>
-								<div class="quadrant" id="quadrant3">
-									<div class="quadrant-content">
-									<!-- 3사분면 내용 -->
-										<div style="font-size: 25px; margin-left: 20%;"><b id="machineName3"></b></div>
-										<div class="quadrant-po"><b id="equipPerformance3"></b></div>
-									</div>
-								</div>
-								<div class="quadrant" id="quadrant4">
-									<div class="quadrant-content">
-									<!-- 4사분면 내용 -->
-										<div style="font-size: 25px;"><b id="machineName4"></b></div>
-										<div class="quadrant-po mr-5"><b id="equipPerformance4"></b></div>
-									</div>
-								</div>
-								<div class="x-axis"></div>
-								<div class="y-axis"></div>
-							</div>		
-						</div>	
-					</div>
-					<div class="col-lg-4">
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">리드타임 분석 (시간)</h6>
-							</div>
-							<div class="grid-item" style="margin-top: 6%; margin-bottom: 11.2%;">
-								<div class="row custom">
-									<div class="col-lg-3 table1"><b>공정시간</b></div>
-									<div class="col-lg-8 table2"><b id="procTimeH"></b></div>
-									<div class="tableline"></div>
-									<div class="col-lg-3 table1"><b>평균LeadTime</b></div>
-									<div class="col-lg-8 table2"><b id="avgLeadTimeH"></b></div>
-									<div class="tableline"></div>
-									<div class="col-lg-3 table1">최대LeadTime</div>
-									<div class="col-lg-8 table2" id="maxLeadTimeH"></div>
-									<div class="tableline"></div>
-									<div class="col-lg-3 table1">최소LeadTime</div>
-									<div class="col-lg-8 table2" id="minLeadTimeH"></div>
-									<div class="tableline"></div>
-									<div class="col-lg-3 table1"><b>평균LossTime</b></div>
-									<div class="col-lg-8 table2"><b id="avgLossTimeH"></b></div>
-									<div class="tableline"></div>
-									<div class="col-lg-3 table1">최대LossTime</div>
-									<div class="col-lg-8 table2" id="maxLossTimeH"></div>
-									<div class="tableline"></div>
-									<div class="col-lg-3 table1">최소LossTime</div>
-									<div class="col-lg-8 table2" id="minLossTimeH"></div>
-									<div class="tableline"></div>
-								</div>
-							</div>
-						</div>		
-					</div>
-					<div class="col-lg-4">
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">일별 생산량 추이 (개)</h6>
-							</div>
-							<div class="grid-item">
-								<div class="dash-card">
-									<div class="highcharts-figure" id="chart1" style="width: 500px; height: 368px;"></div>
-								</div>
-							</div>	
-						</div>		
-					</div>
-				</div>
-				<div class="row ml-2 mr-2">
-					<div class="col-lg-12">
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">주문별 납기준수율</h6>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-6">
-										<table id="table2" data-toggle="table" data-height="408" data-search="true"
-											data-show-columns="true" data-show-columns-toggle-all="true">
-											<thead class="thead-light">
-												<tr>
-													<th data-field="order_name" data-sortable="true" data-align="center">주문명</th>
-													<th data-field="start_time" data-sortable="true" data-align="center">시작시간</th>
-													<th data-field="end_time" data-sortable="true" data-align="center">종료시간</th>
-													<th data-field="taken_time" data-sortable="true" data-align="center">소요시간</th>
-													<th data-field="due_time" data-sortable="true" data-align="center">납기</th>
-													<th data-field="rate" data-sortable="true" data-align="center">납기준수율</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
-									<div class="col-lg-6">
-										<div class="dash-card">
-											<div class="highcharts-figure" id="chart2" style="height: 390px;"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>		
+						<table id="table1" data-toggle="table" data-toolbar="#toolbarWorkDailyReport" data-height="350"
+							data-multiple-select-row="true" data-click-to-select="true" data-search="true"
+							data-show-columns="true" data-show-columns-toggle-all="true" data-pagination="true">
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<!--<th data-field="rownum" data-sortable="true" data-align="center">순번</th>-->
+									<!--<th data-field="order_id" data-sortable="true" data-align="center">주문ID</th>-->
+									<th data-field="order_name" data-sortable="true" data-align="center">주문명</th>
+									<th data-field="item_name" data-sortable="true" data-align="center">item 이름</th>
+									<th data-field="lot_name" data-sortable="true" data-align="center">Lot</th>
+									<th data-field="start_time" data-sortable="true" data-align="center">시작시간</th>
+									<th data-field="end_time" data-sortable="true" data-align="center">납기</th>
+									<th data-field="lot_work" data-sortable="true" data-align="center">총 생산계획</th>
+									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
+										data-formatter="tableOperateFormatter" data-events="simulOperateEvents">수정
+									</th>
+								</tr>
+							</thead>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div id="simulResultDataView">
+			<h4 class="h5 mb-2 font-weight-bold text-primary">결과 및 분석</h4>
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">장비가동률 (%)</h6>
+						</div>
+						<div class="graph-container">
+							<div class="quadrant" id="quadrant1">
+								<div class="quadrant-content">
+								<!-- 1사분면 내용 -->
+									<div style="font-size: 25px; margin-left: 20%;"><b id="machineName1"></b></div>
+									<div class="quadrant-po"><b id="equipPerformance1"></b></div>
+								</div>
+							</div>
+							<div class="quadrant" id="quadrant2">
+								<div class="quadrant-content">
+								<!-- 2사분면 내용 -->
+									<div style="font-size: 25px;"><b id="machineName2"></b></div>
+									<div class="quadrant-po mr-5"><b id="equipPerformance2"></b></div>
+								</div>
+							</div>
+							<div class="quadrant" id="quadrant3">
+								<div class="quadrant-content">
+								<!-- 3사분면 내용 -->
+									<div style="font-size: 25px; margin-left: 20%;"><b id="machineName3"></b></div>
+									<div class="quadrant-po"><b id="equipPerformance3"></b></div>
+								</div>
+							</div>
+							<div class="quadrant" id="quadrant4">
+								<div class="quadrant-content">
+								<!-- 4사분면 내용 -->
+									<div style="font-size: 25px;"><b id="machineName4"></b></div>
+									<div class="quadrant-po mr-5"><b id="equipPerformance4"></b></div>
+								</div>
+							</div>
+							<div class="x-axis"></div>
+							<div class="y-axis"></div>
+						</div>		
+					</div>	
+				</div>
+				<div class="col-lg-4">
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">리드타임 분석 (시간)</h6>
+						</div>
+						<div class="grid-item" style="margin-top: 6%; margin-bottom: 11.2%;">
+							<div class="row custom">
+								<div class="col-lg-3 table1"><b>공정시간</b></div>
+								<div class="col-lg-8 table2"><b id="procTimeH"></b></div>
+								<div class="tableline"></div>									
+								<div class="col-lg-3 table1">최대LeadTime</div>
+								<div class="col-lg-8 table2" id="maxLeadTimeH"></div>
+								<div class="tableline"></div>
+								<div class="col-lg-3 table1"><b>평균LeadTime</b></div>
+								<div class="col-lg-8 table2"><b id="avgLeadTimeH"></b></div>
+								<div class="tableline"></div>
+								<div class="col-lg-3 table1">최소LeadTime</div>
+								<div class="col-lg-8 table2" id="minLeadTimeH"></div>
+								<div class="tableline"></div>					
+								<div class="col-lg-3 table1">최대LossTime</div>
+								<div class="col-lg-8 table2" id="maxLossTimeH"></div>
+								<div class="tableline"></div>
+								<div class="col-lg-3 table1"><b>평균LossTime</b></div>
+								<div class="col-lg-8 table2"><b id="avgLossTimeH"></b></div>
+								<div class="tableline"></div>
+								<div class="col-lg-3 table1">최소LossTime</div>
+								<div class="col-lg-8 table2" id="minLossTimeH"></div>
+								<div class="tableline"></div>
+							</div>
+						</div>
+					</div>		
+				</div>
+				<div class="col-lg-4">
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">일별 생산량 추이 (개)</h6>
+						</div>
+						<div class="grid-item">
+							<div class="dash-card">
+								<div class="highcharts-figure" id="chart1" style="width: 500px; height: 368px;"></div>
+							</div>
+						</div>	
+					</div>		
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">주문별 납기준수율</h6>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-lg-6">
+									<table id="table2" data-toggle="table" data-height="408" data-search="true"
+										data-show-columns="true" data-show-columns-toggle-all="true">
+										<thead class="thead-light">
+											<tr>
+												<th data-field="order_name" data-sortable="true" data-align="center">주문명</th>
+												<th data-field="start_time" data-sortable="true" data-align="center">시작시간</th>
+												<th data-field="end_time" data-sortable="true" data-align="center">종료시간</th>
+												<th data-field="taken_time" data-sortable="true" data-align="center">소요시간</th>
+												<th data-field="due_time" data-sortable="true" data-align="center">납기</th>
+												<th data-field="rate" data-sortable="true" data-align="center">납기준수율</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+								<div class="col-lg-6">
+									<div class="dash-card">
+										<div class="highcharts-figure" id="chart2" style="height: 390px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>		
+				</div>
+			</div>
+		</div>
 	</div>
-	
 	<!-- Modal -->
 	<div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 		aria-hidden="true">

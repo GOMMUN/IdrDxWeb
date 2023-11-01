@@ -425,7 +425,7 @@ function getsimulResult() {
 				end_time: res.data[i].end_time,
 				taken_time: res.data[i].taken_time,
 				due_time: res.data[i].due_time,
-				rate: res.data[i].rate,
+				rate: res.data[i].rate+"%",
 			})
 		}
 		$table2.bootstrapTable('append', rows2)

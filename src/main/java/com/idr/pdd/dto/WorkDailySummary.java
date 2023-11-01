@@ -22,5 +22,6 @@ public class WorkDailySummary {
 	private String firsttimefailqty;
 	private String notoperatetime;
 	private String plant;
+	private String factory;
 
 }

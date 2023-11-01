@@ -16,6 +16,7 @@ function initSetting() {
 	
 }
 
+
 function planqtySumFormatter(data) {
 	field = this.field;
     planqtySum = data.map(function (row) {

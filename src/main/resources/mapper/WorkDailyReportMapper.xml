@@ -70,7 +70,9 @@
 		 FROM DSP_WORKDAILY_REPORT A
 		WHERE ISUSABLE IS NOT NULL
 		AND A.ISUSABLE = 'Usable'
+		<if test='plant != "ALL"'>
 		AND A.FACTORYID = #{plant}
+		</if>
 		ORDER BY WORK_DATE DESC
     </select>
     

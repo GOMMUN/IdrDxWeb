@@ -35,6 +35,57 @@ function initSetting() {
 
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
+	
+	if($("#parameterPlant").val() == "ALL"){ //슈퍼유저시 조회만 가능
+		//생산일보
+		$("#addWorkDailyReport").hide();
+		$("#removeWorkDailyReport").hide();
+		
+		$("#addWorkDailyReportModalModify").remove();
+		$("#addWorkDailyReportModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//작업자투입현황
+		$("#addWorkerInput").hide();
+		$("#removeWorkerInput").hide();
+		
+		$("#addWorkerInputModalModify").remove();
+		$("#addWorkerInputModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//공수투입현황
+		$("#addWorkerManhour").hide();
+		$("#removeWorkerManhour").hide();
+		
+		$("#addWorkerManhourModalModify").remove();
+		$("#addWorkerManhourModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//타공정지원내역
+		$("#addworkerSupport").hide();
+		$("#removeworkerSupport").hide();
+		
+		$("#addWorkerSupportModalModify").remove();
+		$("#addWorkerSupportModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//작업내용
+		$("#addworkContents").hide();
+		$("#removeworkContents").hide();
+		
+		$("#addWorkContentsModalModify").remove();
+		$("#addWorkContentsModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//부적합내역
+		$("#addNonconFormity").hide();
+		$("#removeNonconFormity").hide();
+		
+		$("#addNonconFormityModalModify").remove();
+		$("#addNonconFormityModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//비가동내역
+		$("#addNonOperation").hide();
+		$("#removeNonOperation").hide();
+		
+		$("#addNonOperationModalModify").remove();
+		$("#addNonOperationModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+	}
 
 	$("input[name=workDate]").datepicker({
 		format: "yyyy-mm-dd",
@@ -1949,8 +2000,12 @@ function line() {
 			if (c_line) {
 				$dropdown2.append($("<option/>").val("").text("공정 선택"));
 				$.each(c_line, function() {
-					if (localStorage.getItem('plant') == this.mcode) {
+					if(localStorage.getItem('plant') == "ALL"){
 						$dropdown2.append($("<option/>").val(this.code).text(this.value));
+					}else{
+						localStorage.getItem('plant') == this.mcode
+						$dropdown2.append($("<option/>").val(this.code).text(this.value));
+						
 					}
 				});
 			} else {
@@ -1980,7 +2035,10 @@ function shift() {
 			if (c_shift) {
 				$dropdown3.append($("<option/>").val("").text("작업구분 선택"));
 				$.each(c_shift, function() {
-					if (localStorage.getItem('plant') == this.mcode) {
+					if(localStorage.getItem('plant') == "ALL"){
+						$dropdown3.append($("<option/>").val(this.code).text(this.value));
+					}else{
+						(localStorage.getItem('plant') == this.mcode) 
 						$dropdown3.append($("<option/>").val(this.code).text(this.value));
 					}
 				});
@@ -2037,7 +2095,10 @@ function matarial() {
 			if (c_material) {
 				$dropdown5.append($("<option/>").val("").text("자재 선택"));
 				$.each(c_material, function() {
-					if (localStorage.getItem('plant') == this.mcode) {
+					if(localStorage.getItem('plant') == "ALL"){
+						$dropdown5.append($("<option/>").val(this.code).text(this.value));
+					}else{
+						(localStorage.getItem('plant') == this.mcode) 
 						$dropdown5.append($("<option/>").val(this.code).text(this.value));
 					}
 				});
@@ -2362,6 +2423,7 @@ function workDailyReportDetail(data) {
 	//$('#workDateDetail').datepicker("setDate",new Date(data.workDate))
 	//$("input[name=workDate]").val(data.workDate);
 	//s_workDailyReport = data;
+//	console.log(data);
 	m_dataSeq = data.dataseq;
 	var inputDate = data.workDate;
 	var formattedDate = inputDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");

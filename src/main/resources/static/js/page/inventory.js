@@ -18,6 +18,16 @@ function initSetting() {
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
 	
+	if($("#parameterPlant").val() == "ALL"){ //슈퍼유저시 조회만 가능
+		//생산일보
+		$("#addInventory").hide();
+		$("#removeInventory").hide();
+		
+		$("#addInventoryModalModify").remove();
+		$("#addInventoryModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+	}
+	
 	$("input[name=inventorydate]").datepicker({
 		format: "yyyy-mm-dd",
 		autoclose: true,

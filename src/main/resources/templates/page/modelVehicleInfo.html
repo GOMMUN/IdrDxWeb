@@ -41,43 +41,47 @@
 <body>
 	<input id="parameterPlant" type="hidden" th:value="${plant}" />
 	<input id="parameterUsername" type="hidden" th:value="${username}" />
-	<div class="d-flex bd-highlight">
-		<div class="p-2 col-12 bd-highlight">
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">모델/차종정보</h6>
-				</div>
-				<div class="card-body">
-					<div id="toolbarMvinfo">
-						<button type="button" class="btn btn-primary" id="addMvinfo" data-toggle="modal"
-								data-target="#addGroupShiftInfoModal">
-							<i class="fa-solid fa-plus"></i> Add
-						</button>
-						<button id="removeMvinfo" class="btn btn-danger" disabled>
-							<i class="fa fa-trash"></i> Delete
-						</button>
-					</div>					
-					<table id="mvinfo" data-toggle="table" data-toolbar="#toolbarMvinfo" data-height="750"
-						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/mvinfo/find" data-show-columns="true"
-						data-show-columns-toggle-all="true">
-						<thead class="thead-light">
-							<tr>
-								<th data-field="state" data-checkbox="true"></th>
-								<th data-field="rownum" data-sortable="true" data-align="center">순번</th>									
-								<th data-field="modelid" data-sortable="true" data-align="center">MODEL ID</th>
-								<th data-field="modelnm" data-sortable="true" data-align="center">MODEL 명</th>
-								<th data-field="modeldesc" data-sortable="true" data-align="center">MODEL 설명</th>
-								<th data-field="fstreguserid" data-sortable="true" data-align="center">최초등록자ID</th>
-								<th data-field="fstregdt" data-sortable="true" data-align="center">최초등록시간</th>
-								<th data-field="fnledituserid" data-sortable="true" data-align="center">최종수정자ID</th>
-								<th data-field="fnleditdt" data-sortable="true" data-align="center">최종수정시간</th>
-								<th data-field="useyn" data-sortable="true" data-align="center">사용여부</th>
-								<th data-field="notworkcolumn" data-sortable="false" data-align="center"
-									data-formatter="mvInfoOperateFormatter" data-events="operateEvents">#
-								</th>	
-							</tr>
-						</thead>
-					</table>
+	<div class="container-fluid mt-4">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">모델/차종정보</h6>
+					</div>
+					<div class="card-body">
+						<div id="toolbarMvinfo" class="">
+							<button type="button" class="btn btn-primary" id="addMvinfo"
+								data-target="#addMvinfoModal">
+								<i class="fa-solid fa-plus"></i> Add
+							</button>
+							<button id="removeMvinfo" class="btn btn-danger" disabled>
+								<i class="fa fa-trash"></i> Delete
+							</button>
+						</div>
+						<table id="mvinfo" data-toggle="table" data-toolbar="#toolbarMvinfo" 
+							data-height="750" data-multiple-select-row="true" data-click-to-select="true" 
+							data-show-refresh="true" data-filter-control="true"
+							data-search="true" data-url="/mvinfo/find" data-show-columns="true"
+							data-show-columns-toggle-all="true" data-pagination="true">
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>									
+									<th data-field="modelid" data-sortable="true" data-align="center">MODEL ID</th>
+									<th data-field="modelnm" data-sortable="true" data-align="center">MODEL 명</th>
+									<th data-field="modeldesc" data-sortable="true" data-align="center">MODEL 설명</th>
+									<th data-field="fstreguserid" data-sortable="true" data-align="center">최초등록자ID</th>
+									<th data-field="fstregdt" data-sortable="true" data-align="center">최초등록시간</th>
+									<th data-field="fnledituserid" data-sortable="true" data-align="center">최종수정자ID</th>
+									<th data-field="fnleditdt" data-sortable="true" data-align="center">최종수정시간</th>
+									<th data-field="useyn" data-sortable="true" data-align="center">사용여부</th>
+									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
+										data-formatter="mvInfoOperateFormatter" data-events="operateEvents">#
+									</th>	
+								</tr>
+							</thead>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

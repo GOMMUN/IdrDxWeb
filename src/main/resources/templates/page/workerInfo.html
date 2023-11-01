@@ -41,48 +41,52 @@
 <body>
 	<input id="parameterPlant" type="hidden" th:value="${plant}" />
 	<input id="parameterUsername" type="hidden" th:value="${username}" />
-	<div class="d-flex bd-highlight">
-		<div class="p-2 col-12 bd-highlight">
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">작업자정보</h6>
-				</div>
-				<div class="card-body">
-					<div id="toolbarWorkerInfo">
-						<button type="button" class="btn btn-primary" id="addWorkerInfo" data-toggle="modal"
+	<div class="container-fluid mt-4">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">작업자정보</h6>
+					</div>
+					<div class="card-body">
+						<div id="toolbarWorkerInfo" class="">
+							<button type="button" class="btn btn-primary" id="addWorkerInfo"
 								data-target="#addWorkerInfoModal">
-							<i class="fa-solid fa-plus"></i> Add
-						</button>
-						<button id="removeWorkerinfo" class="btn btn-danger" disabled>
-							<i class="fa fa-trash"></i> Delete
-						</button>
-					</div>					
-					<table id="workerinfo" data-toggle="table" data-toolbar="#toolbarWorkerInfo" data-height="750"
-						data-multiple-select-row="true" data-click-to-select="true" data-search="true" data-url="/workerinfo/find" data-show-columns="true"
-						data-show-columns-toggle-all="true">
-						<thead class="thead-light">
-							<tr>
-								<th data-field="state" data-checkbox="true"></th>
-								<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
-								<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
-								<th data-field="personid" data-sortable="true" data-align="center">작업자ID</th>								
-								<th data-field="personname" data-sortable="true" data-align="center">작업자명</th>
-								<th data-field="creator" data-sortable="true" data-align="center">생성자</th>
-								<th data-field="createtime" data-sortable="true" data-align="center">생성시간</th>
-								<th data-field="eventuser" data-sortable="true" data-align="center">수정자</th>
-								<th data-field="eventtime" data-sortable="true" data-align="center">수정시간</th>
-								<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
-								<th data-field="notworkcolumn" data-sortable="false" data-align="center"
-									data-formatter="workerInfoOperateFormatter" data-events="operateEvents">#
-								</th>									
-							</tr>
-						</thead>
-					</table>
+								<i class="fa-solid fa-plus"></i> Add
+							</button>
+							<button id="removeWorkerinfo" class="btn btn-danger" disabled>
+								<i class="fa fa-trash"></i> Delete
+							</button>
+						</div>
+						<table id="workerinfo" data-toggle="table" data-toolbar="#toolbarWorkerInfo" 
+							data-height="750" data-multiple-select-row="true" data-click-to-select="true" 
+							data-show-refresh="true" data-filter-control="true"
+							data-search="true" data-url="/workerinfo/find" data-show-columns="true"
+							data-show-columns-toggle-all="true" data-pagination="true">
+							<thead class="thead-light">
+								<tr>
+									<th data-field="state" data-checkbox="true"></th>
+									<th data-field="rownum" data-sortable="true" data-align="center">순번</th>
+									<th data-field="factoryname" data-sortable="true" data-align="center">공장명</th>
+									<th data-field="personid" data-sortable="true" data-align="center">작업자ID</th>								
+									<th data-field="personname" data-sortable="true" data-align="center">작업자명</th>
+									<th data-field="creator" data-sortable="true" data-align="center">생성자</th>
+									<th data-field="createtime" data-sortable="true" data-align="center">생성시간</th>
+									<th data-field="eventuser" data-sortable="true" data-align="center">수정자</th>
+									<th data-field="eventtime" data-sortable="true" data-align="center">수정시간</th>
+									<th data-field="isusable" data-sortable="true" data-align="center">사용여부</th>
+									<th data-field="notworkcolumn" data-sortable="false" data-align="center"
+										data-formatter="workerInfoOperateFormatter" data-events="operateEvents">#
+									</th>									
+								</tr>
+							</thead>
+						</table>
+					</div>
 				</div>
-			</div>		
+			</div>
 		</div>
 	</div>
-<!-- Modal -->
+	<!-- Modal -->
 	<div class="modal fade" id="addWorkerInfoModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">

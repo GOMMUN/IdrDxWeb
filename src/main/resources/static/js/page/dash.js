@@ -13,20 +13,30 @@ var chart9data = null;
 var selectedText = null;
 
 var repeat = null;
-var delay = 5000;
+var delay = 50000;
 repeat = setInterval(realTime, delay); // delay 간격으로 실행 
 
 var result = null;
 
 $(function(){
-	initSetting();
-	setEventListener();
+	setPlant();
+
 });
 
-function initSetting() {
-	
+function setPlant(){
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
+	
+	if($("#parameterPlant").val() == "ALL"){
+		factroySelect();
+	}else{
+		$("#factoryselectid").hide();
+		initSetting();
+		setEventListener();
+	}
+}
+
+function initSetting() {
 	
 	code();
 	
@@ -36,33 +46,37 @@ function initSetting() {
 	PQCDrate()					// PQCD 퍼센트 비교
 	selectDayWeekMonthButton();	// 일주월 버튼 클릭
 	
-	if($("#parameterPlant").val() != "KEM"){// 대표기업시 대표 공정별 생산실적 히든
+	if(localStorage.getItem("plant") != "KEM" && localStorage.getItem("plant") != "ALL"){// 대표기업시 대표 공정별 생산실적 히든
 		$('#isPartner').hide();
 		$('#alarm').hide();
 		$('#chart1').css('height', '710px');
+	}else{
+		$('#isPartner').show();
+		$('#alarm').show();
+		$('#chart1').css('height', '340px');
 	}
 	
-	if($("#parameterPlant").val() == "") {
+	if(localStorage.getItem("plant") == "") {
 		$('#logo1').hide();
 		$('#logo2').hide();
 		$('#logo3').hide();
 		$('#logo4').hide();
-	} else if($("#parameterPlant").val() == "KEM"){// 기업별 로고
+	} else if(localStorage.getItem("plant") == "KEM"){// 기업별 로고
 		$('#logo1').show();
 		$('#logo2').hide();
 		$('#logo3').hide();
 		$('#logo4').hide();
-	} else if($("#parameterPlant").val() == "LHO"){
+	} else if(localStorage.getItem("plant") == "LHO"){
 		$('#logo1').hide();
 		$('#logo2').show();
 		$('#logo3').hide();
 		$('#logo4').hide();
-	} else if($("#parameterPlant").val() == "SYM"){
+	} else if(localStorage.getItem("plant") == "SYM"){
 		$('#logo1').hide();
 		$('#logo2').hide();
 		$('#logo3').show();
 		$('#logo4').hide();
-	} else if($("#parameterPlant").val() == "SWH"){
+	} else if(localStorage.getItem("plant") == "SWH"){
 		$('#logo1').hide();
 		$('#logo2').hide();
 		$('#logo3').hide();
@@ -1409,6 +1423,38 @@ function factroy() {
 
                     // 선택된 옵션의 value 값을 localStorage에 저장
                     getName(selectedText);
+                });
+			} else {
+				$dropdown.append($("<option/>").val("").text("공장 선택"));
+			}
+		}
+	});
+}
+
+function factroySelect() { // 전체조회 계정 시 공장선택
+	let url = '/code/factory';
+
+	c_factory = null;
+
+	$.ajax({
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			c_factory = data;
+
+			let $dropdown = $("#factoryselectid");
+			$dropdown.empty();
+
+			if (c_factory) {
+				$dropdown.append($("<option/>").val("").text("공장 선택"));
+				$.each(data, function() {
+					$dropdown.append($("<option/>").val(this.code).text(this.value));
+				});
+				$dropdown.on('change', function() {
+                    let selectedText = $(this).find('option:selected').val();
+                    localStorage.setItem("plant", selectedText);
+                    initSetting();
+					setEventListener();
                 });
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));

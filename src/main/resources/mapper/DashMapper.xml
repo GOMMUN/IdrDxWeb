@@ -537,7 +537,7 @@
 					AND B.LINEID = (SELECT TOP 1
 									LOCATIONID
 									FROM DSP_LOCATION
-									WHERE FACTORYID = 'KEM'
+									WHERE FACTORYID = #{plant}
 									AND ISUSABLE = 'Y'
 									ORDER BY LOCATIONID DESC
 									)

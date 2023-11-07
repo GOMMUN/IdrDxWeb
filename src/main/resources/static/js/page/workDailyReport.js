@@ -2003,9 +2003,9 @@ function line() {
 					if(localStorage.getItem('plant') == "ALL"){
 						$dropdown2.append($("<option/>").val(this.code).text(this.value));
 					}else{
-						localStorage.getItem('plant') == this.mcode
-						$dropdown2.append($("<option/>").val(this.code).text(this.value));
-						
+						if (localStorage.getItem('plant') == this.mcode) {
+							$dropdown2.append($("<option/>").val(this.code).text(this.value));
+						}
 					}
 				});
 			} else {
@@ -2038,8 +2038,9 @@ function shift() {
 					if(localStorage.getItem('plant') == "ALL"){
 						$dropdown3.append($("<option/>").val(this.code).text(this.value));
 					}else{
-						(localStorage.getItem('plant') == this.mcode) 
-						$dropdown3.append($("<option/>").val(this.code).text(this.value));
+						if (localStorage.getItem('plant') == this.mcode) {
+							$dropdown3.append($("<option/>").val(this.code).text(this.value));
+						}
 					}
 				});
 			} else {
@@ -2098,8 +2099,9 @@ function matarial() {
 					if(localStorage.getItem('plant') == "ALL"){
 						$dropdown5.append($("<option/>").val(this.code).text(this.value));
 					}else{
-						(localStorage.getItem('plant') == this.mcode) 
-						$dropdown5.append($("<option/>").val(this.code).text(this.value));
+						if (localStorage.getItem('plant') == this.mcode) {
+							$dropdown5.append($("<option/>").val(this.code).text(this.value));
+						}
 					}
 				});
 			} else {

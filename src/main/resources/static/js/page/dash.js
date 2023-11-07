@@ -29,6 +29,7 @@ function setPlant(){
 	localStorage.setItem("username", $("#parameterUsername").val());
 	
 	if($("#parameterPlant").val() == "ALL"){
+		$("#factoryselectid").parent().addClass("flex-item pr-15");
 		factroySelect();
 	}else{
 		$("#factoryselectid").hide();

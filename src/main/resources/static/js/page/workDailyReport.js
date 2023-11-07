@@ -36,56 +36,7 @@ function initSetting() {
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
 	
-	if($("#parameterPlant").val() == "ALL"){ //슈퍼유저시 조회만 가능
-		//생산일보
-		$("#addWorkDailyReport").hide();
-		$("#removeWorkDailyReport").hide();
-		
-		$("#addWorkDailyReportModalModify").remove();
-		$("#addWorkDailyReportModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
-		
-		//작업자투입현황
-		$("#addWorkerInput").hide();
-		$("#removeWorkerInput").hide();
-		
-		$("#addWorkerInputModalModify").remove();
-		$("#addWorkerInputModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
-		
-		//공수투입현황
-		$("#addWorkerManhour").hide();
-		$("#removeWorkerManhour").hide();
-		
-		$("#addWorkerManhourModalModify").remove();
-		$("#addWorkerManhourModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
-		
-		//타공정지원내역
-		$("#addworkerSupport").hide();
-		$("#removeworkerSupport").hide();
-		
-		$("#addWorkerSupportModalModify").remove();
-		$("#addWorkerSupportModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
-		
-		//작업내용
-		$("#addworkContents").hide();
-		$("#removeworkContents").hide();
-		
-		$("#addWorkContentsModalModify").remove();
-		$("#addWorkContentsModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
-		
-		//부적합내역
-		$("#addNonconFormity").hide();
-		$("#removeNonconFormity").hide();
-		
-		$("#addNonconFormityModalModify").remove();
-		$("#addNonconFormityModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
-		
-		//비가동내역
-		$("#addNonOperation").hide();
-		$("#removeNonOperation").hide();
-		
-		$("#addNonOperationModalModify").remove();
-		$("#addNonOperationModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
-	}
+	checkALL();
 
 	$("input[name=workDate]").datepicker({
 		format: "yyyy-mm-dd",
@@ -2784,6 +2735,59 @@ function sendNotOperateMsg(data){
 			}
 		}
 	});
+}
+
+function checkALL(){
+	if(localStorage.getItem("plant") == "ALL"){ //슈퍼유저시 조회만 가능
+		//생산일보
+		$("#addWorkDailyReport").hide();
+		$("#removeWorkDailyReport").hide();
+		
+		$("#addWorkDailyReportModalModify").remove();
+		$("#addWorkDailyReportModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//작업자투입현황
+		$("#addWorkerInput").hide();
+		$("#removeWorkerInput").hide();
+		
+		$("#addWorkerInputModalModify").remove();
+		$("#addWorkerInputModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//공수투입현황
+		$("#addWorkerManhour").hide();
+		$("#removeWorkerManhour").hide();
+		
+		$("#addWorkerManhourModalModify").remove();
+		$("#addWorkerManhourModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//타공정지원내역
+		$("#addworkerSupport").hide();
+		$("#removeworkerSupport").hide();
+		
+		$("#addWorkerSupportModalModify").remove();
+		$("#addWorkerSupportModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//작업내용
+		$("#addworkContents").hide();
+		$("#removeworkContents").hide();
+		
+		$("#addWorkContentsModalModify").remove();
+		$("#addWorkContentsModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//부적합내역
+		$("#addNonconFormity").hide();
+		$("#removeNonconFormity").hide();
+		
+		$("#addNonconFormityModalModify").remove();
+		$("#addNonconFormityModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+		
+		//비가동내역
+		$("#addNonOperation").hide();
+		$("#removeNonOperation").hide();
+		
+		$("#addNonOperationModalModify").remove();
+		$("#addNonOperationModalClose").parent().removeClass("col-lg-2").addClass("col-lg-12");
+	}
 }
 
 

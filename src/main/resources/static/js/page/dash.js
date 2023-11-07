@@ -20,7 +20,8 @@ var result = null;
 
 $(function(){
 	setPlant();
-
+	setEventListener();
+	
 });
 
 function setPlant(){
@@ -32,7 +33,6 @@ function setPlant(){
 	}else{
 		$("#factoryselectid").hide();
 		initSetting();
-		setEventListener();
 	}
 }
 
@@ -1233,7 +1233,7 @@ function selectDayWeekMonthButton() {
         	localStorage.setItem('month', defaultMonth);
 		}
     }    
-	$(".addType").click(function() {	//일 주 월 타입 선택
+	$(".addType").off('click').on('click',function() {	//일 주 월 타입 선택
 	    var data = $(this).val(); 
 	    var tagId = $(this).parent().attr('id');
 	        
@@ -1251,7 +1251,7 @@ function selectDayWeekMonthButton() {
         $(this).val(newValue);
     });
     
-	$(".addMonth").click(function() {	//월 타입 선택
+	$(".addMonth").off('click').on('click',function() {	//월 타입 선택
 	    var data = $(this).val(); 
 	    var tagId = $(this).parent().attr('id');
 	        
@@ -1454,7 +1454,6 @@ function factroySelect() { // 전체조회 계정 시 공장선택
                     let selectedText = $(this).find('option:selected').val();
                     localStorage.setItem("plant", selectedText);
                     initSetting();
-					setEventListener();
                 });
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));

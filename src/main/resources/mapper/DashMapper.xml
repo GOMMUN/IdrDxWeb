@@ -399,7 +399,7 @@
     <select id="chart5" parameterType="FairProd" resultType="FairProd">
 		SELECT 
 			R.dt,
-			R.EQUIPMENTID,
+			R.LOCATIONNAME,
 			ROUND(CASE 
 				WHEN convert(float, (R.WORKTOTAL + R.NOTOPERATETOTAL)) = 0 THEN ROUND((convert(float, R.WORKTOTAL) / 1), 4)*100
 				ELSE ROUND((convert(float, R.WORKTOTAL) / convert(float, (R.WORKTOTAL + R.NOTOPERATETOTAL))), 4)*100
@@ -408,11 +408,9 @@
 			SELECT 
 			    S.dt AS dt,
 			    (SELECT 
-					E.EQUIPMENTNAME  
-				FROM DSP_LOCATION A
-				LEFT JOIN DSP_EQUIPMENT E
-					ON A.EQUIPMENTID = E.EQUIPMENTID 
-				WHERE A.LOCATIONID = #{line}) AS EQUIPMENTID,
+					LOCATIONNAME  
+				FROM DSP_LOCATION 
+				WHERE LOCATIONID = #{line}) AS LOCATIONNAME,
 			    SUM(S.WORKTOTAL) AS WORKTOTAL,
 			    SUM(S.NOTOPERATETOTAL) AS NOTOPERATETOTAL
 			FROM (

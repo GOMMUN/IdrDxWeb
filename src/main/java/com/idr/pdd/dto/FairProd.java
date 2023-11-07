@@ -10,7 +10,7 @@ public class FairProd {
 	private String prodQty;
 	private String workDate;
 	private String dt;
-	private String equipmentid;
+	private String locationname;
 	private String total;
 	private String workTotal;
 	private String notoperateTotal;

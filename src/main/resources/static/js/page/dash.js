@@ -1450,11 +1450,18 @@ function factroySelect() { // 전체조회 계정 시 공장선택
 				$.each(data, function() {
 					$dropdown.append($("<option/>").val(this.code).text(this.value));
 				});
+
+				$dropdown.val("KEM"); // 선택할 옵션 값을 여기에 넣어줍니다.
+				
+				localStorage.setItem("plant", $dropdown.val()); // 선택된 값을 로컬 스토리지에 저장
+                initSetting();
+                
 				$dropdown.on('change', function() {
                     let selectedText = $(this).find('option:selected').val();
                     localStorage.setItem("plant", selectedText);
                     initSetting();
                 });
+                $dropdown.find('option:first').prop('disabled', true);
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));
 			}

@@ -46,7 +46,11 @@ function initSetting() {
 	nowTime();		//현재 시간
 	PQCDrate()					// PQCD 퍼센트 비교
 	selectDayWeekMonthButton();	// 일주월 버튼 클릭
+	setLogo();		//로고 세팅
 	
+}
+
+function setLogo(){
 	if(localStorage.getItem("plant") != "KEM" && localStorage.getItem("plant") != "ALL"){// 대표기업시 대표 공정별 생산실적 히든
 		$('#isPartner').hide();
 		$('#alarm').hide();
@@ -83,7 +87,6 @@ function initSetting() {
 		$('#logo3').hide();
 		$('#logo4').show();
 	}
-	
 }
 
 function code() {

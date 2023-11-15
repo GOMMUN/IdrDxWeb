@@ -387,12 +387,12 @@ function getsimulResult() {
 		if (res.status == 200) {
 			var result = res.data;
 			$('#procTimeH').text(result.proctime);
-			$('#avgLeadTimeH').text(result.maxleadtime);
-			$('#maxLeadTimeH').text(result.avgleadtime);
+			$('#avgLeadTimeH').text(result.avgleadtime);
+			$('#maxLeadTimeH').text(result.maxleadtime);
 			$('#minLeadTimeH').text(result.minleadtime);
-			$('#avgLossTimeH').text(result.maxlosstime);
-			$('#maxLossTimeH').text(result.minlosstime);
-			$('#minLossTimeH').text(result.avglosstime);
+			$('#avgLossTimeH').text(result.avglosstime);
+			$('#maxLossTimeH').text(result.maxlosstime);		
+			$('#minLossTimeH').text(result.minlosstime);
 		} else {
 			$('#procTimeH').text("-");
 			$('#avgLeadTimeH').text("-");

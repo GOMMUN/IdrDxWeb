@@ -390,8 +390,9 @@ function getsimulResult() {
 			$('#avgLeadTimeH').text(result.avgleadtime);
 			$('#maxLeadTimeH').text(result.maxleadtime);
 			$('#minLeadTimeH').text(result.minleadtime);
+			
 			$('#avgLossTimeH').text(result.avglosstime);
-			$('#maxLossTimeH').text(result.maxlosstime);		
+			$('#maxLossTimeH').text(result.maxlosstime);
 			$('#minLossTimeH').text(result.minlosstime);
 		} else {
 			$('#procTimeH').text("-");

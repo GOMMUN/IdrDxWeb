@@ -49,7 +49,7 @@ function setEventListener(){
                 },
                 complete:function(){
                     // progress Modal 닫기
-//                    $("#pleaseWaitDialog").modal('hide');
+                    $("#pleaseWaitDialog").modal('hide');
  
                 },
                 error:function(request,status,error){

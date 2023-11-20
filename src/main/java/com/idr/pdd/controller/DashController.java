@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 public class DashController {
 	
 	private static String plant = null;
+	private static String accessToken = null;
+	private static String refreshToken = null;
 
 	@Autowired
 	private DashService service;
@@ -29,6 +31,12 @@ public class DashController {
 	@GetMapping("")
     public String init(HttpServletRequest request) {
 		plant = request.getAttribute("plant").toString();
+		accessToken = request.getAttribute("accessToken").toString();
+		refreshToken = request.getAttribute("refreshToken").toString();
+		
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%"+accessToken);
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%"+refreshToken);
+		
         return "page/dash";
     }
 	
@@ -121,7 +129,7 @@ public class DashController {
 	@GetMapping("/chart7")
     public Integer[] chart7() throws Exception {
 		
-		Integer[] AlarmCnt = service.chart7();
+		Integer[] AlarmCnt = service.chart7(accessToken,refreshToken);
 		return AlarmCnt;
     }
 	
@@ -129,7 +137,7 @@ public class DashController {
 	@GetMapping("/chart8")
     public String chart8() throws Exception {
 		
-		String wordCloud = service.chart8();
+		String wordCloud = service.chart8(accessToken,refreshToken);
 		return wordCloud;
     }
 	
@@ -137,7 +145,7 @@ public class DashController {
 	@GetMapping("/chart9")
     public ArrayList<JSONObject> chart9(String month) throws Exception{
 		
-		return service.chart9(month);
+		return service.chart9(month, accessToken, refreshToken);
     }
 	
 	@ResponseBody

@@ -182,9 +182,9 @@ public class DashService {
       return mapper.chart6(plant, month, material);
    }
 
-   public Integer[] chart7() throws Exception{
+   public Integer[] chart7(String accessToken,String refreshToken) throws Exception{
 
-      JSONObject jsonObject = callApi();
+      JSONObject jsonObject = callApi(accessToken, refreshToken);
       
       int count = Integer.parseInt(String.valueOf(jsonObject.get("count")));
       int diff = Integer.parseInt(String.valueOf(jsonObject.get("diff")));
@@ -198,9 +198,9 @@ public class DashService {
       
    }
    
-   public String chart8() throws Exception{
+   public String chart8(String accessToken,String refreshToken) throws Exception{
 
-      JSONObject jsonObject = callApi();
+      JSONObject jsonObject = callApi(accessToken, refreshToken);
       
       // JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
       JSONArray dayArray = (JSONArray) jsonObject.get("day");
@@ -228,9 +228,9 @@ public class DashService {
       return result.toString();
    }
    
-   public ArrayList<JSONObject> chart9(String month) throws Exception{
+   public ArrayList<JSONObject> chart9(String month, String accessToken,String refreshToken) throws Exception{
       
-      JSONObject jsonObject = callApi();
+      JSONObject jsonObject = callApi(accessToken, refreshToken);
       
       // JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
       JSONArray dayArray = (JSONArray) jsonObject.get(month);
@@ -300,7 +300,7 @@ public class DashService {
       return mapper.findAllDailyAlarm();
    }
    
-   public JSONObject callApi() throws Exception{
+   public JSONObject callApi(String accessToken,String refreshToken) throws Exception{
 
       URL url = null;
       HttpsURLConnection conn = null;
@@ -313,6 +313,10 @@ public class DashService {
 
       conn.setRequestMethod("GET");
       conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+      System.out.println("#########################"+accessToken);
+      System.out.println("#########################"+refreshToken);
+      conn.setRequestProperty("Authorization", "Bearer "+accessToken);
+      conn.setRequestProperty("refresh-token", refreshToken);
       
       conn.setDoOutput(true);
       

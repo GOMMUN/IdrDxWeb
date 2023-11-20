@@ -91,6 +91,9 @@ public class TokenInterceptor implements HandlerInterceptor{
         	
 //        	request.setAttribute("plant", "KEM");
 //			request.setAttribute("username", "test2");
+        	
+        	request.setAttribute("accessToken", accessToken);
+			request.setAttribute("refreshToken", refreshToken);
 	
 		} catch (Exception e) {
 			// TODO: handle exception

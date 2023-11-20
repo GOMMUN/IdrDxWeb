@@ -23,5 +23,7 @@ public class WorkDailySummary {
 	private String notoperatetime;
 	private String plant;
 	private String factory;
+	private String percent1;
+	private String percent2;
 
 }

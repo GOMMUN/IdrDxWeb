@@ -850,7 +850,7 @@ function set_D_PlanToPerform(chart6data){
 }
 
 function set_DailyAlarmCnt(chart7data){
-	$("#alarmCnt").text(chart7data[0] + "건");
+	$("#alarmCnt").text(isNaN(chart7data[0]) ? '-' : chart7data[0] + "건");
 	
 	if (chart7data[1] > 0) {
 		$('#alarmDiff').removeClass();
@@ -862,10 +862,12 @@ function set_DailyAlarmCnt(chart7data){
 	} else if (chart7data[1] < 0){
 		$('#alarmDiff').removeClass();
 		$('#alarmDiff').addClass('plus');
-		$('#alarmDiff').text(chart7data[1] + '건');
+		$('#alarmDiff').text(Math.abs(chart7data[1]) + '건');
+	} else if (isNaN(chart7data[1])) {
+		$('#alarmDiff').removeClass();
+		$('#alarmDiff').text('-');
 	}
-	
-	$("#alarmDiff").text(chart7data[1] + "건");
+
 }
 
 function set_WordCloud(chart8data){

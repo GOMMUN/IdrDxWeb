@@ -135,9 +135,9 @@ public class DashController {
 	
 	@ResponseBody
 	@GetMapping("/chart8")
-    public String chart8() throws Exception {
+    public String chart8(String month) throws Exception {
 		
-		String wordCloud = service.chart8(accessToken,refreshToken);
+		String wordCloud = service.chart8(month, accessToken,refreshToken);
 		return wordCloud;
     }
 	

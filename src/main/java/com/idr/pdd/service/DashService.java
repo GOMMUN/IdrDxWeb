@@ -184,92 +184,92 @@ public class DashService {
 
    public Integer[] chart7(String accessToken,String refreshToken) throws Exception{
 
-      JSONObject jsonObject = callApi(accessToken, refreshToken);
-      
-      int count = Integer.parseInt(String.valueOf(jsonObject.get("count")));
-      int diff = Integer.parseInt(String.valueOf(jsonObject.get("diff")));
-      
-      Integer[] list = new Integer[2];
-      
-      list[0] = count;
-      list[1] = diff;
-      
-      return list;
-      
-   }
-   
-   public String chart8(String accessToken,String refreshToken) throws Exception{
+	      JSONObject jsonObject = callApi(accessToken, refreshToken);
+	      
+	      int count = Integer.parseInt(String.valueOf(jsonObject.get("count")));
+	      int diff = Integer.parseInt(String.valueOf(jsonObject.get("diff")));
+	      
+	      Integer[] list = new Integer[2];
+	      
+	      list[0] = count;
+	      list[1] = diff;
+	      
+	      return list;
+	      
+	   }
+	   
+	   public String chart8(String month, String accessToken,String refreshToken) throws Exception{
 
-      JSONObject jsonObject = callApi(accessToken, refreshToken);
-      
-      // JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
-      JSONArray dayArray = (JSONArray) jsonObject.get("day");
-//      System.out.println("###############"+dayArray);
-      
-      
-      
-      // 결과 문자열을 저장할 StringBuilder 생성
-        StringBuilder result = new StringBuilder();
+	      JSONObject jsonObject = callApi(accessToken, refreshToken);
+	      
+	      // JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
+	      JSONArray dayArray = (JSONArray) jsonObject.get(month);
+	      System.out.println("###############"+dayArray);
+	      
+	      
+	      
+	      // 결과 문자열을 저장할 StringBuilder 생성
+	        StringBuilder result = new StringBuilder();
 
-        // 각 객체를 순회하면서 word 값을 count 만큼 추가
-        for (int i = 0; i < dayArray.size(); i++) {
-            JSONObject jsonObj = (JSONObject) dayArray.get(i);
-            int count = Integer.parseInt((String) jsonObj.get("count"));
-            String word = (String) jsonObj.get("word");
+	        // 각 객체를 순회하면서 word 값을 count 만큼 추가
+	        for (int i = 0; i < dayArray.size(); i++) {
+	            JSONObject jsonObj = (JSONObject) dayArray.get(i);
+	            int count = Integer.parseInt((String) jsonObj.get("count"));
+	            String word = (String) jsonObj.get("word");
 
-            // count 만큼 word를 결과 문자열에 추가
-            for (int j = 0; j < count; j++) {
-                result.append(word+" ");
-            }
-        }
+	            // count 만큼 word를 결과 문자열에 추가
+	            for (int j = 0; j < count; j++) {
+	                result.append(word+" ");
+	            }
+	        }
 
-        System.out.println("result :"+result);
-        
-      return result.toString();
-   }
-   
-   public ArrayList<JSONObject> chart9(String month, String accessToken,String refreshToken) throws Exception{
-      
-      JSONObject jsonObject = callApi(accessToken, refreshToken);
-      
-      // JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
-      JSONArray dayArray = (JSONArray) jsonObject.get(month);
-//      System.out.println("###############"+dayArray);
-      
-       // JSON 데이터를 Java 객체로 변환하여 리스트에 저장
-        List<JSONObject> jsonObjects = new ArrayList<>();
-        for (int i = 0; i < dayArray.size(); i++) {
-            jsonObjects.add((JSONObject) dayArray.get(i));
-        }
+	        System.out.println("result :"+result);
+	        
+	      return result.toString();
+	   }
+	   
+	   public ArrayList<JSONObject> chart9(String month, String accessToken,String refreshToken) throws Exception{
+	      
+	      JSONObject jsonObject = callApi(accessToken, refreshToken);
+	      
+	      // JSON 객체에서 month 값을 가져와서 JSON 배열로 변환
+	      JSONArray dayArray = (JSONArray) jsonObject.get(month);
+	      System.out.println("###############"+dayArray);
+	      
+	       // JSON 데이터를 Java 객체로 변환하여 리스트에 저장
+	        List<JSONObject> jsonObjects = new ArrayList<>();
+	        for (int i = 0; i < dayArray.size(); i++) {
+	            jsonObjects.add((JSONObject) dayArray.get(i));
+	        }
 
-        // count를 기준으로 내림차순으로 정렬
-        Collections.sort(jsonObjects, new Comparator<JSONObject>() {
-            @Override
-            public int compare(JSONObject o1, JSONObject o2) {
-                try {
-                    int count1 = Integer.parseInt((String) o1.get("count"));
-                    int count2 = Integer.parseInt((String) o2.get("count"));
-                    return count2 - count1;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return 0;
-                }
-            }
-        });
+	        // count를 기준으로 내림차순으로 정렬
+	        Collections.sort(jsonObjects, new Comparator<JSONObject>() {
+	            @Override
+	            public int compare(JSONObject o1, JSONObject o2) {
+	                try {
+	                    int count1 = Integer.parseInt((String) o1.get("count"));
+	                    int count2 = Integer.parseInt((String) o2.get("count"));
+	                    return count2 - count1;
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                    return 0;
+	                }
+	            }
+	        });
 
-        ArrayList<JSONObject> arrayJson = new ArrayList<JSONObject>();
-        
-        // 상위 6개 데이터 추출
-	    int numberOfItemsToExtract = Math.min(6, jsonObjects.size());
-	    for (int i = 0; i < numberOfItemsToExtract; i++) {
-	        JSONObject jsonObjectTop = jsonObjects.get(i);
-	        System.out.println("jsonObjectTop"+jsonObjectTop);
-	            
-	        arrayJson.add(jsonObjectTop);
-	    }
-      
-      return arrayJson;
-   }
+	        ArrayList<JSONObject> arrayJson = new ArrayList<JSONObject>();
+	        
+	        // 상위 6개 데이터 추출
+		    int numberOfItemsToExtract = Math.min(5, jsonObjects.size());
+		    for (int i = 0; i < numberOfItemsToExtract; i++) {
+		        JSONObject jsonObjectTop = jsonObjects.get(i);
+		        System.out.println("jsonObjectTop"+jsonObjectTop);
+		            
+		        arrayJson.add(jsonObjectTop);
+		    }
+	      
+	      return arrayJson;
+	   }
    
    public String find1Alarm(){
       return mapper.find1Alarm();
@@ -313,8 +313,8 @@ public class DashService {
 
       conn.setRequestMethod("GET");
       conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-      System.out.println("#########################"+accessToken);
-      System.out.println("#########################"+refreshToken);
+//      System.out.println("#########################"+accessToken);
+//      System.out.println("#########################"+refreshToken);
       conn.setRequestProperty("Authorization", "Bearer "+accessToken);
       conn.setRequestProperty("refresh-token", refreshToken);
       

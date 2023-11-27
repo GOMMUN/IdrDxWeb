@@ -1388,18 +1388,20 @@ function selectType(data,tagId) {		//차트별 일 주 월 타입 선택
 		$.get(url+ '?' + $.param(params)).then(function(res) {
 			chart8data = res;
 			set_WordCloud(chart8data);
+			
+			var url = '/dash/chart9';
+		
+			var params = {
+				month: data,
+			};
+			$.get(url+ '?' + $.param(params)).then(function(res) {
+				chart9data = res;
+				set_SmartAlarm(chart9data);
+			})			
 		});
 				
-	}else if(tagId == "chart9Type"){
-		var url = '/dash/chart9';
+	}else{
 		
-		var params = {
-			month: data,
-		};
-		$.get(url+ '?' + $.param(params)).then(function(res) {
-			chart9data = res;
-			set_SmartAlarm(chart9data);
-		})			
 	}
 }
 

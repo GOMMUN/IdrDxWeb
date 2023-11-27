@@ -313,7 +313,7 @@
       <div class="grid-se">
         <div class="dash-card bg-gr">
           <div class="flex-wrap-sb card-hd  pt-1">
-            <div class="flex-item fc-w fs-18" style="margin-top: 10px;"><span class="fw-b fs-h2">비정형데이터</span></div>          
+            <div class="flex-item fc-w fs-18" style="margin-top: 10px;"><span class="fw-b fs-h2">채팅 데이터</span></div>          
           </div>
           <div class="sub-info-tit fc-w fs-14 pt-4">일일 스마트알람 발생 건</div>
           <div class="card-bd fc-w">            
@@ -328,13 +328,23 @@
 
         <div class="dash-card">          
           <div class="flex-wrap-sb card-bd">
-
+            <div class="flex-item" style="width: 20%;">
+              <div class="canva-wrap">
+				<div class="flex-wrap-sb card-hd" style="padding: 0rem 0rem;">
+                  <div class="flex-item fw-b fs-12" style="padding: 0px 1px;">벨류체인 주요 키워드</div>
+                  <div class="flex-item fc-w fs-12" style="padding: 0px 1px;">
+                  </div>
+                </div>
+                <div class="canva highcharts-figure" id="chart7" style="height: 180px;">
+                </div>
+              </div> 
+            </div>
             <div class="flex-item" style="width: 60%;">
               <div class="canva-wrap">
                 <div class="flex-wrap-sb card-hd" style="padding: 0rem 0rem;">
-                  <div class="flex-item fw-b fs-12" style="padding: 0px 1px;">스마트 알람 발생 현황(건)</div>
+                  <div class="flex-item fw-b fs-12" style="padding: 0px 1px;">키워드 TOP 5</div>
                   <div class="flex-item fc-w fs-12" style="padding: 0px 1px;">
-                    <div class="range-wrap" id="chart9Type">
+                    <div class="range-wrap" id="chart8Type">
                       <input type="radio" class="addType" id="select20" name="term5" value="day"><label for="select20">일</label>
                       <input type="radio" class="addType" id="select21" name="term5" value="week"><label for="select21">주</label>
                       <input type="radio" class="addType" id="select22" name="term5" value="month" checked><label for="select22">월</label>
@@ -345,19 +355,6 @@
                 </div>
               </div> 
             </div>
-            
-            <div class="flex-item" style="width: 40%;">
-              <div class="canva-wrap">
-				<div class="flex-wrap-sb card-hd" style="padding: 0rem 0rem;">
-                  <div class="flex-item fw-b fs-12" style="padding: 0px 1px;">워드 클라우드</div>
-                  <div class="flex-item fc-w fs-12" style="padding: 0px 1px;">
-                  </div>
-                </div>
-                <div class="canva highcharts-figure" id="chart7" style="height: 180px;">
-                </div>
-              </div> 
-            </div>
-            
           </div>
         </div>
       </div>      

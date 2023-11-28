@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport"
+		content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0" />
+	<title>Alarm History Report</title>
+
+	<!-- 퍼블리셔가 추가한 js -->
+	<script type="text/javascript" src="../static/js/page/alarmHistoryReport.js"></script>
+
+	<!-- 퍼블리셔가 추가한 bootstrap css (아래의 순서를 지켜주세요.) -->
+	<link href="../static/css/bootstrap/bootstrap.min2.css" rel="stylesheet" />
+
+	<!-- 퍼블리셔가 추가한 css -->
+	<link href="../static/css/style2.css" rel="stylesheet" />
+</head>
+</head>
+
+<body>
+	<div class="alarm-history container-fluid mt-4">
+		<h4 class="h5 mb-2 font-weight-bold text-primary">Alarm History Report</h4>
+		<div class="row">
+			<div class="col-lg-12">
+
+				<!-- 조회 영역 -->
+				<div class="search-card-wrap card shadow mb-4">
+					<div class="d-flex justify-content-center flex-wrap">
+						<div class="d-flex align-items-center me-5">
+							<label class="custom-color-light-black mb-0 me-3" for="">조회항목</label>
+							<select id="factoryCodes" name="factoryid"
+								class="form-select-custom form-control-user me-2">
+								<option value="KEM">코렌스이엠</option>
+							</select>
+							<select id="matarialCode" class="form-select-custom form-control-user">
+								<option value="MOT-DK">DK</option>
+							</select>
+						</div>
+						<div class="d-flex align-items-center me-5">
+							<label class="custom-color-light-black mb-0 me-3" for="">조회기간</label>
+							<div class="date-btn-group btn-group" role="group">
+								<button id="todayBtn" class="btn btn-white px-3"
+									onclick="BtnClick(this)">당일</button>
+								<button id="weekBtn" class="btn btn-white px-3"
+									onclick="BtnClick(this)">1주일</button>
+								<button id="monthBtn" class="btn btn-white px-3"
+									onclick="BtnClick(this)">1개월</button>
+								<button id="threeMonthsBtn" class="btn btn-white px-3"
+									onclick="BtnClick(this)">3개월</button>
+								<button id="sixMonthsBtn" class="btn btn-white px-3"
+									onclick="BtnClick(this)">6개월</button>
+							</div>
+							<div class="d-flex align-items-center">
+								<input id="start" name="start" type="date"
+									class="form-control-custom form-control-user">
+								<span class="mx-1">~</span>
+								<input id="end" name="end" type="date" class="form-control-custom form-control-user">
+							</div>
+						</div>
+						<button id="search" name="search" type="button" class="btn btn-balck">
+							<i class="fa-solid fa-magnifying-glass"></i>
+							<span>조회</span>
+						</button>
+					</div>
+				</div>
+				<!-- //조회 영역 -->
+
+				<div class="tab-card-wrap card shadow mb-4">
+					<!-- 탭 버튼 -->
+					<ul class="custom-tab-bar nav nav-tabs row w-100 m-0 border-bottom-0" role="tablist">
+						<li class="nav-item col p-0" role="presentation">
+							<button class="nav-link active w-100 h-100 border-0" id="tab01" data-bs-toggle="tab"
+								data-bs-target="#tab-pane-01" type="button" role="tab" aria-controls="tab-pane-01"
+								aria-selected="true">
+								<span class="custom-font-ssm custom-fw-md">생산계획 대비 실적 이상</span>
+							</button>
+						</li>
+						<li class="nav-item col p-0" role="presentation">
+							<button class="nav-link w-100 h-100 border-0" id="tab02" data-bs-toggle="tab"
+								data-bs-target="#tab-pane-02" type="button" role="tab" aria-controls="tab-pane-02"
+								aria-selected="false">
+								<span class="custom-font-ssm custom-fw-md">품질 이상</span>
+							</button>
+						</li>
+						<li class="nav-item col p-0" role="presentation">
+							<button class="nav-link w-100 h-100 border-0" id="tab03" data-bs-toggle="tab"
+								data-bs-target="#tab-pane-03" type="button" role="tab" aria-controls="tab-pane-03"
+								aria-selected="false">
+								<span class="custom-font-ssm custom-fw-md">설비 이상</span>
+							</button>
+						</li>
+					</ul>
+					<!-- //탭 버튼 -->
+
+					<!-- 탭 컨텐츠 -->
+					<div class="card-body">
+						<div class="tab-content">
+							<!-- 생산 계획 대비 실적 이상 탭 -->
+							<div class="tab-pane fade show active" id="tab-pane-01" role="tabpanel"
+								aria-labelledby="tab01" tabindex="0">
+								<table id="plantable" data-toggle="table" data-multiple-select-row="true" data-click-to-select="true"
+									data-filter-control="true" data-height="580" data-search="true"
+									data-show-columns="true" data-show-columns-toggle-all="true" data-pagination="true">
+									<thead class="thead-light">
+										<tr>
+											<th data-checkbox="true"></th>
+											<th data-field="factoryid" data-align="center">공장</th>
+											<th data-field="matarial" data-align="center">제품</th>
+											<th data-field="noticetime" data-align="center">발생시간</th>
+											<th data-field="ea1" data-align="center">계획수량(개)</th>
+											<th data-field="ea2" data-align="center">생산실적(개)</th>
+											<th data-field="value" data-align="center">납기준수율(%)</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<!-- //생산 계획 대비 실적 이상 탭 -->
+
+							<!-- 품질 이상 탭 -->
+							<div class="quality-tab tab-pane fade" id="tab-pane-02" role="tabpanel"
+								aria-labelledby="tab-02" tabindex="0">
+								<table id="quality" data-toggle="table" data-multiple-select-row="true" data-click-to-select="true"
+									data-filter-control="true" data-height="580" data-search="true"
+									data-show-columns="true" data-show-columns-toggle-all="true" data-pagination="true">
+									<thead class="thead-light">
+										<tr>
+											<th data-checkbox="true"></th>
+											<th data-field="factoryid" data-align="center">공장</th>
+											<th data-field="matarial" data-align="center">제품</th>
+											<th data-field="noticetime" data-align="center">발생시간</th>
+											<th data-field="ea1" data-align="center">생산실적(개)</th>
+											<th data-field="ea2" data-align="center">불량수량(개)</th>
+											<th data-field="value" data-align="center">불량율(%)</th>
+										</tr>
+									</thead>
+								
+								</table>
+							</div>
+							<!-- //품질 이상 탭 -->
+
+							<!-- 설비 이상 탭 -->
+							<div class="equipment-tab tab-pane fade" id="tab-pane-03" role="tabpanel"
+								aria-labelledby="tab-03" tabindex="0">
+								<table id="facility" data-toggle="table" data-multiple-select-row="true" data-click-to-select="true"
+									data-filter-control="true" data-height="580" data-search="true"
+									data-show-columns="true" data-show-columns-toggle-all="true" data-pagination="true">
+									<thead class="thead-light">
+										<tr>
+											<th data-checkbox="true"></th>
+											<th data-field="factoryid" data-align="center">공장</th>
+											<th data-field="matarial" data-align="center">제품</th>
+											<th data-field="noticetime" data-align="center">비가동시간</th>
+											<th data-field="reason" data-align="center">조치사항(개)</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<!-- //설비 이상 탭 -->
+
+						</div>
+					</div>
+					<!-- //탭 컨텐츠 -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idr.pdd.mapper.AlarmHistoryReportMapper">
+
+	<select id="planfind" resultType="AlarmHistoryReport" parameterType="AlarmHistoryReport">
+		SELECT FACTORYID,
+		(select MATERIALNAME from DSP_MATERIAL WHERE FACTORYID = #{factoryid} AND ISUSABLE = 'Y') as MATERIALNAME,
+		  FORMAT(NOTICE_DATETIME, 'yyyy-MM-dd HH:mm:ss')  as NOTICETIME,
+		EA1,
+		EA2,
+		VALUE
+		from DSP_ANOMALYDETECT_NOTICE
+		WHERE FACTORYID =#{factoryid}
+		AND ISUSABLE ='Usable'
+		AND CREATETIME BETWEEN #{start} AND #{end}
+		AND NOTICE_REASON='UNDER-PRODUCTION';
+	</select>
+
+		<select id="facility" resultType="AlarmHistoryReport" parameterType="AlarmHistoryReport">
+		SELECT FACTORYID,
+		(select MATERIALNAME from DSP_MATERIAL WHERE FACTORYID = #{factoryid} AND ISUSABLE = 'Y') as MATERIALNAME,
+		  FORMAT(NOTICE_DATETIME, 'yyyy-MM-dd HH:mm:ss')  as NOTICETIME,
+		  NOTICE_REASONDESCRIPTION as reason
+		from DSP_ANOMALYDETECT_NOTICE
+		WHERE FACTORYID =#{factoryid}
+		AND ISUSABLE ='Usable'
+		AND CREATETIME BETWEEN #{start} AND #{end}
+		AND NOTICE_REASON='NOTOPERATE-PRESS';
+	</select>
+	
+		<select id="quality" resultType="AlarmHistoryReport" parameterType="AlarmHistoryReport">
+		SELECT FACTORYID,
+		(select MATERIALNAME from DSP_MATERIAL WHERE FACTORYID = #{factoryid} AND ISUSABLE = 'Y') as MATERIALNAME,
+		  FORMAT(NOTICE_DATETIME, 'yyyy-MM-dd HH:mm:ss')  as NOTICETIME,
+		EA1,
+		EA2,
+		VALUE
+		from DSP_ANOMALYDETECT_NOTICE
+		WHERE FACTORYID =#{factoryid}
+		AND ISUSABLE ='Usable'
+		AND CREATETIME BETWEEN #{start} AND #{end}
+		AND NOTICE_REASON='DEFECT-RATE'
+	</select>
+
+
+</mapper>

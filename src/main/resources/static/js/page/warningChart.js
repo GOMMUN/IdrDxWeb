@@ -219,10 +219,10 @@ function prodChart(data){
 
 function failChart(data){
 
-	if(data.prodResult == ""){
-		$("#nelsonProdResult").text("");
+	if(data.failResult == ""){
+		$("#nelsonFailResult").text("");
 	}else{
-		$("#nelsonProdResult").text("이상감지 : "+data.failResult);
+		$("#nelsonFailResult").text("이상감지 : "+data.failResult);
 	}
 	
 	let categories = [];

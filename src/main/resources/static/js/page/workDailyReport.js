@@ -1,8 +1,8 @@
 /**
  * 
  */
-//const CORE_URL = "https://localhost:8171";
-const CORE_URL = "https://dx.idrenvision.com:8171";
+const CORE_URL = "https://localhost:8171";
+//const CORE_URL = "https://dx.idrenvision.com:8171";
 
 let c_factory = null;
 let c_block = null;

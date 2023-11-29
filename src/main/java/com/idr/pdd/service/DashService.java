@@ -259,7 +259,7 @@ public class DashService {
 
 	        ArrayList<JSONObject> arrayJson = new ArrayList<JSONObject>();
 	        
-	        // 상위 6개 데이터 추출
+	        // 상위 5개 데이터 추출
 		    int numberOfItemsToExtract = Math.min(5, jsonObjects.size());
 		    for (int i = 0; i < numberOfItemsToExtract; i++) {
 		        JSONObject jsonObjectTop = jsonObjects.get(i);

@@ -34,8 +34,8 @@ public class DashController {
 		accessToken = request.getAttribute("accessToken").toString();
 		refreshToken = request.getAttribute("refreshToken").toString();
 		
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%"+accessToken);
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%"+refreshToken);
+//		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%"+accessToken);
+//		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%"+refreshToken);
 		
         return "page/dash";
     }

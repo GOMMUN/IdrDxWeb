@@ -11,6 +11,9 @@ function init(){
 	factroy();
 	$('#date').val(getToday());
 	
+	
+	$search = $("#search");
+	$search.trigger('click');
 }
 
 function setEventListener() {
@@ -28,6 +31,7 @@ function setEventListener() {
 
 		$matarialCode = $("#matarialCode");
 		var selectedMaterial = $matarialCode.val();
+		
 		var params = {
 			workDate: $date.val(),
 			factoryid: $factoryCodes.val(),

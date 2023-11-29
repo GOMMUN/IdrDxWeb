@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
+<!-- 퍼블리셔가 추가한 js -->
+<script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/warningChart.js}"></script>
+<!-- 퍼블리셔가 추가한 bootstrap css (아래의 순서를 지켜주세요.) -->
+<link href="../static/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<!-- 퍼블리셔가 추가한 css -->
+<link th:inline="css" th:href="@{/static/css/style2.css}" rel="stylesheet"/>
+<body>
+  <div class="warning-chart container-fluid mt-4">
+    <h4 class="h5 mb-2 font-weight-bold text-primary">Warning Chart</h4>
+		<div class="row">
+			<div class="col-lg-12">
+
+        <!-- 조회 영역 -->
+				<div class="search-card-wrap card shadow mb-4">
+          <div class="d-flex justify-content-center flex-wrap">
+            <div class="d-flex align-items-center me-5">
+              <label class="custom-color-light-black mb-0 me-3" for="">조회항목</label>
+              <select id="factoryCodes" class="form-select-custom form-control-user me-2">
+              </select>
+<!--               <select class="form-select-custom select-custom-lg form-control-user me-2"> -->
+<!--                 <option value="">DK 모터 아마추어 투입공정</option> -->
+<!--               </select> -->
+              <select id="materialCodes" class="form-select-custom form-control-user">
+              </select>
+            </div>
+            <div class="d-flex align-items-center me-5">
+              <label class="custom-color-light-black mb-0 me-3" for="">조회연월</label>
+              <select id="year" class="form-select-custom select-custom-sm form-control-user me-2">
+                <option value="2023">2023년</option>
+                <option value="2024">2024년</option>
+                <option value="2025">2025년</option>
+                <option value="2026">2026년</option>
+                <option value="2027">2027년</option>
+                <option value="2028">2028년</option>
+                <option value="2029">2029년</option>
+                <option value="2030">2030년</option>
+              </select>
+              <select id="month" class="form-select-custom select-custom-sm form-control-user me-2">
+              	<option value="01">01월</option>
+                <option value="02">02월</option>
+              	<option value="03">03월</option>
+                <option value="04">04월</option>
+              	<option value="05">05월</option>
+                <option value="06">06월</option>
+              	<option value="07">07월</option>
+                <option value="08">08월</option>
+                <option value="09">09월</option>
+                <option value="10">10월</option>
+                <option value="11">11월</option>
+                <option value="12">12월</option>
+              </select>
+            </div>
+            <button id="search" type="button" class="btn btn-balck">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>조회</span>
+            </button>
+          </div>
+        </div>
+        <!-- //조회 영역 -->
+
+        <div class="tab-card-wrap card shadow mb-4">
+          <div class="card-body">
+            <h6 class="custom-color-dusk-blue custom-fw-md mt-2 mb-3">Warning Detection</h6>
+            <div class="chart-list d-flex justify-content-between">
+              <div class="chart-item card mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 custom-color-grey custom-fw-md">· 생산계획대비 실적 이상</h6>
+                </div>
+                <div class="card-body">
+                  <!-- Chart 영역입니다. 확인 후 div태그의 인라인스타일을 지워주세요. -->
+<!--                   <div style="height: 440px; background-color: gray; display: flex; justify-content: center; align-items: center; text-align: center;"> -->
+<!--                     <strong style="color: #ffffff;">Chart 영역입니다.</strong> -->
+<!--                   </div> -->
+					<div id="nelsonProdChart"></div>
+                  <p id="nelsonProdResult" class="custom-color-brown fs-4 mt-5 ms-5"></p>
+                </div>
+              </div>
+              <div class="chart-item card mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 custom-color-grey custom-fw-md">· 품질 이상</h6>
+                </div>
+                <div class="card-body">
+                  <!-- Chart 영역입니다. 확인 후 div태그의 인라인스타일을 지워주세요. -->
+<!--                   <div style="height: 440px; background-color: gray; display: flex; justify-content: center; align-items: center; text-align: center;"> -->
+<!--                     <strong style="color: #ffffff;">Chart 영역입니다.</strong> -->
+<!--                   </div> -->
+					<div id="nelsonFailChart"></div>
+                  <p id="nelsonFailResult" class="custom-color-brown fs-4 mt-5 ms-5"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

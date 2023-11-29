@@ -52,8 +52,8 @@ function setEventListener() {
 }
 
 function search(){
-	let url = "https://dx.idrenvision.com:8171" 
-//	let url = "https://localhost:8171"
+//	let url = "https://dx.idrenvision.com:8171" 
+	let url = "https://localhost:8171"
 				+ '/nelsonrule/find';
 	
 	let data = {
@@ -144,6 +144,27 @@ function prodChart(data){
 		categories.push(arg.month+"월 "+arg.day+"일");
 	});
 	
+	let max = 0;
+	let min = 0;
+	
+	data.prodAvgList.forEach(function(value) {
+		if(max <= value){
+			max = value;
+		}
+		
+		if(min >= value){
+			min = value;
+		}
+	});
+	
+	if(max <= data.prodUcl){
+		max = data.prodUcl+0.1;
+	}
+	
+	if(min >= data.prodLcl){
+		min = data.prodLcl-0.1;
+	}
+	
 	Highcharts.chart('nelsonProdChart', {
 		    chart: {
 		        type: 'line'
@@ -158,15 +179,15 @@ function prodChart(data){
 		        title: {
 		            text: ''
 		        },
-		        max: data.prodUtc+0.1,
-		        min: data.prodLtc-0.1,
+		        max: max,
+		        min: min,
 		        plotLines: [{
 		            color: '#ff0000',
 		            width: 2,
-		            value: data.prodUtc,
+		            value: data.prodUcl,
 		            label:{
-//		              text:"UTC : "+data.prodUtc,
-					  text:"UTC",
+//		              text:"UCL : "+data.prodUcl,
+					  text:"UCL",
 		              align: 'left',
 		              textAlign: 'left',
 		              verticalAlign: 'middle'
@@ -185,10 +206,10 @@ function prodChart(data){
 		        },{
 		            color: '#00ff00',
 		            width: 2,
-		            value: data.prodLtc,
+		            value: data.prodLcl,
 		            label:{
-//		              text:"LTC : "+data.prodLtc,
-					  text:"LTC",
+//		              text:"LCL : "+data.prodLcl,
+					  text:"LCL",
 		              align: 'left',
 		              textAlign: 'left',
 		              verticalAlign: 'middle'
@@ -231,6 +252,27 @@ function failChart(data){
 		categories.push(arg.month+"월 "+arg.day+"일");
 	});
 	
+	let max = 0;
+	let min = 0;
+	
+	data.failAvgList.forEach(function(value) {
+		if(max <= value){
+			max = value;
+		}
+		
+		if(min >= value){
+			min = value;
+		}
+	});
+	
+	if(max <= data.failUcl){
+		max = data.failUcl+0.1;
+	}
+	
+	if(min >= data.failLcl){
+		min = data.failLcl-0.1;
+	}
+	
 	Highcharts.chart('nelsonFailChart', {
 		    chart: {
 		        type: 'line'
@@ -245,15 +287,15 @@ function failChart(data){
 		        title: {
 		            text: ''
 		        },
-		        max: data.failUtc+0.1,
-		        min: data.failLtc-0.1,
+		        max: max,
+		        min: min,
 		        plotLines: [{
 		            color: '#ff0000',
 		            width: 2,
-		            value: data.failUtc,
+		            value: data.failUcl,
 		            label:{
-//		              text:"UTC : "+data.failUtc,
-                      text:"UTC",
+//		              text:"UCL : "+data.failUcl,
+                      text:"UCL",
 		              align: 'left',
 		              textAlign: 'left',
 		              verticalAlign: 'middle'
@@ -272,10 +314,10 @@ function failChart(data){
 		        },{
 		            color: '#00ff00',
 		            width: 2,
-		            value: data.failLtc,
+		            value: data.failLcl,
 		            label:{
-//		              text:"LTC : "+data.failLtc,
-                      text:"LTC",
+//		              text:"LCL : "+data.failLcl,
+                      text:"LCL",
 		              align: 'left',
 		              textAlign: 'left',
 		              verticalAlign: 'middle'

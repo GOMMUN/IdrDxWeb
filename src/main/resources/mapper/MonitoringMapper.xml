@@ -8,51 +8,58 @@
 
 	<select id="planAM" resultType="Monitoring"
 		parameterType="Monitoring">
-		SELECT
-		SUM(PROD_QTY)as prod_qty,
-		SUM(GOODSUM_QTY)as
-		good_qty,
-		ROUND(SUM(GOODSUM_QTY) * 100.0 / NULLIF(SUM(PROD_QTY), 0), 1) as per
-		FROM
-		DSP_WORK_CONTENTS A
-		JOIN
-		DSP_WORKDAILY_REPORT B ON A.WORKDAILY_SEQ =
-		B.DATASEQ
-		WHERE B.WORK_DATE
-		= CONVERT(VARCHAR, CONVERT(DATE,
-		#{workDate}),112)
-		AND B.FACTORYID =
-		#{factoryid}
-		AND B.MATERIALID =#{materialid}
-		AND B.ISUSABLE IS NOT NULL
-		AND A.ISUSABLE IS NOT NULL
-		AND
-		B.SHIFTID LIKE '%AM'
+			SELECT
+    dt,
+    SUM(FIRSTTIME_GOOD_QTY_SUM) AS good_qty,
+    SUM(PLAN_QTY) AS prod_qty,
+    ROUND(SUM(FIRSTTIME_GOOD_QTY_SUM) * 100.0 / SUM(PLAN_QTY) , 1) AS per
+FROM (
+    SELECT
+        A.dt AS dt,
+        (SELECT SUM(FIRSTTIME_GOOD_QTY)
+         FROM DSP_WORK_CONTENTS C
+         WHERE C.WORKDAILY_SEQ = B.DATASEQ
+           AND C.ISUSABLE = 'Usable') AS FIRSTTIME_GOOD_QTY_SUM,
+        B.PLAN_QTY
+    FROM CheckDayOff A
+    LEFT JOIN DSP_WORKDAILY_REPORT B ON A.dt = B.WORK_DATE
+    WHERE 1 = 1
+      AND B.FACTORYID = 'KEM'
+      AND B.MATERIALID = 'MOT-DK'
+      AND B.SHIFTID LIKE '%AM'
+      AND B.WORK_DATE = CONVERT(VARCHAR, CONVERT(DATE,
+		'2023-01-02'),112)
+) AS D
+GROUP BY dt
+ORDER BY dt;
 	</select>
 
 	<select id="planPM" resultType="Monitoring"
 		parameterType="Monitoring">
-		SELECT
-		SUM(PROD_QTY)as prod_qty,
-		SUM(GOODSUM_QTY)as
-		good_qty,
-		ROUND(SUM(GOODSUM_QTY) * 100.0 / NULLIF(SUM(PROD_QTY), 0), 1) as per
-		FROM
-		DSP_WORK_CONTENTS A
-		JOIN
-		DSP_WORKDAILY_REPORT B ON A.WORKDAILY_SEQ =
-		B.DATASEQ
-		WHERE B.WORK_DATE
-		= CONVERT(VARCHAR, CONVERT(DATE,
-		#{workDate}),112)
-		AND B.FACTORYID =
-		#{factoryid}
-		AND B.MATERIALID =#{materialid}
-		AND B.ISUSABLE IS NOT NULL
-		AND A.ISUSABLE IS NOT NULL
-		AND
-		B.SHIFTID LIKE
-		'%PM'
+			SELECT
+    dt,
+    SUM(FIRSTTIME_GOOD_QTY_SUM) AS good_qty,
+    SUM(PLAN_QTY) AS prod_qty,
+    ROUND(SUM(FIRSTTIME_GOOD_QTY_SUM) * 100.0 / SUM(PLAN_QTY) , 1) AS per
+FROM (
+    SELECT
+        A.dt AS dt,
+        (SELECT SUM(FIRSTTIME_GOOD_QTY)
+         FROM DSP_WORK_CONTENTS C
+         WHERE C.WORKDAILY_SEQ = B.DATASEQ
+           AND C.ISUSABLE = 'Usable') AS FIRSTTIME_GOOD_QTY_SUM,
+        B.PLAN_QTY
+    FROM CheckDayOff A
+    LEFT JOIN DSP_WORKDAILY_REPORT B ON A.dt = B.WORK_DATE
+    WHERE 1 = 1
+      AND B.FACTORYID = 'KEM'
+      AND B.MATERIALID = 'MOT-DK'
+      AND B.SHIFTID LIKE '%PM'
+      AND B.WORK_DATE = CONVERT(VARCHAR, CONVERT(DATE,
+		'2023-01-02'),112)
+) AS D
+GROUP BY dt
+ORDER BY dt;
 	</select>
 
 	<select id="rejectper" resultType="Monitoring"
@@ -153,31 +160,40 @@
 	</select>
 
 
-	<!-- <select id="findstorage" resultType="Monitoring" parameterType="Monitoring"> 
+	<!--
+	 <select id="findstorage" resultType="Monitoring" parameterType="Monitoring"> 
 		SELECT A.QTY , B.STORAGENAME, A.MATERIALID FROM DSP_INVENTORY A JOIN DSP_STORAGE 
 		B ON A.FACTORYID =#{factoryid} AND B.FACTORYID =#{factoryid} AND A.INVENTORYDATE 
 		=#{workDate} AND A.STORAGEID =B.STORAGEID AND A.ISUSABLE ='USABLE' AND B.ISUSABLE 
-		='Y' </select> <select id="findreject2" resultType="Monitoring" parameterType="Monitoring"> 
+		='Y' </select>
+		
+		 <select id="findreject2" resultType="Monitoring" parameterType="Monitoring"> 
 		SELECT COUNT(case when A.REJECT_ITEMID='RI01' then 1 end)AS RI01, COUNT(case 
 		when A.REJECT_ITEMID='RI02' then 1 end)AS RI02, COUNT(case when A.REJECT_ITEMID='RI03' 
 		then 1 end)AS RI03, COUNT(case when A.REJECT_ITEMID='RI04' then 1 end)AS 
 		RI04 FROM DSP_REJECT_CONTENTS A JOIN DSP_WORKDAILY_REPORT B ON A.WORKDAILY_SEQ 
 		=B.DATASEQ WHERE B.FACTORYID =#{factoryid} AND B.LINEID =#{lineid} AND A.ISUSABLE 
 		IS NOT NULL AND B.ISUSABLE IS NOT NULL AND B.WORK_DATE =CONVERT(VARCHAR,CONVERT(DATE, 
-		#{workDate}),112) </select> <select id="findnotoperate" resultType="Monitoring" 
+		#{workDate}),112) </select>
+		
+		 <select id="findnotoperate" resultType="Monitoring" 
 		parameterType="Monitoring"> SELECT LEFT(CONCAT(SUBSTRING(A.NOTOPERATETIME_FROM,1,2),':',SUBSTRING(A.NOTOPERATETIME_FROM,3,4)),5) 
 		AS NOTOPERATETIME_FROM, LEFT(CONCAT(SUBSTRING(A.NOTOPERATETIME_TO,1,2),':',SUBSTRING(A.NOTOPERATETIME_TO,3,4)),5) 
 		AS NOTOPERATETIME_TO, (SELECT LOCATIONNAME FROM DSP_LOCATION WHERE LOCATIONID=#{lineid})AS 
 		LINEID FROM DSP_NOTOPERATE_CONTENTS A JOIN DSP_WORKDAILY_REPORT B ON A.WORKDAILY_SEQ 
 		=B.DATASEQ WHERE B.WORK_DATE =CONVERT(VARCHAR, CONVERT(DATE, #{workDate}),112) 
 		AND B.FACTORYID =#{factoryid} AND A.ISUSABLE = 'Usable' AND B.LINEID =#{lineid} 
-		</select> <select id="findproduct1" resultType="Monitoring" parameterType="Monitoring"> 
+		</select>
+		
+		 <select id="findproduct1" resultType="Monitoring" parameterType="Monitoring"> 
 		SELECT SUM(CASE WHEN B.SHIFTID = 'KEM-AM' THEN A.PROD_QTY ELSE 0 END) AS 
 		AM_PROD_QTY, SUM(CASE WHEN B.SHIFTID = 'KEM-PM' THEN A.PROD_QTY ELSE 0 END) 
 		AS PM_PROD_QTY FROM DSP_WORK_CONTENTS A JOIN DSP_WORKDAILY_REPORT B ON A.WORKDAILY_SEQ 
 		= B.DATASEQ WHERE B.WORK_DATE = CONVERT(VARCHAR, CONVERT(DATE, #{workDate}),112) 
 		AND B.FACTORYID = #{factoryid} AND B.LINEID = #{lineid} AND B.ISUSABLE IS 
-		NOT NULL AND A.ISUSABLE IS NOT NULL </select> <select id="findproduct2" resultType="Monitoring" 
+		NOT NULL AND A.ISUSABLE IS NOT NULL </select> 
+		
+		<select id="findproduct2" resultType="Monitoring" 
 		parameterType="Monitoring"> SELECT SUM(CASE WHEN SHIFTID = 'KEM-AM' THEN 
 		PLAN_QTY ELSE 0 END) AS AM_PLAN_QTY, SUM(CASE WHEN SHIFTID = 'KEM-PM' THEN 
 		PLAN_QTY ELSE 0 END) AS PM_PLAN_QTY FROM DSP_WORKDAILY_REPORT WHERE WORK_DATE 

@@ -128,6 +128,7 @@ function facilityajax(params) {
 
 function getmatarial() {
 	let url = '/materialmaster/find';
+	
 	$.ajax({
 		url: url,
 		type: 'GET',

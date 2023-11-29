@@ -20,70 +20,32 @@ public class MonitoringService {
 	@Autowired
 	MonitoringMapper mapper;
 
-	public Monitoring findproduct(Monitoring param) {
+	
 
-		try {
-			Monitoring mt = mapper.findproduct1(param);
-			Monitoring mt2 = mapper.findproduct2(param);
-			mt.setAmPlanQty(mt2.getAmPlanQty());
-			mt.setPmPlanQty(mt2.getPmPlanQty());
-			return mt;
-		} catch (Exception e) {
-			Monitoring mt = new Monitoring();
-			return null;
-		}
-
+	public Monitoring planPM(Monitoring param) {
+		// TODO Auto-generated method stub
+		return mapper.planAM(param);
 	}
 
-	public Monitoring findstorage(Monitoring param) {
-
-		List<Monitoring> mtlist = mapper.findstorage(param);
-		int mqty = 0;
-		int pqty = 0;
-
-		for (int i = 0; i < mtlist.size(); i++) {
-			if (mtlist.get(i).getStoragename().contains("자재창고")) {
-				mqty += mtlist.get(i).getQty();
-			} else if (mtlist.get(i).getStoragename().contains("제품창고")) {
-				pqty += mtlist.get(i).getQty();
-			}
-		}
-
-		Monitoring mt = new Monitoring();
-		mt.setMtotalqty(mqty);
-		mt.setPtotalqty(pqty);
-
-		return mt;
+	public Monitoring planAM(Monitoring param) {
+		// TODO Auto-generated method stub
+		return mapper.planPM(param);
 	}
 
-	public Monitoring findreject(Monitoring param) {
-
-		try {
-			Monitoring mt = mapper.findreject1(param);
-			Monitoring mt2 = mapper.findreject2(param);
-			mt.setRi01(mt2.getRi01());
-			mt.setRi02(mt2.getRi02());
-			mt.setRi03(mt2.getRi03());
-			mt.setRi04(mt2.getRi04());
-
-			return mt;
-		} catch (Exception e) {
-			return null;
-		}
-
+	public Monitoring rejectper(Monitoring param) {
+		// TODO Auto-generated method stub
+		return mapper.rejectper(param);
 	}
 
-	public List<Monitoring> findnotoperate(Monitoring param) {
-		try {
-			List<Monitoring> mtlist = mapper.findnotoperate(param);
+	public String uptime(Monitoring param) {
+		
+		double uptimeValue = Double.parseDouble(mapper.uptime(param));
+		double downtimeValue = Double.parseDouble(mapper.downtime(param));
 
-			return mtlist;
-
-		} catch (Exception e) {
-
-			return null;
-		}
-
+		// 백분율을 계산합니다.
+		double percentage = (uptimeValue / (uptimeValue + downtimeValue)) * 100;
+		
+		return String.valueOf(percentage);
 	}
 
 }

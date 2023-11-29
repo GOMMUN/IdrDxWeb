@@ -21,18 +21,18 @@
           <div class="d-flex justify-content-center flex-wrap">
             <div class="d-flex align-items-center me-5">
               <label class="custom-color-light-black mb-0 me-3" for="">조회항목</label>
-              <select class="form-select-custom form-control-user me-2">
+              <select id="factoryCodes" class="form-select-custom form-control-user me-2">
                 <option value="">코렌스이엠</option>
               </select>
-              <select class="form-select-custom form-control-user">
+              <select id="matarialCode" class="form-select-custom form-control-user">
                 <option value="">DK</option>
               </select>
             </div>
             <div class="d-flex align-items-center me-5">
               <label class="custom-color-light-black mb-0 me-3" for="">조회일</label>
-              <input type="date" class="form-control-custom form-control-user">
+              <input id="date" type="date" class="form-control-custom form-control-user">
             </div>
-            <button type="button" class="btn btn-balck">
+            <button id="search" type="button" class="btn btn-balck">
               <i class="fa-solid fa-magnifying-glass"></i>
               <span>조회</span>
             </button>
@@ -55,13 +55,13 @@
                     </div>
                     <div>
                       <p class="fs-4 custom-color-text mb-0 lh-sm">달성율</p>
-                      <p class="custom-fw-b fs-2 custom-color-blue mb-0 lh-sm"><span class="custom-font-xl">98</span>%</p>
+                      <p class="custom-fw-b fs-2 custom-color-blue mb-0 lh-sm"><span id="peram" class="custom-font-xl">98</span>%</p>
                     </div>
                   </div>
                   <div class="card-summary d-flex justify-content-around align-items-center mt-3 px-4 py-1">
-                    <p class="text custom-color-text mb-0">계획수량<span class="custom-color-blue fs-5 ms-3 custom-fw-b">230</span> <span class="custom-color-blue">개</span></p>
+                    <p class="text custom-color-text mb-0">계획수량<span id="prodqtyam" class="custom-color-blue fs-5 ms-3 custom-fw-b">230</span> <span class="custom-color-blue">개</span></p>
                     <span class="contour-slash">/</span>
-                    <p class="text custom-color-text mb-0">생산수량<span class="custom-color-blue fs-5 ms-3 custom-fw-b">226</span> <span class="custom-color-blue">개</span></p>
+                    <p class="text custom-color-text mb-0">생산수량<span id="goodqtyam" class="custom-color-blue fs-5 ms-3 custom-fw-b">226</span> <span class="custom-color-blue">개</span></p>
                   </div>
                 </div>
               </div>
@@ -74,13 +74,13 @@
                     </div>
                     <div>
                       <p class="fs-4 custom-color-text mb-0 lh-sm">달성율</p>
-                      <p class="custom-fw-b fs-2 custom-color-blue mb-0 lh-sm"><span class="custom-font-xl">10</span>%</p>
+                      <p class="custom-fw-b fs-2 custom-color-blue mb-0 lh-sm"><span id="perpm" class="custom-font-xl">10</span>%</p>
                     </div>
                   </div>
                   <div class="card-summary d-flex justify-content-around align-items-center mt-3 px-4 py-1">
-                    <p class="text custom-color-text mb-0">계획수량<span class="custom-color-blue fs-5 ms-3 custom-fw-b">230</span> <span class="custom-color-blue">개</span></p>
+                    <p class="text custom-color-text mb-0">계획수량<span id="prodqtypm" class="custom-color-blue fs-5 ms-3 custom-fw-b">230</span> <span class="custom-color-blue">개</span></p>
                     <span class="contour-slash">/</span>
-                    <p class="text custom-color-text mb-0">생산수량<span class="custom-color-blue fs-5 ms-3 custom-fw-b">23</span> <span class="custom-color-blue">개</span></p>
+                    <p class="text custom-color-text mb-0">생산수량<span id="goodqtypm" class="custom-color-blue fs-5 ms-3 custom-fw-b">23</span> <span class="custom-color-blue">개</span></p>
                   </div>
                 </div>
               </div>
@@ -88,13 +88,13 @@
                 <div class="card">
                   <div class="card-body py-3">
                     <p class="custom-font-md custom-color-dark custom-fw-md mb-0">· 불량률</p>
-                    <p class="text-center custom-fw-b fs-2 custom-color-red mb-0 lh-sm"><span class="custom-font-xl">0.30</span>%</p>
+                    <p class="text-center custom-fw-b fs-2 custom-color-red mb-0 lh-sm"><span id="rejectper" class="custom-font-xl">0.30</span>%</p>
                   </div>
                 </div>
                 <div class="card">
                   <div class="card-body py-3">
                     <p class="custom-font-md custom-color-dark custom-fw-md mb-0">· 설비 가동율</p>
-                    <p class="text-center custom-fw-b fs-2 custom-color-green mb-0 lh-sm"><span class="custom-font-xl">98</span>%</p>
+                    <p class="text-center custom-fw-b fs-2 custom-color-green mb-0 lh-sm"><span id="eqoperate" class="custom-font-xl">98</span>%</p>
                   </div>
                 </div>
               </div>

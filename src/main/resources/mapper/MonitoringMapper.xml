@@ -12,7 +12,7 @@
 		SUM(PROD_QTY)as prod_qty,
 		SUM(GOODSUM_QTY)as
 		good_qty,
-		ROUND(SUM(GOODSUM_QTY)*100.0/SUM(PROD_QTY),0) as per
+		ROUND(SUM(GOODSUM_QTY) * 100.0 / NULLIF(SUM(PROD_QTY), 0), 1) as per
 		FROM
 		DSP_WORK_CONTENTS A
 		JOIN
@@ -23,8 +23,7 @@
 		#{workDate}),112)
 		AND B.FACTORYID =
 		#{factoryid}
-		AND B.LINEID ==
-		#{lineid}
+		AND B.MATERIALID =#{materialid}
 		AND B.ISUSABLE IS NOT NULL
 		AND A.ISUSABLE IS NOT NULL
 		AND
@@ -37,7 +36,7 @@
 		SUM(PROD_QTY)as prod_qty,
 		SUM(GOODSUM_QTY)as
 		good_qty,
-		ROUND(SUM(GOODSUM_QTY)*100.0/SUM(PROD_QTY),0) as per
+		ROUND(SUM(GOODSUM_QTY) * 100.0 / NULLIF(SUM(PROD_QTY), 0), 1) as per
 		FROM
 		DSP_WORK_CONTENTS A
 		JOIN
@@ -48,8 +47,7 @@
 		#{workDate}),112)
 		AND B.FACTORYID =
 		#{factoryid}
-		AND B.LINEID =
-		#{lineid}
+		AND B.MATERIALID =#{materialid}
 		AND B.ISUSABLE IS NOT NULL
 		AND A.ISUSABLE IS NOT NULL
 		AND
@@ -57,12 +55,12 @@
 		'%PM'
 	</select>
 
-	<select id="findreject1" resultType="Monitoring"
+	<select id="rejectper" resultType="Monitoring"
 		parameterType="Monitoring">
 		SELECT SUM(PROD_QTY)AS TOTALPROD_QTY
 		,SUM(FIRSTTIME_FAIL_QTY)AS
 		TOTALFAIL_QTY,
-		ROUND(SUM(FIRSTTIME_FAIL_QTY)*100.0/SUM(PROD_QTY),0)as PER
+		ROUND(SUM(FIRSTTIME_FAIL_QTY) * 100.0 / NULLIF(SUM(PROD_QTY), 0), 1) AS PER
 		FROM
 		DSP_WORKDAILY_REPORT A
 		JOIN DSP_WORK_CONTENTS B ON
@@ -74,12 +72,12 @@
 		AND
 		A.FACTORYID
 		=#{factoryid}
-		AND A.LINEID =#{lineid}
+		AND A.MATERIALID =#{materialid}
 		AND A.ISUSABLE IS NOT NULL
 		AND B.ISUSABLE IS NOT NULL
 	</select>
 
-	<select id="time1" resultType="Monitoring"
+	<select id="uptime" resultType="String"
 		parameterType="Monitoring">
 		SELECT
 		SUM(
@@ -88,7 +86,7 @@
 		STUFF(STUFF(A.WORKTIME_FROM, 3, 0, ':'), 6, 0, ':'), 108),
 		CONVERT(datetime, STUFF(STUFF(A.WORKTIME_TO, 3, 0, ':'), 6, 0, ':'),
 		108)
-		)) AS 가동시간
+		)) AS UPTIME
 		FROM
 		DSP_WORK_CONTENTS A
 		JOIN DSP_WORKDAILY_REPORT B
@@ -116,7 +114,7 @@
 		='Usable'
 	</select>
 
-	<select id="time2" resultType="Monitoring"
+	<select id="downtime" resultType="String"
 		parameterType="Monitoring">
 		SELECT
 		SUM(
@@ -125,7 +123,7 @@
 		STUFF(STUFF(A.NOTOPERATETIME_FROM , 3, 0, ':'), 6, 0, ':'), 108),
 		CONVERT(datetime, STUFF(STUFF(A.NOTOPERATETIME_TO, 3, 0, ':'), 6, 0,
 		':'), 108)
-		)) AS 비가동시간
+		)) AS DOWNTIME
 		FROM
 		DSP_NOTOPERATE_CONTENTS A
 		JOIN

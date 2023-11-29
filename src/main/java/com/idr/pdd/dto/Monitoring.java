@@ -5,32 +5,12 @@ import lombok.Data;
 @Data
 public class Monitoring {
 
-	private String workDate;
-	private int planQty;
-	private int prodQty;
-	private double performancepercent;
-	private String shiftid;
 	private String factoryid;
-	private String lineid;
-	private String storageid;
-	private String storagename;
-	private int qty;
-	private int mtotalqty;
-	private int ptotalqty;
 	private String materialid;
-	private String materialname;
-	private int firsttimeFailQty;
-	private int totalprodQty;
-	private int totalfailQty;
-	private double failpercent;
-	private String ri01;
-	private String ri02;
-	private String ri03;
-	private String ri04;
-	private String notoperatetimeFrom;
-	private String notoperatetimeTo;
-	private int amProdQty;
-	private int pmProdQty;
-	private int amPlanQty;
-	private int pmPlanQty;
+	private String workDate;
+	private String per;
+	private String prodQty;
+	private String goodQty;
+	private String uptime;
+	private String downtime;
 }

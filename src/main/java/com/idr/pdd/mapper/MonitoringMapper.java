@@ -17,18 +17,13 @@ import com.idr.pdd.dto.WorkerSupport;
 public interface MonitoringMapper {
 
 
-	//List<Monitoring> findproduct(Monitoring param);
+	Monitoring planAM(Monitoring param);
 
-	List<Monitoring> findstorage(Monitoring param);
+	Monitoring planPM(Monitoring param);
 
-	//Monitoring findreject(Monitoring param);
+	Monitoring rejectper(Monitoring param);
 
-	List<Monitoring> findnotoperate(Monitoring param);
+	String uptime(Monitoring param);
 
-	Monitoring findreject1(Monitoring param);
-	Monitoring findreject2(Monitoring param);
-
-	Monitoring findproduct1(Monitoring param);
-
-	Monitoring findproduct2(Monitoring param);
+	String downtime(Monitoring param);
 }

@@ -122,7 +122,12 @@ function eqoperate(params) {
 		data: JSON.stringify(params),
 		success: function(data) {
 			if (data != '') {
-				$("#eqoperate").text(data.substring(0, 4) + "%");
+				if(data=="100.0"){
+					$("#eqoperate").text(data.substring(0, 3) + "%");
+				}else{
+					$("#eqoperate").text(data.substring(0, 4) + "%");
+				}
+				
 			} else {
 				$("#eqoperate").text("-");
 			}
@@ -240,7 +245,7 @@ function chart1(data){
       y: data.prodQty-data.goodQty
     }, {
       name: '생산수량',
-      y: data.goodQty
+      y: Number(data.goodQty)
     }]
   }]
 });
@@ -286,7 +291,7 @@ function chart2(data){
       y: data.prodQty-data.goodQty
     }, {
       name: '생산수량',
-      y: data.goodQty
+      y: Number(data.goodQty)
     }]
   }]
 });

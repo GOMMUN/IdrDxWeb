@@ -326,10 +326,5 @@ body {
   font-weight: 600;
   color: #b0b0b0;
 }
-/*모니터링 차트*/
-#monitoringchart1 {
-  min-width: 310px;
-  height: 400px;
-  max-width: 600px;
-  margin: 0 auto;
-}
+
+

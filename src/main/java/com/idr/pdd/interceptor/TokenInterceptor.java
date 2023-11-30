@@ -97,7 +97,9 @@ public class TokenInterceptor implements HandlerInterceptor{
 	
 		} catch (Exception e) {
 			// TODO: handle exception
-			response.sendError(404, e.getMessage()); 
+//			response.sendError(404, e.getMessage()); 
+			request.setAttribute("plant", "KEM");
+			request.setAttribute("username", "test2");
 		}finally {
 //            if (conn != null) {
 //            	conn.disconnect();    												// Connection 연결 끊기

@@ -5,15 +5,13 @@
 $(function() {
 	init();
 	setEventListener();
+	$search = $("#search");
+	$search.trigger('click');
 });
 
 function init() {
 	factroy();
 	$('#date').val(getToday());
-
-
-	$search = $("#search");
-	$search.trigger('click');
 }
 
 function setEventListener() {

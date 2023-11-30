@@ -28,7 +28,7 @@ public class MonitoringService {
 	}
 
 	public Monitoring planAM(Monitoring param) {
-		// TODO Auto-generated method stub
+		
 		return mapper.planPM(param);
 	}
 
@@ -40,14 +40,14 @@ public class MonitoringService {
 	public String uptime(Monitoring param) {
 		
 		try {
-		
-			double uptimeValue = Double.parseDouble(mapper.uptime(param));
 			double downtimeValue = Double.parseDouble(mapper.downtime(param));
-
+			double uptimeValue = Double.parseDouble(mapper.uptime(param));
+			
+			
 			// 백분율을 계산합니다.
 			double percentage = (uptimeValue / (uptimeValue + downtimeValue)) * 100;
-			
-			return String.valueOf(percentage);
+			return null;
+			//return String.valueOf(percentage);
 		}catch(Exception e) {
 			return null;
 		}

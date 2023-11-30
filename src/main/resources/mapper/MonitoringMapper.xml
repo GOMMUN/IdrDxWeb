@@ -12,7 +12,10 @@
     dt,
     SUM(FIRSTTIME_GOOD_QTY_SUM) AS good_qty,
     SUM(PLAN_QTY) AS prod_qty,
-    ROUND(SUM(FIRSTTIME_GOOD_QTY_SUM) * 100.0 / SUM(PLAN_QTY) , 1) AS per
+     CASE
+       WHEN SUM(FIRSTTIME_GOOD_QTY_SUM) = 0 OR SUM(PLAN_QTY) = 0  THEN NULL
+       ELSE ROUND(SUM(FIRSTTIME_GOOD_QTY_SUM) * 100.0 / SUM(PLAN_QTY), 1)
+    END AS per
 FROM (
     SELECT
         A.dt AS dt,
@@ -40,7 +43,10 @@ ORDER BY dt;
     dt,
     SUM(FIRSTTIME_GOOD_QTY_SUM) AS good_qty,
     SUM(PLAN_QTY) AS prod_qty,
-    ROUND(SUM(FIRSTTIME_GOOD_QTY_SUM) * 100.0 / SUM(PLAN_QTY) , 1) AS per
+     CASE
+       WHEN SUM(FIRSTTIME_GOOD_QTY_SUM) = 0 OR SUM(PLAN_QTY) = 0  THEN NULL
+       ELSE ROUND(SUM(FIRSTTIME_GOOD_QTY_SUM) * 100.0 / SUM(PLAN_QTY), 1)
+    END AS per
 FROM (
     SELECT
         A.dt AS dt,
@@ -89,13 +95,13 @@ ORDER BY dt;
 	<select id="uptime" resultType="String"
 		parameterType="Monitoring">
 		SELECT
-		SUM(
+		COALESCE (SUM(
 		DATEDIFF(SECOND,
 		CONVERT(datetime,
 		STUFF(STUFF(A.WORKTIME_FROM, 3, 0, ':'), 6, 0, ':'), 108),
 		CONVERT(datetime, STUFF(STUFF(A.WORKTIME_TO, 3, 0, ':'), 6, 0, ':'),
 		108)
-		)) AS UPTIME
+		)) ,0)AS UPTIME
 		FROM
 		DSP_WORK_CONTENTS A
 		JOIN DSP_WORKDAILY_REPORT B

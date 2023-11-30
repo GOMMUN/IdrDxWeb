@@ -34,14 +34,13 @@ public class MonitoringController {
 	@ResponseBody
 	@PostMapping("/planPM")
     public Monitoring planPM(@RequestBody Monitoring param) {
-
 		return service.planPM(param);
     }
 	
 	@ResponseBody
 	@PostMapping("/planAM")
     public Monitoring planAM(@RequestBody Monitoring param) {
-
+		
 		return service.planAM(param);
     }
 	

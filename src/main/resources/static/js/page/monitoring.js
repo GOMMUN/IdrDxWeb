@@ -59,9 +59,17 @@ function planam(params) {
 				$("#peram").text(data.per.substring(0, 4) + "%");
 				chart1(data);
 			} else {
-				$("#prodqtyam").text("-");
-				$("#goodqtyam").text("-");
-				$("#peram").text("-");
+				if(data.prodQty!=null){
+					$("#prodqtyam").text(data.prodQty);
+				}else{
+					$("#prodqtyam").text('0');
+				}
+				if(data.goodQty!=null){
+					$("#goodqtyam").text(data.goodQty);
+				}else{
+					$("#goodqtyam").text('0');
+				}
+				$("#peram").text("0"+'%');
 				zerochart('monitoringchart1');
 			}
 
@@ -84,9 +92,17 @@ function planpm(params) {
 				$("#perpm").text(data.per.substring(0, 4) + "%");
 				chart2(data);
 			} else {
-				$("#prodqtypm").text("-");
-				$("#goodqtypm").text("-");
-				$("#perpm").text("-");
+				if(data.prodQty!=null){
+					$("#prodqtypm").text(data.prodQty);
+				}else{
+					$("#prodqtypm").text('0');
+				}
+				if(data.goodQty!=null){
+					$("#goodqtypm").text(data.goodQty);
+				}else{
+					$("#goodqtypm").text('0');
+				}
+				$("#perpm").text("0"+'%');
 				zerochart('monitoringchart2');
 			}
 		}
@@ -105,7 +121,7 @@ function rejectper(params) {
 			if (data.per != null) {
 				$("#rejectper").text(data.per.substring(0, 3) + "%");
 			} else {
-				$("#rejectper").text("-");
+				$("#rejectper").text("0"+'%');
 			}
 
 
@@ -129,7 +145,7 @@ function eqoperate(params) {
 				}
 				
 			} else {
-				$("#eqoperate").text("-");
+				$("#eqoperate").text("0"+'%');
 			}
 
 

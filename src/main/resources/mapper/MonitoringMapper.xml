@@ -126,13 +126,13 @@ ORDER BY dt;
 	<select id="downtime" resultType="String"
 		parameterType="Monitoring">
 		SELECT
-		SUM(
+		COALESCE (SUM(
 		DATEDIFF(SECOND,
 		CONVERT(datetime,
 		STUFF(STUFF(A.NOTOPERATETIME_FROM , 3, 0, ':'), 6, 0, ':'), 108),
 		CONVERT(datetime, STUFF(STUFF(A.NOTOPERATETIME_TO, 3, 0, ':'), 6, 0,
 		':'), 108)
-		)) AS DOWNTIME
+		)) ,0)AS DOWNTIME
 		FROM
 		DSP_NOTOPERATE_CONTENTS A
 		JOIN

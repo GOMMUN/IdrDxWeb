@@ -57,10 +57,12 @@ function planam(params) {
 				$("#prodqtyam").text(data.prodQty);
 				$("#goodqtyam").text(data.goodQty);
 				$("#peram").text(data.per.substring(0, 4) + "%");
+				chart1(data);
 			} else {
 				$("#prodqtyam").text("-");
 				$("#goodqtyam").text("-");
 				$("#peram").text("-");
+				zerochart('monitoringchart1');
 			}
 
 		}
@@ -80,10 +82,12 @@ function planpm(params) {
 				$("#prodqtypm").text(data.prodQty);
 				$("#goodqtypm").text(data.goodQty);
 				$("#perpm").text(data.per.substring(0, 4) + "%");
+				chart2(data);
 			} else {
 				$("#prodqtypm").text("-");
 				$("#goodqtypm").text("-");
 				$("#perpm").text("-");
+				zerochart('monitoringchart2');
 			}
 		}
 	});
@@ -193,4 +197,144 @@ function getToday() {
 	var day = ("0" + date.getDate()).slice(-2);
 
 	return year + "-" + month + "-" + day;
+}
+
+function chart1(data){
+	Highcharts.chart('monitoringchart1', {
+  colors: ['#d1d3e2', '#232aa1'],
+  chart: {
+    type: 'pie'
+  },
+  title: {
+	        text: '',
+	        align: 'left'
+	    },
+  tooltip: {
+    valueSuffix: '개'
+  },
+  navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
+	    credits: {
+	        enabled: false
+	    }, 
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: false,
+        format: '{point.name}: {y}'
+      },
+      showInLegend: false
+    }
+  },
+  series: [{
+    name: '',
+    colorByPoint: true,
+    innerSize: '70%',
+    data: [{
+      name: '부족수량',
+      y: data.prodQty-data.goodQty
+    }, {
+      name: '생산수량',
+      y: data.goodQty
+    }]
+  }]
+});
+}
+function chart2(data){
+	Highcharts.chart('monitoringchart2', {
+  colors: ['#d1d3e2', '#232aa1'],
+  chart: {
+    type: 'pie'
+  },
+  title: {
+	        text: '',
+	        align: 'left'
+	    },
+  tooltip: {
+    valueSuffix: '개'
+  },
+  navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
+	    credits: {
+	        enabled: false
+	    }, 
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: false,
+        format: '{point.name}: {y}'
+      },
+      showInLegend: false
+    }
+  },
+  series: [{
+    name: '',
+    colorByPoint: true,
+    innerSize: '70%',
+    data: [{
+      name: '부족수량',
+      y: data.prodQty-data.goodQty
+    }, {
+      name: '생산수량',
+      y: data.goodQty
+    }]
+  }]
+});
+}
+
+function zerochart(name){
+	Highcharts.chart(name, {
+  colors: ['#d1d3e2', '#232aa1'],
+  chart: {
+    type: 'pie'
+  },
+  title: {
+	        text: '',
+	        align: 'left'
+	    },
+  tooltip: {
+    valueSuffix: '개'
+  },
+  navigation: {
+	        buttonOptions: {
+	            enabled: false
+	        }
+	    },
+	    credits: {
+	        enabled: false
+	    }, 
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: false,
+        format: '{point.name}: {y}'
+      },
+      showInLegend: false
+    }
+  },
+  series: [{
+    name: '',
+    colorByPoint: true,
+    innerSize: '70%',
+    data: [{
+      name: '부족수량',
+      y: 1
+    }, {
+      name: '생산수량',
+      y: 0
+    }]
+  }]
+});
 }

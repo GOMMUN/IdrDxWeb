@@ -4,7 +4,11 @@
 	layout:decorate="~{layouts/default_layout}" layout:fragment="Content">
 
 
+
   <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/monitoring.js}"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
   <!-- 퍼블리셔가 추가한 bootstrap css (아래의 순서를 지켜주세요.) -->
   <link href="../static/css/bootstrap/bootstrap.min2.css" rel="stylesheet" />
   <!-- 퍼블리셔가 추가한 css -->
@@ -50,8 +54,7 @@
                 <div class="card-body py-3">
                   <p class="custom-font-md custom-color-dark custom-fw-md mb-0">· 생산계획대비 실적 - 오전</p>
                   <div class="d-flex align-items-center mt-2">
-                    <div class="chart-area me-3">
-                      <!-- 그래프 영역입니다 -->
+                    <div id="monitoringchart1" class="chart-area me-3">
                     </div>
                     <div>
                       <p class="fs-4 custom-color-text mb-0 lh-sm">달성율</p>
@@ -69,7 +72,7 @@
                 <div class="card-body py-3">
                   <p class="custom-font-md custom-color-dark custom-fw-md mb-0">· 생산계획대비 실적 - 오후</p>
                   <div class="d-flex align-items-center mt-2">
-                    <div class="chart-area me-3">
+                    <div id="monitoringchart2" class="chart-area me-3">
                       <!-- 그래프 영역입니다 -->
                     </div>
                     <div>

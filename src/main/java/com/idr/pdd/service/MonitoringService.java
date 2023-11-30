@@ -40,6 +40,7 @@ public class MonitoringService {
 	public String uptime(Monitoring param) {
 		
 		try {
+		
 			double uptimeValue = Double.parseDouble(mapper.uptime(param));
 			double downtimeValue = Double.parseDouble(mapper.downtime(param));
 

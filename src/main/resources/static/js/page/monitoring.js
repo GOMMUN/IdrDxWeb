@@ -7,11 +7,11 @@ $(function() {
 	setEventListener();
 });
 
-function init(){
+function init() {
 	factroy();
 	$('#date').val(getToday());
-	
-	
+
+
 	$search = $("#search");
 	$search.trigger('click');
 }
@@ -31,17 +31,17 @@ function setEventListener() {
 
 		$matarialCode = $("#matarialCode");
 		var selectedMaterial = $matarialCode.val();
-		
+
 		var params = {
 			workDate: $date.val(),
 			factoryid: $factoryCodes.val(),
 			materialid: selectedMaterial
 		};
-	
-	planam(params);
-	planpm(params);
-	rejectper(params);
-	eqoperate(params);
+
+		planam(params);
+		planpm(params);
+		rejectper(params);
+		eqoperate(params);
 	});
 
 }
@@ -55,10 +55,15 @@ function planam(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			
-			$("#prodqtyam").text(data.prodQty);
-			$("#goodqtyam").text(data.goodQty);
-			$("#peram").text(data.per.substring(0,4));
+			if (data.per != null) {
+				$("#prodqtyam").text(data.prodQty);
+				$("#goodqtyam").text(data.goodQty);
+				$("#peram").text(data.per.substring(0, 4) + "%");
+			} else {
+				$("#prodqtyam").text("-");
+				$("#goodqtyam").text("-");
+				$("#peram").text("-");
+			}
 
 		}
 	});
@@ -73,9 +78,15 @@ function planpm(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			$("#prodqtypm").text(data.prodQty);
-			$("#goodqtypm").text(data.goodQty);
-			$("#perpm").text(data.per.substring(0,4));
+			if (data.per != null) {
+				$("#prodqtypm").text(data.prodQty);
+				$("#goodqtypm").text(data.goodQty);
+				$("#perpm").text(data.per.substring(0, 4) + "%");
+			} else {
+				$("#prodqtypm").text("-");
+				$("#goodqtypm").text("-");
+				$("#perpm").text("-");
+			}
 		}
 	});
 }
@@ -89,7 +100,12 @@ function rejectper(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			$("#rejectper").text(data.per.substring(0,3));
+			if (data.per != null) {
+				$("#rejectper").text(data.per.substring(0, 3) + "%");
+			} else {
+				$("#rejectper").text("-");
+			}
+
 
 		}
 	});
@@ -103,7 +119,12 @@ function eqoperate(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			$("#eqoperate").text(data.substring(0,4));
+			if (data != '') {
+				$("#eqoperate").text(data.substring(0, 4) + "%");
+			} else {
+				$("#eqoperate").text("-");
+			}
+
 
 		}
 	});

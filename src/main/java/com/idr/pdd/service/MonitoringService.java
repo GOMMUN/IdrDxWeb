@@ -39,13 +39,18 @@ public class MonitoringService {
 
 	public String uptime(Monitoring param) {
 		
-		double uptimeValue = Double.parseDouble(mapper.uptime(param));
-		double downtimeValue = Double.parseDouble(mapper.downtime(param));
+		try {
+			double uptimeValue = Double.parseDouble(mapper.uptime(param));
+			double downtimeValue = Double.parseDouble(mapper.downtime(param));
 
-		// 백분율을 계산합니다.
-		double percentage = (uptimeValue / (uptimeValue + downtimeValue)) * 100;
+			// 백분율을 계산합니다.
+			double percentage = (uptimeValue / (uptimeValue + downtimeValue)) * 100;
+			
+			return String.valueOf(percentage);
+		}catch(Exception e) {
+			return null;
+		}
 		
-		return String.valueOf(percentage);
 	}
 
 }

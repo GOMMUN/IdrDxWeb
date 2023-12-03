@@ -87,11 +87,11 @@ function save() {
 	data.failRule7Length = $("#quality-length07").val();  
 	data.failRule8Length = $("#quality-length08").val(); 
 
-	if(validation){
+	if(validation(data)){
 		alert("Rule Default 값 확인");
 		return;
 	}
-	debugger;
+
 	$.ajax({
 		url: url,
 		type: 'PUT',
@@ -294,21 +294,48 @@ function initdata() {
 
 function validation(data){
 	let flag = false;
-	if(data.prodRule2Length < 9){flag = true;} 
-	else if(data.prodRule3Length < 6){flag = true;} 
-	else if(data.prodRule4Length < 14) {flag = true;}  
-	else if(data.prodRule5Length < 3 && data.prodRule5Limit < 2) {flag = true;}  
-	else if(data.prodRule6Length < 5 && data.prodRule6Limit < 4) {flag = true;} 
-	else if(data.prodRule7Length < 14){flag = true;} 
-	else if(data.prodRule8Length < 8){flag = true;} 
-	else if(data.failRule2Length < 9){flag = true;}  
-	else if(data.failRule3Length < 6){flag = true;} 
-	else if(data.failRule4Length < 14){flag = true;} 
-	else if(data.failRule5Length < 3 && data.prodRule5Limit < 2) {flag = true;} 
-	else if(data.failRule6Length < 5 && data.prodRule6Limit < 4){flag = true;} 
-	else if(data.failRule7Length < 14){flag = true;} 
-	else if(data.failRule8Length < 8){flag = true;} 
 	
+	if(!flag){
+		if(data.prodRule2Length < 9){flag = true;}
+	}
+	if(!flag){
+		if(data.prodRule3Length < 6){flag = true;} 
+	}
+	if(!flag){
+		if(data.prodRule4Length < 14) {flag = true;} 
+	}
+	if(!flag){
+		if(data.prodRule5Length < 3 && data.prodRule5Limit < 2) {flag = true;}  
+	}
+	if(!flag){
+		if(data.prodRule6Length < 5 && data.prodRule6Limit < 4) {flag = true;} 
+	}
+	if(!flag){
+		if(data.prodRule7Length < 14){flag = true;} 
+	}
+	if(!flag){
+		if(data.prodRule8Length < 8){flag = true;} 
+	}
+	if(!flag){
+		if(data.failRule2Length < 9){flag = true;}
+	}
+	if(!flag){
+		if(data.failRule3Length < 6){flag = true;} 
+	}
+	if(!flag){
+		if(data.failRule4Length < 14){flag = true;} 
+	}
+	if(!flag){
+		if(data.failRule5Length < 3 && data.prodRule5Limit < 2) {flag = true;} 
+	}
+	if(!flag){
+		if(data.failRule6Length < 5 && data.prodRule6Limit < 4){flag = true;} 
+	}
+	if(!flag){
+		if(data.failRule7Length < 14){flag = true;} 
+	}
+	if(!flag){
+		if(data.failRule8Length < 8){flag = true;} 
+	}
 	return flag;
-		
 }

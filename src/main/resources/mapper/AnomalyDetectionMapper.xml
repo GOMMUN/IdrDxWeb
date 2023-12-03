@@ -9,13 +9,176 @@
 		SElECT VALUE ,ALARM_TYPE
 		FROM DSP_ALARM_SETTING
 	</select>
+	
+	<select id="findN" resultType="NelsonruleSetting">
+		SELECT DATASEQ, LENGTH, LIMIT, NELSON_RULE, ISCHECKED, ALARM_TYPE, TYPE_NAME 
+		FROM DSP_NELSONRULE_SETTING
+	</select>
 
-	<update id="modify" parameterType="AnomalyDetection">
+	<update id="modify" parameterType="Map">
 		UPDATE DSP_ALARM_SETTING
 		SET
 		VALUE = #{value1}
 		WHERE
 		DATASEQ = 2
+	</update>
+	
+	<update id="nelsonModifyProd1" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{prodNelsonRule1}
+		WHERE 1=1
+		AND ALARM_TYPE = 'UNDER-PRODUCTION'
+		AND NELSON_RULE = 1
+	</update>
+	
+	<update id="nelsonModifyProd2" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{prodNelsonRule2},
+		LENGTH = #{prodRule2Length}
+		WHERE 1=1
+		AND ALARM_TYPE = 'UNDER-PRODUCTION'
+		AND NELSON_RULE = 2
+	</update>
+	
+	<update id="nelsonModifyProd3" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{prodNelsonRule3},
+		LENGTH = #{prodRule3Length}
+		WHERE 1=1
+		AND ALARM_TYPE = 'UNDER-PRODUCTION'
+		AND NELSON_RULE = 3
+	</update>
+	
+	<update id="nelsonModifyProd4" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{prodNelsonRule4},
+		LENGTH = #{prodRule4Length}
+		WHERE 1=1
+		AND ALARM_TYPE = 'UNDER-PRODUCTION'
+		AND NELSON_RULE = 4
+	</update>
+	
+	<update id="nelsonModifyProd5" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{prodNelsonRule5},
+		LENGTH = #{prodRule5Length},
+		LIMIT = #{prodRule5Limit}
+		WHERE 1=1
+		AND ALARM_TYPE = 'UNDER-PRODUCTION'
+		AND NELSON_RULE = 5
+	</update>
+	
+	<update id="nelsonModifyProd6" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{prodNelsonRule6},
+		LENGTH = #{prodRule6Length},
+		LIMIT = #{prodRule6Limit}
+		WHERE 1=1
+		AND ALARM_TYPE = 'UNDER-PRODUCTION'
+		AND NELSON_RULE = 6
+	</update>
+	
+	<update id="nelsonModifyProd7" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{prodNelsonRule7}
+		WHERE 1=1
+		AND ALARM_TYPE = 'UNDER-PRODUCTION'
+		AND NELSON_RULE = 7
+	</update>
+	
+	<update id="nelsonModifyProd8" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{prodNelsonRule8}
+		WHERE 1=1
+		AND ALARM_TYPE = 'UNDER-PRODUCTION'
+		AND NELSON_RULE = 8
+	</update>
+	
+	<update id="nelsonModifyFail1" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{failNelsonRule1}
+		WHERE 1=1
+		AND ALARM_TYPE = 'DEFECT-RATE'
+		AND NELSON_RULE = 1
+	</update>
+	
+	<update id="nelsonModifyFail2" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{failNelsonRule2},
+		LENGTH = #{failRule2Length}
+		WHERE 1=1
+		AND ALARM_TYPE = 'DEFECT-RATE'
+		AND NELSON_RULE = 2
+	</update>
+	
+	<update id="nelsonModifyFail3" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{failNelsonRule3},
+		LENGTH = #{failRule3Length}
+		WHERE 1=1
+		AND ALARM_TYPE = 'DEFECT-RATE'
+		AND NELSON_RULE = 3
+	</update>
+	
+	<update id="nelsonModifyFail4" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{failNelsonRule4},
+		LENGTH = #{failRule4Length}
+		WHERE 1=1
+		AND ALARM_TYPE = 'DEFECT-RATE'
+		AND NELSON_RULE = 4
+	</update>
+	
+	<update id="nelsonModifyFail5" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{failNelsonRule5},
+		LENGTH = #{failRule5Length},
+		LIMIT = #{failRule5Limit}
+		WHERE 1=1
+		AND ALARM_TYPE = 'DEFECT-RATE'
+		AND NELSON_RULE = 5
+	</update>
+	
+	<update id="nelsonModifyFail6" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{failNelsonRule6},
+		LENGTH = #{failRule6Length},
+		LIMIT = #{failRule6Limit}
+		WHERE 1=1
+		AND ALARM_TYPE = 'DEFECT-RATE'
+		AND NELSON_RULE = 6
+	</update>
+	
+	<update id="nelsonModifyFail7" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{failNelsonRule7}
+		WHERE 1=1
+		AND ALARM_TYPE = 'DEFECT-RATE'
+		AND NELSON_RULE = 7
+	</update>
+	
+	<update id="nelsonModifyFail8" parameterType="Map">
+		UPDATE DSP_NELSONRULE_SETTING
+		SET
+		ISCHECKED = #{failNelsonRule8}
+		WHERE 1=1
+		AND ALARM_TYPE = 'DEFECT-RATE'
+		AND NELSON_RULE = 8
 	</update>
 
 	<update id="modify2" parameterType="AnomalyDetection">
@@ -26,5 +189,11 @@
 		DATASEQ = 3
 	</update>
 
-
+	<update id="modify3" parameterType="AnomalyDetection">
+		UPDATE DSP_ALARM_SETTING
+		SET
+		VALUE = #{value3}
+		WHERE
+		DATASEQ = 4
+	</update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.idr.pdd.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.idr.pdd.dto.AnomalyDetection;
 import com.idr.pdd.dto.Factory;
+import com.idr.pdd.dto.NelsonruleSetting;
 import com.idr.pdd.dto.Shift;
 import com.idr.pdd.dto.WorkerInput;
 import com.idr.pdd.service.AnomalyDetectionService;
@@ -24,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("anomalydetection")
-public class AnomalyDetectionController {
+class AnomalyDetectionController {
 
 	@Autowired
 	AnomalyDetectionService  service;
@@ -41,8 +43,14 @@ public class AnomalyDetectionController {
     }
 	
 	@ResponseBody
+	@GetMapping("/findN")
+    public List<NelsonruleSetting> findN() {
+		return service.findN();
+    }
+	
+	@ResponseBody
 	@PutMapping("/modify")
-    public int modify(@RequestBody AnomalyDetection  param) {
+    public int modify(@RequestBody Map<String, String>  param) {
 		return service.modify(param);
     }
 	

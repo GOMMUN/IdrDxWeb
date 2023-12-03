@@ -233,7 +233,7 @@ function prodChart(data){
 		    series: [{
 		        name: '',
 		        data: data.prodAvgList
-		    }]
+		    }] 
 		});
 
 }

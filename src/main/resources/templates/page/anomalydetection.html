@@ -5,48 +5,481 @@
 
 <script th:inline="javascript" type="text/javascript" th:src="@{/static/js/page/anomalydetection.js}"></script>
 
-<script type="text/javascript" src="/path/to/jquery.js"></script>
-<script type="text/javascript" src="/path/to/moment.js"></script>
-<script type="text/javascript" src="/path/to/bootstrap/js/transition.js"></script>
-<script type="text/javascript" src="/path/to/bootstrap/js/collapse.js"></script>
-<script type="text/javascript" src="/path/to/bootstrap/dist/bootstrap.min.js"></script>
-<script type="text/javascript" src="/path/to/bootstrap-datetimepicker.min.js"></script>
+<!-- <script type="text/javascript" src="/path/to/jquery.js"></script> -->
+<!-- <script type="text/javascript" src="/path/to/moment.js"></script> -->
+<!-- <script type="text/javascript" src="/path/to/bootstrap/js/transition.js"></script> -->
+<!-- <script type="text/javascript" src="/path/to/bootstrap/js/collapse.js"></script> -->
+<!-- <script type="text/javascript" src="/path/to/bootstrap/dist/bootstrap.min.js"></script> -->
+<!-- <script type="text/javascript" src="/path/to/bootstrap-datetimepicker.min.js"></script> -->
+
+<!-- 퍼블리셔가 추가한 bootstrap css (아래의 순서를 지켜주세요.) -->
+<link href="../static/css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<!-- 퍼블리셔가 추가한 css -->
+<link th:inline="css" th:href="@{/static/css/style2.css}" rel="stylesheet"/>
 
 <body>
-	<div class="d-flex bd-highlight">
-		<div class="p-2 col-12 bd-highlight">
-			<div class="card shadow mb-4">
-				<form class="user">
-					<div class="col-sm-1 btn float-right" >
-						<a id="set" class="btn btn-primary btn-user btn-block">
-							저장
-						</a>
-					</div>
-				</form>
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">계획대비 생산량 부족</h6>
-				</div>
-				<form class="user">
-					<div class="form-group row">
-						<div class="col-sm-5 mb-3 mb-sm-0">
-							<input type="text" name="value1" class="form-control-custom form-control-user"
-								id="value1" placeholder='Value값 설정'>
-						</div>
+	<div class="alarm-setting container-fluid mt-4">
+    <h4 class="h5 mb-2 font-weight-bold text-primary">기준 설정</h4>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card shadow mb-4">
 
-					</div>
-				</form>
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold text-primary">불량율 알림</h6>
-				</div>
-				<form class="user">
-					<div class="form-group row">
-						<div class="col-sm-5 mb-3 mb-sm-0">
-							<input type="text" name="value2" class="form-control-custom form-control-user"
-								id="value2" placeholder='Value값 설정'>
-						</div>
+          <!-- 탭 버튼 -->
+          <ul class="custom-tab-bar nav nav-tabs row w-100 m-0 border-bottom-0" role="tablist">
+            <li class="nav-item col p-0" role="presentation">
+              <button 
+                class="nav-link active w-100 h-100 border-0"
+                id="tab01"
+                data-bs-toggle="tab"
+                data-bs-target="#tab-pane-01"
+                type="button"
+                role="tab"
+                aria-controls="tab-pane-01"
+                aria-selected="true"
+              >
+                <span class="custom-font-ssm custom-fw-md">생산계획 대비 실적 이상</span>
+              </button>
+            </li>
+            <li class="nav-item col p-0" role="presentation">
+              <button
+                class="nav-link w-100 h-100 border-0"
+                id="tab02"
+                data-bs-toggle="tab"
+                data-bs-target="#tab-pane-02"
+                type="button"
+                role="tab"
+                aria-controls="tab-pane-02"
+                aria-selected="false"
+              >
+              <span class="custom-font-ssm custom-fw-md">품질 이상</span>
+              </button>
+            </li>
+            <li class="nav-item col p-0" role="presentation">
+              <button
+                class="nav-link w-100 h-100 border-0"
+                id="tab03"
+                data-bs-toggle="tab"
+                data-bs-target="#tab-pane-03"
+                type="button"
+                role="tab"
+                aria-controls="tab-pane-03"
+                aria-selected="false"
+              >
+              <span class="custom-font-ssm custom-fw-md">설비 이상</span>
+              </button>
+            </li>
+          </ul>
+          <!-- //탭 버튼 -->
 
+          <!-- 탭 컨텐츠 -->
+					<div class="card-body">
+            <div class="tab-content">
+              <div class="text-right">
+                <button id="save" type="button" class="btn btn-primary">
+                  <i class="fa-solid fa-check"></i>
+                  <span>적용</span>
+                </button>
+              </div>
+
+              <!-- 생산 계획 대비 실적 이상 탭 -->
+              <div class="production-tab tab-pane fade show active" id="tab-pane-01" role="tabpanel" aria-labelledby="tab01" tabindex="0">
+                <div class="alarm-content-wrap">
+                  <h6 class="custom-color-dusk-blue custom-fw-md">Alarm 설정</h6>
+                  <div class="alarm-content d-flex align-items-center justify-content-center">
+                    <p class="mb-0 me-3 custom-color-black custom-font-md">생산계획 대비 실적 달성율</p>
+                    <input id="value1" class="text-input fs-5 text-right me-2 custom-fw-md custom-color-black" type="text" value="90">
+                    <p class="mb-0 custom-color-black">% 이하 시</p>
+                  </div>
+                </div>
+                <div class="rule-content-wrap">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="custom-color-dusk-blue custom-fw-md mb-0">Warning Detection Rule 설정</h6>
+                    <div class="d-flex align-items-center">
+                      <input type="checkbox" id="production-tab-all" role="button" onclick="checkAll(this, 'production-tab')">
+                      <label class="mb-0 ms-1 custom-font-sm custom-color-black" role="button" for="production-tab-all">전체선택</label>
+                    </div>
+                  </div>
+                  <div class="rule-content-list d-flex flex-wrap">
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="production-check01" role="button">
+                        <input type="checkbox" id="production-check01" onclick="updateCheckAll('production-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-sm-between">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 1</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black">측정값이 평균 ± 3σ 를 벗어난 경우</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-1.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="production-check02" role="button">
+                        <input type="checkbox" id="production-check02" onclick="updateCheckAll('production-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 2</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="production-length02" class="text-input" type="text" value="9">
+                            <span>개 이상의 값이 평균선 위 혹은 아래에 존재할 경우 (치우침이 존재한다고 판단)</span>
+                          </p>
+                          <p class="rule-text">Default : 9개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-2.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="production-check03" role="button">
+                        <input type="checkbox" id="production-check03" onclick="updateCheckAll('production-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 3</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <input id="production-length03" class="text-input" type="text" value="6">
+                            <span>개 이상의 값이 연속적으로 증가하거나 감소하는 경우 (추세가 존재한다고 판단)</span>
+                          </p>
+                          <p class="rule-text">Default : 6개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-3.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="production-check04" role="button">
+                        <input type="checkbox" id="production-check04" onclick="updateCheckAll('production-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 4</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="production-length04" class="text-input" type="text" value="14">
+                            <span>개 이상의 값의 방향이 번갈아 나타나는 경우</span>
+                          </p>
+                          <p class="rule-text">Default : 14개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-4.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="production-check05" role="button">
+                        <input type="checkbox" id="production-check05" onclick="updateCheckAll('production-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 5</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="production-length05" class="text-input" type="text" value="3">
+                            <span>개의 값 중</span>
+                            <input id="production-limit05" class="text-input" type="text" value="2">
+                            <span>개 이상의 값이 2σ 이상에 존재할 경우 (upper/lower 중 같은 방향)</span>
+                          </p>
+                          <p class="rule-text">Default : 3개의 값 중 2개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-5.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="production-check06" role="button">
+                        <input type="checkbox" id="production-check06" onclick="updateCheckAll('production-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 6</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="production-length06" class="text-input" type="text" value="5">
+                            <span>개의 값 중</span>
+                            <input id="production-limit06" class="text-input" type="text" value="4">
+                            <span>개 이상의 값이 1σ 기준선 내 존재할 경우 (upper/lower 중 같은 방향)</span>
+                          </p>
+                          <p class="rule-text">Default : 5개의 값 중 4개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-6.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="production-check07" role="button">
+                        <input type="checkbox" id="production-check07" onclick="updateCheckAll('production-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 7</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="production-length07" class="text-input" type="text" value="14">
+                            <span>개 이상의 값이 1σ 이내에 존재할경우 (upper/lower 상관 없음)</span>
+                          </p>
+                          <p class="rule-text">Default : 14개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-7.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="production-check08" role="button">
+                        <input type="checkbox" id="production-check08" onclick="updateCheckAll('production-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 8</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="production-length08" class="text-input" type="text" value="8">
+                            <span>개 이상의 값이 모두 1σ 이내에 존재하지 않는 경우 (upper/lower 상관 없음)</span>
+                          </p>
+                          <p class="rule-text">Default : 8개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-8.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- // 생산 계획 대비 실적 이상 탭 -->
+
+              <!-- 품질 이상 탭 -->
+              <div class="quality-tab tab-pane fade" id="tab-pane-02" role="tabpanel" aria-labelledby="tab-02" tabindex="0">
+                <div class="alarm-content-wrap">
+                  <h6 class="custom-color-dusk-blue custom-fw-md">Alarm 설정</h6>
+                  <div class="alarm-content d-flex align-items-center justify-content-center">
+                    <p class="mb-0 me-3 custom-color-black custom-font-md">불량율</p>
+                    <input id="value2" class="text-input fs-5 text-right me-2 custom-fw-md custom-color-black" type="text" value="5">
+                    <p class="mb-0 custom-color-black">% 이상 시</p>
+                  </div>
+                </div>
+                <div class="rule-content-wrap">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="custom-color-dusk-blue custom-fw-md mb-0">Warning Detection Rule 설정</h6>
+                    <div class="d-flex align-items-center">
+                      <input type="checkbox" id="quality-tab-all" role="button" onclick="checkAll(this, 'quality-tab')">
+                      <label class="mb-0 ms-1 custom-font-sm custom-color-black" role="button" for="quality-tab-all">전체선택</label>
+                    </div>
+                  </div>
+                  <div class="rule-content-list d-flex flex-wrap">
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="quality-check01" role="button">
+                        <input type="checkbox" id="quality-check01" onclick="updateCheckAll('quality-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-sm-between">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 1</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black">측정값이 평균 ± 3σ 를 벗어난 경우</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-1.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="quality-check02" role="button">
+                        <input type="checkbox" id="quality-check02" onclick="updateCheckAll('quality-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 2</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="quality-length02" class="text-input" type="text" value="9">
+                            <span>개 이상의 값이 평균선 위 혹은 아래에 존재할 경우 (치우침이 존재한다고 판단)</span>
+                          </p>
+                          <p class="rule-text">Default : 9개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-2.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="quality-check03" role="button">
+                        <input type="checkbox" id="quality-check03" onclick="updateCheckAll('quality-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 3</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <input id="quality-length03" class="text-input" type="text" value="6">
+                            <span>개 이상의 값이 연속적으로 증가하거나 감소하는 경우 (추세가 존재한다고 판단)</span>
+                          </p>
+                          <p class="rule-text">Default : 6개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-3.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="quality-check04" role="button">
+                        <input type="checkbox" id="quality-check04" onclick="updateCheckAll('quality-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 4</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="quality-length04" class="text-input" type="text" value="14">
+                            <span>개 이상의 값의 방향이 번갈아 나타나는 경우</span>
+                          </p>
+                          <p class="rule-text">Default : 14개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-4.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="quality-check05" role="button">
+                        <input type="checkbox" id="quality-check05" onclick="updateCheckAll('quality-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 5</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="quality-length05" class="text-input" type="text" value="3">
+                            <span>개의 값 중</span>
+                            <input id="quality-limit05" class="text-input" type="text" value="2">
+                            <span>개 이상의 값이 2σ 이상에 존재할 경우 (upper/lower 중 같은 방향)</span>
+                          </p>
+                          <p class="rule-text">Default : 3개의 값 중 2개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-5.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="quality-check06" role="button">
+                        <input type="checkbox" id="quality-check06" onclick="updateCheckAll('quality-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 6</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="quality-length06" class="text-input" type="text" value="5">
+                            <span>개의 값 중</span>
+                            <input id="quality-limit06" class="text-input" type="text" value="4">
+                            <span>개 이상의 값이 1σ 기준선 내 존재할 경우 (upper/lower 중 같은 방향)</span>
+                          </p>
+                          <p class="rule-text">Default : 5개의 값 중 4개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-6.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="quality-check07" role="button">
+                        <input type="checkbox" id="quality-check07" onclick="updateCheckAll('quality-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 7</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="quality-length07" class="text-input" type="text" value="14">
+                            <span>개 이상의 값이 1σ 이내에 존재할경우 (upper/lower 상관 없음)</span>
+                          </p>
+                          <p class="rule-text">Default : 14개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-7.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="rule-content-item d-flex border border-1">
+                      <label class="rule-content-check mb-0 d-flex justify-content-center align-items-center border-end" for="quality-check08" role="button">
+                        <input type="checkbox" id="quality-check08" onclick="updateCheckAll('quality-tab')" role="button">
+                      </label>
+                      <div class="rule-content d-flex justify-content-between align-items-center">
+                        <div class="rule-content-text">
+                          <p class="rule-sub-txt">Rule명</p>
+                          <h6 class="rule-title">Rule 8</h6>
+                          <p class="rule-sub-txt">설명</p>
+                          <p class="custom-color-black lh-28">
+                            <span>연속적으로 관측된</span>
+                            <input id="quality-length08" class="text-input" type="text" value="8">
+                            <span>개 이상의 값이 모두 1σ 이내에 존재하지 않는 경우 (upper/lower 상관 없음)</span>
+                          </p>
+                          <p class="rule-text">Default : 8개 이상의 값</p>
+                        </div>
+                        <div class="rule-content-img d-flex align-items-center">
+                          <img class="w-100" src="/static/image/img-rule-8.png" alt="룰 이미지">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- //품질 이상 탭 -->
+
+              <!-- 설비 이상 탭 -->
+              <div class="equipment-tab tab-pane fade" id="tab-pane-03" role="tabpanel" aria-labelledby="tab-03" tabindex="0">
+                <div class="alarm-content-wrap">
+                  <h6 class="custom-color-dusk-blue custom-fw-md">Alarm 설정</h6>
+                  <div class="alarm-content d-flex align-items-center justify-content-center">
+                    <p class="mb-0 custom-color-black custom-font-md me-3">비가동 발생 시 Alarm 활성화</p>
+                    <div class="toggle-switch-button">
+                      <input type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- //설비 이상 탭 -->
+
+            </div>
 					</div>
-				</form>
+          <!-- // 탭 컨텐츠 -->
+
+				</div>
 			</div>
 		</div>
 	</div>

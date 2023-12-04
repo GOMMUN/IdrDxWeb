@@ -75,23 +75,23 @@
 		AND A.FACTORYID = #{plant}
 	</if>
 	AND A.ISUSABLE ='Usable'
-	<if test='plant != "ALL"'>
-		AND A.LINEID = (SELECT TOP 1
-						LOCATIONID
-						FROM DSP_LOCATION
-						WHERE 1=1
-						AND FACTORYID = #{plant}
-						AND ISUSABLE = 'Y'
-						ORDER BY LOCATIONID DESC
-						)
-	</if>
-	<if test='plant == "ALL"'>
-		AND A.LINEID IN (SELECT TOP 1 LOCATIONID
-                 FROM DSP_LOCATION
-                 WHERE FACTORYID = A.FACTORYID
-                 AND ISUSABLE = 'Y'
-                 ORDER BY LOCATIONID DESC)
-	</if>
+<!--	<if test='plant != "ALL"'>-->
+<!--		AND A.LINEID = (SELECT TOP 1-->
+<!--						LOCATIONID-->
+<!--						FROM DSP_LOCATION-->
+<!--						WHERE 1=1-->
+<!--						AND FACTORYID = #{plant}-->
+<!--						AND ISUSABLE = 'Y'-->
+<!--						ORDER BY LOCATIONID DESC-->
+<!--						)-->
+<!--	</if>-->
+<!--	<if test='plant == "ALL"'>-->
+<!--		AND A.LINEID IN (SELECT TOP 1 LOCATIONID-->
+<!--                 FROM DSP_LOCATION-->
+<!--                 WHERE FACTORYID = A.FACTORYID-->
+<!--                 AND ISUSABLE = 'Y'-->
+<!--                 ORDER BY LOCATIONID DESC)-->
+<!--	</if>-->
 	ORDER BY DATASEQ
     </select>
     

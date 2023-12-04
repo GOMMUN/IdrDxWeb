@@ -46,8 +46,7 @@ public class MonitoringService {
 			
 			// 백분율을 계산합니다.
 			double percentage = (uptimeValue / (uptimeValue + downtimeValue)) * 100;
-			return null;
-			//return String.valueOf(percentage);
+			return String.valueOf(percentage);
 		}catch(Exception e) {
 			return null;
 		}

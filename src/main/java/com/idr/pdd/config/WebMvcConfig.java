@@ -13,7 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TokenInterceptor())
         		.addPathPatterns(
-        				"/monitoring",							// 이상감지모니터링
+//        				"/monitoring",							// 이상감지모니터링
         				"/workDailyReport",						// 작업일보
         				"/simullator/fairPerformance",			// 공정실적
         				"/simullator/logisticsPerformance",		// 물류실적

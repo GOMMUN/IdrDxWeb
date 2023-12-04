@@ -59,7 +59,12 @@ function planam(params) {
 			if (data.per != null) {
 				$("#prodqtyam").text(data.prodQty);
 				$("#goodqtyam").text(data.goodQty);
-				$("#peram").text(data.per.substring(0, 4) + "%");
+				if(data.per==100){
+					$("#peram").text(data.per.substring(0, 3) + "%");
+				}else{
+					$("#peram").text(data.per.substring(0, 4) + "%");
+				}
+				
 				chart1(data);
 			} else {
 				if(data.prodQty!=null){
@@ -92,7 +97,12 @@ function planpm(params) {
 			if (data.per != null) {
 				$("#prodqtypm").text(data.prodQty);
 				$("#goodqtypm").text(data.goodQty);
-				$("#perpm").text(data.per.substring(0, 4) + "%");
+				if(data.per==100){
+					$("#perpm").text(data.per.substring(0, 3) + "%");
+				}else{
+					$("#perpm").text(data.per.substring(0, 4) + "%");
+				}
+				
 				chart2(data);
 			} else {
 				if(data.prodQty!=null){
@@ -140,17 +150,17 @@ function eqoperate(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			if (data != '') {
+			if(data=="NaN"){
+				$("#eqoperate").text("0"+'%');
+			}
+			else{
 				if(data=="100.0"){
 					$("#eqoperate").text(data.substring(0, 3) + "%");
 				}else{
 					$("#eqoperate").text(data.substring(0, 4) + "%");
 				}
 				
-			} else {
-				$("#eqoperate").text("0"+'%');
 			}
-
 
 		}
 	});

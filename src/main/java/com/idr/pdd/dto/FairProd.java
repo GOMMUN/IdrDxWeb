@@ -16,6 +16,7 @@ public class FairProd {
 	private String notoperateTotal;
 	private String cnt;
 	private int manhour;
+	private int firsttimeGoodQty;
 	private int firsttimeFailQty;
 	private String worktime;
 	private String notoperatetime;

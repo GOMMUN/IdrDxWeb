@@ -26,4 +26,8 @@ public interface MonitoringMapper {
 	String uptime(Monitoring param);
 
 	String downtime(Monitoring param);
+	
+	Monitoring deliveryComplianceRate(Monitoring param);
+
+	Monitoring rejectRate(Monitoring param);
 }

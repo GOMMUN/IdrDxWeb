@@ -40,6 +40,9 @@ function setEventListener() {
 		planpm(params);
 		rejectper(params);
 		eqoperate(params);
+		deliveryComplianceRate(params);
+		rejectRate(params);
+		notOperateRate(params);
 	});
 
 }
@@ -146,6 +149,66 @@ function eqoperate(params) {
 				
 			} else {
 				$("#eqoperate").text("0"+'%');
+			}
+
+
+		}
+	});
+}
+
+function deliveryComplianceRate(params) {
+	let url = '/monitoring/deliveryComplianceRate';
+
+	$.ajax({
+		url: url,
+		type: 'POST',
+		contentType: 'application/json; charset=utf-8',
+		data: JSON.stringify(params),
+		success: function(data) {
+			if (data.per != null) {
+				$("#rejectper").text(data.per.substring(0, 3) + "%");
+			} else {
+				$("#rejectper").text("0"+'%');
+			}
+
+
+		}
+	});
+}
+
+function rejectRate(params) {
+	let url = '/monitoring/rejectRate';
+
+	$.ajax({
+		url: url,
+		type: 'POST',
+		contentType: 'application/json; charset=utf-8',
+		data: JSON.stringify(params),
+		success: function(data) {
+			if (data.per != null) {
+				$("#rejectper").text(data.per.substring(0, 3) + "%");
+			} else {
+				$("#rejectper").text("0"+'%');
+			}
+
+
+		}
+	});
+}
+
+function notOperateRate(params) {
+	let url = '/monitoring/notOperateRate';
+
+	$.ajax({
+		url: url,
+		type: 'POST',
+		contentType: 'application/json; charset=utf-8',
+		data: JSON.stringify(params),
+		success: function(data) {
+			if (data.per != null) {
+				$("#rejectper").text(data.per.substring(0, 3) + "%");
+			} else {
+				$("#rejectper").text("0"+'%');
 			}
 
 

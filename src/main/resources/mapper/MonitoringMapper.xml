@@ -207,5 +207,68 @@ ORDER BY dt;
 		PLAN_QTY ELSE 0 END) AS PM_PLAN_QTY FROM DSP_WORKDAILY_REPORT WHERE WORK_DATE 
 		= CONVERT(VARCHAR, CONVERT(DATE, #{workDate}),112) AND FACTORYID = #{factoryid} 
 		AND LINEID = #{lineid} AND ISUSABLE IS NOT NULL </select> -->
+		
+		
+	<select id="deliveryComplianceRate" resultType="Monitoring" parameterType="Monitoring">
+		SELECT
+		    dt,
+		    SUM(FIRSTTIME_GOOD_QTY_SUM) AS TOTAL_FIRSTTIME_GOOD_QTY_SUM,
+		    SUM(PLAN_QTY) AS TOTAL_PLAN_QTY,
+		    ROUND(SUM(FIRSTTIME_GOOD_QTY_SUM) * 100.0 / SUM(PLAN_QTY) , 1) AS per
+		FROM (
+		    SELECT
+		        A.dt AS dt,
+		        (SELECT SUM(FIRSTTIME_GOOD_QTY)
+		         FROM DSP_WORK_CONTENTS C
+		         WHERE C.WORKDAILY_SEQ = B.DATASEQ
+		           AND C.ISUSABLE = 'Usable') AS FIRSTTIME_GOOD_QTY_SUM,
+		        B.PLAN_QTY
+		    FROM CheckDayOff A
+		    LEFT JOIN DSP_WORKDAILY_REPORT B ON A.dt = B.WORK_DATE
+		    WHERE 1 = 1
+		      AND B.FACTORYID = #{factoryid}
+		      AND B.MATERIALID = #{materialid}
+		      AND B.WORK_DATE BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY, -13, #{workDate}), 112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, #{workDate}), 112)
+		) AS D
+		GROUP BY dt
+		ORDER BY dt;
+	</select>
+	
+	<select id="rejectRate" resultType="Monitoring" parameterType="Monitoring">
+		SELECT
+		    dt,
+		    SUM(TOTALPROD_QTY) AS TOTALPROD_QTY,
+		    SUM(TOTALFAIL_QTY) AS TOTALFAIL_QTY,
+		    SUM(TOTAL_GOOD) AS TOTAL_GOOD,
+		    ROUND(SUM(TOTALFAIL_QTY) * 100.0 / NULLIF(SUM(TOTALFAIL_QTY) + SUM(TOTAL_GOOD), 0), 1) AS PER
+		FROM (
+		    SELECT
+		        A.dt AS dt,
+		        (SELECT SUM(PROD_QTY)
+		         FROM DSP_WORK_CONTENTS C
+		         WHERE C.WORKDAILY_SEQ = B.DATASEQ
+		           AND C.ISUSABLE = 'Usable') AS TOTALPROD_QTY,
+		        (SELECT SUM(FIRSTTIME_FAIL_QTY)
+		         FROM DSP_WORK_CONTENTS C
+		         WHERE C.WORKDAILY_SEQ = B.DATASEQ
+		           AND C.ISUSABLE = 'Usable') AS TOTALFAIL_QTY,
+		        (SELECT SUM(FIRSTTIME_GOOD_QTY)
+		         FROM DSP_WORK_CONTENTS C
+		         WHERE C.WORKDAILY_SEQ = B.DATASEQ
+		           AND C.ISUSABLE = 'Usable') AS TOTAL_GOOD
+		    FROM CheckDayOff A
+		    LEFT JOIN DSP_WORKDAILY_REPORT B ON A.dt = B.WORK_DATE
+		    WHERE 1 = 1
+		      AND B.FACTORYID = #{factoryid}
+		      AND B.MATERIALID = #{materialid}
+		      AND B.WORK_DATE BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY, -13, #{workDate}), 112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, #{workDate}), 112)
+		) AS D
+		GROUP BY dt
+		ORDER BY dt;
+	</select>
+	
+	<select id="chart3" resultType="String" parameterType="Monitoring">
+		
+	</select>
 
 </mapper>

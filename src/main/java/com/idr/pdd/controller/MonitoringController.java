@@ -59,9 +59,19 @@ public class MonitoringController {
     }
 	
 
+	@ResponseBody
+	@PostMapping("/deliveryComplianceRate")
+    public Monitoring deliveryComplianceRate(@RequestBody Monitoring param) {
+
+		return service.deliveryComplianceRate(param);
+    }
 	
-	
-	
+	@ResponseBody
+	@PostMapping("/rejectRate")
+    public Monitoring rejectRate(@RequestBody Monitoring param) {
+
+		return service.rejectRate(param);
+    }
 
 
 }

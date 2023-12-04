@@ -87,7 +87,8 @@
 	<update id="nelsonModifyProd7" parameterType="Map">
 		UPDATE DSP_NELSONRULE_SETTING
 		SET
-		ISCHECKED = #{prodNelsonRule7}
+		ISCHECKED = #{prodNelsonRule7},
+		LENGTH = #{prodRule7Length}
 		WHERE 1=1
 		AND ALARM_TYPE = 'UNDER-PRODUCTION'
 		AND NELSON_RULE = 7
@@ -96,7 +97,8 @@
 	<update id="nelsonModifyProd8" parameterType="Map">
 		UPDATE DSP_NELSONRULE_SETTING
 		SET
-		ISCHECKED = #{prodNelsonRule8}
+		ISCHECKED = #{prodNelsonRule8},
+		LENGTH = #{prodRule8Length}
 		WHERE 1=1
 		AND ALARM_TYPE = 'UNDER-PRODUCTION'
 		AND NELSON_RULE = 8
@@ -166,7 +168,8 @@
 	<update id="nelsonModifyFail7" parameterType="Map">
 		UPDATE DSP_NELSONRULE_SETTING
 		SET
-		ISCHECKED = #{failNelsonRule7}
+		ISCHECKED = #{failNelsonRule7},
+		LENGTH = #{failRule7Length}
 		WHERE 1=1
 		AND ALARM_TYPE = 'DEFECT-RATE'
 		AND NELSON_RULE = 7
@@ -175,7 +178,8 @@
 	<update id="nelsonModifyFail8" parameterType="Map">
 		UPDATE DSP_NELSONRULE_SETTING
 		SET
-		ISCHECKED = #{failNelsonRule8}
+		ISCHECKED = #{failNelsonRule8},
+		LENGTH = #{failRule8Length}
 		WHERE 1=1
 		AND ALARM_TYPE = 'DEFECT-RATE'
 		AND NELSON_RULE = 8

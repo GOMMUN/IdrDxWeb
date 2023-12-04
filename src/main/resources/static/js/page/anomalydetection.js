@@ -150,16 +150,20 @@ function findNelsonruleSetting(){
 		dataType: "json",
 		contentType: 'application/json; charset=utf-8',
 		success: function(data) {
+			let prodCnt = 0;
+			let failcnt = 0;
 			data.forEach(function(res) {
 				 
 				if(res.alarmType == "UNDER-PRODUCTION" && res.nelsonRule == 1){
 					if(res.ischecked == "Y"){
+						prodCnt++;
 						$('#production-check01').prop('checked',true);
 					}else{
 						$('#production-check01').prop('checked',false);
 					}
 				}else if(res.alarmType == "UNDER-PRODUCTION" && res.nelsonRule == 2){
 					if(res.ischecked == "Y"){
+						prodCnt++;
 						$('#production-check02').prop('checked',true);
 					}else{
 						$('#production-check02').prop('checked',false);
@@ -168,6 +172,7 @@ function findNelsonruleSetting(){
 					$("#production-length02").val(res.length); 
 				}else if(res.alarmType == "UNDER-PRODUCTION" && res.nelsonRule == 3){
 					if(res.ischecked == "Y"){
+						prodCnt++;
 						$('#production-check03').prop('checked',true);
 					}else{
 						$('#production-check03').prop('checked',false);
@@ -175,6 +180,7 @@ function findNelsonruleSetting(){
 					$("#production-length03").val(res.length); 
 				}else if(res.alarmType == "UNDER-PRODUCTION" && res.nelsonRule == 4){
 					if(res.ischecked == "Y"){
+						prodCnt++;
 						$('#production-check04').prop('checked',true);
 					}else{
 						$('#production-check04').prop('checked',false);
@@ -182,6 +188,7 @@ function findNelsonruleSetting(){
 					$("#production-length04").val(res.length); 
 				}else if(res.alarmType == "UNDER-PRODUCTION" && res.nelsonRule == 5){
 					if(res.ischecked == "Y"){
+						prodCnt++;
 						$('#production-check05').prop('checked',true);
 					}else{
 						$('#production-check05').prop('checked',false);
@@ -190,6 +197,7 @@ function findNelsonruleSetting(){
 					$("#production-limit05").val(res.limit); 
 				}else if(res.alarmType == "UNDER-PRODUCTION" && res.nelsonRule == 6){
 					if(res.ischecked == "Y"){
+						prodCnt++;
 						$('#production-check06').prop('checked',true);
 					}else{
 						$('#production-check06').prop('checked',false);
@@ -198,6 +206,7 @@ function findNelsonruleSetting(){
 					$("#production-limit06").val(res.limit); 
 				}else if(res.alarmType == "UNDER-PRODUCTION" && res.nelsonRule == 7){
 					if(res.ischecked == "Y"){
+						prodCnt++;
 						$('#production-check07').prop('checked',true);
 					}else{
 						$('#production-check07').prop('checked',false);
@@ -205,6 +214,7 @@ function findNelsonruleSetting(){
 					$("#production-length07").val(res.length);
 				}else if(res.alarmType == "UNDER-PRODUCTION" && res.nelsonRule == 8){
 					if(res.ischecked == "Y"){
+						prodCnt++;
 						$('#production-check08').prop('checked',true);
 					}else{
 						$('#production-check08').prop('checked',false);
@@ -214,12 +224,14 @@ function findNelsonruleSetting(){
 				
 				else if(res.alarmType == "DEFECT-RATE" && res.nelsonRule == 1){
 					if(res.ischecked == "Y"){
+						failcnt++;
 						$('#quality-check01').prop('checked',true);
 					}else{
 						$('#quality-check01').prop('checked',false);
 					}
 				}else if(res.alarmType == "DEFECT-RATE" && res.nelsonRule == 2){
 					if(res.ischecked == "Y"){
+						failcnt++;
 						$('#quality-check02').prop('checked',true);
 					}else{
 						$('#quality-check02').prop('checked',false);
@@ -227,6 +239,7 @@ function findNelsonruleSetting(){
 					$("#quality-length02").val(res.length); 
 				}else if(res.alarmType == "DEFECT-RATE" && res.nelsonRule == 3){
 					if(res.ischecked == "Y"){
+						failcnt++;
 						$('#quality-check03').prop('checked',true);
 					}else{
 						$('#quality-check03').prop('checked',false);
@@ -234,6 +247,7 @@ function findNelsonruleSetting(){
 					$("#quality-length03").val(res.length); 
 				}else if(res.alarmType == "DEFECT-RATE" && res.nelsonRule == 4){
 					if(res.ischecked == "Y"){
+						failcnt++;
 						$('#quality-check04').prop('checked',true);
 					}else{
 						$('#quality-check04').prop('checked',false);
@@ -241,6 +255,7 @@ function findNelsonruleSetting(){
 					$("#quality-length04").val(res.length); 
 				}else if(res.alarmType == "DEFECT-RATE" && res.nelsonRule == 5){
 					if(res.ischecked == "Y"){
+						failcnt++;
 						$('#quality-check05').prop('checked',true);
 					}else{
 						$('#quality-check05').prop('checked',false);
@@ -249,6 +264,7 @@ function findNelsonruleSetting(){
 					$("#quality-limit05").val(res.limit); 
 				}else if(res.alarmType == "DEFECT-RATE" && res.nelsonRule == 6){
 					if(res.ischecked == "Y"){
+						failcnt++;
 						$('#quality-check06').prop('checked',true);
 					}else{
 						$('#quality-check06').prop('checked',false);
@@ -257,6 +273,7 @@ function findNelsonruleSetting(){
 					$("#quality-limit06").val(res.limit); 
 				}else if(res.alarmType == "DEFECT-RATE" && res.nelsonRule == 7){
 					if(res.ischecked == "Y"){
+						failcnt++;
 						$('#quality-check07').prop('checked',true);
 					}else{
 						$('#quality-check07').prop('checked',false);
@@ -264,6 +281,7 @@ function findNelsonruleSetting(){
 					$("#quality-length07").val(res.length);
 				}else if(res.alarmType == "DEFECT-RATE" && res.nelsonRule == 8){
 					if(res.ischecked == "Y"){
+						failcnt++;
 						$('#quality-check08').prop('checked',true);
 					}else{
 						$('#quality-check08').prop('checked',false);
@@ -271,6 +289,10 @@ function findNelsonruleSetting(){
 					$("#quality-length08").val(res.length);
 				} 
 			})
+			
+			if(prodCnt == 8) $("#production-tab-all").prop('checked',true);
+			if(failcnt == 8) $("#quality-tab-all").prop('checked',true);
+			
 		}
 	});
 }

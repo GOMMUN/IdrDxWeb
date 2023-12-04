@@ -3,6 +3,7 @@
  */
 let c_factory = null;
 let c_material = null;
+let c_line = null;
 
 $(function() {
 	initSetting();
@@ -22,6 +23,7 @@ function initSetting() {
 
 function code() {
 	factroy();		// 공장코드 조회
+	line();
 	material();
 }
 
@@ -31,6 +33,19 @@ function setEventListener() {
 	$factoryCodes = $("#factoryCodes");
 	
 	$factoryCodes.change(function() {
+		
+		let $dropdown = $("#lineCodes");
+		$dropdown.empty();
+
+		if (c_line) {
+			$.each(c_line, function() {
+				if ($factoryCodes.val() == this.mcode) {
+					$dropdown.append($("<option/>").val(this.code).text(this.value));
+				}
+			});
+		} else {
+			$dropdown.append($("<option/>").val("").text("공정 선택"));
+		}
 
 		let $dropdown2 = $("#materialCodes");
 		$dropdown2.empty();
@@ -52,13 +67,14 @@ function setEventListener() {
 }
 
 function search(){
-//	let url = "https://dx.idrenvision.com:8171" 
-	let url = "https://localhost:8171"
+	let url = "https://dx.idrenvision.com:8171" 
+//	let url = "https://localhost:8171"
 				+ '/nelsonrule/find';
 	
 	let data = {
 		"workDate": $("#year").val()+$("#month").val(), 
 		"factoryid": $("#factoryCodes").val(), 
+		"lineid": $("#lineCodes").val(), 
 		"materialid": $("#materialCodes").val()
 	};
 
@@ -128,6 +144,21 @@ function material() {
 			c_material = data;
 		}
 	});
+}
+
+function line() {
+	c_line = null;
+
+	$.ajax({
+		url: '/code/line',
+		type: 'GET',
+		async:false,
+		success: function(data) {
+			c_line = data;
+		}
+	});
+
+
 }
 
 function prodChart(data){

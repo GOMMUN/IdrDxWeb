@@ -13,4 +13,5 @@ public class Monitoring {
 	private String goodQty;
 	private String uptime;
 	private String downtime;
+	private String dt;
 }

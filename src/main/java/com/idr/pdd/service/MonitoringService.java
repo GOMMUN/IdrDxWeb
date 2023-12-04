@@ -53,12 +53,12 @@ public class MonitoringService {
 		
 	}
 	
-	public Monitoring deliveryComplianceRate(Monitoring param) {
-		// TODO Auto-generated method stub
+	public List<Monitoring> deliveryComplianceRate(Monitoring param) {
+
 		return mapper.deliveryComplianceRate(param);
 	}
 
-	public Monitoring rejectRate(Monitoring param) {
+	public List<Monitoring> rejectRate(Monitoring param) {
 		
 		return mapper.rejectRate(param);
 	}

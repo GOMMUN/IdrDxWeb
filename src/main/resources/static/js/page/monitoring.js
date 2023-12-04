@@ -42,7 +42,7 @@ function setEventListener() {
 		eqoperate(params);
 		deliveryComplianceRate(params);
 		rejectRate(params);
-		notOperateRate(params);
+		//notOperateRate(params);
 	});
 
 }
@@ -59,25 +59,25 @@ function planam(params) {
 			if (data.per != null) {
 				$("#prodqtyam").text(data.prodQty);
 				$("#goodqtyam").text(data.goodQty);
-				if(data.per==100){
+				if (data.per == 100) {
 					$("#peram").text(data.per.substring(0, 3) + "%");
-				}else{
+				} else {
 					$("#peram").text(data.per.substring(0, 4) + "%");
 				}
-				
+
 				chart1(data);
 			} else {
-				if(data.prodQty!=null){
+				if (data.prodQty != null) {
 					$("#prodqtyam").text(data.prodQty);
-				}else{
+				} else {
 					$("#prodqtyam").text('0');
 				}
-				if(data.goodQty!=null){
+				if (data.goodQty != null) {
 					$("#goodqtyam").text(data.goodQty);
-				}else{
+				} else {
 					$("#goodqtyam").text('0');
 				}
-				$("#peram").text("0"+'%');
+				$("#peram").text("0" + '%');
 				zerochart('monitoringchart1');
 			}
 
@@ -97,25 +97,25 @@ function planpm(params) {
 			if (data.per != null) {
 				$("#prodqtypm").text(data.prodQty);
 				$("#goodqtypm").text(data.goodQty);
-				if(data.per==100){
+				if (data.per == 100) {
 					$("#perpm").text(data.per.substring(0, 3) + "%");
-				}else{
+				} else {
 					$("#perpm").text(data.per.substring(0, 4) + "%");
 				}
-				
+
 				chart2(data);
 			} else {
-				if(data.prodQty!=null){
+				if (data.prodQty != null) {
 					$("#prodqtypm").text(data.prodQty);
-				}else{
+				} else {
 					$("#prodqtypm").text('0');
 				}
-				if(data.goodQty!=null){
+				if (data.goodQty != null) {
 					$("#goodqtypm").text(data.goodQty);
-				}else{
+				} else {
 					$("#goodqtypm").text('0');
 				}
-				$("#perpm").text("0"+'%');
+				$("#perpm").text("0" + '%');
 				zerochart('monitoringchart2');
 			}
 		}
@@ -134,7 +134,7 @@ function rejectper(params) {
 			if (data.per != null) {
 				$("#rejectper").text(data.per.substring(0, 3) + "%");
 			} else {
-				$("#rejectper").text("0"+'%');
+				$("#rejectper").text("0" + '%');
 			}
 
 
@@ -150,16 +150,16 @@ function eqoperate(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			if(data=="NaN"){
-				$("#eqoperate").text("0"+'%');
+			if (data == "NaN") {
+				$("#eqoperate").text("0" + '%');
 			}
-			else{
-				if(data=="100.0"){
+			else {
+				if (data == "100.0") {
 					$("#eqoperate").text(data.substring(0, 3) + "%");
-				}else{
+				} else {
 					$("#eqoperate").text(data.substring(0, 4) + "%");
 				}
-				
+
 			}
 
 		}
@@ -175,13 +175,7 @@ function deliveryComplianceRate(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			if (data.per != null) {
-				$("#rejectper").text(data.per.substring(0, 3) + "%");
-			} else {
-				$("#rejectper").text("0"+'%');
-			}
-
-
+			deliveryratechart(data);
 		}
 	});
 }
@@ -195,13 +189,7 @@ function rejectRate(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			if (data.per != null) {
-				$("#rejectper").text(data.per.substring(0, 3) + "%");
-			} else {
-				$("#rejectper").text("0"+'%');
-			}
-
-
+			rejectratechart(data);
 		}
 	});
 }
@@ -218,7 +206,7 @@ function notOperateRate(params) {
 			if (data.per != null) {
 				$("#rejectper").text(data.per.substring(0, 3) + "%");
 			} else {
-				$("#rejectper").text("0"+'%');
+				$("#rejectper").text("0" + '%');
 			}
 
 
@@ -293,142 +281,291 @@ function getToday() {
 	return year + "-" + month + "-" + day;
 }
 
-function chart1(data){
+function chart1(data) {
 	Highcharts.chart('monitoringchart1', {
-  colors: ['#d1d3e2', '#232aa1'],
-  chart: {
-    type: 'pie'
-  },
-  title: {
-	        text: '',
-	        align: 'left'
-	    },
-  tooltip: {
-    valueSuffix: '개'
-  },
-  navigation: {
-	        buttonOptions: {
-	            enabled: false
-	        }
-	    },
-	    credits: {
-	        enabled: false
-	    }, 
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false,
-        format: '{point.name}: {y}'
-      },
-      showInLegend: false
-    }
-  },
-  series: [{
-    name: '',
-    colorByPoint: true,
-    innerSize: '70%',
-    data: [{
-      name: '부족수량',
-      y: data.prodQty-data.goodQty
-    }, {
-      name: '생산수량',
-      y: Number(data.goodQty)
-    }]
-  }]
-});
+		colors: ['#d1d3e2', '#232aa1'],
+		chart: {
+			type: 'pie'
+		},
+		title: {
+			text: '',
+			align: 'left'
+		},
+		tooltip: {
+			valueSuffix: '개'
+		},
+		navigation: {
+			buttonOptions: {
+				enabled: false
+			}
+		},
+		credits: {
+			enabled: false
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: false,
+					format: '{point.name}: {y}'
+				},
+				showInLegend: false
+			}
+		},
+		series: [{
+			name: '',
+			colorByPoint: true,
+			innerSize: '70%',
+			data: [{
+				name: '부족수량',
+				y: data.prodQty - data.goodQty
+			}, {
+				name: '생산수량',
+				y: Number(data.goodQty)
+			}]
+		}]
+	});
 }
-function chart2(data){
+function chart2(data) {
 	Highcharts.chart('monitoringchart2', {
-  colors: ['#d1d3e2', '#232aa1'],
-  chart: {
-    type: 'pie'
-  },
-  title: {
-	        text: '',
-	        align: 'left'
-	    },
-  tooltip: {
-    valueSuffix: '개'
-  },
-  navigation: {
-	        buttonOptions: {
-	            enabled: false
-	        }
-	    },
-	    credits: {
-	        enabled: false
-	    }, 
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false,
-        format: '{point.name}: {y}'
-      },
-      showInLegend: false
-    }
-  },
-  series: [{
-    name: '',
-    colorByPoint: true,
-    innerSize: '70%',
-    data: [{
-      name: '부족수량',
-      y: data.prodQty-data.goodQty
-    }, {
-      name: '생산수량',
-      y: Number(data.goodQty)
-    }]
-  }]
-});
+		colors: ['#d1d3e2', '#232aa1'],
+		chart: {
+			type: 'pie'
+		},
+		title: {
+			text: '',
+			align: 'left'
+		},
+		tooltip: {
+			valueSuffix: '개'
+		},
+		navigation: {
+			buttonOptions: {
+				enabled: false
+			}
+		},
+		credits: {
+			enabled: false
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: false,
+					format: '{point.name}: {y}'
+				},
+				showInLegend: false
+			}
+		},
+		series: [{
+			name: '',
+			colorByPoint: true,
+			innerSize: '70%',
+			data: [{
+				name: '부족수량',
+				y: data.prodQty - data.goodQty
+			}, {
+				name: '생산수량',
+				y: Number(data.goodQty)
+			}]
+		}]
+	});
 }
 
-function zerochart(name){
+function zerochart(name) {
 	Highcharts.chart(name, {
-  colors: ['#d1d3e2', '#232aa1'],
-  chart: {
-    type: 'pie'
-  },
-  title: {
-	        text: '',
-	        align: 'left'
-	    },
-  tooltip: {
-    valueSuffix: '개'
-  },
-  navigation: {
-	        buttonOptions: {
-	            enabled: false
-	        }
-	    },
-	    credits: {
-	        enabled: false
-	    }, 
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: false,
-        format: '{point.name}: {y}'
-      },
-      showInLegend: false
-    }
-  },
-  series: [{
-    name: '',
-    colorByPoint: true,
-    innerSize: '70%',
-    data: [{
-      name: '부족수량',
-      y: 1
-    }, {
-      name: '생산수량',
-      y: 0
-    }]
-  }]
-});
+		colors: ['#d1d3e2', '#232aa1'],
+		chart: {
+			type: 'pie'
+		},
+		title: {
+			text: '',
+			align: 'left'
+		},
+		tooltip: {
+			valueSuffix: '개'
+		},
+		navigation: {
+			buttonOptions: {
+				enabled: false
+			}
+		},
+		credits: {
+			enabled: false
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: false,
+					format: '{point.name}: {y}'
+				},
+				showInLegend: false
+			}
+		},
+		series: [{
+			name: '',
+			colorByPoint: true,
+			innerSize: '70%',
+			data: [{
+				name: '부족수량',
+				y: 1
+			}, {
+				name: '생산수량',
+				y: 0
+			}]
+		}]
+	});
+}
+
+function deliveryratechart(param) {
+	var seriesData = [];
+	var dateData = [];
+
+	for (var j = 0; j < param.length; j++) {
+	    let formattedDate = param[j].dt.substring(4, 6) + "월" + param[j].dt.substring(6, 8) + "일";
+	    dateData.push(formattedDate);
+	}
+
+	for (var j = 0; j < param.length; j++) {
+		var series;
+		if (param[j].per == 100) {
+			series = Number(param[j].per.substring(0, 3));
+		}else if(param[j].per==null){
+			series=0;
+		}else {
+			series = Number(param[j].per.substring(0, 4));
+		}
+		
+
+		seriesData.push(series);
+
+	}
+
+	Highcharts.chart('deliveryrate', {
+		chart: {
+			type: 'line'
+		},
+		colors: ['#232aa1'],
+		title: {
+			text: ''
+		},
+		subtitle: {
+			text: ''
+		},
+		credits: {
+			enabled: false
+		},
+		navigation: {
+			buttonOptions: {
+				enabled: false
+			}
+		},
+		xAxis: {
+			categories: dateData,
+			crosshair: true,
+			accessibility: {
+				description: ''
+			}
+		},
+		yAxis: {
+			labels: {
+                enabled: false
+            },
+			title: {
+				text: ''
+			}
+		},
+		plotOptions: {
+			line: {
+				dataLabels: {
+					enabled: true
+				},
+				enableMouseTracking: false
+			}
+		},
+		series: [{
+			name: '납기준수율',
+			data: seriesData
+		}]
+
+	});
+}
+
+
+function rejectratechart(param) {
+	var seriesData = [];
+	var dateData = [];
+
+	for (var j = 0; j < param.length; j++) {
+	    let formattedDate = param[j].dt.substring(4, 6) + "월" + param[j].dt.substring(6, 8) + "일";
+	    dateData.push(formattedDate);
+	}
+
+	for (var j = 0; j < param.length; j++) {
+		var series;
+		if (param[j].per == 100) {
+			series = Number(param[j].per.substring(0, 3));
+		}else if(param[j].per==null){
+			series=0;
+		}else {
+			series = Number(param[j].per.substring(0, 4));
+		}
+		
+
+		seriesData.push(series);
+
+	}
+
+	Highcharts.chart('rejectrate', {
+		chart: {
+			type: 'line'
+		},
+		colors: ['#232aa1'],
+		title: {
+			text: ''
+		},
+		subtitle: {
+			text: ''
+		},
+		credits: {
+			enabled: false
+		},
+		navigation: {
+			buttonOptions: {
+				enabled: false
+			}
+		},
+		xAxis: {
+			categories: dateData,
+			crosshair: true,
+			accessibility: {
+				description: ''
+			}
+		},
+		yAxis: {
+			labels: {
+                enabled: false
+            },
+			title: {
+				text: ''
+			}
+		},
+		plotOptions: {
+			line: {
+				dataLabels: {
+					enabled: true
+				},
+				enableMouseTracking: false
+			}
+		},
+		series: [{
+			name: '불량율',
+			data: seriesData
+		}]
+
+	});
 }

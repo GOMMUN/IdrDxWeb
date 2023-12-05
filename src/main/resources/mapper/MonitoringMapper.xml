@@ -235,42 +235,22 @@ ORDER BY dt;
 	</select>
 	
 	<select id="rejectRate" resultType="Monitoring" parameterType="Monitoring">
-		SELECT
-		    dt,
-		    SUM(TOTALPROD_QTY) AS TOTALPROD_QTY,
-		    SUM(TOTALFAIL_QTY) AS TOTALFAIL_QTY,
-		    SUM(TOTAL_GOOD) AS TOTAL_GOOD,
-		     ROUND(
-        		CASE
-           		 WHEN SUM(TOTALFAIL_QTY) = 0 THEN NULL
-           		 ELSE SUM(TOTALFAIL_QTY) * 100.0 / NULLIF(SUM(TOTALFAIL_QTY) + SUM(TOTAL_GOOD), 0)
-       			 END,
-        	1
-    ) AS PER
-		FROM (
-		    SELECT
-		        A.dt AS dt,
-		        (SELECT SUM(PROD_QTY)
-		         FROM DSP_WORK_CONTENTS C
-		         WHERE C.WORKDAILY_SEQ = B.DATASEQ
-		           AND C.ISUSABLE = 'Usable') AS TOTALPROD_QTY,
-		        (SELECT SUM(FIRSTTIME_FAIL_QTY)
-		         FROM DSP_WORK_CONTENTS C
-		         WHERE C.WORKDAILY_SEQ = B.DATASEQ
-		           AND C.ISUSABLE = 'Usable') AS TOTALFAIL_QTY,
-		        (SELECT SUM(FIRSTTIME_GOOD_QTY)
-		         FROM DSP_WORK_CONTENTS C
-		         WHERE C.WORKDAILY_SEQ = B.DATASEQ
-		           AND C.ISUSABLE = 'Usable') AS TOTAL_GOOD
-		    FROM CheckDayOff A
-		    LEFT JOIN DSP_WORKDAILY_REPORT B ON A.dt = B.WORK_DATE
-		    WHERE 1 = 1
-		      AND B.FACTORYID = #{factoryid}
-		      AND B.MATERIALID = #{materialid}
-		      AND B.WORK_DATE BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY, -13, #{workDate}), 112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, #{workDate}), 112)
-		) AS D
-		GROUP BY dt
-		ORDER BY dt;
+		SELECT AA.dt,BB.PROD,BB.GOOD,BB.FAIL,
+ROUND((BB.FAIL)*100.0/(BB.FAIL+BB.GOOD),3)AS per
+FROM CheckDayOff AA
+LEFT OUTER JOIN (
+   SELECT A.WORK_DATE, SUM(B.PROD_QTY) AS PROD, SUM(B.FIRSTTIME_GOOD_QTY) AS GOOD, SUM(B.FIRSTTIME_FAIL_QTY) AS FAIL
+   FROM DSP_WORKDAILY_REPORT A LEFT JOIN DSP_WORK_CONTENTS B
+   ON A.DATASEQ = B.WORKDAILY_SEQ
+   WHERE 1=1
+   AND A.WORK_DATE BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY, -13, #{workDate}), 112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, #{workDate}), 112)
+   AND FACTORYID = #{factoryid}
+   AND MATERIALID = #{materialid}
+   GROUP BY A.WORK_DATE
+)BB ON AA.dt = BB.WORK_DATE
+WHERE 1=1
+AND AA.dt BETWEEN CONVERT(VARCHAR(8), DATEADD(DAY, -13, #{workDate}), 112) AND CONVERT(VARCHAR(8), DATEADD(DAY, 0, #{workDate}), 112)
+ORDER BY AA.dt;
 	</select>
 	
 	<select id="chart3" resultType="String" parameterType="Monitoring">

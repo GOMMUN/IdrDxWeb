@@ -162,7 +162,7 @@ function set_P_Representative(chart1data) {
 	    seriesData1[j] = [];
 	    
 	    for (var i = 0; i <= chart1data[j].length-1; i++) {        
-	        seriesData1[j][i] = Number(chart1data[j][i].firsttimeGoodQty);
+	        seriesData1[j][i] = Number(chart1data[j][i].prodQty);
 	    }
 	    
 	    var series = {
@@ -296,7 +296,7 @@ function set_P_Partner(chart2data){
 		    seriesData1[j] = [];
 		    
 		    for (var i = 0; i <= chart2data[j].length-1; i++) {        
-		        seriesData1[j][i] = Number(chart2data[j][i].firsttimeGoodQty);
+		        seriesData1[j][i] = Number(chart2data[j][i].prodQty);
 		    }
 		    
 		    var series = {
@@ -742,7 +742,7 @@ function set_D_PlanToPerform(chart6data){
 	for (var i = 0; i <= chart6data.length-1; i++) {
 
 		plan[i] = Number(chart6data[i].planQty);
-		prod[i] = Number(chart6data[i].firsttimeGoodQty);
+		prod[i] = Number(chart6data[i].prodQty);
 
 	}
 
@@ -1056,10 +1056,10 @@ function PQCDrate() {
 		
 		result.forEach(function(r) {
 			if (r.workDate == formattedDate) {
-	            ProdQtyTo = r.firsttimeGoodQty;
+	            ProdQtyTo = r.prodQty;
 	            ManhourTo = r.manhour;
             } else {
-	            ProdQtyYe = r.firsttimeGoodQty;
+	            ProdQtyYe = r.prodQty;
 	            ManhourYe = r.manhour;
 			}
         });
@@ -1095,10 +1095,10 @@ function PQCDrate() {
 		result.forEach(function(r) {
 			if (r.workDate == formattedDate) {
 	            FirstTimeFailQtyTo = r.firsttimeFailQty;
-	            ProdQtyTo = r.firsttimeGoodQty;
+	            ProdQtyTo = r.prodQty;
             } else {
 				FirstTimeFailQtyYe = r.firsttimeFailQty;
-	            ProdQtyYe = r.firsttimeGoodQty;
+	            ProdQtyYe = r.prodQty;
 			}
         });
         
@@ -1187,10 +1187,10 @@ function PQCDrate() {
 		
         result.forEach(function(r) {
 			if (r.workDate == formattedDate) {
-	            ProdQtyTo = r.firsttimeGoodQty;
+	            ProdQtyTo = r.prodQty;
 	            PlanQtyTo = r.planQty;
             } else {
-	            ProdQtyYe = r.firsttimeGoodQty;
+	            ProdQtyYe = r.prodQty;
 	            PlanQtyYe = r.planQty;
 			}
         });

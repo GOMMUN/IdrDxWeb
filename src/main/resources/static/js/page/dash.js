@@ -162,7 +162,7 @@ function set_P_Representative(chart1data) {
 	    seriesData1[j] = [];
 	    
 	    for (var i = 0; i <= chart1data[j].length-1; i++) {        
-	        seriesData1[j][i] = Number(chart1data[j][i].prodQty);
+	        seriesData1[j][i] = Number(chart1data[j][i].firsttimeGoodQty);
 	    }
 	    
 	    var series = {
@@ -296,7 +296,7 @@ function set_P_Partner(chart2data){
 		    seriesData1[j] = [];
 		    
 		    for (var i = 0; i <= chart2data[j].length-1; i++) {        
-		        seriesData1[j][i] = Number(chart2data[j][i].prodQty);
+		        seriesData1[j][i] = Number(chart2data[j][i].firsttimeGoodQty);
 		    }
 		    
 		    var series = {
@@ -742,7 +742,7 @@ function set_D_PlanToPerform(chart6data){
 	for (var i = 0; i <= chart6data.length-1; i++) {
 
 		plan[i] = Number(chart6data[i].planQty);
-		prod[i] = Number(chart6data[i].prodQty);
+		prod[i] = Number(chart6data[i].firsttimeGoodQty);
 
 	}
 
@@ -1056,10 +1056,10 @@ function PQCDrate() {
 		
 		result.forEach(function(r) {
 			if (r.workDate == formattedDate) {
-	            ProdQtyTo = r.prodQty;
+	            ProdQtyTo = r.firsttimeGoodQty;
 	            ManhourTo = r.manhour;
             } else {
-	            ProdQtyYe = r.prodQty;
+	            ProdQtyYe = r.firsttimeGoodQty;
 	            ManhourYe = r.manhour;
 			}
         });
@@ -1090,22 +1090,22 @@ function PQCDrate() {
 	});
 	$.get(urlq + '?' + $.param(params)).then(function(res) {
 		var result = res;
-		var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, ProdQtyTo = 0, ProdQtyYe = 0;
+		var FirstTimeFailQtyTo = 0, FirstTimeFailQtyYe = 0, FirstTimeGoodQtyTo = 0, FirstTimeGoodQtyYe = 0;
 		
 		result.forEach(function(r) {
 			if (r.workDate == formattedDate) {
 	            FirstTimeFailQtyTo = r.firsttimeFailQty;
-	            ProdQtyTo = r.prodQty;
+	            FirstTimeGoodQtyTo = r.firsttimeGoodQty;
             } else {
 				FirstTimeFailQtyYe = r.firsttimeFailQty;
-	            ProdQtyYe = r.prodQty;
+	            FirstTimeGoodQtyYe = r.firsttimeGoodQty;
 			}
         });
         
-        failRate = (FirstTimeFailQtyTo / ProdQtyTo) * 100; //불량률
+        failRate = (FirstTimeFailQtyTo / FirstTimeFailQtyTo+FirstTimeGoodQtyTo) * 100; //불량률
         $('#failRate').text(isNaN(failRate) ? '-' : parseFloat(failRate.toFixed(2)) + '%');
         
-        preFailRate = (FirstTimeFailQtyYe / ProdQtyYe) * 100;
+        preFailRate = (FirstTimeFailQtyYe / FirstTimeFailQtyYe+FirstTimeGoodQtyYe) * 100;
 	    compareFailRate = failRate-preFailRate
 	    
 		if (parseFloat(compareFailRate.toFixed(2)) > 0){
@@ -1187,10 +1187,10 @@ function PQCDrate() {
 		
         result.forEach(function(r) {
 			if (r.workDate == formattedDate) {
-	            ProdQtyTo = r.prodQty;
+	            ProdQtyTo = r.firsttimeGoodQty;
 	            PlanQtyTo = r.planQty;
             } else {
-	            ProdQtyYe = r.prodQty;
+	            ProdQtyYe = r.firsttimeGoodQty;
 	            PlanQtyYe = r.planQty;
 			}
         });

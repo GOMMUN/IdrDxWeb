@@ -198,7 +198,8 @@ function prodChart(data){
 	
 	Highcharts.chart('nelsonProdChart', {
 		    chart: {
-		        type: 'line'
+		        type: 'line',
+		        marginLeft: 50
 		    },
 		    title: {
 		        text: ''
@@ -212,6 +213,7 @@ function prodChart(data){
 		        },
 		        max: max,
 		        min: min,
+		        opposite: true,
 		        plotLines: [{
 		            color: '#ff0000',
 		            width: 2,
@@ -221,7 +223,9 @@ function prodChart(data){
 					  text:"UCL",
 		              align: 'left',
 		              textAlign: 'left',
-		              verticalAlign: 'middle'
+		              verticalAlign: 'middle',
+		              x: -50,
+                	  y: 3
 		            }
 		        },{
 		            color: '#000000',
@@ -229,10 +233,12 @@ function prodChart(data){
 		            value: data.prodAvg,
 		            label:{
 //		              text:"달성률 평균 : "+data.prodAvg,
-					  text:"달성률 평균",
+					  text:"평균",
 		              align: 'left',
 		              textAlign: 'left',
-		              verticalAlign: 'middle'
+		              verticalAlign: 'middle',
+		              x: -50,
+                	  y: 3
 		            }
 		        },{
 		            color: '#00ff00',
@@ -243,7 +249,9 @@ function prodChart(data){
 					  text:"LCL",
 		              align: 'left',
 		              textAlign: 'left',
-		              verticalAlign: 'middle'
+		              verticalAlign: 'middle',
+		              x: -50,
+                	  y: 3
 		            }
 		        }]
 		    },
@@ -306,7 +314,8 @@ function failChart(data){
 	
 	Highcharts.chart('nelsonFailChart', {
 		    chart: {
-		        type: 'line'
+		        type: 'line',
+		        marginLeft: 50
 		    },
 		    title: {
 		        text: ''
@@ -320,6 +329,7 @@ function failChart(data){
 		        },
 		        max: max,
 		        min: min,
+		        opposite: true,
 		        plotLines: [{
 		            color: '#ff0000',
 		            width: 2,
@@ -329,7 +339,9 @@ function failChart(data){
                       text:"UCL",
 		              align: 'left',
 		              textAlign: 'left',
-		              verticalAlign: 'middle'
+		              verticalAlign: 'middle',
+		              x: -50,
+                	  y: 3
 		            }
 		        },{
 		            color: '#000000',
@@ -337,10 +349,12 @@ function failChart(data){
 		            value: data.failAvg,
 		            label:{
 //		              text:"달성률 평균 : "+data.failAvg,
-		              text:"달성률 평균",
+		              text:"평균",
 		              align: 'left',
 		              textAlign: 'left',
-		              verticalAlign: 'middle'
+		              verticalAlign: 'middle',
+		              x: -50,
+                	  y: 3
 		            }
 		        },{
 		            color: '#00ff00',
@@ -351,7 +365,9 @@ function failChart(data){
                       text:"LCL",
 		              align: 'left',
 		              textAlign: 'left',
-		              verticalAlign: 'middle'
+		              verticalAlign: 'middle',
+		              x: -50,
+                	  y: 3
 		            }
 		        }]
 		    },

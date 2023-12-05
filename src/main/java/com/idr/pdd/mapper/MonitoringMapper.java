@@ -30,4 +30,6 @@ public interface MonitoringMapper {
 	List<Monitoring> deliveryComplianceRate(Monitoring param);
 
 	List<Monitoring> rejectRate(Monitoring param);
+	
+	List<Monitoring> notoperateRate(Monitoring param);
 }

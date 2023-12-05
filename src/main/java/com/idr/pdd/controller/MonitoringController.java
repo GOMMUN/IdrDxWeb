@@ -73,5 +73,10 @@ public class MonitoringController {
 		return service.rejectRate(param);
     }
 
+	@ResponseBody
+	@PostMapping("/notoperateRate")
+    public List<Monitoring> notoperateRate(@RequestBody Monitoring param) {
 
+		return service.notoperateRate(param);
+    }
 }

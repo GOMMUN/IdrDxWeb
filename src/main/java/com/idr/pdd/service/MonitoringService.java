@@ -63,4 +63,8 @@ public class MonitoringService {
 		return mapper.rejectRate(param);
 	}
 
+	public List<Monitoring> notoperateRate(Monitoring param) {
+		
+		return mapper.notoperateRate(param);
+	}
 }

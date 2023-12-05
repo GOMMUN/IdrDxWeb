@@ -14,4 +14,5 @@ public class Monitoring {
 	private String uptime;
 	private String downtime;
 	private String dt;
+	private String notoperatetime;
 }

@@ -42,7 +42,7 @@ function setEventListener() {
 		eqoperate(params);
 		deliveryComplianceRate(params);
 		rejectRate(params);
-		//notOperateRate(params);
+		notOperateRate(params);
 	});
 
 }
@@ -195,7 +195,7 @@ function rejectRate(params) {
 }
 
 function notOperateRate(params) {
-	let url = '/monitoring/notOperateRate';
+	let url = '/monitoring/notoperateRate';
 
 	$.ajax({
 		url: url,
@@ -203,13 +203,7 @@ function notOperateRate(params) {
 		contentType: 'application/json; charset=utf-8',
 		data: JSON.stringify(params),
 		success: function(data) {
-			if (data.per != null) {
-				$("#rejectper").text(data.per.substring(0, 3) + "%");
-			} else {
-				$("#rejectper").text("0" + '%');
-			}
-
-
+			notoperateRateChart(data);
 		}
 	});
 }
@@ -482,7 +476,10 @@ function deliveryratechart(param) {
 		plotOptions: {
 			line: {
 				dataLabels: {
-					enabled: true
+					enabled: true,
+					formatter: function () {
+                        return this.y + ' %';
+                    }
 				},
 				enableMouseTracking: false
 			}
@@ -557,7 +554,10 @@ function rejectratechart(param) {
 		plotOptions: {
 			line: {
 				dataLabels: {
-					enabled: true
+					enabled: true,
+					formatter: function () {
+                        return this.y + ' %';
+                    }
 				},
 				enableMouseTracking: false
 			}
@@ -568,4 +568,75 @@ function rejectratechart(param) {
 		}]
 
 	});
+}
+
+function notoperateRateChart(param) {
+    var seriesData = [];
+    var dateData = [];
+    console.log(param);
+
+    for (var j = 0; j < param.length; j++) {
+        let formattedDate = param[j].dt.substring(4, 6) + "월" + param[j].dt.substring(6, 8) + "일";
+        dateData.push(formattedDate);
+    }
+
+    for (var j = 0; j < param.length; j++) {
+        var series;
+        series = Math.floor(Number(param[j].notoperatetime) / 60);
+
+        seriesData.push(series);
+
+    }
+
+    Highcharts.chart('notoperateRate', {
+        chart: {
+            type: 'column'
+        },
+        colors: ['#232aa1'],
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        credits: {
+            enabled: false
+        },
+        navigation: {
+            buttonOptions: {
+                enabled: false
+            }
+        },
+        xAxis: {
+            categories: dateData,
+            crosshair: true,
+            accessibility: {
+                description: ''
+            }
+        },
+        yAxis: {
+            labels: {
+                enabled: false
+            },
+            title: {
+                text: ''
+            }
+        },
+        plotOptions: {
+            column: {
+				pointPadding: 0.2,
+                dataLabels: {
+                    enabled: true,
+                    formatter: function () {
+                        return this.y + ' 분';
+                    }
+                }
+            }
+        },
+        series: [{
+            name: '비가동 현황',
+            data: seriesData
+        }]
+
+    });
 }

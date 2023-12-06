@@ -1102,10 +1102,10 @@ function PQCDrate() {
 			}
         });
         
-        failRate = (FirstTimeFailQtyTo / FirstTimeFailQtyTo+FirstTimeGoodQtyTo) * 100; //불량률
+        failRate = (FirstTimeFailQtyTo / (FirstTimeFailQtyTo+FirstTimeGoodQtyTo)) * 100; //불량률
         $('#failRate').text(isNaN(failRate) ? '-' : parseFloat(failRate.toFixed(2)) + '%');
-        
-        preFailRate = (FirstTimeFailQtyYe / FirstTimeFailQtyYe+FirstTimeGoodQtyYe) * 100;
+        console.log("###"+failRate);
+        preFailRate = (FirstTimeFailQtyYe / (FirstTimeFailQtyYe+FirstTimeGoodQtyYe)) * 100;
 	    compareFailRate = failRate-preFailRate
 	    
 		if (parseFloat(compareFailRate.toFixed(2)) > 0){

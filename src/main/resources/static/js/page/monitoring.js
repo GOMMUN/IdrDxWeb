@@ -59,11 +59,9 @@ function planam(params) {
 			if (data.per != null) {
 				$("#prodqtyam").text(data.prodQty);
 				$("#goodqtyam").text(data.goodQty);
-				if (data.per == 100) {
-					$("#peram").text(data.per.substring(0, 3) + "%");
-				} else {
-					$("#peram").text(data.per.substring(0, 4) + "%");
-				}
+				
+				let dataChange = Number(data.per);
+				$("#peram").text(parseFloat(dataChange.toFixed(2)) + "%");
 
 				chart1(data);
 			} else {
@@ -97,11 +95,9 @@ function planpm(params) {
 			if (data.per != null) {
 				$("#prodqtypm").text(data.prodQty);
 				$("#goodqtypm").text(data.goodQty);
-				if (data.per == 100) {
-					$("#perpm").text(data.per.substring(0, 3) + "%");
-				} else {
-					$("#perpm").text(data.per.substring(0, 4) + "%");
-				}
+				
+				let dataChange = Number(data.per);
+				$("#perpm").text(parseFloat(dataChange.toFixed(2)) + "%");
 
 				chart2(data);
 			} else {
@@ -132,7 +128,8 @@ function rejectper(params) {
 		data: JSON.stringify(params),
 		success: function(data) {
 			if (data.per != null) {
-				$("#rejectper").text(data.per.substring(0, 3) + "%");
+				let dataChange = Number(data.per);
+				$("#rejectper").text(parseFloat(dataChange.toFixed(2)) + "%");
 			} else {
 				$("#rejectper").text("0" + '%');
 			}
@@ -154,12 +151,8 @@ function eqoperate(params) {
 				$("#eqoperate").text("0" + '%');
 			}
 			else {
-				if (data == "100.0") {
-					$("#eqoperate").text(data.substring(0, 3) + "%");
-				} else {
-					$("#eqoperate").text(data.substring(0, 4) + "%");
-				}
-
+				let dataChange = Number(data);
+				$("#eqoperate").text(parseFloat(dataChange.toFixed(2)) + "%");
 			}
 
 		}

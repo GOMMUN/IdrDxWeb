@@ -2540,7 +2540,7 @@ function personfind(data) {
 
 function resetWorkDailyReport() {
 	let today = new Date();
-	let WorkDate = today.getFullYear().toString() + '-' + (today.getMonth()+1).toString() + '-' + today.getDate().toString();
+	let WorkDate = today.getFullYear().toString() + '-' + (today.getMonth()+1).toString() + '-' + ("0"+today.getDate()).slice(-2).toString();
 		
 	$("input[name=ruleid]").val("");
 	$("input[name=workDate]").val(WorkDate);

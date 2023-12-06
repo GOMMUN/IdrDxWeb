@@ -1069,7 +1069,7 @@ function PQCDrate() {
         
         preUph = ProdQtyYe / ManhourYe;
 	    compareUph = Uph-preUph
-	    
+
 	    if (compareUph.toFixed(0) > 0){
 		    $('#preUph .plus').text(compareUph.toFixed(0)).hide();
 		    $('#preUph .same').text(compareUph.toFixed(0)).hide();
@@ -1104,7 +1104,7 @@ function PQCDrate() {
         
         failRate = (FirstTimeFailQtyTo / (FirstTimeFailQtyTo+FirstTimeGoodQtyTo)) * 100; //불량률
         $('#failRate').text(isNaN(failRate) ? '-' : parseFloat(failRate.toFixed(2)) + '%');
-        console.log("###"+failRate);
+
         preFailRate = (FirstTimeFailQtyYe / (FirstTimeFailQtyYe+FirstTimeGoodQtyYe)) * 100;
 	    compareFailRate = failRate-preFailRate
 	    

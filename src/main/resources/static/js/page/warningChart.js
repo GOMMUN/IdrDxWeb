@@ -67,8 +67,8 @@ function setEventListener() {
 }
 
 function search(){
-	let url = "https://dx.idrenvision.com:8171" 
-//	let url = "https://localhost:8171"
+//	let url = "https://dx.idrenvision.com:8171" 
+	let url = "https://localhost:8171"
 				+ '/nelsonrule/find';
 	
 	let data = {
@@ -178,13 +178,18 @@ function prodChart(data){
 	let max = 0;
 	let min = 0;
 	
-	data.prodAvgList.forEach(function(value) {
-		if(max <= value){
+	data.prodAvgList.forEach(function(value,index) {
+		if(index == 0){
 			max = value;
-		}
-		
-		if(min >= value){
 			min = value;
+		}else{
+			if(max <= value){
+				max = value;
+			}
+			
+			if(min >= value){
+				min = value;
+			}
 		}
 	});
 	
@@ -294,13 +299,18 @@ function failChart(data){
 	let max = 0;
 	let min = 0;
 	
-	data.failAvgList.forEach(function(value) {
-		if(max <= value){
+	data.failAvgList.forEach(function(value,index) {
+		if(index == 0){
 			max = value;
-		}
-		
-		if(min >= value){
 			min = value;
+		}else{
+			if(max <= value){
+				max = value;
+			}
+			
+			if(min >= value){
+				min = value;
+			}
 		}
 	});
 	

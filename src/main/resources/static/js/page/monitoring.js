@@ -12,7 +12,6 @@ $(function() {
 function init() {
 	factroy();
 	$('#date').val(getToday());
-	setPlant();
 }
 
 function setPlant(){
@@ -20,9 +19,9 @@ function setPlant(){
 	localStorage.setItem("username", $("#parameterUsername").val());
 	
 	if(localStorage.getItem("plant") == "KEM"){
-		$("#factoryCodes option:eq(1)").prop("selected", true);
+		$("#factoryCodes").val("KEM").prop("selected", true);
 	} else if(localStorage.getItem("plant") == "LHO"){
-		$("#factoryCodes option:eq(2)").prop("selected", true);
+		$("#factoryCodes").val("LHO").prop("selected", true);
 	} else if(localStorage.getItem("plant") == "SYM"){
 		$("#factoryCodes option:eq(3)").prop("selected", true);
 	} else if(localStorage.getItem("plant") == "SWH"){
@@ -265,7 +264,8 @@ function factroy() {
 				$.each(data, function() {
 					$dropdown.append($("<option/>").val(this.code).text(this.value));
 				});
-				$("#factoryCodes option:eq(1)").prop("selected", true);
+				setPlant();
+				//$("#factoryCodes option:eq(1)").prop("selected", true);
 				data.factoryid = $("select[name=factoryid]").val();
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));

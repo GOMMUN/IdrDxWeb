@@ -1,6 +1,7 @@
 /**
  * 
  */
+let c_material = null;
 
 $(function() {
 	init();
@@ -222,12 +223,13 @@ function getmatarial() {
 		type: 'GET',
 		success: function(data) {
 			let materials = data;
-
+			c_material=data;
+			
 			$matarialCode = $("#matarialCode");
 			$matarialCode.empty();
 
 			// factoryCode와 factoryId가 일치하는 데이터 필터링
-			let matchingMaterials = materials.filter(function(material) {
+			let matchingMaterials = c_material.filter(function(material) {
 				return material.factoryid === $factoryCodes.val();
 			});
 
@@ -253,6 +255,7 @@ function factroy() {
 	$.ajax({
 		url: url,
 		type: 'GET',
+		async: false,
 		success: function(data) {
 			factorys = data;
 

@@ -23,9 +23,9 @@ function setPlant(){
 	} else if(localStorage.getItem("plant") == "LHO"){
 		$("#factoryCodes").val("LHO").prop("selected", true);
 	} else if(localStorage.getItem("plant") == "SYM"){
-		$("#factoryCodes option:eq(3)").prop("selected", true);
+		$("#factoryCodes").val("SYM").prop("selected", true);
 	} else if(localStorage.getItem("plant") == "SWH"){
-		$("#factoryCodes option:eq(4)").prop("selected", true);
+		$("#factoryCodes").val("SWH").prop("selected", true);
 	}
 }
 

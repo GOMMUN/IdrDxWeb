@@ -154,25 +154,26 @@ function set_P_Representative(chart1data) {
 	    }
 	}
 	
+	var seriesData = [];
 	var seriesData1 = [];
 	var seriesData2 = [];
-
-	for (var j = 0; j <= chart1data.length-1; j++) {
-		
-	    seriesData1[j] = [];
+	
+	for (var p = 0; p < chart1data.length; p++) {
+	    seriesData1[p] = chart1data[p][0].lineid;
+	    seriesData2[p] = [];
 	    
-	    for (var i = 0; i <= chart1data[j].length-1; i++) {        
-	        seriesData1[j][i] = Number(chart1data[j][i].firsttimeGoodQty);
+	    for (var q = 0; q < chart1data[j].length; q++) {      
+	        seriesData2[p][q] = Number(chart1data[p][q].firsttimeGoodQty);
 	    }
 	    
 	    var series = {
-	        name: chart1data[j][0].lineid,
-	        data: seriesData1[j]
+	        name: seriesData1[p],
+	        data: seriesData2[p]
 	    };
-	    
-	    seriesData2.push(series);
-	
+        
+	    seriesData.push(series);
 	}
+
 	if(localStorage.getItem('plant') == 'KEM'){
 		
 	} else {
@@ -256,15 +257,16 @@ function set_P_Representative(chart1data) {
 	        }
 	    },
 	    legend: {
-			itemDistance:15,
-    		symbolRadius: 0
+			itemDistance: 15,
+    		symbolRadius: 0	
 		},
-		series: seriesData2,
+		series: seriesData,
 			colors: [
 				'#0D70C6',
 				'#009CD8',
 				'#09D0D9',
-				'#0DCF9C'
+				'#0DCF9C',
+				'#008299'
 			]
 		}
 	);
@@ -605,12 +607,12 @@ function set_C_Equipment(chart5data) {
 	var seriesData1 = [];
 	var seriesData2 = [];
 
-	for (var j = 0; j <= chart5data.length-1; j++) {
+	for (var j = 0; j < chart5data.length; j++) {
 	
 		
 	    seriesData1[j] = [];
 	    
-	    for (var i = 0; i <= chart5data[j].length-1; i++) {
+	    for (var i = 0; i < chart5data[j].length; i++) {
 	        var percentage = 0;
 	        percentage = Number(parseFloat(chart5data[j][i].total));
 	        var percentage_data = parseFloat(percentage.toFixed(2));
@@ -618,7 +620,7 @@ function set_C_Equipment(chart5data) {
 	    }
 	    
 	    var series = {
-	        name: chart5data[j][0].locationname,
+	        name: chart5data[j][0].lineid,
 	        data: seriesData1[j]
 	    };
 	    
@@ -635,7 +637,7 @@ function set_C_Equipment(chart5data) {
 
 
     legend: {
-		itemDistance: 30,
+		itemDistance: 15,
         verticalAlign: 'bottom',
         align: 'center'
     },

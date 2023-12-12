@@ -623,7 +623,8 @@ function notoperateRateChart(param) {
                     formatter: function () {
                         return this.y + ' 분';
                     }
-                }
+                },
+                enableMouseTracking: false
             }
         },
         series: [{

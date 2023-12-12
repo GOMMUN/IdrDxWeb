@@ -12,6 +12,22 @@ $(function() {
 function init() {
 	factroy();
 	$('#date').val(getToday());
+	setPlant();
+}
+
+function setPlant(){
+	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
+	
+	if(localStorage.getItem("plant") == "KEM"){
+		$("#factoryCodes option:eq(1)").prop("selected", true);
+	} else if(localStorage.getItem("plant") == "LHO"){
+		$("#factoryCodes option:eq(2)").prop("selected", true);
+	} else if(localStorage.getItem("plant") == "SYM"){
+		$("#factoryCodes option:eq(3)").prop("selected", true);
+	} else if(localStorage.getItem("plant") == "SWH"){
+		$("#factoryCodes option:eq(4)").prop("selected", true);
+	}
 }
 
 function setEventListener() {

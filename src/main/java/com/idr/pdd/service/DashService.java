@@ -157,22 +157,32 @@ public class DashService {
    
    public List<List<FairProd>> chart2(String plant, String factory, String month) {
 
-      List<String> rank = mapper.rank(factory, month);
+//      List<String> rank = mapper.rank(factory, month);
 
       List<List<FairProd>> finalresult = new ArrayList<>();
+      	if (plant.equals("KEM")) {   //대표기업 로그인
+	        if (factory.equals("LHO")) {
+	           finalresult.add(mapper.chart2("LHO-P0003", month));
+	        } else if (factory.equals("SWH")) {
+	           finalresult.add(mapper.chart2("SWH-P0003", month));   
+	        } else if (factory.equals("SYM")) {
+	           finalresult.add(mapper.chart2("SYM-P0003", month));   
+	        } 
+	     }
+      
 
-      if (plant.equals("KEM")) {   //대표기업 로그인
-         if (factory.equals("LHO")) {
-            finalresult.add(mapper.chart2(rank.get(0), month));
-         } else if (factory.equals("SWH")) {
-            finalresult.add(mapper.chart2(rank.get(0), month));   
-         } else if (factory.equals("SYM")) {
-            finalresult.add(mapper.chart2(rank.get(0), month));   
-         } 
-      }else {   //협력사 로그인
-         rank = mapper.rank(plant, month);
-         finalresult.add(mapper.chart2(rank.get(0), month));   
-      }
+//      if (plant.equals("KEM")) {   //대표기업 로그인
+//         if (factory.equals("LHO")) {
+//            finalresult.add(mapper.chart2(rank.get(0), month));
+//         } else if (factory.equals("SWH")) {
+//            finalresult.add(mapper.chart2(rank.get(0), month));   
+//         } else if (factory.equals("SYM")) {
+//            finalresult.add(mapper.chart2(rank.get(0), month));   
+//         } 
+//      }else {   //협력사 로그인
+//         rank = mapper.rank(plant, month);
+//         finalresult.add(mapper.chart2(rank.get(0), month));   
+//      }
       
 
       return finalresult;

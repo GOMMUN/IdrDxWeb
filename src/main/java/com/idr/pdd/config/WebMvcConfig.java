@@ -41,7 +41,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         				"/dxcube",								// DX VALUE CHAIN CUBE
         				"/dash",								// 대시보드
         				"/workDailySummary",					// 작업일보Summary
-        				"/alarmHistoryReport"					// AlaramHistory
+        				"/alarmHistoryReport"				// AlaramHistory
         			);								
     }
 

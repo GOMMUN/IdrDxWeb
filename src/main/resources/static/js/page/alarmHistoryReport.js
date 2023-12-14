@@ -193,7 +193,7 @@ function factroy() {
 				$.each(data, function() {
 					$dropdown.append($("<option/>").val(this.code).text(this.value));
 				});
-				setPlant();
+				 setPlant();
 				//$("#factoryCodes option:eq(1)").prop("selected", true);
 				data.factoryid = $("select[name=factoryid]").val();
 			} else {

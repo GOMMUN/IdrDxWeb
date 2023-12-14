@@ -17,10 +17,6 @@ function initSetting() {
 	
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
-	var currentDate = new Date();
-	var currentMonth = currentDate.getMonth() + 1;
-	$("#month").val(currentMonth).prop("selected", true);
-	
 	code();
 }
 

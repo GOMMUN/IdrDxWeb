@@ -17,7 +17,9 @@ function initSetting() {
 	
 	localStorage.setItem("plant", $("#parameterPlant").val());
 	localStorage.setItem("username", $("#parameterUsername").val());
-
+	var currentDate = new Date();
+	var currentMonth = currentDate.getMonth() + 1;
+	$("#month").val(currentMonth).prop("selected", true);
 	code();
 }
 
@@ -67,8 +69,8 @@ function setEventListener() {
 }
 
 function search(){
-//	let url = "https://dx.idrenvision.com:8171" 
-	let url = "https://localhost:8171"
+	let url = "https://dx.idrenvision.com:8171" 
+//	let url = "https://localhost:8171"
 				+ '/nelsonrule/find';
 	
 	let data = {

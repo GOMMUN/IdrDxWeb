@@ -16,7 +16,8 @@
 		WHERE FACTORYID =#{factoryid}
 		AND ISUSABLE ='Usable'
 		AND CREATETIME BETWEEN #{start} AND DATEADD(DAY, 1, #{end})
-		AND NOTICE_REASON='UNDER-PRODUCTION';
+		AND NOTICE_REASON='UNDER-PRODUCTION'
+		order by NOTICETIME DESC;
 	</select>
 
 		<select id="facility" resultType="AlarmHistoryReport" parameterType="AlarmHistoryReport">
@@ -28,7 +29,8 @@
 		WHERE FACTORYID =#{factoryid}
 		AND ISUSABLE ='Usable'
 		AND CREATETIME BETWEEN #{start} AND DATEADD(DAY, 1, #{end})
-		AND NOTICE_REASON='NOTOPERATE-PRESS';
+		AND NOTICE_REASON='NOTOPERATE-PRESS'
+		order by NOTICETIME DESC
 	</select>
 	
 		<select id="quality" resultType="AlarmHistoryReport" parameterType="AlarmHistoryReport">
@@ -43,6 +45,7 @@
 		AND ISUSABLE ='Usable'
 		AND CREATETIME BETWEEN #{start} AND DATEADD(DAY, 1, #{end})
 		AND NOTICE_REASON='DEFECT-RATE'
+		order by NOTICETIME DESC
 	</select>
 
 

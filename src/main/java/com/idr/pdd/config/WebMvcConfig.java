@@ -39,8 +39,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         				"/datasetdetail",						// 분류 DATASET 상세매핑
         				"/scenario",							// 시나리오별 그룹핑
         				"/dxcube",								// DX VALUE CHAIN CUBE
-        				"/dash",									// 대시보드
-        				"/workDailySummary"						// 작업일보Summary
+        				"/dash",								// 대시보드
+        				"/workDailySummary",					// 작업일보Summary
+        				"/alarmHistoryReport"					// AlaramHistory
         			);								
     }
 

@@ -13,7 +13,20 @@ function init() {
 	$search.trigger('click');
 }
 
-
+function setPlant(){
+	localStorage.setItem("plant", $("#parameterPlant").val());
+	localStorage.setItem("username", $("#parameterUsername").val());
+	
+	if(localStorage.getItem("plant") == "KEM"){
+		$("#factoryCodes").val("KEM").prop("selected", true);
+	} else if(localStorage.getItem("plant") == "LHO"){
+		$("#factoryCodes").val("LHO").prop("selected", true);
+	} else if(localStorage.getItem("plant") == "SYM"){
+		$("#factoryCodes").val("SYM").prop("selected", true);
+	} else if(localStorage.getItem("plant") == "SWH"){
+		$("#factoryCodes").val("SWH").prop("selected", true);
+	}
+}
 
 function setEventListener() {
 	$search = $("#search");
@@ -180,7 +193,9 @@ function factroy() {
 				$.each(data, function() {
 					$dropdown.append($("<option/>").val(this.code).text(this.value));
 				});
-				
+				 setPlant();
+				//$("#factoryCodes option:eq(1)").prop("selected", true);
+				data.factoryid = $("select[name=factoryid]").val();
 			} else {
 				$dropdown.append($("<option/>").val("").text("공장 선택"));
 			}

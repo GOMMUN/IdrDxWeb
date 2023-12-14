@@ -620,7 +620,7 @@ function set_C_Equipment(chart5data) {
 	    }
 	    
 	    var series = {
-	        name: chart5data[j][0].lineid,
+	        name: chart5data[j][0].locationname,
 	        data: seriesData1[j]
 	    };
 	    

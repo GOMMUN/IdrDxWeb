@@ -38,6 +38,8 @@
         		,BUFFER 
         		,CREATOR
         		,CREATETIME
+        		,EVENTUSER
+				,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
@@ -49,6 +51,8 @@
 				,#{buffer}
 				,#{creator}
 				,getdate()
+				,#{creator}
+				,GETDATE()
 				,#{isusable}			
 			)
 	</insert>

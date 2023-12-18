@@ -38,6 +38,8 @@
 				,ENDTIME
 				,CREATOR
 				,CREATETIME
+				,EVENTUSER
+				,EVENTTIME
 				,ISUSABLE	
         )
         VALUES (
@@ -48,6 +50,8 @@
 				,#{shifttype}
 				,CONCAT(REPLACE(#{starttime},':',''),'00')
 			  	,CONCAT(REPLACE(#{endtime},':',''),'00')
+				,#{creator}
+				,GETDATE()
 				,#{creator}
 				,GETDATE()
 				,#{isusable}		

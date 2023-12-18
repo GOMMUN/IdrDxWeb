@@ -33,6 +33,8 @@
 				,FACTORYTYPE
 				,CREATOR
 				,CREATETIME
+				,EVENTUSER
+				,EVENTTIME
 				,ISUSABLE	
         )
         VALUES (
@@ -41,6 +43,8 @@
 				,#{factoryname}
 				,#{description}
 				,#{factorytype}
+				,#{creator}
+				,GETDATE()
 				,#{creator}
 				,GETDATE()
 				,#{isusable}		

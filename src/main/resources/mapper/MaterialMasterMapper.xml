@@ -27,8 +27,6 @@
         	A.TID,
         	A.COMPANY_CD
         FROM DSP_MATERIAL as A
-        WHERE 1=1
-        AND A.ISUSABLE = 'Y'
         ORDER BY EVENTTIME DESC
     </select>
     
@@ -44,6 +42,8 @@
         		,RECEIVINGINSPECTION 
         		,CREATOR
         		,CREATETIME
+				,EVENTUSER
+				,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
@@ -57,6 +57,8 @@
 				,#{receivinginspection}
 				,#{creator}
 				,getdate()
+				,#{creator}
+				,GETDATE()
 				,#{isusable}			
 			)
 	</insert>

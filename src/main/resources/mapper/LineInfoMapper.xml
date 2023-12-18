@@ -48,6 +48,8 @@
 				,EQUIPMENTID
 				,CREATOR
 				,CREATETIME
+				,EVENTUSER
+				,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
@@ -57,6 +59,8 @@
 				,#{locationname}			
 				,'LINE'
 				,#{equipmentid}
+				,#{creator}
+				,GETDATE()
 				,#{creator}
 				,GETDATE()
 				,#{isusable}			

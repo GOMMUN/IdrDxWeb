@@ -91,22 +91,6 @@ function initSetting() {
 			alert("장비명을 입력하세요.");
 			$("input[name=equipmentname]").focus();
 			return;
-//		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-//			alert("고장률을 입력하세요.");
-//			$("input[name=failurerate]").focus();
-//			return;
-//		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-//			alert("복구시간을 입력하세요.");
-//			$("input[name=recoverytime]").focus();
-//			return;
-//		} else if (isNaN(data.errorrate) || data.errorrate == "") {
-//			alert("불량률을 입력하세요.");
-//			$("input[name=errorrate]").focus();
-//			return;
-//		} else if (isNaN(data.buffer) || data.buffer == "") {
-//			alert("Buffer를 입력하세요.");
-//			$("input[name=buffer]").focus();
-//			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
@@ -163,22 +147,6 @@ function initSetting() {
 		} else if (data.equipmentname == "") {
 			alert("장비명을 입력하세요.");
 			$("input[name=equipmentname]").focus();
-			return;
-		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-			alert("고장률을 입력하세요.");
-			$("input[name=failurerate]").focus();
-			return;
-		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-			alert("복구시간을 입력하세요.");
-			$("input[name=recoverytime]").focus();
-			return;
-		} else if (isNaN(data.errorrate) || data.errorrate == "") {
-			alert("불량률을 입력하세요.");
-			$("input[name=errorrate]").focus();
-			return;
-		} else if (isNaN(data.buffer) || data.buffer == "") {
-			alert("Buffer를 입력하세요.");
-			$("input[name=buffer]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");

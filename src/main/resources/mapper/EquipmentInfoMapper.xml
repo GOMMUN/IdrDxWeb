@@ -60,6 +60,8 @@
         		,BUFFER 
         		,CREATOR
         		,CREATETIME
+        		,EVENTUSER
+				,EVENTTIME
 				,ISUSABLE			
 			) 
 			VALUES(
@@ -70,6 +72,8 @@
 				,#{recoverytime}
 				,#{errorrate}
 				,#{buffer}
+				,#{creator}
+				,getdate()
 				,#{creator}
 				,getdate()
 				,#{isusable}			

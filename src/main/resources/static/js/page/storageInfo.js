@@ -71,9 +71,6 @@ function initSetting() {
 		data.factoryid = $("select[name=factoryid]").val();
 		data.storageid = $("input[name=storageid]").val();
 		data.storagename = $("input[name=storagename]").val();
-		data.failurerate = $("input[name=failurerate]").val();
-		data.recoverytime = $("input[name=recoverytime]").val();
-		data.buffer = $("input[name=buffer]").val();
 		data.isusable = $("select[name=isusable]").val();
 		data.creator = localStorage.getItem("username");
 	
@@ -86,17 +83,9 @@ function initSetting() {
 			alert("창고코드를 입력하세요.");
 			$("input[name=storageid]").focus();
 			return;
-		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-			alert("고장률을 입력하세요.");
-			$("input[name=failurerate]").focus();
-			return;
-		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-			alert("복구시간을 입력하세요.");
-			$("input[name=recoverytime]").focus();
-			return;
-		} else if (isNaN(data.buffer) || data.buffer == "") {
-			alert("Buffer를 입력하세요.");
-			$("input[name=buffer]").focus();
+		} else if (data.storageid == "") {
+			alert("창고명을 입력하세요.");
+			$("input[name=storagename]").focus();
 			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
@@ -134,9 +123,6 @@ function initSetting() {
 		data.factoryid = $("select[name=factoryid]").val();
 		data.storageid = $("input[name=storageid]").val();
 		data.storagename = $("input[name=storagename]").val();
-		data.failurerate = $("input[name=failurerate]").val();
-		data.recoverytime = $("input[name=recoverytime]").val();
-		data.buffer = $("input[name=buffer]").val();
 		data.isusable = $("select[name=isusable]").val();
 		data.eventuser = localStorage.getItem("username");
 
@@ -149,27 +135,15 @@ function initSetting() {
 			alert("창고코드를 입력하세요.");
 			$("input[name=storageid]").focus();
 			return;
-		} else if (data.storagename == "") {
+		} else if (data.storageid == "") {
 			alert("창고명을 입력하세요.");
 			$("input[name=storagename]").focus();
 			return;
-//		} else if (isNaN(data.failurerate) || data.failurerate == "") {
-//			alert("고장률을 입력하세요.");
-//			$("input[name=failurerate]").focus();
-//			return;
-//		} else if (isNaN(data.recoverytime) || data.recoverytime == "") {
-//			alert("복구시간을 입력하세요.");
-//			$("input[name=recoverytime]").focus();
-//			return;
-//		} else if (isNaN(data.buffer) || data.buffer == "") {
-//			alert("Buffer를 입력하세요.");
-//			$("input[name=buffer]").focus();
-//			return;
 		} else if (data.isusable == "") {
 			alert("사용여부를 선택해주세요.");
 			$("select[name=isusable]").focus();
 			return;
-		} 
+		}
 		
 		let url = '/storageinfo/modify';
 

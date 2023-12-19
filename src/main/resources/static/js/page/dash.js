@@ -1142,24 +1142,28 @@ function PQCDrate() {
 //			}
 //        });
 	
-		var totalYe = [];
-		var totalTo = [];
+		var totalYe = 0;
+		var totalTo = 0;
+		var sumYe = [];
+    	var sumTo = [];
 	
 		for (var j = 0; j <= result.length-1; j++) {
 
 		    for (var i = 0; i <= result[j].length-1; i++) {
 				if(i==0){
-					total1 = parseFloat(result[j][i].total)
-					totalYe.push(total1)
+					var total1 = parseFloat(result[j][i].total);
+					totalYe += (isNaN(total1) ? 0 : total1);
+					sumYe.push(totalYe.toFixed(2));
 				} else {
-					total2 = parseFloat(result[j][i].total)
-					totalTo.push(total2)
+					var total2 = parseFloat(result[j][i].total);
+					totalTo += (isNaN(total2) ? 0 : total2);
+					sumTo.push(totalTo.toFixed(2));
 				}
 		    }  
 		}
 		
-		avgYe = (totalYe[0] + totalYe[1] + totalYe[2] + totalYe[3])/4
-		avgTo = (totalTo[0] + totalTo[1] + totalTo[2] + totalTo[3])/4
+		var avgYe = parseFloat(sumYe[sumYe.length - 1]/result.length);
+		var avgTo = parseFloat(sumTo[sumTo.length - 1]/result.length);
         
         //가동률
         $('#operateRate').text(isNaN(avgTo) ? '-' : parseFloat(avgTo.toFixed(2)) + '%');
